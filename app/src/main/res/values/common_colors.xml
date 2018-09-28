@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--common-->
+    <color name="common_title">#ffffff</color>
+    <color name="common_bg">#eef1f3</color>
+    <color name="common_bg_gray">#eef1f3</color>
+
+    <color name="common_drivder_line">#E7E7E7</color>
+
+    <color name="common_light_gray">#929292</color>
+    <color name="common_title_color">#FF4707</color>
+    <color name="transparent">#00000000</color>
+</resources>

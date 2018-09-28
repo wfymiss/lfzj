@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/common_bg"
+    >
+
+    <include layout="@layout/include_title_text"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_100"
+        android:textSize="@dimen/sp_15"
+        android:textColor="@color/color_333333"
+        android:layout_marginTop="@dimen/dp_1"
+        android:gravity="top|left"
+        android:hint="给大家说说近期的新鲜事"
+        android:id="@+id/et_content"
+        android:padding="@dimen/dp_10"
+        android:background="@color/color_ffffff"/>
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/common_bg"
+        />
+    <com.ovov.lfzj.base.widget.NoScrollGridView
+        android:id="@+id/put_square_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:scrollbars="none"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:background="@color/color_ffffff"
+        android:horizontalSpacing="@dimen/dp_5"
+        android:verticalSpacing="@dimen/dp_5"
+        android:numColumns="3"/>
+</LinearLayout>

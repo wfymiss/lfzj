@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ovov.lfzj.user.setting.SettingActivity">
+
+    <include layout="@layout/include_title_text" />
+
+
+    <TextView
+        android:id="@+id/tv_account_safe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="@color/color_ffffff"
+        android:drawableRight="@mipmap/point_icon_gray"
+        android:padding="@dimen/dp_15"
+        android:text="@string/text_account_safe"
+        android:textColor="#000000"
+        android:textSize="@dimen/sp_15" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="@color/color_ffffff"
+        android:padding="@dimen/dp_15"
+        android:text="@string/text_about"
+        android:id="@+id/tv_about"
+        android:layout_marginTop="@dimen/dp_1"
+        android:drawableRight="@mipmap/point_icon_gray"
+        android:textColor="#000000"
+        android:textSize="@dimen/sp_15" />
+
+
+    <Button
+        android:id="@+id/btn_loginout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_50"
+        android:layout_marginRight="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_50"
+        android:background="@drawable/feed_ground_button"
+        android:text="@string/text_loginout"
+
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/sp_15" />
+</LinearLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--工单提交室内、室外类别按钮背景图-->
+<!--商家版优惠劵修改数量背景-->
+<!--业主版优惠劵中心背景-->
+<!--意见反馈背景图片-->
+<!--提醒弹框背景-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="10dp"/>
+    <solid android:color="#FFFFFF"/>
+</shape>

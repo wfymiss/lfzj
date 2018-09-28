@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?><!--gridView 分类图-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100">
+
+        <ImageView
+            android:id="@+id/list_popup_fabu_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/guide_view_01"/>
+        <ImageView
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:src="@mipmap/pop_close_icon"
+            android:id="@+id/iv_close"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+</LinearLayout>

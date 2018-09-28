@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--工单提交室内、室外类别按钮b背景选择颜色-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/feed_ground_button" android:state_selected="true"/>
+    <item android:drawable="@drawable/feed_ground" android:state_selected="false"/>
+</selector>

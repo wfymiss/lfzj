@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    tools:context="com.ovov.lfzj.opendoor.ApplyVisitorActivity">
+    <!--<android.support.v7.widget.Toolbar-->
+    <!--android:id="@+id/visitor_apply_toolbar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="?attr/actionBarSize"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:background="@color/colorPrimary">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/textView"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:text="访客通行"-->
+    <!--android:textColor="#ffffff"-->
+    <!--android:textSize="18sp" />-->
+    <!--<TextView-->
+    <!--android:id="@+id/lock_visitor_code"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_gravity="right"-->
+    <!--android:text="访客记录"-->
+    <!--android:gravity="center"-->
+    <!--android:textColor="#ffffff"-->
+    <!--android:textSize="15sp"-->
+    <!--android:layout_marginRight="10dp"/>-->
+    <!--</android.support.v7.widget.Toolbar>-->
+    <include layout="@layout/include_title_text" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_house_photo"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="30px"
+            android:layout_marginLeft="70px"
+            android:layout_marginTop="50px"
+            android:scaleType="centerCrop"
+            android:src="@drawable/banner_default" />
+
+        <TextView
+            android:id="@+id/tv_house_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_adress_house"
+            android:layout_alignStart="@+id/tv_adress_house"
+            android:layout_alignTop="@+id/iv_house_photo"
+            android:layout_marginTop="20px"
+            android:text="管理员（业主）"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_adress_house"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_house_title"
+            android:layout_marginLeft="40px"
+            android:layout_marginTop="30px"
+            android:layout_toRightOf="@+id/iv_house_photo"
+            android:text="凯德世家1栋-3008号"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30px"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_arrow_right" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30px"
+        android:background="@color/background_underlineview_color" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tv_invite_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="70px"
+            android:gravity="center"
+            android:text="访客姓名："
+            android:textColor="@color/gray_dark"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/lock_invite_name"
+            style="@style/AppTheme.EditText.Big"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="50px"
+            android:layout_toRightOf="@+id/tv_invite_name"
+            android:hint="请输入访客姓名" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tv_phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="70px"
+            android:gravity="center"
+            android:text="手机号码："
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/lock_invite_phone"
+            style="@style/AppTheme.EditText.Big"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="50px"
+            android:layout_toRightOf="@+id/tv_phone_number"
+            android:hint="请输入访客手机号码"
+            android:inputType="number" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tv_use_number_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="70px"
+            android:gravity="center"
+            android:text="使用次数："
+            android:textColor="@color/gray_dark"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/lock_invite_validConunt"
+            style="@style/AppTheme.EditText.Big"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30px"
+            android:layout_marginRight="50px"
+            android:layout_toRightOf="@id/tv_use_number_title"
+            android:hint="最多使用6次"
+            android:inputType="number" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tv_start_time_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="70px"
+            android:gravity="center"
+            android:text="开始时间："
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/lock_invite_startTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50px"
+            android:layout_marginRight="50px"
+            android:layout_toRightOf="@id/tv_start_time_title"
+            android:text="2017-07-20  10:35" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tv_vaild_time_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="70px"
+            android:gravity="center"
+            android:text="有效期（分钟）："
+            android:textColor="@color/gray_dark"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/lock_invite_validTime"
+            style="@style/AppTheme.EditText.Big"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10px"
+            android:layout_marginRight="10px"
+            android:layout_toRightOf="@id/tv_vaild_time_title"
+            android:hint="有效时间（最长120分钟）"
+            android:inputType="number" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_light" />
+
+    <TextView
+        android:id="@+id/lock_invite_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="80px"
+        android:layout_marginRight="80px"
+        android:layout_marginTop="60dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="生成通行证"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+</LinearLayout>

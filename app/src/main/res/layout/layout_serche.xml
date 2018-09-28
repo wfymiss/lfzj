@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:background="@mipmap/map" />
+
+
+    <TextView
+        android:id="@+id/im_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/black"
+        android:layout_marginRight="2dp"
+        android:text="请选择"
+        android:textSize="@dimen/textSize_12sp"
+
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@mipmap/rightaroow" />
+
+    <RelativeLayout
+        android:id="@+id/pro_searchView"
+        android:layout_width="0dp"
+        android:layout_height="33dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="9dp"
+        android:layout_weight="1"
+        android:background="@drawable/search_box_background">
+
+
+        <ImageView
+            android:id="@+id/im_seach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin_15dp"
+            android:src="@drawable/seach" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/margin_12dp"
+            android:layout_toRightOf="@+id/im_seach"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="@string/hint"
+            android:textSize="@dimen/textSize_12sp" />
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/im_scan"
+        android:layout_width="28dp"
+        android:layout_height="22dp"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/scan" />
+
+    <ImageView
+        android:id="@+id/im_list"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/messages" />
+</LinearLayout>

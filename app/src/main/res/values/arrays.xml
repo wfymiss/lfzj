@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="channel_tag_style">
+        <attr name="channelItemBg" format="reference|integer" />
+        <attr name="channelItemDragingBg" format="reference|integer" />
+        <attr name="channelItemFixedBg" format="reference|integer" />
+        <attr name="showPathAnim" format="boolean" />
+        <attr name="fixedPos" format="integer" />
+        <attr name="addedCategroyTitleBg" format="reference|color|integer" />
+        <attr name="unAddedCategroyTitleBg" format="reference|color|integer" />
+        <attr name="colums" format="integer" />
+        <attr name="columnHorizontalSpace" format="integer|reference|dimension" />
+        <attr name="columnVerticalSpace" format="integer|reference|dimension" />
+        <attr name="channelItemTxColor" format="color|reference" />
+        <attr name="channelItemTxSize" format="reference|dimension" />
+        <attr name="itemDrawableLeft" format="reference|integer" />
+        <attr name="itemDrawable" format="reference|integer" />
+    </declare-styleable>
+    <!--发现页图片-->
+    <integer-array name="find_gv_image">
+        <item>@drawable/pay</item>
+        <item>@drawable/repair</item>
+        <item>@drawable/incarh</item>
+        <item>@drawable/shop</item>
+        <item>@drawable/flower</item>
+
+    </integer-array>
+    <!--发现页图片对应的位子-->
+    <string-array name="find_gv_title">
+        <item>缴费</item>
+        <item>邻里圈</item>
+        <item>身份认证</item>
+        <item>开门</item>
+        <item>访客通行</item>
+
+    </string-array>
+
+    <!--推荐图片-->
+    <integer-array name="gv_image">
+        <item>@drawable/shop1</item>
+        <item>@drawable/shop1</item>
+        <item>@drawable/shop1</item>
+        <item>@drawable/shop1</item>
+        <item>@drawable/shop1</item>
+
+    </integer-array>
+
+
+    <!--发现页图片-->
+    <integer-array name="service_image">
+        <item>@drawable/service</item>
+        <item>@drawable/government</item>
+        <item>@drawable/repairs</item>
+        <item>@drawable/courier</item>
+        <item>@drawable/laundry</item>
+        <item>@drawable/meeting</item>
+        <item>@drawable/heath</item>
+        <item>@drawable/visitors</item>
+        <item>@drawable/shop</item>
+        <item>@drawable/shoptree</item>
+        <item>@drawable/friend</item>
+        <item>@drawable/activity</item>
+        <item>@drawable/flower</item>
+        <item>@drawable/pays</item>
+        <item>@drawable/incarh</item>
+        <item>@drawable/mymoney</item>
+        <item>@drawable/headlines</item>
+        <item>@drawable/property</item>
+        <item>@drawable/traffic</item>
+        <item>@drawable/advices</item>
+
+    </integer-array>
+    <!--发现页图片对应的位子-->
+    <string-array name="service_title">
+        <item>家政服务</item>
+        <item>政务大厅</item>
+        <item>报修</item>
+        <item>快递服务</item>
+        <item>洗衣上门</item>
+        <item>共享会议室</item>
+        <item>健康体检</item>
+        <item>访客通行</item>
+        <item>优选商城</item>
+        <item>跳蚤市场</item>
+        <item>邻里圈</item>
+        <item>社区活动</item>
+        <item>花圃</item>
+        <item>便捷缴费</item>
+        <item>会员充值</item>
+        <item>我的钱包</item>
+        <item>新闻头条</item>
+        <item>物业通知</item>
+        <item>小区交通</item>
+        <item>投诉建议</item>
+    </string-array>
+
+    <declare-styleable name="StarIndicator">
+        <attr name="indicator_icon_chose" format="reference" />
+        <attr name="indicator_icon_normal" format="reference" />
+        <attr name="indicator_margin_left" format="dimension" />
+        <attr name="indicator_star_size" format="integer" />
+        <attr name="indicator_star_chose" format="integer" />
+    </declare-styleable>
+</resources>

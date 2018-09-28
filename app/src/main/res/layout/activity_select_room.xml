@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffffff"
+    tools:context="com.ovov.lfzj.login.SelectUnitActivity">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/include_building_title" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_below="@+id/title"
+        android:background="@color/common_bg" />
+
+    <TextView
+        android:id="@+id/tv_unit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view"
+        android:background="@color/common_bg"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_40"
+        android:paddingTop="@dimen/dp_10"
+        android:text="1栋1单元" />
+
+    <ListView
+        android:id="@+id/list_sub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_commit"
+        android:layout_below="@+id/tv_unit"
+        android:background="@color/white"
+        android:divider="@color/common_bg"
+        android:dividerHeight="@dimen/dp_1" />
+
+    <Button
+        android:id="@+id/btn_commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_50"
+        android:layout_marginRight="@dimen/dp_50"
+        android:background="@drawable/shape_next_text"
+        android:text="提交认证"
+        android:textColor="@color/color_ffffff"
+        android:textSize="@dimen/sp_15" />
+</RelativeLayout>

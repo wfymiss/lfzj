@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--工单提交室内、室外类别按钮背景图-->
+<!--意见反馈按钮背景图片-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="10dp"/>
+    <solid android:color="@color/colorPrimary"/>
+</shape>

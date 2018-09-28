@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/color_ffffff"
+    tools:context="com.ovov.lfzj.neighbour.TransmitActivity">
+
+    <include layout="@layout/include_title_text"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_100"
+        android:background="@color/white"
+        android:padding="@dimen/dp_10"
+        android:gravity="top"
+        android:id="@+id/et_content"
+        android:hint="@string/text_share_feel"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:background="@color/common_bg">
+        <ImageView
+            android:layout_width="116dp"
+            android:layout_height="95dp"
+            android:id="@+id/iv_transim"
+            android:src="@color/color_333333"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/color_333333"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:layout_marginRight="@dimen/dp_10"
+            android:id="@+id/tv_nickname"
+            android:layout_toRightOf="@id/iv_transim"
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_transim"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:text="两只耳朵"
+            android:layout_below="@+id/tv_nickname"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_15" />
+    </RelativeLayout>
+</LinearLayout>

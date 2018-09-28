@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/activity_title_popup"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:background="@drawable/feed_back_log"
+        android:layout_marginLeft="88dp"
+        android:layout_marginRight="88dp"
+        android:layout_width="match_parent"
+        android:layout_height="226dp">
+        <TextView
+            android:textSize="18dp"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:background="@mipmap/build_select_bg"
+            android:layout_width="match_parent"
+            android:layout_height="34dp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/activity_title_recy"
+            android:layout_width="match_parent"
+            android:layout_height="192dp"/>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.ovov.lfzj.base.banner.BannerLayout
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"></com.ovov.lfzj.base.banner.BannerLayout>
+
+        <include
+            layout="@layout/layout_serche"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp" />
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:background="@color/white"
+        android:numColumns="5"></GridView>
+
+    <include layout="@layout/base_view_title"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/gridview1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:background="@color/white"></android.support.v7.widget.RecyclerView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:background="@mipmap/line" />
+
+    <com.ovov.lfzj.base.widget.NoScrollGridView
+        android:id="@+id/new_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:numColumns="1"></com.ovov.lfzj.base.widget.NoScrollGridView>
+
+    <com.ovov.lfzj.base.widget.NoScrollGridView
+        android:id="@+id/notice_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:numColumns="1"></com.ovov.lfzj.base.widget.NoScrollGridView>
+
+
+
+</LinearLayout>

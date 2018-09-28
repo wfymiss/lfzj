@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_ffffff"
+    android:orientation="vertical"
+    tools:context="com.ovov.lfzj.login.ServiceActivity">
+
+    <include layout="@layout/include_title_text"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_10"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textSize_18sp"
+                android:text="《“乐福院子”APP用户协议和法律协议》"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      本协议为您与“乐福院子”APP（以下简称“乐福院子”）管理者之间所订立的契约，具有合同的法律效力，请您仔细阅读。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="一、本协议内容、生效、变更"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_15"
+                android:textStyle="bold"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      本协议内容包括协议正文及所有“乐福院子”已经发布的或将来可能发布的各类规则。所有规则为本协议不可分割的组成部分，与协议正文具有同等法律效力。如您对协议有任何疑问，应向“乐福院子”咨询。您在同意所有协议条款并完成注册程序，才能成为本站的正式用户，您点击“我已阅读并同意“乐福院子”用户协议和法律协议”按钮后，本协议即生效，对双方产生约束力。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      只要您使用“乐福院子”平台服务，则本协议即对您产生约束，届时您不应以未阅读本协议的内容或者未获得“乐福院子”对您问询的解答等理由，主张本协议无效，或要求撤销本协议。您确认：本协议条款是处理双方权利义务的契约，始终有效，法律另有强制性规定或双方另有特别约定的，依其规定。您承诺接受并遵守本协议的约定。如果您不同意本协议的约定，您应立即停止注册程序或停止使用“乐福院子”平台服务。“乐福院子”有权根据需要不定期地制订、修改本协议及/或各类规则，并在“乐福院子”平台公示，不再另行单独通知用户。变更后的协议和规则一经在网站公布，立即生效。如您不同意相关变更，应当立即停止使用“乐福院子”平台服务。您继续使用“乐福院子”平台服务的，即表明您接受修订后的协议和规则。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="二、注册"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_15"
+                android:textStyle="bold"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      注册资格用户须具有法定的相应权利能力和行为能力的自然人、法人或其他组织，能够独立承担法律责任。您完成注册程序或其他“乐福院子”平台同意的方式实际使用本平台服务时，即视为您确认自己具备主体资格，能够独立承担法律责任。若因您不具备主体资格，而导致的一切后果，由您及您的监护人自行承担。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="注册资料"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      2.1用户应自行诚信向本站提供注册资料，用户同意其提供的注册资料真实、准确、完整、合法有效，用户注册资料如有变动的，应及时更新其注册资料。如果用户提供的注册资料不合法、不真实、不准确、不详尽的，用户需承担因此引起的相应责任及后果，并且“乐福院子”保留终止用户使用本平台各项服务的权利。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      2.2用户在本站进行浏览等活动时，涉及用户真实姓名/名称、通信地址、联系电话、电子邮箱等隐私信息的，本站将予以严格保密，除非得到用户的授权或法律另有规定，本站不会向外界披露用户隐私信息。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="账户"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      3.1您注册成功后，即成为“乐福院子”平台的会员，将持有“乐福院子”平台唯一编号的账户信息，您可以根据本站规定改变您的密码。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      3.2您设置的姓名为真实姓名，不得侵犯或涉嫌侵犯他人合法权益。否则，“乐福院子”有权终止向您提供服务，注销您的账户。账户注销后，相应的会员名将开放给任意用户注册登记使用。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      3.3您应谨慎合理的保存、使用您的会员名和密码，应对通过您的会员名和密码实施的行为负责。除非有法律规定或司法裁定，且征得“乐福院子”的同意，否则，会员名和密码不得以任何方式转让、赠与或继承（与账户相关的财产权益除外）。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      3.4用户不得将在本站注册获得的账户借给他人使用，否则用户应承担由此产生的全部责任，并与实际使用人承担连带责任。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      3.5如果发现任何非法使用等可能危及您的账户安全的情形时，您应当立即以有效方式通知“乐福院子”要求暂停相关服务，并向公安机关报案。您理解“乐福院子”对您的请求采取行动需要合理时间，“乐福院子”对在采取行动前已经产生的后果（包括但不限于您的任何损失）不承担任何责任。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户信息的合理使用"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      4.1您同意“乐福院子”平台拥有通过邮件、短信电话等形式，向在本站注册用户发送信息等告知信息的权利。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      4.2您了解并同意，“乐福院子”有权应国家司法、行政等主管部门的要求，向其提供您在“乐福院子”平台填写的注册信息和交易记录等必要信息。如您涉嫌侵犯他人知识产权，则“乐福院子”亦有权在初步判断涉嫌侵权行为存在的情况下，向权利人提供您必要的身份信息。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      4.3用户同意“乐福院子”有权使用用户的注册信息、用户名、密码等信息，登陆进入用户的注册账户，进行证据保全，包括但不限于公证、见证等。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="三、免责条款"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      1.凡以任何方式登陆“乐福院子”，或直接、间接使用“乐福院子”资料者，均被视为自愿接受本网站相关声明和用户服务协议的约束。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      2.“乐福院子”转载的文字、图片、音视频等资料均由“乐福院子”用户提供，其真实性、准确性和合法性由信息发布人负责。“乐福院子”不提供任何保证，并不承担任何法律责任。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      3.“乐福院子”所转载的文字、图片、音视频等资料，如果侵犯了第三方的知识产权或其他权利，责任由作者或转载者本人承担，“乐福院子”对此不承担责任。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      4.“乐福院子”不保证为向用户提供便利而设置的外部链接的准确性和完整性，同时，对于该外部链接指向的不由“乐福院子”实际控制的任何网页上的内容，“乐福院子”不承担任何责任。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      5.除“乐福院子”注明之服务条款外，其它因不当使用“乐福院子”而导致的任何意外、疏忽、合约毁坏、诽谤、版权或其他知识产权侵犯及其所造成的任何损失，“乐福院子”概不负责，亦不承担任何法律责任。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      6.对于因不可抗力或因黑客攻击、通讯线路中断等“乐福院子”不能控制的原因造成的网络服务中断或其他缺陷，导致用户不能正常使用“乐福院子”，“乐福院子”不承担任何责任，但将尽力减少因此给用户造成的损失或影响。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      7.未涉及的问题请参见国家有关法律法规，当本声明与国家有关法律法规冲突时，以国家法律法规为准。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      8.“乐福院子”相关协议版权及其修改权、更新权和最终解释权均属“乐福院子”管理者所有。"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

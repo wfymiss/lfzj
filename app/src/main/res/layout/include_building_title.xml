@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/color_ffffff"
+    android:layout_height="48dp">
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/common_title"
+        android:textColor="@color/color_444444"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="title"
+        />
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:src="@mipmap/ic_back_blackk"/>
+    <!--android:src="@mipmap/icon_back" />-->
+
+    <TextView
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="@dimen/common_margin"
+        android:textColor="@color/color_444444"
+        android:text=""
+        android:textSize="@dimen/common_text_size_middle" />
+
+    <ImageView
+        android:id="@+id/iv_right"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right|center_vertical"
+        android:scaleType="center"
+        android:visibility="gone" />
+</FrameLayout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--工单视频录制页-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <include layout="@layout/include_title_text"
+        android:id="@+id/record_toolbar"/>
+
+    <SurfaceView
+        android:id="@+id/record_surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/record_toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#80faf7f7"
+        android:padding="10dp">
+
+        <!-- 开始/结束 录制按钮 -->
+        <ImageView
+            android:id="@+id/record_control"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:onClick="startRecord"
+            android:src="@mipmap/recordvideo_start" />
+
+        <ImageView
+            android:id="@+id/record_pause"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40px"
+            android:onClick="stopRecord"
+            android:src="@mipmap/recordvideo_stop"
+            android:visibility="gone" />
+
+        <Chronometer
+            android:id="@+id/record_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="40px"
+            android:format="%s"
+            android:textSize="58px" />
+    </RelativeLayout>
+</RelativeLayout>

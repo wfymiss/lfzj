@@ -1,0 +1,136 @@
+<resources>
+    <string name="app_name">乐福院子</string>
+    <string name="main_home">社区</string>
+    <string name="main_market">商城</string>
+    <string name="main_neighbour">邻里圈</string>
+    <string name="main_user">我的</string>
+
+    <string name="text_login">登录</string>
+    <string name="text_user_register">用户注册</string>
+    <string name="text_find_pwd">找回密码</string>
+    <string name="edit_phone_hint">请输入手机号码</string>
+    <string name="edit_pwd_hint">密码</string>
+    <string name="edit_verify_hint">验证码</string>
+    <string name="text_get_verify">获取验证码</string>
+    <string name="text_confirm_pwd">确认密码</string>
+    <string name="text_square">广场</string>
+    <string name="text_activity">活动</string>
+
+    <string name="text_express">快递服务</string>
+    <string name="text_activity_starttime">开始时间  %s</string>
+    <string name="text_enroll">已报名</string>
+    <string name="text_good">赞</string>
+    <string name="text_my_community">我的社区</string>
+    <string name="text_encroll_num">%d 人已报名</string>
+    <string name="text_put_square">发布消息</string>
+    <string name="text_put">发布</string>
+    <string name="text_put_activity">发布活动</string>
+    <string name="text_start_time">开始时间</string>
+    <string name="text_end_time">结束时间</string>
+    <string name="text_activity_address">活动地址</string>
+    <string name="text_activity_price">活动价格</string>
+    <string name="please_input_activity_title">请输入活动标题</string>
+    <string name="please_input_activity_content">请输入您要发起的活动内容</string>
+    <string name="text_pl_num">评论 %s</string>
+    <string name="text_good_num">赞 %s</string>
+    <string name="text_replay_num">转发 %s</string>
+    <string name="hint">请输入搜索内容</string>
+    <string name="text_activity_detail">活动详情</string>
+    <string name="text_qrcode">二维码扫描</string>
+    <string name="text_keylist">钥匙列表</string>
+    <string name="text_update_key">更新钥匙</string>
+    <string name="text_opendoor_setting">智能设备设置</string>
+    <string name="text_me_owner">我是业主</string>
+    <string name="text_me_property">我是物业</string>
+    <string name="text_me_seller">我是商户</string>
+    <string name="text_service">我已认真阅读并同意该</string>
+    <string name="text_service_title">《用户协议》</string>
+    <string name="text_no_confirm">暂时不认证</string>
+    <string name="text_error_dialog">错误提示：\n号码输入有误；\n该号码与物业预留手机号码不符；\n或前往物业变更手机号码。</string>
+    <string name="text_wechat">微信</string>
+    <string name="text_wechat_moment">朋友圈</string>
+    <string name="text_mine_message">我的消息</string>
+    <string name="text_user_hint">用户昵称</string>
+    <string name="text_hint">这个小伙伴很懒，啥都没有留下！</string>
+
+
+    <string name="mine_message">我的信息</string>
+    <string name="mine_bbs">我的论坛</string>
+    <string name="mine_activity">我的活动</string>
+    <string name="mine_house">我的家人</string>
+    <string name="mine_home">我的家庭</string>
+    <string name="mine_education">我的教育</string>
+    <string name="mine_health">我的健康</string>
+    <string name="mine_reward">我的奖励</string>
+    <string name="mine_money">我的钱包</string>
+    <string name="mine_centre">领券中心</string>
+    <string name="mine_courier">我的快递</string>
+    <string name="mine_order">预约订单</string>
+    <string name="mine_maintenance">维修工单</string>
+    <string name="mine_shop">商城订单</string>
+    <string name="mine_sevice">服务订单</string>
+    <string name="mine_idcard">身份认证</string>
+    <string name="mine_utility">我的物业账单</string>
+    <string name="mine_utility_order">物业经理信箱</string>
+    <string name="mine_title">个人中心</string>
+
+    <string name="text_phone_empty">手机号不能为空</string>
+    <string name="text_pwd_empty">密码不能为空</string>
+    <string name="text_confirm_empty">确认密码不能为空</string>
+    <string name="text_phone_error">请输入正确的手机号</string>
+    <string name="text_verify_empty">验证码不能为空</string>
+    <string name="text_no_equals">两次输入的密码不一致</string>
+    <string name="text_share_feel">说说分享体会</string>
+    <string name="text_transim_neighbour">转发邻里圈</string>
+    <string name="text_immediately_enroll">立即报名</string>
+    <string name="text_worker_order_detail">工单详情</string>
+
+    <!--列表数据下标题-->
+    <string name="script_load_more">上拉加载更多</string>
+    <string name="script_loading">正在加载数据 ......</string>
+    <string name="script_load_no_data">没有数据了</string>
+    <string name="score">评分</string>
+    <string name="text_repair">物业报修</string>
+    <string name="text_repair_list">报修列表</string>
+    <string name="text_video_record">录制视频</string>
+    <string name="text_payment_record">缴费记录</string>
+    <string name="text_edit">编辑</string>
+    <string name="text_put_success">发布成功</string>
+    <string name="text_put_failer">发布失败</string>
+    <string name="please_input_content">请输入内容</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="order_ok">交易成功</string>
+    <string name="title_activity_order_detail">OrderDetailActivity</string>
+    <string name="text_name">姓名</string>
+    <string name="text_shop_price">商品单价</string>
+    <string name="text_unitiy">运费(快递)</string>
+    <string name="text_price_numb">订单总价</string>
+    <string name="text_pay_detail">支付明细</string>
+    <string name="text_pay_discount">优惠折扣</string>
+    <string name="text_real_pay">实付款</string>
+    <string name="text_order_detail">订单信息</string>
+    <string name="text_order_numb">订单信息:</string>
+    <string name="text_create_time">创建时间:</string>
+    <string name="text_pay_time">创建时间:</string>
+    <string name="text_paydone_time">成交时间:</string>
+    <string name="text_pay_way">付款方式:</string>
+    <string name="text_good_success">点赞成功</string>
+    <string name="text_good_failer">点赞失败</string>
+    <string name="text_set">设置</string>
+    <string name="text_account_safe">账户安全</string>
+    <string name="text_about">关于我们</string>
+    <string name="text_loginout">退出登录</string>
+    <string name="text_loginout_failer">退出失败</string>
+    <string name="text_login_invaild">登录失效，请重新登录</string>
+    <string name="text_send">发送</string>
+    <string name="text_reciver">回复时间:</string>
+    <string name="text_input_comment">请输入评论内容</string>
+    <string name="text_comment_success">评论成功</string>
+    <string name="text_select_sub">选择小区</string>
+    <string name="text_select_bunilding">选择单元楼</string>
+    <string name="text_select_room">选择房间号</string>
+
+
+</resources>

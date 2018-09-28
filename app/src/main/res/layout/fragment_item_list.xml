@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list"
+    android:name="com.example.administrator.myapplication.ItemFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/window_gray"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="14dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/my_circle_images"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:src="@mipmap/default_head_img" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="李梦"
+                android:textColor="#3e3e3e"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="撒大家不放假安饭"
+                android:textColor="#3e3e3e"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:text="20:00"
+                android:textColor="#666666"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/gray" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/blu"
+            android:text="接单"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/white"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:padding="10dp">-->
+
+    <!--<de.hdodenhof.circleimageview.CircleImageView-->
+    <!--android:id="@+id/my_circle_images"-->
+    <!--android:layout_width="62dp"-->
+    <!--android:layout_height="62dp"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:clickable="true"-->
+    <!--android:src="@mipmap/default_head_img" />-->
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:layout_marginLeft="10dp">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/name_tv"-->
+    <!--style="@style/myText"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="李梦" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/time"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:text="8.13"-->
+    <!--android:textColor="#999999" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:layout_toRightOf="@+id/time"-->
+    <!--android:text="20:00"-->
+    <!--android:textColor="#999999" />-->
+    <!--</RelativeLayout>-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<TextView-->
+    <!--style="@style/myText"-->
+    <!--android:background="@color/white"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:textSize="16sp"-->
+    <!--android:textColor="#666666"-->
+    <!--android:padding="10dp"-->
+    <!--android:text="大环境大活动价不开大边框到八九块都不大大大阿达打打打" />-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:background="@color/white"-->
+    <!--android:layout_margin="10dp"-->
+    <!--&gt;-->
+    <!--<ImageView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:src="@mipmap/ic_launcher"-->
+    <!--android:layout_height="match_parent" />-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:layout_marginLeft="5dp"-->
+    <!--android:layout_marginRight="5dp"-->
+    <!--android:src="@mipmap/ic_launcher"-->
+    <!--android:layout_height="match_parent" />-->
+    <!--<ImageView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:src="@mipmap/ic_launcher"-->
+    <!--android:layout_height="match_parent" />-->
+    <!--</LinearLayout>-->
+</LinearLayout>

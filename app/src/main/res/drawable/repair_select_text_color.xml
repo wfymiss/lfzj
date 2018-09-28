@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--工单提交室内、室外类别按钮字体选择颜色-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true" android:color="#FFFFFF"/>
+    <item android:state_selected="false" android:color="@color/colorPrimary"/>
+</selector>

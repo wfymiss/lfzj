@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/padding_10dp">
+
+        <TextView
+            android:id="@+id/categray_added_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:layout_marginLeft="@dimen/margin_10dp"
+         android:layout_centerVertical="true"
+            android:text="我的服务"
+            android:textColor="#000000" />
+        <!--android:drawableLeft="@mipmap/rectangular"-->
+
+
+        <TextView
+            android:id="@+id/btn_showdrawableleft"
+            android:layout_width="54dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/margin_15dp"
+            android:background="@drawable/hape_tv_item"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="17dp"
+            android:gravity="center_horizontal"
+            android:padding="2dp"
+            android:text="编辑"
+            android:textColor="#ff6fba2c"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/title_tishi"
+        android:layout_width="match_parent"
+        android:layout_height="135dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@mipmap/shap_text"
+        android:gravity="center_horizontal|center_vertical"
+        android:padding="10dp"
+        android:text="点击编辑把常用的服务添加到这儿吧~~"
+        android:textColor="#000000"
+        android:visibility="gone" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/added_channel_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/white"
+        android:clipToPadding="false" />
+
+
+    <!--<TextView-->
+    <!--android:id="@+id/categray_unadded_title"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!---->
+    <!--android:padding="10dp"-->
+    <!--android:text="更多频道"-->
+    <!--android:textColor="#ffffff" />-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/unAdded_channel_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="@dimen/padding_14dp"
+        android:background="@color/white"
+        android:clipToPadding="false"
+        android:padding="10dp" />
+
+</LinearLayout>

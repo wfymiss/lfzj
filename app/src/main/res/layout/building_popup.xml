@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--楼宇选择框——view-->
+<RelativeLayout
+    android:id="@+id/comm_popup"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:background="@drawable/feed_back_log"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="283dp">
+        <TextView
+            android:text="选择楼号"
+            android:textSize="18dp"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:background="@mipmap/build_select_bg"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/comm_popup_recy"
+            android:background="@drawable/feed_back_log"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="243dp"/>
+    </LinearLayout>
+</RelativeLayout>

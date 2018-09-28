@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ratingbar="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/window_gray"
+    android:orientation="vertical"
+
+    >
+
+    <include layout="@layout/include_title_text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/shape_white_button"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/complain_content"
+            android:layout_width="match_parent"
+            android:layout_height="420px"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="请输入您的建议 ......"
+            android:maxLength="500"
+            android:textColorHint="#bfbfbf"
+            android:textSize="15sp" />
+
+        <GridView
+            android:id="@+id/gv"
+
+            android:layout_width="match_parent"
+            android:layout_height="280px"
+            android:columnWidth="260px"
+            android:gravity="center"
+            android:horizontalSpacing="60px"
+            android:numColumns="3"
+            android:scrollbars="none"></GridView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="服务态度"
+
+                android:textColor="#000000"
+                android:textSize="18dp" />
+
+            <com.ovov.lfzj.user.view.StarBar
+                android:id="@+id/star"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_gravity="center_vertical"
+                app:indicator_icon_chose="@drawable/huanstar"
+                app:indicator_icon_normal="@drawable/gaystar"
+                app:indicator_star_chose="1"
+                app:indicator_star_size="5" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

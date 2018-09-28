@@ -1,0 +1,54 @@
+package com.ovov.lfzj.login;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+
+import com.ovov.lfzj.MainActivity;
+import com.ovov.lfzj.R;
+import com.ovov.lfzj.base.BaseActivity;
+import com.ovov.lfzj.base.bean.LoginUserBean;
+import com.ovov.lfzj.base.utils.SharedPreferenceUtil;
+import com.ovov.lfzj.guide.GuideActivity;
+
+
+public class SplashActivity extends BaseActivity {
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            boolean isNeedShowGuide = SharedPreferenceUtil.getBoolean(getApplicationContext(), GuideActivity.IS_NEED_SHOW_GUIDE, true);
+            if (isNeedShowGuide) {
+                startActivity(new Intent(SplashActivity.this, GuideActivity.class));
+                finish();
+            } else {
+                if (LoginUserBean.getInstance().isLogin()) {
+                    MainActivity.toActivity(mActivity);
+                    finish();
+                } else {
+                    LoginActivity.toActivity(mActivity);
+                    finish();
+                }
+            }
+
+        }
+    };
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_splash;
+    }
+
+    @Override
+    public void init() {
+        mHandler.sendEmptyMessageDelayed(0, 2000);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeMessages(0);
+    }
+}
