@@ -400,65 +400,67 @@ public class UserInfoActivity extends BaseActivity implements CustompopupWindow.
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case RESULT_CODE_CAMEA:      // 拍照后裁剪图片
-                cropImageUri = Uri.fromFile(filepath);
-                Intent intent_pho = new Intent("com.android.camera.action.CROP"); //剪裁
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    intent_pho.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                }
-                intent_pho.setDataAndType(imageUri, "image/*");     //设置"image/*" 的数据
-                intent_pho.putExtra("crop", "true");
-                //设置宽高比例
-                intent_pho.putExtra("aspectX", 1);      //裁剪方框宽的比例
-                intent_pho.putExtra("aspectY", 1);
-                //设置裁剪图片宽高
-                intent_pho.putExtra("outputX", 200);    // 裁剪图片宽
-                intent_pho.putExtra("outputY", 200);
-                intent_pho.putExtra("scale", true);    //是否保持比例
-                intent_pho.putExtra(MediaStore.EXTRA_OUTPUT, cropImageUri);            //将剪切的图片保存到目标Uri中
-                intent_pho.putExtra("return-data", false);   //是否返回bitmap
-                intent_pho.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-                intent_pho.putExtra("noFaceDetection", true);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case RESULT_CODE_CAMEA:      // 拍照后裁剪图片
+                    cropImageUri = Uri.fromFile(filepath);
+                    Intent intent_pho = new Intent("com.android.camera.action.CROP"); //剪裁
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        intent_pho.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    }
+                    intent_pho.setDataAndType(imageUri, "image/*");     //设置"image/*" 的数据
+                    intent_pho.putExtra("crop", "true");
+                    //设置宽高比例
+                    intent_pho.putExtra("aspectX", 1);      //裁剪方框宽的比例
+                    intent_pho.putExtra("aspectY", 1);
+                    //设置裁剪图片宽高
+                    intent_pho.putExtra("outputX", 200);    // 裁剪图片宽
+                    intent_pho.putExtra("outputY", 200);
+                    intent_pho.putExtra("scale", true);    //是否保持比例
+                    intent_pho.putExtra(MediaStore.EXTRA_OUTPUT, cropImageUri);            //将剪切的图片保存到目标Uri中
+                    intent_pho.putExtra("return-data", false);   //是否返回bitmap
+                    intent_pho.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+                    intent_pho.putExtra("noFaceDetection", true);
 //                //广播刷新相册  Intent启动MediaScanner服务扫描指定的文件
 //                Intent intentBc = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
 //                intentBc.setData(imageUri);
 //                this.sendBroadcast(intentBc);
-                startActivityForResult(intent_pho, RESULT_CUT_PHOTO); // 设置裁剪参数显示图片至ImageView
-                break;
-            case RESULT_CODE_PHOTO:    // 相册裁剪图片
-                if (data != null) {
-                    cropImageUri = Uri.fromFile(filepath);
-                    Uri newUri = Uri.parse(PhotoUtils.getPath(this, data.getData()));      // 图片缓存转换路径
-                    // 内容提供者标示
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        newUri = FileProvider.getUriForFile(this, "com.leFu.fileProvider", new File(newUri.getPath()));
+                    startActivityForResult(intent_pho, RESULT_CUT_PHOTO); // 设置裁剪参数显示图片至ImageView
+                    break;
+                case RESULT_CODE_PHOTO:    // 相册裁剪图片
+                    if (data != null) {
+                        cropImageUri = Uri.fromFile(filepath);
+                        Uri newUri = Uri.parse(PhotoUtils.getPath(this, data.getData()));      // 图片缓存转换路径
+                        // 内容提供者标示
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            newUri = FileProvider.getUriForFile(this, "com.leFu.fileProvider", new File(newUri.getPath()));
+                        }
+                        cutBitmap(newUri);    // 获取相册图片路径
                     }
-                    cutBitmap(newUri);    // 获取相册图片路径
-                }
-                break;
-            case RESULT_CUT_PHOTO:     // 显示裁剪后图片
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(UserInfoActivity.this.getContentResolver(), cropImageUri);
-                    if (bitmap != null) {
-                        userInfoPhoto.setImageBitmap(bitmap);              //  显示头像
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                // 上传头像
-                try {
-                    Bitmap bitmap_up = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(cropImageUri));
-                    try {             //保存头像到本地
-                        saveBitmap(bitmap_up);
+                    break;
+                case RESULT_CUT_PHOTO:     // 显示裁剪后图片
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(UserInfoActivity.this.getContentResolver(), cropImageUri);
+                        if (bitmap != null) {
+                            userInfoPhoto.setImageBitmap(bitmap);              //  显示头像
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                break;
-            default:
+                    // 上传头像
+                    try {
+                        Bitmap bitmap_up = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(cropImageUri));
+                        try {             //保存头像到本地
+                            saveBitmap(bitmap_up);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                default:
+            }
         }
     }
 

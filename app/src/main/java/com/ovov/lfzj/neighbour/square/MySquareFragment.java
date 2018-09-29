@@ -225,7 +225,7 @@ public class MySquareFragment extends BaseFragment {
                         } else {
                             img = squareListInfo.userInfo.user_logo;
                         }
-                        MyCommunityActivity.toUserActivity(getActivity(), squareListInfo.userInfo.nickname, img, "2", squareListInfo.user_id);
+                        MyCommunityActivity.toUserActivity(getActivity(), squareListInfo.userInfo.nickname, img, "2", squareListInfo.user_id,squareListInfo.userInfo.signature);
                     }
                 });
                 TextView tvTransmitName = viewHolder.getView(R.id.tv_transmit_nickname);
@@ -237,7 +237,7 @@ public class MySquareFragment extends BaseFragment {
                         } else {
                             tranimg = squareListInfo.userInfo.user_logo;
                         }
-                        MyCommunityActivity.toUserActivity(mActivity,squareListInfo.transpondInfo.userInfo.nickname,tranimg,"2",squareListInfo.transpondInfo.user_id);
+                        MyCommunityActivity.toUserActivity(mActivity,squareListInfo.transpondInfo.userInfo.nickname,tranimg,"2",squareListInfo.transpondInfo.user_id,squareListInfo.userInfo.signature);
                     }
                 });
                 mTransmitImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {

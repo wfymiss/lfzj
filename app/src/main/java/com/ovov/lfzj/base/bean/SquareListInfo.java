@@ -71,7 +71,7 @@ public class SquareListInfo {
 
         public String nickname;
         public String user_logo;
-
+        public String signature;
 
     }
 
@@ -103,6 +103,7 @@ public class SquareListInfo {
 
             public String nickname;
             public String user_logo;
+            public String signature;
 
         }
     }

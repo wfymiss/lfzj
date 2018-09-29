@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -52,13 +53,14 @@ public class MyCommunityActivity extends BaseActivity {
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
-    public static void toUserActivity(Context context, String name,String img,String type,String user_id) {
+    public static void toUserActivity(Context context, String name,String img,String type,String user_id,String sign) {
         Intent intent = new Intent(context, MyCommunityActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("name",name);
         bundle.putString("img",img);
         bundle.putString("type",type);
         bundle.putString("userid",user_id);
+        bundle.putString("sign",sign);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
@@ -78,13 +80,24 @@ public class MyCommunityActivity extends BaseActivity {
             mTvNickname.setText(LoginUserBean.getInstance().getUserInfoBean().nickname);
             if (!LoginUserBean.getInstance().getUserInfoBean().user_logo.equals(""))
                 Picasso.with(mActivity).load(LoginUserBean.getInstance().getUserInfoBean().user_logo).into(mIvHeader);
+            if (!TextUtils.isEmpty(LoginUserBean.getInstance().getUserInfoBean().signature)){
+                mTvSign.setText(LoginUserBean.getInstance().getUserInfoBean().signature);
+            }else {
+                mTvSign.setText("这个小伙伴很懒,什么都没有留下");
+            }
         }else {
             String name = bundle.getString("name");
             String img = bundle.getString("img");
             userid = bundle.getString("userid");
+            String sign = bundle.getString("sign");
             mTvNickname.setText(name);
-            if (!img.equals("")){
+            if (img != null && !TextUtils.isEmpty(img)){
                 Picasso.with(mActivity).load(img).into(mIvHeader);
+            }
+            if (!TextUtils.isEmpty(sign)){
+                mTvSign.setText(sign);
+            }else {
+                mTvSign.setText("这个小伙伴很懒,什么都没有留下");
             }
             setTitleText(name);
         }

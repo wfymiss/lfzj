@@ -29,7 +29,10 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item> <!--是否浮现在activity之上-->
     </style>
-
+    <style name="Dialog_Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
     <!--生成访客通行二维码页文本输入框属性-->
     <style name="AppTheme.EditText.Big" parent="Widget.AppCompat.EditText">
     <item name="android:drawablePadding">@dimen/margin_6dp</item>

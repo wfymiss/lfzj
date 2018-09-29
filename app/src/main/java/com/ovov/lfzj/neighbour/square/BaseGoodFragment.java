@@ -1,7 +1,6 @@
 package com.ovov.lfzj.neighbour.square;
 
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +17,7 @@ import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseFragment;
 
 import com.ovov.lfzj.base.bean.DataInfo;
+import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.bean.SquareDetailInfo;
 
 import com.ovov.lfzj.base.net.DataResultException;
@@ -26,6 +26,7 @@ import com.ovov.lfzj.event.GoodEvent;
 import com.ovov.lfzj.event.SquareGoodEvent;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
+import com.ovov.lfzj.neighbour.MyCommunityActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -86,17 +87,24 @@ public class BaseGoodFragment extends BaseFragment {
         mListComment.setLayoutManager(linearLayoutManager);
         mAdapter = new CommonAdapter<SquareDetailInfo.FabulousBean>(getActivity(), mData, R.layout.item_good) {
             @Override
-            public void convert(ViewHolder viewHolder, SquareDetailInfo.FabulousBean replyBean) {
-                viewHolder.setText(R.id.tv_nickname,replyBean.userInfo.nickname);
-                viewHolder.setText(R.id.tv_time,replyBean.time);
+            public void convert(ViewHolder viewHolder, final SquareDetailInfo.FabulousBean replyBean) {
+                viewHolder.setText(R.id.tv_nickname, replyBean.userInfo.nickname);
+                viewHolder.setText(R.id.tv_time, replyBean.time);
                 CircleImageView ivHeader = viewHolder.getView(R.id.iv_header);
-                if (replyBean.userInfo.user_logo != null && !replyBean.userInfo.user_logo.equals("")){
+                if (replyBean.userInfo.user_logo != null && !replyBean.userInfo.user_logo.equals("")) {
                     Picasso.with(mActivity).load(replyBean.userInfo.user_logo).into(ivHeader);
                 }
+                ivHeader.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MyCommunityActivity.toUserActivity(mActivity,replyBean.userInfo.nickname,replyBean.userInfo.user_logo,"2",replyBean.user_id,replyBean.userInfo.signature);
+                    }
+                });
             }
 
         };
         mListComment.setAdapter(mAdapter);
+
         getSquareDetail();
         addRxBusSubscribe(GoodEvent.class, new Action1<GoodEvent>() {
             @Override
@@ -108,7 +116,7 @@ public class BaseGoodFragment extends BaseFragment {
     }
 
     private void getSquareDetail() {
-        Subscription subscription = RetrofitHelper.getInstance().getSquareDetail(squareDetailInfo.id)
+        Subscription subscription = RetrofitHelper.getInstance().getSquareDetail(LoginUserBean.getInstance().getId())
                 .compose(RxUtil.<DataInfo<SquareDetailInfo>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<SquareDetailInfo>>() {
                     @Override
@@ -138,7 +146,9 @@ public class BaseGoodFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        squareDetailInfo = ((SquareDetailActivity) getActivity()).getSquareDetailinfo();
+       /* squareDetailInfo = ((SquareDetailActivity) getActivity()).getSquareDetailinfo();
+        LoginUserBean.getInstance().setId(squareDetailInfo.id);
+        LoginUserBean.getInstance().save();*/
 
     }
 

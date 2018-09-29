@@ -23,6 +23,7 @@ import com.ovov.lfzj.event.AddCommentEvent;
 import com.ovov.lfzj.event.SquareCommentEvent;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
+import com.ovov.lfzj.neighbour.MyCommunityActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -51,10 +52,12 @@ public class SquareCommentFragment extends BaseFragment {
 
     public SquareCommentFragment() {
     }
+
     public static SquareCommentFragment newInstance() {
         SquareCommentFragment activityDetailFragment = new SquareCommentFragment();
         return activityDetailFragment;
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,16 +78,22 @@ public class SquareCommentFragment extends BaseFragment {
         mListComment.setLayoutManager(linearLayoutManager);
         mAdapter = new CommonAdapter<SquareDetailInfo.ReplyBean>(getActivity(), mData, R.layout.item_activity_comment) {
             @Override
-            public void convert(ViewHolder viewHolder, SquareDetailInfo.ReplyBean replyBean) {
-                viewHolder.setText(R.id.tv_nickname,replyBean.userInfo.nickname);
-                viewHolder.setText(R.id.tv_content,replyBean.content);
-                viewHolder.setText(R.id.tv_time,replyBean.time);
+            public void convert(ViewHolder viewHolder, final SquareDetailInfo.ReplyBean replyBean) {
+                viewHolder.setText(R.id.tv_nickname, replyBean.userInfo.nickname);
+                viewHolder.setText(R.id.tv_content, replyBean.content);
+                viewHolder.setText(R.id.tv_time, replyBean.time);
                 CircleImageView ivHeader = viewHolder.getView(R.id.iv_header);
-                if (replyBean.userInfo.user_logo != null && !replyBean.userInfo.user_logo.equals("")){
+                if (replyBean.userInfo.user_logo != null && !replyBean.userInfo.user_logo.equals("")) {
                     Picasso.with(mActivity).load(replyBean.userInfo.user_logo).into(ivHeader);
-                }else {
+                } else {
                     Picasso.with(mActivity).load(R.mipmap.ic_default_head).into(ivHeader);
                 }
+                ivHeader.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MyCommunityActivity.toUserActivity(mActivity,replyBean.userInfo.nickname,replyBean.userInfo.user_logo,"2",replyBean.user_id,replyBean.userInfo.signature);
+                    }
+                });
             }
         };
         mListComment.setAdapter(mAdapter);
@@ -100,7 +109,7 @@ public class SquareCommentFragment extends BaseFragment {
     }
 
     private void getSquareDetail() {
-        Subscription subscription = RetrofitHelper.getInstance().getSquareDetail(squareDetailInfo.id)
+        Subscription subscription = RetrofitHelper.getInstance().getSquareDetail(LoginUserBean.getInstance().getId())
                 .compose(RxUtil.<DataInfo<SquareDetailInfo>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<SquareDetailInfo>>() {
                     @Override
@@ -130,7 +139,8 @@ public class SquareCommentFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        squareDetailInfo = ((SquareDetailActivity) getActivity()).getSquareDetailinfo();
+        //squareDetailInfo = ((SquareDetailActivity) getActivity()).getSquareDetailinfo();
+
 
     }
 

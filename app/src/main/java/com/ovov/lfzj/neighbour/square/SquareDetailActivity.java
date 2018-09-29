@@ -32,6 +32,7 @@ import com.ovov.lfzj.base.utils.UIUtils;
 import com.ovov.lfzj.base.widget.EditDialog;
 import com.ovov.lfzj.base.widget.IdentityDialog;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
+import com.ovov.lfzj.base.widget.ScaleImageView;
 import com.ovov.lfzj.base.widget.ShareAppPopup;
 import com.ovov.lfzj.event.AddCommentEvent;
 import com.ovov.lfzj.event.GoodEvent;
@@ -129,6 +130,8 @@ public class SquareDetailActivity extends BaseActivity {
         posistion = getIntent().getExtras().getInt("posistion");
         type = getIntent().getExtras().getInt("type");
 
+
+
         identityDialog = new IdentityDialog(mActivity, SQUARE_DETAIL_IDENTITY);
         mIvRight.setImageResource(R.mipmap.ic_share);
         mIvRight.setVisibility(View.VISIBLE);
@@ -140,6 +143,14 @@ public class SquareDetailActivity extends BaseActivity {
             public void convert(ViewHolder viewHolder, String s, int i) {
                 ImageView ivGrid = viewHolder.getView(R.id.iv_user_img);
                 Picasso.with(SquareDetailActivity.this).load(s).into(ivGrid);
+                ivGrid.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ScaleImageView scaleImageView = new ScaleImageView(mActivity);
+                        scaleImageView.setUrls(mGridData,i);
+                        scaleImageView.create();
+                    }
+                });
             }
         };
         mGridView.setAdapter(mGridAdapter);
@@ -163,6 +174,7 @@ public class SquareDetailActivity extends BaseActivity {
                 SquareDetailActivity.toActivity(mActivity, mSquareDetailInfo.transpondInfo.id, position, 1);
             }
         });
+
 
         getSquareDetail();
 
@@ -414,6 +426,9 @@ public class SquareDetailActivity extends BaseActivity {
                                 mGridAdapter.notifyDataSetChanged();
                             }
                         }
+                        LoginUserBean.getInstance().setId(squareDetailInfoDataInfo.datas().id);
+                        LoginUserBean.getInstance().setForwardBean(squareDetailInfoDataInfo.datas().forward);
+                        LoginUserBean.getInstance().save();
 
                         initTab();
                     }

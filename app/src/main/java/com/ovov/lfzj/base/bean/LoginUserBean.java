@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Nate on 2016年8月16日
@@ -50,6 +51,16 @@ public class LoginUserBean implements Serializable, Cloneable {
     private String access_token;
     private String subname;
 
+    private List<SquareDetailInfo.ForwardBean> forwardBean;
+
+    public List<SquareDetailInfo.ForwardBean> getForwardBean() {
+        return forwardBean;
+    }
+
+    public void setForwardBean(List<SquareDetailInfo.ForwardBean> forwardBean) {
+        this.forwardBean = forwardBean;
+    }
+
     public void setSubname(String subname) {
         this.subname = subname;
     }
@@ -73,6 +84,15 @@ public class LoginUserBean implements Serializable, Cloneable {
     private String phone;
     private String sub_id;
     private SubListBean.SubdataBean.UserInfoBean userInfoBean;
+    private String Neighbourid;
+
+    public String getId() {
+        return Neighbourid;
+    }
+
+    public void setId(String Neighbourid) {
+        this.Neighbourid = Neighbourid;
+    }
 
     public SubListBean.SubdataBean.UserInfoBean getUserInfoBean() {
         return userInfoBean;
@@ -134,6 +154,8 @@ public class LoginUserBean implements Serializable, Cloneable {
         userInfoBean = null;
         sub_id = "";
         subname = "";
+        Neighbourid = "";
+        forwardBean = null;
     }
 
     public void save() {

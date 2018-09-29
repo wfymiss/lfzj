@@ -11,7 +11,7 @@
         android:layout_height="@dimen/dp_100"
         android:hint="@string/text_input_comment"
         android:id="@+id/et_comment"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:background="@color/common_bg"
         android:gravity="top|left"
         android:padding="@dimen/dp_10"/>
