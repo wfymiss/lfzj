@@ -45,6 +45,7 @@ import com.ovov.lfzj.home.bean.NewsBean;
 import com.ovov.lfzj.home.bean.SubdistrictsBean;
 import com.ovov.lfzj.home.payment.activity.PayMentRecordActivity;
 import com.ovov.lfzj.home.presenter.HomePresenter;
+import com.ovov.lfzj.home.repair.RepairActivity;
 import com.ovov.lfzj.home.ui.MessageListActivity;
 import com.ovov.lfzj.home.ui.NewsDetailActivity;
 import com.ovov.lfzj.home.ui.NoticeDetailActivity;
@@ -94,11 +95,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
     private TextView textView;
     private int page;
     private String id;
-
     //初始化数据
     private HomeNeighAdapter mAdapter;
-
-
     private List<SquareListInfo> datas = new ArrayList<>();
     private BannerAdapter<BannerBean> bannerAdapter;
     private List<String> bannerlist;
@@ -250,14 +248,13 @@ public class HomeFragment extends BaseFragment implements HomeView {
             protected void bind(ViewHolder holder, BannerBean data) {
                 Picasso.with(getContext()).load(data.getImg()).into(holder.mImageView);
             }
-
         };
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (UIUtils.isFastClick()) {
                     if (position == 2) {
-                        IdentityConfirmActivity.toActivity(mActivity);
+                        RepairActivity.toActivity(mActivity);
                         return;
                     }
                     if (LoginUserBean.getInstance().isIs_auth()) {
@@ -273,7 +270,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
                         }
                         if (position == 4) {
                             ApplyVisitorActivity.toActivity(mActivity);
-
                         }
                     } else {
                         IdentityDialog identityDialog = new IdentityDialog(mActivity, HOME_FRAGMENT_IDENTITY);

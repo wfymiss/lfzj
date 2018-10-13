@@ -180,13 +180,15 @@
             android:theme="@style/FullScreenTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />
         <activity android:name=".login.IdentityErrorActivity" />
-        <!--<activity
+        <!--
+            <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />-->
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />
+        -->
         <activity
             android:name=".home.ui.GoodsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -194,26 +196,6 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />
         <activity
             android:name=".neighbour.TransmitActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".home.repair.activity.VideoPlayerActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".home.repair.activity.OrderCommentActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".home.repair.activity.OwnerRepairDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".home.repair.activity.RepairActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".home.repair.activity.VideoRecordActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <!-- 拍照、相册7.0权限设置 -->
@@ -359,12 +341,31 @@
         <activity
             android:name=".home.GameActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".home.ui.NoticeDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <activity android:name=".wxapi.WXEntryActivity"/>
+        <activity android:name=".wxapi.WXEntryActivity" />
+        <activity
+            android:name=".home.repair.RepairActivity"
+            android:hardwareAccelerated="false" />
+        <activity android:name=".property.PropertyMainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".home.repair.WorkerOrderActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".home.repair.WorkOrderConfirmActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".home.repair.WorkerOrderDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".property.home.repair.WorkerOrderActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

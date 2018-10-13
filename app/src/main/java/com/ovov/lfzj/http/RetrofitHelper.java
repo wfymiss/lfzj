@@ -283,36 +283,6 @@ public class RetrofitHelper {
         return mApiService.getUserSquarelist(getToken(), userid, page, id);
     }
 
-
-    public Observable<PayInfo> getPayInfo(String order_id, String order_num, String type, String subdistrict_id, String version) {
-        return mApiService.getPayInfo(getToken(), order_id, order_num, type, subdistrict_id, version);
-    }
-
-    public Observable<PayInfo> getAlipayCheckOrder(String order_id, String order_num, String type, String subdistrict_id, String version) {
-        return mApiService.getAlipayCheckOrder(getToken(), order_id, order_num, type, subdistrict_id, version);
-    }
-
-    public Observable<PayInfo> getAlipayPayFleaOrder(String order_id, String order_num, String type, String subdistrict_id) {
-        return mApiService.getAlipayPayFleaOrder(getToken(), order_id, order_num, type, subdistrict_id);
-    }
-
-    public Observable<PayInfo> getAliPayPayOrder(String order_id, String order_num, String type, String subdistrict_id) {
-        return mApiService.getAliPayPayOrder(getToken(), order_id, order_num, type, subdistrict_id);
-    }
-
-
-    public Observable<PayResult> getAliPayResult(String order_id, String order_num, String type, String subdistrict_id) {
-        return mApiService.getAliPayResult(getToken(), order_id, order_num, subdistrict_id, type);
-    }
-
-    public Observable<WXPayInfo> getWXPayInfo(String order_id, String order_num, String type, String subdistrict_id, String version) {
-        return mApiService.getWXPayInfo(getToken(), order_id, order_num, type, subdistrict_id, version);
-    }
-
-    public Observable<WxPaySuccessResult> getWxPayResult(String order_id, String order_num, String type, String subdistrict_id) {
-        return mApiService.getWxPayResult(getToken(), order_id, order_num, type, subdistrict_id);
-    }
-
     public Observable<ListInfo<PropertyPaymentInfo>> getOrderUndone(int page) {
         return mApiService.getOrderUndone(getToken(), page, LoginUserBean.getInstance().getSub_id());
     }

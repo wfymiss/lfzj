@@ -131,6 +131,39 @@
     <string name="text_select_sub">选择小区</string>
     <string name="text_select_bunilding">选择单元楼</string>
     <string name="text_select_room">选择房间号</string>
+    <string name="text_make_order">生成工单</string>
+    <string name="text_property_repair">物业报修</string>
+    <string name="text_repair_name">报修人员</string>
+    <string name="text_repair_name_hint">请填写真实姓名</string>
+    <string name="text_repair_phone">联系电话</string>
+    <string name="text_repair_phone_hint">可以联系到的手机号码</string>
+    <string name="text_repair_location">报修位置</string>
+    <string name="text_repair_location_hint_common">请填写公共位置</string>
+    <string name="text_repair_location_hint_family">请选择房间</string>
+    <string name="text_repair_content">报修内容</string>
+    <string name="text_repair_content_hint">尽可能详细的描述故障情况</string>
+    <string name="text_my_workorder">我的工单</string>
+    <string name="text_pending_workorder">待处理</string>
+    <string name="text_in_hand">处理中</string>
+    <string name="text_has_complete">已完成</string>
+    <string name="text_revise">返回修改</string>
+    <string name="text_commit_workorder">提交工单</string>
+    <string name="text_worker_order_confirm">工单确认</string>
+
+    <!--管家版功能标题-->
+    <string name="gd">维修工单</string>
+    <string name="cb">抄表管理</string>
+    <string name="payfee">缴费查询</string>
+    <string name="jy">投诉建议</string>
+    <string name="dbsx">待办事项</string>
+    <string name="schema">日程管理</string>
+    <string name="sqgg">社区公告</string>
+    <string name="nbtz">内部通知</string>
+    <string name="phone">常用电话</string>
+    <string name="workflow">工作流程</string>
+    <string name="dispatch">客服派单</string>
+    <string name="zg_dispatch">主管派单</string>
+    <string name="property_commit">楼管报修</string>
 
 
 </resources>

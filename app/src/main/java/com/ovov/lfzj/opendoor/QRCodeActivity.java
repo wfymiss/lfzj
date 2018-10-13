@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -86,6 +87,7 @@ public class QRCodeActivity extends BaseActivity {
         if (keys != null && keys.size() > 0) {
             QRUtils.loadConfig(this.getApplicationContext());
             String qrStr = null;
+            Log.e("keyssss", String.valueOf(keys));
             qrStr = QRUtils.createDoorControlQR(this,
                     "0123456788", keys, 10, 10, 0, "12341234");    //  生成钥匙字符串
             Bitmap contentbitmap = ceateBitmap(qrStr);
@@ -156,7 +158,6 @@ public class QRCodeActivity extends BaseActivity {
         canvas.restore();  // 调用canvas的restore方法将画布恢复为原来的状态
         return blankBitmap;
     }
-
 
 
     @OnClick({R.id.iv_back, R.id.btn_refresh})

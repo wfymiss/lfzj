@@ -20,6 +20,7 @@ import com.ovov.lfzj.event.UpdateEvent;
 import com.ovov.lfzj.event.UserFragmentIdentityEvent;
 import com.ovov.lfzj.home.bean.SubListBean;
 import com.ovov.lfzj.home.payment.activity.PayMentRecordActivity;
+import com.ovov.lfzj.home.repair.WorkerOrderActivity;
 import com.ovov.lfzj.home.ui.MessageListActivity;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
@@ -126,7 +127,7 @@ public class UserFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.my_circle_images, R.id.tv_shop_order, R.id.tv_my})
+    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.my_circle_images, R.id.tv_shop_order, R.id.tv_my,R.id.tv_worker_order})
 
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -168,6 +169,9 @@ public class UserFragment extends BaseFragment {
                     IdentityDialog identityDialog = new IdentityDialog(mActivity, UAER_FRAGMENT_IDENTITY);
                     identityDialog.show();
                 }
+                break;
+            case R.id.tv_worker_order:
+                WorkerOrderActivity.toActivity(mActivity);
                 break;
         }
     }

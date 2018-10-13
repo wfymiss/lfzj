@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -14,6 +15,7 @@ import android.webkit.WebViewClient;
 
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
+import com.ovov.lfzj.base.bean.LoginUserBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,9 +59,10 @@ public class GameActivity extends BaseActivity {
                 return true;
             }
         });*/
-        mWebGame.loadUrl("http://game_test.catel-link.com/");
+        mWebGame.loadUrl("http://game_test.catel-link.com/?playID=" + LoginUserBean.getInstance().getUserId());
         mWebGame.setWebViewClient(webViewClient);
     }
+
     private WebViewClient webViewClient = new WebViewClient() {
         @Override
         public void onPageFinished(WebView view, String url) {

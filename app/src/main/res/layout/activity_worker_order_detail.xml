@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/common_bg"
+    tools:context="com.ovov.lfzj.home.repair.WorkerOrderDetailActivity">
+
+    <include layout="@layout/include_title_text"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/color_ffffff">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="工单状态"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/color_text_a1a1a1"
+                    android:layout_margin="15dp"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_ff4622"
+                    android:textSize="@dimen/textSize_12sp"
+                    android:layout_gravity="center_vertical"
+                    android:text="待处理"
+                    android:layout_marginRight="@dimen/padding_15dp"
+                    android:id="@+id/tv_status"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_10dp"
+                android:background="@color/common_bg"/>
+            <include layout="@layout/include_workorder_detail" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
