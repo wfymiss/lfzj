@@ -1,5 +1,6 @@
 package com.ovov.lfzj.home;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,6 +17,7 @@ import android.webkit.WebViewClient;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.bean.LoginUserBean;
+import com.ovov.lfzj.base.utils.JavaSccriptFinishActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +36,7 @@ public class GameActivity extends BaseActivity {
     public int getLayoutId() {
         return R.layout.activity_game;
     }
-
+    @SuppressLint("JavascriptInterface")
     @Override
     public void init() {
 
@@ -44,6 +46,7 @@ public class GameActivity extends BaseActivity {
         webSettings.setGeolocationEnabled(true);
         webSettings.setGeolocationDatabasePath("/data/data/org.itri.html5webview/databases/");     // enable Web Storage: localStorage, sessionStorage
         webSettings.setDomStorageEnabled(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         mWebGame.requestFocus();
         mWebGame.setScrollBarStyle(0);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
@@ -51,6 +54,8 @@ public class GameActivity extends BaseActivity {
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setSavePassword(true);
         webSettings.setSaveFormData(true);
+        mWebGame.setWebViewClient(webViewClient);
+        mWebGame.addJavascriptInterface(new JavaSccriptFinishActivity(mActivity),"JavaScriptInterface");
         //设置不用系统浏览器打开,直接显示在当前Webview
        /* webview.setWebViewClient(new WebViewClient() {
             @Override
@@ -60,7 +65,7 @@ public class GameActivity extends BaseActivity {
             }
         });*/
         mWebGame.loadUrl("http://game_test.catel-link.com/?playID=" + LoginUserBean.getInstance().getUserId());
-        mWebGame.setWebViewClient(webViewClient);
+
     }
 
     private WebViewClient webViewClient = new WebViewClient() {
