@@ -180,13 +180,15 @@
             android:theme="@style/FullScreenTheme"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />
         <activity android:name=".login.IdentityErrorActivity" />
-        <!--<activity
+        <!--
+            <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />-->
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />
+        -->
         <activity
             android:name=".home.ui.GoodsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -364,7 +366,11 @@
             android:name=".home.ui.NoticeDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <activity android:name=".wxapi.WXEntryActivity"/>
+        <activity android:name=".wxapi.WXEntryActivity" />
+        <activity android:name=".user.activity.HealthSubscribeActivity" />
+        <activity android:name=".user.activity.HealthDetailActivity" />
+        <activity android:name=".opendoor.DemoActivity" />
+        <activity android:name=".user.activity.FamilyActivity"></activity>
     </application>
 
 </manifest>

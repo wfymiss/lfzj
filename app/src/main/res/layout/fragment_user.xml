@@ -170,15 +170,16 @@
                 <!--android:layout_height="@dimen/margin_1dp"-->
                 <!--android:background="@color/color_dcdcdc" />-->
 
-            <!--<TextView-->
-                <!--style="@style/text_mine_size"-->
-                <!--android:drawableLeft="@mipmap/home"-->
-                <!--android:text="@string/mine_house" />-->
+            <TextView
+                android:id="@+id/mine_family"
+                style="@style/text_mine_size"
+                android:drawableLeft="@mipmap/home"
+                android:text="@string/mine_house" />
 
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/margin_1dp"-->
-                <!--android:background="@color/color_dcdcdc" />-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_1dp"
+                android:background="@color/color_dcdcdc" />
 
             <!--<TextView-->
                 <!--style="@style/text_mine_size"-->
@@ -200,10 +201,11 @@
                 <!--android:layout_height="@dimen/margin_1dp"-->
                 <!--android:background="@color/color_dcdcdc" />-->
 
-            <!--<TextView-->
-                <!--style="@style/text_mine_size"-->
-                <!--android:drawableLeft="@mipmap/health"-->
-                <!--android:text="@string/mine_health" />-->
+            <TextView
+                android:id="@+id/tv_myhealth"
+                style="@style/text_mine_size"
+                android:drawableLeft="@mipmap/health"
+                android:text="@string/mine_health" />
 
             <!--<View-->
                 <!--android:layout_width="match_parent"-->
@@ -215,10 +217,10 @@
                 <!--android:drawableLeft="@mipmap/reward"-->
                 <!--android:text="@string/mine_reward" />-->
 
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/margin_1dp"-->
-                <!--android:background="@color/color_dcdcdc" />-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_1dp"
+                android:background="@color/color_dcdcdc" />
 
             <!--<TextView-->
                 <!--style="@style/text_mine_size"-->

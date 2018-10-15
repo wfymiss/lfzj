@@ -24,9 +24,9 @@ import com.ovov.lfzj.home.ui.MessageListActivity;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.login.IdentityConfirmActivity;
-import com.ovov.lfzj.login.SelectSubActivity;
 import com.ovov.lfzj.market.order.OrderActivity;
-import com.ovov.lfzj.user.activity.MessageActivity;
+import com.ovov.lfzj.user.activity.FamilyActivity;
+import com.ovov.lfzj.user.activity.HealthSubscribeActivity;
 import com.ovov.lfzj.user.setting.SettingActivity;
 import com.squareup.picasso.Picasso;
 
@@ -60,12 +60,16 @@ public class UserFragment extends BaseFragment {
     TextView tvServiceOrder;*/
     @BindView(R.id.tv_my)
     TextView tvMy;
+    @BindView(R.id.mine_family)
+    TextView mine_family;
     @BindView(R.id.my_circle_images)
     CircleImageView mCircleImages;
     @BindView(R.id.tv_nickname)
     TextView mTvNickname;
     @BindView(R.id.tv_sign)
     TextView mTvSign;
+    @BindView(R.id.tv_myhealth)
+    TextView tvMyhealth;
     /*@BindView(R.id.tv_unitiy_message)
     TextView tvUnitiyMessage;*/
     private ActivityUtils mUtils;
@@ -126,7 +130,7 @@ public class UserFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.my_circle_images, R.id.tv_shop_order, R.id.tv_my})
+    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.my_circle_images, R.id.tv_shop_order, R.id.tv_my, R.id.tv_myhealth,R.id.mine_family})
 
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -168,6 +172,14 @@ public class UserFragment extends BaseFragment {
                     IdentityDialog identityDialog = new IdentityDialog(mActivity, UAER_FRAGMENT_IDENTITY);
                     identityDialog.show();
                 }
+                break;
+
+            case R.id.mine_family:
+                FamilyActivity.toActivity(mActivity);
+                break;
+
+            case R.id.tv_myhealth:
+                HealthSubscribeActivity.toActivity(mActivity);
                 break;
         }
     }

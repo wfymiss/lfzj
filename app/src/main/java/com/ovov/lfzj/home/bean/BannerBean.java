@@ -7,6 +7,16 @@ package com.ovov.lfzj.home.bean;
 public class BannerBean {
 
     private String img;
+    private String code;
+    private String datas;
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getDatas() {
+        return datas;
+    }
 
     public String getImg() {
         return img;

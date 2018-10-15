@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:elevation="@dimen/dp_3"
+    android:orientation="vertical"
+
+    app:cardCornerRadius="@dimen/margin_10dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="体检预约单" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="剩余时间：" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignStart="@+id/time"
+                android:layout_below="@+id/time"
+                android:text="3天09:28"
+                android:textColor="@color/color_red" />
+
+            <TextView
+                android:id="@+id/tv_time2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+             android:layout_below="@+id/tv_time"
+                android:text="预约时间：" />
+
+            <TextView
+                android:id="@+id/tv_health_time"
+                android:layout_width="wrap_content"
+                android:layout_below="@+id/tv_time2"
+                android:layout_height="wrap_content"
+                android:text="20818年6月20日 下午14:50——17：50" />
+
+
+            <TextView
+                android:id="@+id/health_location"
+                android:layout_width="wrap_content"
+                android:layout_below="@+id/tv_health_time"
+                android:layout_height="wrap_content"
+                android:text="体检地点:"/>
+
+            <TextView
+                android:id="@+id/tv_health_location"
+                android:layout_width="wrap_content"
+                android:layout_below="@+id/health_location"
+                android:layout_height="wrap_content"
+                android:text="凯德世家物业中心"/>
+
+
+            <TextView
+                android:id="@+id/health_numb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/tv_health_location"
+                android:text="预约编号:"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@+id/health_numb"
+                android:layout_below="@+id/tv_health_location"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="1000224"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_health_time"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/default_head_img"/>
+
+
+
+        </RelativeLayout>
+
+
+
+
+</android.support.v7.widget.CardView>

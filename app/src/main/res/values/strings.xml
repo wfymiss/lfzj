@@ -38,7 +38,7 @@
     <string name="text_activity_detail">活动详情</string>
     <string name="text_qrcode">二维码扫描</string>
     <string name="text_keylist">钥匙列表</string>
-    <string name="text_update_key">更新钥匙</string>
+    <string name="text_update_key">更新</string>
     <string name="text_opendoor_setting">智能设备设置</string>
     <string name="text_me_owner">我是业主</string>
     <string name="text_me_property">我是物业</string>
@@ -131,6 +131,8 @@
     <string name="text_select_sub">选择小区</string>
     <string name="text_select_bunilding">选择单元楼</string>
     <string name="text_select_room">选择房间号</string>
+
+    <string name="text_choosetime">请选择日期</string>
 
 
 </resources>

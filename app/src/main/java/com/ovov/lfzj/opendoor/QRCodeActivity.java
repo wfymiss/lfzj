@@ -1,11 +1,9 @@
 package com.ovov.lfzj.opendoor;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -29,7 +27,6 @@ import java.util.Hashtable;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -163,6 +160,7 @@ public class QRCodeActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
+
                 finish();
                 break;
             case R.id.btn_refresh:

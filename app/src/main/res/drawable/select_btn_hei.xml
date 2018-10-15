@@ -7,6 +7,6 @@
         <corners android:radius="5dp"/>
 
         <!-- 设置几何形状绘制边框 红色边框 -->
-        <stroke android:color="#f5c9c9"
-            android:width="2dp"/>
+        <stroke android:color="#8f8c8c"
+            android:width="1dp"/>
 </shape>

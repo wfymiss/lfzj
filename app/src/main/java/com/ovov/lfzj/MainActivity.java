@@ -257,12 +257,13 @@ public class MainActivity extends BaseMainActivity {
 
     @OnClick(R.id.iv_open)
     public void onViewClicked() {
-        if (LoginUserBean.getInstance().isIs_auth()) {
-            OpendoorActivity.toActivity(mActivity);
-        } else {
-            IdentityDialog identityDialog = new IdentityDialog(mActivity, MAIN_ACTIVITY_IDENTITY);
-            identityDialog.show();
-        }
+        OpendoorActivity.toActivity(mActivity);
+//        if (LoginUserBean.getInstance().isIs_auth()) {
+//            OpendoorActivity.toActivity(mActivity);
+//        } else {
+//            IdentityDialog identityDialog = new IdentityDialog(mActivity, MAIN_ACTIVITY_IDENTITY);
+//            identityDialog.show();
+//        }
 
 
     }

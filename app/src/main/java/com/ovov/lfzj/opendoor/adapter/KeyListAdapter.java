@@ -41,9 +41,7 @@ public class KeyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         KeyViewHolder keyViewHolder= (KeyViewHolder) holder;
         if (list!=null && list.size()>0){
-            keyViewHolder.key.setText(list.get(position).getKey());
             keyViewHolder.keyName.setText(list.get(position).getSn_name());
-            keyViewHolder.time.setText(list.get(position).getCreated_time());
         }
     }
 
@@ -57,8 +55,7 @@ public class KeyListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public KeyViewHolder(View itemView) {
             super(itemView);
             keyName= (TextView)itemView.findViewById(R.id.key_list_name);
-            key= (TextView) itemView.findViewById(R.id.key_list_key);
-            time= (TextView)itemView.findViewById(R.id.distribute_time);
+
         }
     }
 }

@@ -97,7 +97,6 @@ public class AllFragment extends BaseFragment {
 
 
     private void initData(final int type) {
-        Log.e("313131","有没有");
         if (type == REFRESH) {
             page = 1;
         } else if (type == LOADMORE) {

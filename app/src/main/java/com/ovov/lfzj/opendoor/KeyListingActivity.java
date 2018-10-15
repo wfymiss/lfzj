@@ -24,6 +24,7 @@ import com.ovov.lfzj.base.bean.KeyReplyInfo;
 import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.widget.BuildingPopup;
 import com.ovov.lfzj.event.BuildingEvent;
+import com.ovov.lfzj.http.api.CatelApiService;
 import com.ovov.lfzj.opendoor.adapter.KeyListAdapter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -68,7 +69,8 @@ public class KeyListingActivity extends BaseActivity {
     private String sub_id = null;   // 小区id
     //private UserInfo infoData=null;                    // 定义用户信息
     private String role_id = null;                     // 身份判断 未认证0，已认证1，家人2
-    private String keyPath= "http://app.catel-link.com/v1/entrance/applyKey";       // 更新钥匙列表
+ //   private String keyPath= "http://app.catel-link.com/v1/entrance/applyKey";       //  更新钥匙列表
+    private String keyPath= CatelApiService.HOST+"v1/entrance/applyKey";       // 更新钥匙列表
     private String build_keyPath="https://api.catel-link.com/front/Entrance/property/getKeys";   // 获取选定的楼宇钥匙
     private boolean upKey = false;
     private OkHttpClient okHttpClient;

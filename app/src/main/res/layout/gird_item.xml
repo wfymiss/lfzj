@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/gird_time"
+        style="@style/health_text"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:text="09:00-11:30" />
+</LinearLayout>
