@@ -24,6 +24,7 @@ import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.utils.Uri2Pathutil;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
 import com.ovov.lfzj.event.ClickEvent;
+import com.ovov.lfzj.event.DeleteImageEvent;
 import com.ovov.lfzj.event.RefreshEvent;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
@@ -102,6 +103,12 @@ public class PutSquareActivity extends BaseActivity {
                                 }
                             }
                         });
+            }
+        });
+        addRxBusSubscribe(DeleteImageEvent.class, new Action1<DeleteImageEvent>() {
+            @Override
+            public void call(DeleteImageEvent deleteImageEvent) {
+                mImage.remove(deleteImageEvent.posistion);
             }
         });
     }

@@ -212,71 +212,7 @@ public interface CatelApiService {
     Observable<ActivityUpImageInfo> upLoadActivityImage(@Part("token") String token, @Part MultipartBody.Part part);
 
 
-    // 支付宝支付商品订单接口
-    @FormUrlEncoded
-    @POST("front/emall/pay/orderHandel")
-    Observable<PayInfo> getPayInfo(@Field("token") String token,
-                                   @Field("order_id") String orderId,
-                                   @Field("order_num") String orderNum,
-                                   @Field("type") String payType,
-                                   @Field("subdistrict_id") String sub_id,
-                                   @Field("version") String version);
 
-    // 支付宝——缴费账单合并支付
-    @FormUrlEncoded
-    @POST("front/Emall/pay/orderPrototal")
-    Observable<PayInfo> getAlipayCheckOrder(@Field("token") String token,
-                                            @Field("order_id") String orderId,
-                                            @Field("order_num") String order_num,
-                                            @Field("type") String type,
-                                            @Field("subdistrict_id") String subdistrict_id,
-                                            @Field("version") String version_num);
-
-    // 支付宝跳蚤市场商品订单支付接口
-    @FormUrlEncoded
-    @POST("front/Emall/Pay/fleaOrder")
-    Observable<PayInfo> getAlipayPayFleaOrder(@Field("token") String token,
-                                              @Field("order_id") String orderId,
-                                              @Field("order_num") String order_num,
-                                              @Field("type") String type,
-                                              @Field("subdistrict_id") String subdistrict_id);
-
-    // 支付宝物业缴费、工单、家政服务订单支付接口
-    @FormUrlEncoded
-    @POST("front/Emall/Pay/propertyFeeOrder")
-    Observable<PayInfo> getAliPayPayOrder(@Field("token") String token,
-                                          @Field("order_id") String orderId,
-                                          @Field("order_num") String order_num,
-                                          @Field("type") String type,
-                                          @Field("subdistrict_id") String sub_id);
-
-    //支付宝支付结果请求回调接口
-    @FormUrlEncoded
-    @POST("front/Emall/Pay/comfirmSuccess")
-    Observable<PayResult> getAliPayResult(@Field("token") String token,
-                                          @Field("order_id") String order_id,
-                                          @Field("order_num") String order_number,
-                                          @Field("subdistrict_id") String sub_id,
-                                          @Field("type") String type);
-
-    // 微信支付商城商品订单、物业缴费、工单、家政付费接口接口
-    @FormUrlEncoded
-    @POST("front/Pay/pay/createOrder")
-    Observable<WXPayInfo> getWXPayInfo(@Field("token") String token,
-                                       @Field("order_id") String order_id,
-                                       @Field("order_num") String order_num,
-                                       @Field("type") String type,
-                                       @Field("subdistrict_id") String sub_id,
-                                       @Field("version") String version_num);
-
-    // 微信支付结果回调
-    @FormUrlEncoded
-    @POST("front/Pay/pay/confirmOrder")
-    Observable<WxPaySuccessResult> getWxPayResult(@Field("token") String token,
-                                                  @Field("order_id") String order_id,
-                                                  @Field("order_num") String order_num,
-                                                  @Field("type") String type,
-                                                  @Field("subdistrict_id") String sub_id);
 
 
     @FormUrlEncoded

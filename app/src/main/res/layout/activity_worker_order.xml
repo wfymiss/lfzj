@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color"
+    android:background="@color/common_bg"
     android:orientation="vertical">
 
 
@@ -14,10 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabIndicatorColor="@color/colorPrimary"
-        app:tabMode="scrollable"
+        app:tabMode="fixed"
         app:tabSelectedTextColor="@color/colorPrimary"
-        app:tabTextAppearance="@style/TabLayoutTextStyle"
-        app:tabTextColor="#0b0b0b" />
+        android:background="@color/color_ffffff"
+        app:tabTextColor="#444444" />
 
     <View
         android:layout_width="match_parent"

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_ffffff"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_15dp"
+                android:layout_marginLeft="@dimen/padding_15dp"
+                android:layout_marginTop="@dimen/padding_15dp"
+                android:text="@string/text_repair_name"
+                android:textColor="@color/color_text_a1a1a1"
+                android:textSize="@dimen/sp_15" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_15"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_15"
+                android:text="原磊"
+                android:textColor="@color/color_444444"
+                android:textSize="@dimen/textSize_15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_15dp"
+                android:layout_marginLeft="@dimen/padding_15dp"
+                android:text="@string/text_repair_phone"
+                android:textColor="@color/color_text_a1a1a1"
+                android:textSize="@dimen/sp_15" />
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_15"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:text="133*******"
+                android:textColor="@color/color_444444"
+                android:textSize="@dimen/textSize_15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_15dp"
+                android:layout_marginLeft="@dimen/padding_15dp"
+                android:text="报修类型"
+                android:textColor="@color/color_text_a1a1a1"
+                android:textSize="@dimen/sp_15" />
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_15"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:text="家庭区域"
+                android:textColor="@color/color_444444"
+                android:textSize="@dimen/textSize_15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_15dp"
+                android:layout_marginLeft="@dimen/padding_15dp"
+                android:text="@string/text_repair_location"
+                android:textColor="@color/color_text_a1a1a1"
+                android:textSize="@dimen/sp_15" />
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_15"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:text="4号楼"
+                android:textColor="@color/color_444444"
+                android:textSize="@dimen/textSize_15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_15dp"
+                android:layout_marginLeft="@dimen/padding_15dp"
+                android:text="报修项目"
+                android:textColor="@color/color_text_a1a1a1"
+                android:textSize="@dimen/sp_15" />
+
+            <TextView
+                android:id="@+id/tv_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_15"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:text="水"
+                android:textColor="@color/color_444444"
+                android:textSize="@dimen/textSize_15sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_10dp"
+        android:background="@color/color_ffffff"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_15dp"
+            android:layout_marginTop="@dimen/padding_15dp"
+            android:text="@string/text_repair_content"
+            android:textColor="@color/color_text_a1a1a1"
+            android:textSize="@dimen/sp_15" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_15dp"
+            android:layout_marginRight="@dimen/dp_15"
+            android:layout_marginTop="@dimen/padding_15dp"
+            android:text="content"
+            android:textColor="@color/color_444444"
+            android:textSize="@dimen/textSize_14sp" />
+
+        <com.ovov.lfzj.base.widget.NoScrollGridView
+            android:id="@+id/gridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_15"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_15"
+            android:horizontalSpacing="@dimen/padding_5dp"
+            android:numColumns="3"
+            android:verticalSpacing="@dimen/padding_5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_ffffff"
+        android:layout_marginTop="@dimen/dp_15"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_15dp"
+                android:layout_marginLeft="@dimen/padding_15dp"
+                android:layout_marginTop="@dimen/padding_15dp"
+                android:text="工单编号"
+                android:textColor="@color/color_text_a1a1a1"
+                android:textSize="@dimen/sp_15" />
+
+            <TextView
+                android:id="@+id/tv_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_15"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_15"
+                android:text="201809078899"
+                android:textColor="@color/color_444444"
+                android:textSize="@dimen/textSize_15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/re_number"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_15dp"
+                android:layout_marginLeft="@dimen/padding_15dp"
+                android:text="报修时间"
+                android:textColor="@color/color_text_a1a1a1"
+                android:textSize="@dimen/sp_15" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_15"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:text="2019-09-09 9:00"
+                android:textColor="@color/color_444444"
+                android:textSize="@dimen/textSize_15sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

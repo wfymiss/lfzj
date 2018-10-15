@@ -263,15 +263,16 @@
                 <!--android:layout_height="@dimen/margin_1dp"-->
                 <!--android:background="@color/color_dcdcdc" />-->
 
-            <!--<TextView-->
-                <!--style="@style/text_mine_size"-->
-                <!--android:drawableLeft="@mipmap/maintenance"-->
-                <!--android:text="@string/mine_maintenance" />-->
+            <TextView
+                style="@style/text_mine_size"
+                android:id="@+id/tv_worker_order"
+                android:drawableLeft="@mipmap/maintenance"
+                android:text="@string/mine_maintenance" />
 
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/margin_1dp"-->
-                <!--android:background="@color/color_dcdcdc" />-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_1dp"
+                android:background="@color/color_dcdcdc" />
 
             <TextView
                 android:id="@+id/tv_shop_order"

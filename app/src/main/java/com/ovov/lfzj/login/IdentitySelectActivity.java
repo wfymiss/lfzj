@@ -10,6 +10,7 @@ import com.ovov.lfzj.MainActivity;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.bean.LoginUserBean;
+import com.ovov.lfzj.property.PropertyMainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -80,7 +81,9 @@ public class IdentitySelectActivity extends BaseActivity {
                         else
                             MainActivity.toActivity(mActivity);
                         finish();
-                    } else
+                    } else if (type == PROPETY)
+                        PropertyMainActivity.toActivity(mActivity);
+                    else
                         IdentityErrorActivity.toActivity(mActivity);
                 } else {
                     showToast("请同意用户协议");

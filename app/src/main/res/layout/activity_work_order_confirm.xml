@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ovov.lfzj.home.repair.WorkOrderConfirmActivity">
+
+    <include layout="@layout/include_title_text"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <include layout="@layout/include_workorder_detail"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_revise"
+                android:textSize="@dimen/sp_15"
+                android:textColor="@color/color_text_a1a1a1"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_13"
+                android:id="@+id/tv_revise"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_commit"
+                android:text="@string/text_commit_workorder"
+                android:padding="@dimen/padding_14dp"
+                android:background="@drawable/shape_next_text"
+                android:textColor="@color/color_ffffff"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp"
+                android:layout_marginTop="@dimen/dp_14"
+                android:gravity="center"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

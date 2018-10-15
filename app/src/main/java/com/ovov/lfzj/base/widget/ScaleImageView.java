@@ -9,6 +9,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -148,7 +149,7 @@ public class ScaleImageView {
         adapter = new MyPagerAdapter(views, dialog);
         if (status == URLS) {
             for (String url : urls) {
-                FrameLayout frameLayout = (FrameLayout) activity.getLayoutInflater().inflate(R.layout.view_scale_image, null);
+                RelativeLayout frameLayout = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.view_scale_image, null);
                 SubsamplingScaleImageView imageView = (SubsamplingScaleImageView) frameLayout.findViewById(R.id.scale_image_view);
                 views.add(frameLayout);
                 IOThread.getSingleThread().execute(() -> {

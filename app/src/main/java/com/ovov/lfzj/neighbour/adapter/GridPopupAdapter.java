@@ -12,6 +12,7 @@ import com.ovov.lfzj.R;
 
 import com.ovov.lfzj.base.utils.RxBus;
 import com.ovov.lfzj.event.ClickEvent;
+import com.ovov.lfzj.event.DeleteImageEvent;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -115,6 +116,7 @@ public class GridPopupAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
                     list.remove(position);
+                    RxBus.getDefault().post(new DeleteImageEvent(position));
                     notifyDataSetChanged();
                 }
             });
