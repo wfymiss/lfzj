@@ -22,12 +22,14 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import cn.jpush.android.api.JPushInterface;
+import cn.testin.analysis.data.TestinDataApi;
+import cn.testin.analysis.data.TestinDataConfig;
 
 
 /**
  * Created by jzxiang on 22/12/2017.
  */
-public class CatelApplication extends BaseApplication  {
+public class CatelApplication extends BaseApplication {
     public static int REFRESH = 1;
     public static int LOADMORE = 2;
     public static int isGood = 1;
@@ -81,7 +83,19 @@ public class CatelApplication extends BaseApplication  {
         GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_FULL);
         GSYVideoType.setShowType(GSYVideoType.SCREEN_MATCH_FULL);
         MobSDK.init(this);
+
 */
+        TestinDataConfig testinDataConfig = new TestinDataConfig()
+                .openShake(true)//设置是否打开摇一摇反馈bug功能
+                .collectCrash(true)//设置是否收集app崩溃信息
+                .collectNDKCrash(true)//设置收集NDK异常，需集成bugout-ndk
+                .collectANR(true)//设置是否收集ANR异常信息
+                .setScreenshot(true)//设置是否打开崩溃截图功能
+                .collectLogCat(false)//设置是否收集logcat系统日志
+                .collectUserSteps(true);//设置是否收集用户操作步骤
+
+//SDK初始化
+        TestinDataApi.init(this, "e049a72ba5b487156d5bed6e03b95d24", testinDataConfig);
 
     }
 

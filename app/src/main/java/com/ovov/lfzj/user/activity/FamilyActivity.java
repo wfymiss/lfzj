@@ -2,6 +2,7 @@ package com.ovov.lfzj.user.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class FamilyActivity extends BaseActivity {
 
@@ -35,6 +38,7 @@ public class FamilyActivity extends BaseActivity {
         Intent intent = new Intent(context, FamilyActivity.class);
         context.startActivity(intent);
     }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_family;
@@ -51,5 +55,11 @@ public class FamilyActivity extends BaseActivity {
         FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), tabslist, fragmentList);
         orderVp.setAdapter(fragmentAdapter);
         tabOrder.setupWithViewPager(orderVp);
+    }
+
+
+    @OnClick(R.id.iv_back)
+    public void onViewClicked() {
+        finish();
     }
 }

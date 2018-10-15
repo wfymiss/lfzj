@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.testin.analysis.bug.BugOutApi;
 import rx.Subscription;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -150,12 +152,20 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mForegroundActivity = this;
+        BugOutApi.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mForegroundActivity = null;
+        BugOutApi.onPause(this);
+    }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        //注：回调 3
+        BugOutApi.onDispatchTouchEvent(this, ev);
+        return super.dispatchTouchEvent(ev);
     }
 
     /**

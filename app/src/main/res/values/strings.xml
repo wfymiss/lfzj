@@ -149,6 +149,7 @@
     <string name="text_revise">返回修改</string>
     <string name="text_commit_workorder">提交工单</string>
     <string name="text_worker_order_confirm">工单确认</string>
+    <string name="text_please_input_msg">请输入完整信息</string>
 
     <!--管家版功能标题-->
     <string name="gd">维修工单</string>

@@ -401,6 +401,10 @@ public class RetrofitHelper {
         return mApiService.getMarketUrl(getToken());
     }
 
+    public Observable<DataInfo> addFamily(String name,String mobile){
+        return mApiService.addFamily(getToken(),getSubId(),name,mobile);
+    }
+
     private static final String TAG = "RetrofitHelper";
     public void download(@NonNull String url, final String filePath, Subscriber subscriber) {
 

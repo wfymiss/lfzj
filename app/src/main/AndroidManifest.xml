@@ -33,6 +33,24 @@
     <!-- 申明权限 操作SD卡 写入和读取数据的权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 
     <!-- 申明录像权限 -->
     <uses-feature
@@ -212,26 +230,6 @@
             android:name=".neighbour.TransmitActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".home.repair.activity.VideoPlayerActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".home.repair.activity.OrderCommentActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".home.repair.activity.OwnerRepairDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".home.repair.activity.RepairActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".home.repair.activity.VideoRecordActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
         <!-- 拍照、相册7.0权限设置 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -375,11 +373,17 @@
         <activity
             android:name=".home.GameActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/FullScreenTheme"
             android:screenOrientation="landscape" />
         <activity
             android:name=".home.ui.NoticeDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
+        <activity android:name=".property.home.repair.WorkerOrderActivity"/>
+        <activity android:name=".home.repair.RepairActivity"/>
+        <activity android:name=".home.repair.WorkerOrderActivity"/>
+        <activity android:name=".home.repair.WorkerOrderDetailActivity"/>
+        <activity android:name=".home.repair.WorkOrderConfirmActivity"/>
         <activity android:name=".wxapi.WXEntryActivity" />
         <activity android:name=".user.activity.HealthSubscribeActivity" />
         <activity android:name=".user.activity.HealthDetailActivity" />

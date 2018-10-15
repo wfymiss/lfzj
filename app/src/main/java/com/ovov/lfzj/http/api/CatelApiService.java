@@ -58,7 +58,7 @@ import rx.Observable;
  */
 public interface CatelApiService {
 
-//    String HOST = "http://app.catel-link.com/";
+    //String HOST = "http://app.catel-link.com/";
 
     String HOST = "http://api_test.catel-link.com/";
 
@@ -380,6 +380,12 @@ public interface CatelApiService {
 
     @GET("v1/shop/index")
     Observable<DataInfo<UrlBean>> getMarketUrl(@Query("token") String token);
+    @FormUrlEncoded
+    @POST("v1/personal/owneraddfamily")
+    Observable<DataInfo> addFamily(@Field("token") String token,
+                                   @Field("subdistrict_id") String sub_id,
+                                   @Field("name") String name,
+                                   @Field("mobile") String mobile);
 
 
 }

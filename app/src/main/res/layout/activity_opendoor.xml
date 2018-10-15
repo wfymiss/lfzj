@@ -44,10 +44,14 @@
 
         <Button
             android:id="@+id/but"
-            android:layout_width="172dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:paddingLeft="@dimen/margin_30dp"
+            android:paddingRight="@dimen/margin_30dp"
+            android:paddingBottom="@dimen/margin_10dp"
+            android:paddingTop="@dimen/margin_10dp"
             android:layout_marginTop="@dimen/dp_50"
             android:background="@drawable/btn_shape_door"
             android:textColor="@color/white"
@@ -66,20 +70,20 @@
             app:wave_width="40">
 
         </com.ovov.lfzj.base.widget.WaveView>
-
-        <ImageView
-            android:id="@+id/head"
-            android:layout_width="123dp"
-            android:layout_height="120dp"
-            android:layout_centerInParent="true"
-            android:src="@mipmap/lock_im" />
         <ImageView
             android:id="@+id/head1"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_width="163dp"
+            android:layout_height="163dp"
             android:layout_centerInParent="true"
             android:visibility="gone"
+            android:src="@mipmap/ic_oval" />
+        <ImageView
+            android:id="@+id/head"
+            android:layout_width="155dp"
+            android:layout_height="155dp"
+            android:layout_centerInParent="true"
             android:src="@mipmap/lock_im" />
+
 
     </RelativeLayout>
     <LinearLayout
@@ -159,7 +163,7 @@
                 android:layout_below="@+id/iv_apply_key"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/margin_10dp"
-                android:text="房客通行"
+                android:text="访客通行"
                 android:textColor="#ff444444"
                 android:textSize="15sp" />
         </RelativeLayout>

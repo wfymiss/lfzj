@@ -19,7 +19,7 @@ public class WaveView extends View {
     /**
      * 波浪圆圈颜色
      */
-    private int mColor = getResources().getColor(R.color.color_red);
+    private int mColor = getResources().getColor(R.color.color_81b4ff);
     /**
      * 第一个圆圈的半径(也就是圆形图片的半径)
      */

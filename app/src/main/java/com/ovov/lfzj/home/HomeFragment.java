@@ -257,7 +257,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (UIUtils.isFastClick()) {
                     if (position == 2) {
-                        GameActivity.toActivity(mActivity);
+                        RepairActivity.toActivity(mActivity);
                         return;
                     }
                     if (LoginUserBean.getInstance().isIs_auth()) {

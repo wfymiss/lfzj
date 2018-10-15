@@ -186,6 +186,7 @@ public class OpendoorActivity extends BaseActivity {
 //        operatingAnim = AnimationUtils.loadAnimation(this, R.anim.opendoor_rotate);    // 定义开门动画
 //        LinearInterpolator lin = new LinearInterpolator();
 //        operatingAnim.setInterpolator(lin);
+        //wave.setColor(R.color.color_81b4ff);
     }
 
 

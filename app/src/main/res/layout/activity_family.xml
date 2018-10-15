@@ -13,8 +13,8 @@
         android:background="#FFFFFF"
         app:tabIndicatorColor="@color/colorPrimary"
         app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/blu"
-        app:tabTextColor="#000000" />
+        app:tabSelectedTextColor="@color/color_444444"
+        app:tabTextColor="@color/color_text_a1a1a1" />
     <android.support.v4.view.ViewPager
         android:id="@+id/order_vp"
         android:layout_width="match_parent"
