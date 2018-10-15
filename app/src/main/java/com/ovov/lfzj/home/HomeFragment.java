@@ -8,9 +8,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
@@ -58,6 +60,7 @@ import com.ovov.lfzj.neighbour.MyCommunityActivity;
 import com.ovov.lfzj.neighbour.square.SquareDetailActivity;
 import com.ovov.lfzj.opendoor.ApplyVisitorActivity;
 import com.ovov.lfzj.opendoor.OpendoorActivity;
+import com.ovov.lfzj.opendoor.adapter.HouseListAdapter;
 import com.ovov.lfzj.opendoor.capture.CaptureActivity;
 import com.ovov.lfzj.user.SearchActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -218,7 +221,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
         ImageView scan = addheadlayout.findViewById(R.id.im_scan);
         bannerLayout = addheadlayout.findViewById(R.id.banner);
 
-        if (LoginUserBean.getInstance().getSubname() != null) {
+        if (LoginUserBean.getInstance().getSubname() != null && !LoginUserBean.getInstance().getSubname().isEmpty()) {
             textView.setText(LoginUserBean.getInstance().getSubname());
         } else {
             textView.setText("请选择");
@@ -294,7 +297,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
                     if (!noticeBean.getImages().get(0).isEmpty()) {
                         Picasso.with(getContext()).load(noticeBean.getImages().get(0)).error(R.drawable.meinv).into(view);
                     }
-                }else {
+                } else {
                     view.setVisibility(View.GONE);
                 }
 
@@ -511,16 +514,23 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
 
     private void initpopuwindow(final TextView textView) {
-        View view = View.inflate(getContext(), R.layout.alerdialog_list_item, null);
-        ListView lv_appointment = (ListView) view.findViewById(R.id.lv);
+        View view = View.inflate(getContext(), R.layout.popup_activity_title, null);
+        ListView lv_appointment = (ListView) view.findViewById(R.id.activity_title_recy);
 
-        final PopupWindow popupWindow = new PopupWindow(view, 300, ViewGroup.LayoutParams.WRAP_CONTENT);
-        ArrayAdapter adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
+        final PopupWindow popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        HouseListAdapter adapter = new HouseListAdapter(list, getContext());
+        // 产生背景变暗效果
+        WindowManager.LayoutParams lp = getActivity().getWindow()
+                .getAttributes();
+        lp.alpha = 0.4f;
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        getActivity().getWindow().setAttributes(lp);
         lv_appointment.setAdapter(adapter);
         lv_appointment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 textView.setText(list.get(position));
+                homePresenter.getNoticeList();
                 popupWindow.dismiss();
                 LoginUserBean.getInstance().setSub_id(listinfo1.get(position).getSubdistrict_id());
                 LoginUserBean.getInstance().setSubname(listinfo1.get(position).getSubdistrict_name());
@@ -528,15 +538,28 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
             }
         });
+
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+            // 在dismiss中恢复透明度
+            public void onDismiss() {
+                WindowManager.LayoutParams lp =getActivity().getWindow()
+                        .getAttributes();
+                lp.alpha = 1f;
+                getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                getActivity().getWindow().setAttributes(lp);
+            }
+        });
+
+
         // 使其聚集,可点击
         popupWindow.setFocusable(true);
         // 设置允许在外点击消失
-        popupWindow.setOutsideTouchable(true);
+      //  popupWindow.setOutsideTouchable(true);
 
         // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
-
-        popupWindow.showAsDropDown(textView);
+        popupWindow.showAtLocation(getActivity().getWindow().getDecorView(), Gravity.CENTER, 0, 0);
 
 
     }

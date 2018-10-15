@@ -16,7 +16,6 @@ import com.ovov.lfzj.base.bean.ServerFeedBackInfo;
 import com.ovov.lfzj.base.bean.ShopListBean;
 import com.ovov.lfzj.base.bean.SquareDetailInfo;
 import com.ovov.lfzj.base.bean.SquareListInfo;
-import com.ovov.lfzj.base.bean.StoreOrderCommentInfo;
 import com.ovov.lfzj.base.bean.SublistInfo;
 import com.ovov.lfzj.base.bean.UnitInfo;
 import com.ovov.lfzj.base.bean.UnitListResult;
@@ -25,9 +24,9 @@ import com.ovov.lfzj.base.bean.UrlBean;
 import com.ovov.lfzj.base.bean.VisistorRecordResult;
 import com.ovov.lfzj.base.bean.WorkOrderUpInfo;
 import com.ovov.lfzj.home.bean.BannerBean;
+import com.ovov.lfzj.home.bean.HealthDetailBean;
 import com.ovov.lfzj.home.bean.NewsBean;
 import com.ovov.lfzj.home.bean.NewsDetailBean;
-import com.ovov.lfzj.home.bean.NotifiBean;
 import com.ovov.lfzj.home.bean.PayInfo;
 import com.ovov.lfzj.home.bean.PayResult;
 import com.ovov.lfzj.home.bean.PaymentDetailResult;
@@ -35,13 +34,13 @@ import com.ovov.lfzj.home.bean.SubListBean;
 import com.ovov.lfzj.home.bean.WXPayInfo;
 import com.ovov.lfzj.home.bean.WxPaySuccessResult;
 import com.ovov.lfzj.market.order.bean.ShopBean;
+import com.ovov.lfzj.user.bean.HealthBean;
 
 import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -59,7 +58,9 @@ import rx.Observable;
  */
 public interface CatelApiService {
 
-    String HOST = "http://app.catel-link.com/";
+//    String HOST = "http://app.catel-link.com/";
+
+    String HOST = "http://api_test.catel-link.com/";
 
     @FormUrlEncoded
     @POST("v1/user/login")
@@ -233,6 +234,24 @@ public interface CatelApiService {
     @POST("/v1/user/get_user_info")
     Observable<SubListBean> getHomeList(@Field("token") String token);
 
+    @FormUrlEncoded
+    @POST("/v1/examination")
+    Observable<ListInfo<HealthBean>> getHealthTime(@Field("token") String token,
+                                                   @Field("subdistrictr_id") String sub_id,
+                                                   @Field("time") String time);
+
+    @FormUrlEncoded
+    @POST("/v1/examination/examinationlist")
+    Observable<HealthDetailBean> getHealthDetail(@Field("token") String time,
+                                                 @Field("subdistrictr_id") String sub_id);
+
+    @FormUrlEncoded
+    @POST("/v1/examination/examinationadd")
+    Observable<BannerBean> getHealthOrder(@Field("token") String token,
+                                          @Field("subdistrictr_id") String sub_id,
+                                          @Field("time_id") String time_id,
+                                          @Field("time") String time);
+
     // 获取业主缴费账单详情
     @FormUrlEncoded
     @POST("v1/charge/orderDetail")
@@ -336,7 +355,7 @@ public interface CatelApiService {
     @POST("/v1/entrance/visitorRecord")
     Observable<ServerFeedBackInfo> getUpVisitorInfo(@Field("token") String token,
                                                     @Field("subdistrict_id") String tel,
-                                                    @Field("mobile" )String moblie,
+                                                    @Field("mobile") String moblie,
                                                     @Field("visitor") String visitor,
                                                     @Field("visitor_tel") String visitor_phone,
                                                     @Field("valid_num") String vaild_num,

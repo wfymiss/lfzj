@@ -212,6 +212,26 @@
             android:name=".neighbour.TransmitActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.repair.activity.VideoPlayerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.repair.activity.OrderCommentActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.repair.activity.OwnerRepairDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.repair.activity.RepairActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.repair.activity.VideoRecordActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
         <!-- 拍照、相册7.0权限设置 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -355,31 +375,16 @@
         <activity
             android:name=".home.GameActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="landscape"
-            android:theme="@style/FullScreenTheme" />
+            android:screenOrientation="landscape" />
         <activity
             android:name=".home.ui.NoticeDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity android:name=".wxapi.WXEntryActivity" />
-        <activity
-            android:name=".home.repair.RepairActivity"
-            android:hardwareAccelerated="false" />
-        <activity android:name=".property.PropertyMainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".home.repair.WorkerOrderActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".home.repair.WorkOrderConfirmActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".home.repair.WorkerOrderDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".property.home.repair.WorkerOrderActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".user.activity.HealthSubscribeActivity" />
+        <activity android:name=".user.activity.HealthDetailActivity" />
+        <activity android:name=".opendoor.DemoActivity" />
+        <activity android:name=".user.activity.FamilyActivity"></activity>
     </application>
 
 </manifest>

@@ -15,12 +15,14 @@
         android:layout_height="226dp">
         <TextView
             android:textSize="18dp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/blu"
             android:gravity="center"
+            android:text="选择小区"
+
             android:background="@mipmap/build_select_bg"
             android:layout_width="match_parent"
             android:layout_height="34dp" />
-        <android.support.v7.widget.RecyclerView
+        <ListView
             android:id="@+id/activity_title_recy"
             android:layout_width="match_parent"
             android:layout_height="192dp"/>

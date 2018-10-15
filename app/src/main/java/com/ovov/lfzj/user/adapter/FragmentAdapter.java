@@ -16,7 +16,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragments;
     private String[] mTabIds;
 
-    public FragmentAdapter(FragmentManager supportFragmentManager,  String[] tabIds, List<Fragment> fragments) {
+    public FragmentAdapter(FragmentManager supportFragmentManager, String[] tabIds, List<Fragment> fragments) {
         super(supportFragmentManager);
         this.mFragments = fragments;
         this.mTabIds = tabIds;
@@ -30,7 +30,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return AllFragment.newInstance(position);
+        return mFragments.get(position);
     }
 
     @Nullable

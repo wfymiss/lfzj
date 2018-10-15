@@ -1,12 +1,9 @@
 package com.ovov.lfzj.opendoor;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -30,7 +27,6 @@ import java.util.Hashtable;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -87,7 +83,6 @@ public class QRCodeActivity extends BaseActivity {
         if (keys != null && keys.size() > 0) {
             QRUtils.loadConfig(this.getApplicationContext());
             String qrStr = null;
-            Log.e("keyssss", String.valueOf(keys));
             qrStr = QRUtils.createDoorControlQR(this,
                     "0123456788", keys, 10, 10, 0, "12341234");    //  生成钥匙字符串
             Bitmap contentbitmap = ceateBitmap(qrStr);
@@ -160,10 +155,12 @@ public class QRCodeActivity extends BaseActivity {
     }
 
 
+
     @OnClick({R.id.iv_back, R.id.btn_refresh})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
+
                 finish();
                 break;
             case R.id.btn_refresh:

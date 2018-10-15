@@ -93,6 +93,8 @@ public class HomeNeighAdapter extends BaseAdapter {
             viewHolder.tvTime.setText(list.get(position).time);
             viewHolder.tv_name.setText(list.get(position).userInfo.nickname);
             viewHolder.tv_look.setText(list.get(position).replyNum);
+            // TODO: 2018/10/12
+        //    viewHolder.tv_loacation.setText(list.get();
                 viewHolder.delect.setOnClickListener( new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

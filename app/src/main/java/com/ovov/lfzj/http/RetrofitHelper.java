@@ -11,7 +11,6 @@ import com.ovov.lfzj.base.BaseApplication;
 import com.ovov.lfzj.base.bean.ActivityUpImageInfo;
 import com.ovov.lfzj.base.bean.BuildingListResult;
 import com.ovov.lfzj.base.bean.DataInfo;
-import com.ovov.lfzj.base.bean.ErrorInfo;
 import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.LoginBean;
 import com.ovov.lfzj.base.bean.LoginUserBean;
@@ -25,7 +24,6 @@ import com.ovov.lfzj.base.bean.ServerFeedBackInfo;
 import com.ovov.lfzj.base.bean.ShopListBean;
 import com.ovov.lfzj.base.bean.SquareDetailInfo;
 import com.ovov.lfzj.base.bean.SquareListInfo;
-import com.ovov.lfzj.base.bean.StoreOrderCommentInfo;
 import com.ovov.lfzj.base.bean.SublistInfo;
 import com.ovov.lfzj.base.bean.UnitInfo;
 import com.ovov.lfzj.base.bean.UnitListResult;
@@ -35,9 +33,9 @@ import com.ovov.lfzj.base.bean.VisistorRecordResult;
 import com.ovov.lfzj.base.bean.WorkOrderUpInfo;
 import com.ovov.lfzj.base.utils.NetWorkUtil;
 import com.ovov.lfzj.home.bean.BannerBean;
+import com.ovov.lfzj.home.bean.HealthDetailBean;
 import com.ovov.lfzj.home.bean.NewsBean;
 import com.ovov.lfzj.home.bean.NewsDetailBean;
-import com.ovov.lfzj.home.bean.NotifiBean;
 import com.ovov.lfzj.home.bean.PayInfo;
 import com.ovov.lfzj.home.bean.PayResult;
 import com.ovov.lfzj.home.bean.PaymentDetailResult;
@@ -46,6 +44,7 @@ import com.ovov.lfzj.home.bean.WXPayInfo;
 import com.ovov.lfzj.home.bean.WxPaySuccessResult;
 import com.ovov.lfzj.http.api.CatelApiService;
 import com.ovov.lfzj.market.order.bean.ShopBean;
+import com.ovov.lfzj.user.bean.HealthBean;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -68,12 +67,8 @@ import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Field;
-import retrofit2.http.Multipart;
 import rx.Observable;
 import rx.Subscriber;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -351,6 +346,16 @@ public class RetrofitHelper {
         return mApiService.getBanner(getToken());
     }
 
+    public Observable<ListInfo<HealthBean>> getHealthTime(String time) {
+        return mApiService.getHealthTime(getToken(),"1",time);
+    }
+
+    public Observable<HealthDetailBean> getHealthDetail( ) {
+        return mApiService.getHealthDetail(getToken(),"1");
+    }
+    public Observable<BannerBean> getHealthOrder(String Time_id,String time) {
+        return mApiService.getHealthOrder(getToken(),"1",Time_id,time);
+    }
 
     public Observable<SubListBean> gethomeList() {
         return mApiService.getHomeList(getToken());

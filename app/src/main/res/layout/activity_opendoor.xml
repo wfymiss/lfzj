@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@mipmap/ic_opendoor_back"
+    android:background="@mipmap/open_door"
     tools:context="com.ovov.lfzj.opendoor.OpendoorActivity">
 
     <RelativeLayout
@@ -18,7 +18,7 @@
             android:layout_height="20dp"
             android:layout_marginLeft="@dimen/dp_18"
             android:layout_marginTop="@dimen/dp_16"
-            android:src="@mipmap/ic_setting" />
+            android:src="@mipmap/nav_icon_back_white" />
         <TextView
             android:id="@+id/open_door_title"
             android:layout_width="wrap_content"
@@ -28,115 +28,140 @@
             android:text="乐福智家"
             android:textColor="#ffffff"
             android:textSize="18sp" />
-        <ImageView
-            android:id="@+id/icon_finish"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dp_18"
-            android:layout_marginTop="@dimen/dp_16"
-            android:src="@mipmap/ic_close" />
+        <!--<ImageView-->
+            <!--android:id="@+id/icon_finish"-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="@dimen/dp_18"-->
+            <!--android:layout_marginTop="@dimen/dp_16"-->
+            <!--android:src="@mipmap/ic_close" />-->
     </RelativeLayout>
-    <LinearLayout
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="@dimen/dp_50">
+
+        <Button
+            android:id="@+id/but"
+            android:layout_width="172dp"
+            android:layout_height="wrap_content"
+           android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_50"
+            android:background="@drawable/btn_shape_door"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_15sp"
+            android:text="切换至二维码开门" />
+
+        <com.ovov.lfzj.base.widget.WaveView
+            android:id="@+id/wave"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:wave_color="@color/color_red"
+            app:wave_coreImageRadius="30"
+            app:wave_width="40">
+
+        </com.ovov.lfzj.base.widget.WaveView>
+
         <ImageView
-            android:id="@+id/icon_result"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@mipmap/icon_sucess"
-            android:visibility="gone"/>
+            android:id="@+id/head"
+            android:layout_width="123dp"
+            android:layout_height="120dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/lock_im" />
         <ImageView
-            android:id="@+id/open_top"
-            android:layout_width="150dp"
-            android:layout_height="75dp"
-            android:src="@mipmap/ic_opendoor_top" />
-        <ImageView
-            android:id="@+id/open_bottom"
-            android:layout_width="150dp"
-            android:layout_height="75dp"
-            android:src="@mipmap/ic_opendoor_bottom" />
-    </LinearLayout>
-    <ImageView
-        android:id="@+id/opendoor_anim"
-        android:layout_width="175dp"
-        android:layout_height="175dp"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:src="@mipmap/ic_opendoor_anim" />
+            android:id="@+id/head1"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:src="@mipmap/lock_im" />
+
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="15dp"
         android:orientation="horizontal">
+
         <RelativeLayout
             android:id="@+id/re_scan"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1">
+
             <ImageView
                 android:id="@+id/iv_scan"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:src="@mipmap/ic_scan" />
+                android:src="@mipmap/keylist" />
+
             <TextView
                 android:id="@+id/tv_open_history"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_scan"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="50px"
-                android:text="扫码开门"
-                android:textColor="#ffffff"
-                android:textSize="13sp" />
+                android:layout_marginTop="9dp"
+                android:text="钥匙列表"
+                android:textColor="#ff444444"
+                android:textSize="15sp" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/re_code"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1">
+
             <ImageView
                 android:id="@+id/iv_code"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:src="@mipmap/ic_open_qrcode" />
+                android:src="@mipmap/open_list" />
+
             <TextView
                 android:id="@+id/tv_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_code"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="50px"
-                android:text="二维码开门"
-                android:textColor="#ffffff"
-                android:textSize="13sp" />
+                android:layout_marginTop="7dp"
+                android:text="开门记录"
+                android:textColor="#ff444444"
+                android:textSize="15sp" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/re_apply_key"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1">
+
             <ImageView
                 android:id="@+id/iv_apply_key"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:src="@mipmap/ic_new_key" />
+                android:src="@mipmap/friend_go" />
+
             <TextView
                 android:id="@+id/tv_apply_key"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_apply_key"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="50px"
-                android:text="钥匙列表"
-                android:textColor="#ffffff"
-                android:textSize="13sp" />
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:text="房客通行"
+                android:textColor="#ff444444"
+                android:textSize="15sp" />
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>
