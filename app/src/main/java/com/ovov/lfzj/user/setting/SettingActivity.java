@@ -3,6 +3,7 @@ package com.ovov.lfzj.user.setting;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,6 +23,7 @@ import com.ovov.lfzj.login.LoginActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 import rx.Subscription;
 
 public class SettingActivity extends BaseActivity {
@@ -84,7 +86,9 @@ public class SettingActivity extends BaseActivity {
                         if (errorInfoDataInfo.success()){
                             LoginUserBean.getInstance().reset();
                             LoginUserBean.getInstance().save();
+                            JPushInterface.deleteAlias(mActivity,1);
                             LoginActivity.toActivity(mActivity);
+
                             for (int i = 0; i < mActivities.size(); i++) {
                                 if (mActivities.get(i) != null && !mActivities.get(i).isFinishing()) {
                                     mActivities.get(i).finish();
@@ -98,7 +102,7 @@ public class SettingActivity extends BaseActivity {
     // 提醒
     private void frameRemind() {
         final RemindDialogUtil.Builder dialogBuilder = new RemindDialogUtil.Builder(this);
-        dialogBuilder.setContent("确认退出登陆吗？");
+        dialogBuilder.setContent("确认退出登录吗？");
         final RemindDialogUtil dialog=dialogBuilder.Create();
         dialog.setCanceledOnTouchOutside(false);
         dialogBuilder.setConfirmListener(new RemindDialogUtil.Builder.ConfirmClickListener() {

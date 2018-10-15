@@ -21,6 +21,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
+import cn.jpush.android.api.JPushInterface;
+
 
 /**
  * Created by jzxiang on 22/12/2017.
@@ -72,6 +74,8 @@ public class CatelApplication extends BaseApplication  {
             StrictMode.setVmPolicy(builder.build());
         }
         MobSDK.init(this);
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
        /* GSYVideoType.setRenderType(GSYVideoType.TEXTURE);
         GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_DEFAULT);
         GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_FULL);

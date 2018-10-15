@@ -36,6 +36,7 @@ import com.ovov.lfzj.base.widget.UpdateDialog;
 import com.ovov.lfzj.base.widget.IdentityDialog;
 import com.ovov.lfzj.event.DownloadEvent;
 import com.ovov.lfzj.event.IdentityEvent;
+import com.ovov.lfzj.event.LoginOutEvent;
 import com.ovov.lfzj.event.MainIdentityEvent;
 import com.ovov.lfzj.event.SquareDetailIdentityEvent;
 import com.ovov.lfzj.event.SwitchEvent;
@@ -46,6 +47,7 @@ import com.ovov.lfzj.http.download.DownloadUtils;
 import com.ovov.lfzj.http.download.JsDownloadListener;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.login.IdentityConfirmActivity;
+import com.ovov.lfzj.login.LoginActivity;
 import com.ovov.lfzj.market.MarketFragment;
 import com.ovov.lfzj.neighbour.NeighbourFragment;
 import com.ovov.lfzj.opendoor.OpendoorActivity;
@@ -65,6 +67,7 @@ import java.net.URL;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action1;
@@ -159,6 +162,21 @@ public class MainActivity extends BaseMainActivity {
             @Override
             public void call(SwitchEvent switchEvent) {
                 menuItemClicked(1);
+            }
+        });
+        addRxBusSubscribe(LoginOutEvent.class, new Action1<LoginOutEvent>() {
+            @Override
+            public void call(LoginOutEvent loginOutEvent) {
+                LoginUserBean.getInstance().reset();
+                LoginUserBean.getInstance().save();
+                JPushInterface.deleteAlias(mActivity,1);
+                LoginActivity.toActivity(mActivity);
+
+                for (int i = 0; i < mActivities.size(); i++) {
+                    if (mActivities.get(i) != null && !mActivities.get(i).isFinishing()) {
+                        mActivities.get(i).finish();
+                    }
+                }
             }
         });
 

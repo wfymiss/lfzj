@@ -72,6 +72,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.jpush.android.api.JPushInterface;
 import rx.Subscription;
 import rx.functions.Action1;
 
@@ -131,7 +132,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
     public void init() {
         isLogin();
         initView();
-
+        Log.e("shehzi",LoginUserBean.getInstance().getPhone());
+        JPushInterface.setAlias(mActivity,1,LoginUserBean.getInstance().getPhone());
         mActivityListSwf.setEnableLoadmore(false);
         mActivityListSwf.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -166,8 +168,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
             homePresenter.getNoticeList();
         }
         homePresenter.getNewsList();
-
-
         initBanner();
 
     }

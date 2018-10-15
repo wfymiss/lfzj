@@ -9,18 +9,19 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="38px"
+            android:layout_marginRight="38px"
+            android:layout_marginTop="52px"
+            android:gravity="center"
             android:text="提示"
             android:textColor="#080604"
             android:textSize="18sp"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:layout_marginTop="52px"
-            android:layout_marginLeft="38px"
-            android:layout_marginRight="38px"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textStyle="bold" />
         <TextView
             android:id="@+id/pop_delete_title"
             android:text="提示"

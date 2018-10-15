@@ -17,11 +17,12 @@ import com.ovov.lfzj.home.view.HomeView;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 
+import cn.jpush.android.api.JPushInterface;
 import rx.Subscription;
 
 public class HomePresenter {
     private HomeView homeView;
-    public HomeFragment mContext;
+    public Context mContext;
 
     public HomePresenter(HomeView Context) {
         this.homeView = Context;
@@ -107,6 +108,7 @@ public class HomePresenter {
                     @Override
                     public void onNext(SubListBean listInfoDataInfo) {
                         if (listInfoDataInfo.getCode().equals("200")) {
+
                             homeView.getsubList(listInfoDataInfo.getDatas().getSubdistricts());
                             LoginUserBean.getInstance().setUserInfoBean(listInfoDataInfo.getDatas().getUser());
                             LoginUserBean.getInstance().save();
