@@ -135,8 +135,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
     public void init() {
         isLogin();
         initView();
-        Log.e("shehzi",LoginUserBean.getInstance().getPhone());
-        JPushInterface.setAlias(mActivity,1,LoginUserBean.getInstance().getPhone());
+        Log.e("shehzi", LoginUserBean.getInstance().getPhone());
+        JPushInterface.setAlias(mActivity, 1, LoginUserBean.getInstance().getPhone());
         mActivityListSwf.setEnableLoadmore(false);
         mActivityListSwf.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -543,7 +543,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
             // 在dismiss中恢复透明度
             public void onDismiss() {
-                WindowManager.LayoutParams lp =getActivity().getWindow()
+                WindowManager.LayoutParams lp = getActivity().getWindow()
                         .getAttributes();
                 lp.alpha = 1f;
                 getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -555,7 +555,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
         // 使其聚集,可点击
         popupWindow.setFocusable(true);
         // 设置允许在外点击消失
-      //  popupWindow.setOutsideTouchable(true);
+        //  popupWindow.setOutsideTouchable(true);
 
         // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -598,7 +598,13 @@ public class HomeFragment extends BaseFragment implements HomeView {
         for (SubdistrictsBean s : listInfo) {
             list.add(s.getSubdistrict_name());
 
+//
+//            for (SubdistrictsBean.housesBean housesBean : s.getHouses()) {
+//                String d = housesBean.getUnit() + "-" + housesBean.getFloor() + "-" + housesBean.getNumber();
+//
+//            }
         }
+
 
     }
 

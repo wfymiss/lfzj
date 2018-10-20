@@ -182,7 +182,6 @@ public class MySquareFragment extends BaseFragment {
                     reTransmit.setVisibility(View.VISIBLE);
                     viewHolder.setText(R.id.tv_transmit_nickname, "@" + squareListInfo.transpondInfo.userInfo.nickname + ":");
                     viewHolder.setText(R.id.tv_transmit_content, squareListInfo.transpondInfo.comment);
-
                     if (squareListInfo.transpondInfo.imgUrl != null && squareListInfo.transpondInfo.imgUrl.size() > 0)
                         mGridData.addAll(squareListInfo.transpondInfo.imgUrl);
                     if (mGridData.size() == 1 || mGridData.size() == 2 || mGridData.size() == 4) {

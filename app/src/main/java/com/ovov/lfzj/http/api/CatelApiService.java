@@ -212,9 +212,6 @@ public interface CatelApiService {
     Observable<ActivityUpImageInfo> upLoadActivityImage(@Part("token") String token, @Part MultipartBody.Part part);
 
 
-
-
-
     @FormUrlEncoded
     @POST("v1/charge/orderUndone")
     Observable<ListInfo<PropertyPaymentInfo>> getOrderUndone(@Field("token") String token,
@@ -380,12 +377,26 @@ public interface CatelApiService {
 
     @GET("v1/shop/index")
     Observable<DataInfo<UrlBean>> getMarketUrl(@Query("token") String token);
+
     @FormUrlEncoded
     @POST("v1/personal/owneraddfamily")
     Observable<DataInfo> addFamily(@Field("token") String token,
                                    @Field("subdistrict_id") String sub_id,
                                    @Field("name") String name,
                                    @Field("mobile") String mobile);
+
+
+    @POST("/v1/work/workadd")
+    Observable<DataInfo> workAdd(@Field("token") String token,
+                                 @Field("phone") String phone,
+                                 @Field("address") String address,
+                                 @Field("repair") String repair,
+                                 @Field("position") String position,
+                                 @Field("category") String category,
+                                 @Field("repair_time") String repair_time,
+                                 @Field("content") String content,
+                                 @Field("repair_img") String repair_img
+    );
 
 
 }

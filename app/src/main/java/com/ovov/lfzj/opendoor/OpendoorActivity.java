@@ -11,7 +11,6 @@ import android.graphics.Canvas;
 import android.hardware.SensorManager;
 import android.media.SoundPool;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
@@ -23,7 +22,6 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -52,7 +50,6 @@ import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.opendoor.capture.CaptureActivity;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,7 +61,6 @@ import java.util.Hashtable;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscription;
 
@@ -89,8 +85,8 @@ public class OpendoorActivity extends BaseActivity {
             TextView sub_title;
     @BindView(R.id.wave)
     WaveView wave;
-    @BindView(R.id.head)
-    ImageView head;
+//    @BindView(R.id.head)
+//    ImageView head;
     @BindView(R.id.head1)
     ImageView head1;
     private static int QRC_WIDTH = 600;    //定义二维码长度
@@ -130,14 +126,14 @@ public class OpendoorActivity extends BaseActivity {
                 case SENSOR_SHAKE:
                     if (arrayKey != null && arrayKey.length > 0) {
                         //开启动画
-                        wave.addWave();
                         wave.start();
                         checkBluetoothPermission();       // 蓝牙开门
                     } else
                         feedback("请在钥匙列表更新钥匙");
                     break;
                 case OPEN_DOOR_BACK:                // 开门成功返回信息结果
-
+                    wave.stop();
+              //      head.setImageResource(R.mipmap.lock_loser);
 //                    iconResult.setVisibility(View.VISIBLE);
 //                    iconResult.setImageResource(R.mipmap.icon_sucess);
 //                    opendoorAnim.clearAnimation();
@@ -149,6 +145,8 @@ public class OpendoorActivity extends BaseActivity {
 //                    feedback(back);                     // 开门返回信息结果 ——二维码 ？
                     break;
                 case OPEN_DOOR_fail:
+                    wave.stop();
+             //       head.setImageResource(R.mipmap.lock_loser);
                     //  蓝牙开门失败
 //                    iconResult.setVisibility(View.VISIBLE);
 //                    iconResult.setImageResource(R.mipmap.icon_faile);
@@ -243,7 +241,7 @@ public class OpendoorActivity extends BaseActivity {
 //        }
 //    }
 
-    @OnClick({R.id.re_scan, R.id.re_code, R.id.re_apply_key, R.id.icon_setting, R.id.head, R.id.but})
+    @OnClick({R.id.re_scan, R.id.re_code, R.id.re_apply_key, R.id.icon_setting,R.id.wave, R.id.but})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.re_scan:         //  钥匙列表
@@ -262,7 +260,7 @@ public class OpendoorActivity extends BaseActivity {
                 finish();
                 break;
 
-            case R.id.head:
+            case R.id.wave:
                 //防止重复点击 出现不一样的圆形
                 if (UIUtils.isFastClick()) {
                     if (flag) {
@@ -272,7 +270,6 @@ public class OpendoorActivity extends BaseActivity {
                         handler.sendMessageAtTime(msg_open, 6000);// 开门
                     }
                 }
-
                 break;
             case R.id.but:
                 if (flag) {
@@ -282,11 +279,11 @@ public class OpendoorActivity extends BaseActivity {
                     initQrCode();
                     flag = false;
                 } else {
-                    wave.invalidate();
+                    wave.stop();
                     head1.setVisibility(View.GONE);
-                    head.setVisibility(View.VISIBLE);
+//                    head.setVisibility(View.VISIBLE);
                     but.setText("切换至二维码开门");
-                    head.setImageResource(R.mipmap.lock_im);
+//                    head.setImageResource(R.mipmap.lock_im);
                     wave.setVisibility(View.VISIBLE);
                     flag = true;
                 }
@@ -302,7 +299,7 @@ public class OpendoorActivity extends BaseActivity {
                     "0123456788", keys, 10, 10, 0, "12341234");    //  生成钥匙字符串
             Bitmap contentbitmap = ceateBitmap(qrStr);
             if (contentbitmap != null) {
-                head.setVisibility(View.GONE);
+//                head.setVisibility(View.GONE);
                 head1.setVisibility(View.VISIBLE);
                 head1.setImageBitmap(contentbitmap);
                 // 显示二维码
@@ -605,8 +602,8 @@ public class OpendoorActivity extends BaseActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-
                     wave.stop();
+//                    head.setImageResource(R.mipmap.lock_success);
 //                    iconResult.setVisibility(View.GONE);    // 开门动画结束后，隐藏开门结果图片
                 }
             }, 3000);
@@ -703,7 +700,6 @@ public class OpendoorActivity extends BaseActivity {
 
     // 开门结果信息弹出
     public void feedback(String msg) {
-        wave.setVisibility(View.INVISIBLE);
         wave.stop();
         backLog = new FeedbackDialog.BuilderLog(OpendoorActivity.this);
         backLog.setContent(msg);

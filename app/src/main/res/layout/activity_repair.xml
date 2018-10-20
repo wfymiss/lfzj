@@ -263,7 +263,6 @@
                         android:layout_marginLeft="17dp"
                         android:layout_marginRight="@dimen/dp_10"
                         android:maxLength="20"
-                        android:inputType="phone"
                         android:gravity="left|top"
                         android:id="@+id/et_content"
                         android:layout_below="@+id/tv_repair_content"

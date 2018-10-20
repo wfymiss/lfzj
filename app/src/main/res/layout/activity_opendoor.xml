@@ -61,15 +61,13 @@
         <com.ovov.lfzj.base.widget.WaveView
             android:id="@+id/wave"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            app:wave_color="@color/color_red"
-            app:wave_coreImageRadius="30"
-            app:wave_width="40">
-
-        </com.ovov.lfzj.base.widget.WaveView>
+            android:layout_height="match_parent"
+            app:diffuse_color="@color/colorAccent"
+            app:diffuse_coreColor="@color/colorPrimaryDark"
+            app:diffuse_coreImage="@mipmap/lock_im"
+            app:diffuse_coreRadius="100"
+            app:diffuse_maxWidth="300"
+            app:diffuse_width="4" />>
         <ImageView
             android:id="@+id/head1"
             android:layout_width="163dp"
@@ -77,13 +75,6 @@
             android:layout_centerInParent="true"
             android:visibility="gone"
             android:src="@mipmap/ic_oval" />
-        <ImageView
-            android:id="@+id/head"
-            android:layout_width="155dp"
-            android:layout_height="155dp"
-            android:layout_centerInParent="true"
-            android:src="@mipmap/lock_im" />
-
 
     </RelativeLayout>
     <LinearLayout
