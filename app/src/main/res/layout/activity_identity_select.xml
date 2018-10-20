@@ -107,6 +107,7 @@
                 android:textColor="@color/color_444444"
                 android:text="跳过"
                 android:id="@+id/tv_skip"
+                android:visibility="gone"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dp_25"/>
 

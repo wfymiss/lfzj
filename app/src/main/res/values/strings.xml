@@ -150,6 +150,18 @@
     <string name="text_commit_workorder">提交工单</string>
     <string name="text_worker_order_confirm">工单确认</string>
     <string name="text_please_input_msg">请输入完整信息</string>
+    <string name="text_comment_content">评价内容</string>
+    <string name="please_comment_repair">请您评价一下维修人员上门维修的情况</string>
+    <string name="repair_speed">上门速度</string>
+    <string name="service_attitude">服务态度</string>
+    <string name="repair_technology">维修技术</string>
+    <string name="text_common_comment">评价</string>
+    <string name="text_trouble_detail">故障情况</string>
+    <string name="text_material_price">材料报价</string>
+    <string name="text_repair_people_name">维修人员</string>
+    <string name="text_check">验收</string>
+    <string name="text_identity_owner">业主身份认证</string>
+    <string name="text_abandon">放弃认证</string>
 
     <!--管家版功能标题-->
     <string name="gd">维修工单</string>

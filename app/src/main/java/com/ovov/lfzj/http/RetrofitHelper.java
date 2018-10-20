@@ -14,6 +14,7 @@ import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.LoginBean;
 import com.ovov.lfzj.base.bean.LoginUserBean;
+import com.ovov.lfzj.base.bean.MobileInfo;
 import com.ovov.lfzj.base.bean.OpenLogUpInfo;
 import com.ovov.lfzj.base.bean.PropertyCheckOrderInfo;
 import com.ovov.lfzj.base.bean.PropertyPaymentInfo;
@@ -327,8 +328,8 @@ public class RetrofitHelper {
         return mApiService.getRoom(sub_id, building_id, unit_id);
     }
 
-    public Observable<DataInfo> authStep2(String house_path) {
-        return mApiService.authStep2(getToken(), house_path);
+    public Observable<DataInfo> authStep2(String house_path,String captcha,String mobile) {
+        return mApiService.authStep2(getToken(), house_path,captcha,mobile);
     }
 
     public Observable<DataInfo> userInfoUpdate(String name, String birthday, String
@@ -403,6 +404,10 @@ public class RetrofitHelper {
 
     public Observable<DataInfo> addFamily(String name,String mobile){
         return mApiService.addFamily(getToken(),getSubId(),name,mobile);
+    }
+
+    public Observable<DataInfo<MobileInfo>> getMobile(String house_path){
+        return mApiService.getMobile(getToken(),house_path);
     }
 
     private static final String TAG = "RetrofitHelper";

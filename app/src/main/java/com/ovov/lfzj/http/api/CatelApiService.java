@@ -6,6 +6,7 @@ import com.ovov.lfzj.base.bean.BuildingListResult;
 import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.LoginBean;
+import com.ovov.lfzj.base.bean.MobileInfo;
 import com.ovov.lfzj.base.bean.OpenLogUpInfo;
 import com.ovov.lfzj.base.bean.PropertyCheckOrderInfo;
 import com.ovov.lfzj.base.bean.PropertyPaymentInfo;
@@ -308,7 +309,9 @@ public interface CatelApiService {
     @FormUrlEncoded
     @POST("v1/user/user_auth_step2")
     Observable<DataInfo> authStep2(@Field("token") String token,
-                                   @Field("house_path") String house_path);
+                                   @Field("house_path") String house_path,
+                                   @Field("captcha") String captcha,
+                                   @Field("mobile") String mobile);
 
     @Multipart
     @POST("v1/user/userinfoupdate")
@@ -386,6 +389,10 @@ public interface CatelApiService {
                                    @Field("subdistrict_id") String sub_id,
                                    @Field("name") String name,
                                    @Field("mobile") String mobile);
+    @FormUrlEncoded
+    @POST("v1/house/get_user_info")
+    Observable<DataInfo<MobileInfo>> getMobile(@Field("token") String token,
+                                               @Field("house_path") String house_path);
 
 
 }

@@ -48,6 +48,7 @@ import com.ovov.lfzj.home.bean.SubdistrictsBean;
 import com.ovov.lfzj.home.payment.activity.PayMentRecordActivity;
 import com.ovov.lfzj.home.presenter.HomePresenter;
 import com.ovov.lfzj.home.repair.RepairActivity;
+import com.ovov.lfzj.home.repair.RepairCommentActivity;
 import com.ovov.lfzj.home.ui.MessageListActivity;
 import com.ovov.lfzj.home.ui.NewsDetailActivity;
 import com.ovov.lfzj.home.ui.NoticeDetailActivity;
@@ -56,6 +57,7 @@ import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.login.IdentityConfirmActivity;
 import com.ovov.lfzj.login.LoginActivity;
+import com.ovov.lfzj.login.MySubActivity;
 import com.ovov.lfzj.neighbour.MyCommunityActivity;
 import com.ovov.lfzj.neighbour.square.SquareDetailActivity;
 import com.ovov.lfzj.opendoor.ApplyVisitorActivity;
@@ -88,7 +90,6 @@ import static com.ovov.lfzj.CatelApplication.REFRESH;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends BaseFragment implements HomeView {
-
 
     Unbinder unbinder;
     @BindView(R.id.recyclerview)
@@ -135,7 +136,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
     public void init() {
         isLogin();
         initView();
-        Log.e("shehzi",LoginUserBean.getInstance().getPhone());
         JPushInterface.setAlias(mActivity,1,LoginUserBean.getInstance().getPhone());
         mActivityListSwf.setEnableLoadmore(false);
         mActivityListSwf.setOnRefreshListener(new OnRefreshListener() {
@@ -257,7 +257,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (UIUtils.isFastClick()) {
                     if (position == 2) {
-                        RepairActivity.toActivity(mActivity);
+                        //RepairCommentActivity.toActivity(mActivity);
+                        MySubActivity.toActivity(mActivity);
                         return;
                     }
                     if (LoginUserBean.getInstance().isIs_auth()) {

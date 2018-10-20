@@ -13,5 +13,6 @@
     <string name="common_next">下一步</string>
     <string name="common_reinput">重新输入</string>
     <string name="common_text_tip">提示</string>
+    <string name="common_commit">提交</string>
 
 </resources>

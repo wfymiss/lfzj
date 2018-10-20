@@ -8,6 +8,8 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.hardware.SensorManager;
 import android.media.SoundPool;
 import android.os.Build;
@@ -18,6 +20,7 @@ import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -129,12 +132,15 @@ public class OpendoorActivity extends BaseActivity {
             switch (open_msg.what) {
                 case SENSOR_SHAKE:
                     if (arrayKey != null && arrayKey.length > 0) {
-                        //开启动画
-                        wave.addWave();
-                        wave.start();
+
+                        //wave.start();
                         checkBluetoothPermission();       // 蓝牙开门
-                    } else
+                    } else{
                         feedback("请在钥匙列表更新钥匙");
+                        wave.stop();
+                        wave.clearAnimation();
+                    }
+
                     break;
                 case OPEN_DOOR_BACK:                // 开门成功返回信息结果
 
@@ -143,7 +149,14 @@ public class OpendoorActivity extends BaseActivity {
 //                    opendoorAnim.clearAnimation();
 //                    opendoorAnim.invalidate();
 //                    opendoorAnim.setVisibility(View.GONE);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            wave.stop();
+                            wave.clearAnimation();
 
+                        }
+                    },3000);
                     postOpenData();                  // 开门结果上传数据
 //                    String back = (String) open_msg.obj;
 //                    feedback(back);                     // 开门返回信息结果 ——二维码 ？
@@ -155,9 +168,22 @@ public class OpendoorActivity extends BaseActivity {
 //                    opendoorAnim.clearAnimation();
 //                    opendoorAnim.invalidate();
 //                    opendoorAnim.setVisibility(View.GONE);
-                    postOpenData();                 // 开门结果上传数据
+
+
                     String back_fail = (String) open_msg.obj;
-                    feedback(back_fail);                  // 开门失败返回信息结果
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            wave.stop();
+                            wave.clearAnimation();
+                            feedback(back_fail);                  // 开门失败返回信息结果
+                        }
+                    },3000);
+
+
+                    postOpenData();                 // 开门结果上传数据
+
+
                     break;
             }
         }
@@ -187,6 +213,13 @@ public class OpendoorActivity extends BaseActivity {
 //        LinearInterpolator lin = new LinearInterpolator();
 //        operatingAnim.setInterpolator(lin);
         //wave.setColor(R.color.color_81b4ff);
+
+        wave.setDuration(6000);
+        wave.setStyle(Paint.Style.FILL);
+        wave.setColor(Color.parseColor("#ffffff"));
+        wave.setInitialRadius(159f);
+        wave.setInterpolator(new LinearOutSlowInInterpolator());
+
     }
 
 
@@ -263,10 +296,13 @@ public class OpendoorActivity extends BaseActivity {
                 break;
 
             case R.id.head:
+
                 //防止重复点击 出现不一样的圆形
                 if (UIUtils.isFastClick()) {
                     if (flag) {
+
                         wave.setVisibility(View.VISIBLE);
+                        wave.start();
                         Message msg_open = new Message();
                         msg_open.what = SENSOR_SHAKE;
                         handler.sendMessageAtTime(msg_open, 6000);// 开门
@@ -278,16 +314,15 @@ public class OpendoorActivity extends BaseActivity {
                 if (flag) {
                     but.setText("切换至蓝牙开门");
                     //生成二维码
-                    wave.setVisibility(View.GONE);
                     initQrCode();
                     flag = false;
                 } else {
-                    wave.invalidate();
+                    wave.stop();
+                    wave.clearAnimation();
                     head1.setVisibility(View.GONE);
                     head.setVisibility(View.VISIBLE);
                     but.setText("切换至二维码开门");
                     head.setImageResource(R.mipmap.lock_im);
-                    wave.setVisibility(View.VISIBLE);
                     flag = true;
                 }
                 break;

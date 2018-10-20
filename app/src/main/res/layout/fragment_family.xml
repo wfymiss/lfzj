@@ -14,6 +14,7 @@
         android:layout_marginBottom="45dp"
         android:layout_alignParentBottom="true"
         android:textColor="@color/color_ffffff"
+        android:id="@+id/btn_commit"
         android:textSize="17sp"
         android:text="邀请认证"/>
 

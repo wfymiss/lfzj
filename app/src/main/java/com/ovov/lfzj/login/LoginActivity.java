@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.ovov.lfzj.MainActivity;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
+import com.ovov.lfzj.base.IdentityType;
 import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.LoginBean;
 import com.ovov.lfzj.base.bean.LoginUserBean;
@@ -18,6 +19,7 @@ import com.ovov.lfzj.base.utils.RegexUtils;
 import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
+import com.ovov.lfzj.property.PropertyMainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -101,16 +103,50 @@ public class LoginActivity extends BaseActivity {
                             LoginUserBean.getInstance().setLogin(true);
                             LoginUserBean.getInstance().setUserId(loginBeanDataInfo.datas().user_id);
                             LoginUserBean.getInstance().setPhone(mEtPhone.getText().toString());
+
                             if (loginBeanDataInfo.datas().is_user_auth == 0) {
                                 LoginUserBean.getInstance().setIs_auth(false);
                             } else {
                                 LoginUserBean.getInstance().setIs_auth(true);
                             }
                             LoginUserBean.getInstance().save();
+                            String[] userType = loginBeanDataInfo.datas().user_type.split("\\|");
+                            if (userType.length > 2 && !loginBeanDataInfo.datas().user_type.equals("1|2|3")){
+                                IdentitySelectActivity.toActivity(mActivity);
+                                finish();
+                                return;
+                            }
 
-                            IdentitySelectActivity.toActivity(mActivity);
+                            if (userType.length <= 2 && loginBeanDataInfo.datas().user_type.contains(IdentityType.typeOwner)){
+                                MainActivity.toActivity(mActivity);
+                                finish();
+                                return;
+                            }
+                            if (userType.length <= 2 && loginBeanDataInfo.datas().user_type.contains(IdentityType.typeFamily)){
+                                MainActivity.toActivity(mActivity);
+                                finish();
+                                return;
+                            }
+                            if (userType.length >= 2 && loginBeanDataInfo.datas().user_type.contains(IdentityType.typeProperty)){
+                                IdentitySelectActivity.toActivity(mActivity);
+                                finish();
+                                return;
+                            }
+                            if (userType.length >= 2 && loginBeanDataInfo.datas().user_type.contains(IdentityType.typeSeller)){
+                                finish();
+                                return;
+                            }
+                            if (userType.length >= 2 && loginBeanDataInfo.datas().user_type.equals("1|2|3")){
+                                MainActivity.toActivity(mActivity);
+                                finish();
+                                return;
+                            }
+                            if (loginBeanDataInfo.datas().user_type.equals(IdentityType.typeUser)){
+                                MainActivity.toActivity(mActivity);
+                                finish();
+                                return;
+                            }
 
-                            finish();
 
                         }
                     }

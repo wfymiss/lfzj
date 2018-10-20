@@ -85,6 +85,15 @@ public class LoginUserBean implements Serializable, Cloneable {
     private String sub_id;
     private SubListBean.SubdataBean.UserInfoBean userInfoBean;
     private String Neighbourid;
+    private String loginType;
+
+    public String getLoginType() {
+        return loginType;
+    }
+
+    public void setLoginType(String loginType) {
+        this.loginType = loginType;
+    }
 
     public String getId() {
         return Neighbourid;
@@ -156,6 +165,7 @@ public class LoginUserBean implements Serializable, Cloneable {
         subname = "";
         Neighbourid = "";
         forwardBean = null;
+        loginType = "";
     }
 
     public void save() {

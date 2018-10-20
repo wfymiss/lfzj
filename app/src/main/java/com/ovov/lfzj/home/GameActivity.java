@@ -55,15 +55,6 @@ public class GameActivity extends BaseActivity {
         webSettings.setSavePassword(true);
         webSettings.setSaveFormData(true);
         mWebGame.setWebViewClient(webViewClient);
-        mWebGame.addJavascriptInterface(new JavaSccriptFinishActivity(mActivity),"JavaScriptInterface");
-        //设置不用系统浏览器打开,直接显示在当前Webview
-       /* webview.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        });*/
         mWebGame.loadUrl("http://game_test.catel-link.com/?playID=" + LoginUserBean.getInstance().getUserId());
 
     }
@@ -81,7 +72,13 @@ public class GameActivity extends BaseActivity {
             //showLoadingDialog();
         }
 
-
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url.contains("www.flower-exit.com")){
+                finish();
+            }
+            return true;
+        }
         /**/
     };
 

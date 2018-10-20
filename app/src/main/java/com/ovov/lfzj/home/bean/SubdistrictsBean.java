@@ -34,8 +34,17 @@ public class SubdistrictsBean {
         private String building_id;
         private String unit;
         private String floor;
+        private String building_name;
 
-        public String getSubdistrict_id() {
+      public String getBuilding_name() {
+          return building_name;
+      }
+
+      public void setBuilding_name(String building_name) {
+          this.building_name = building_name;
+      }
+
+      public String getSubdistrict_id() {
             return subdistrict_id;
         }
 

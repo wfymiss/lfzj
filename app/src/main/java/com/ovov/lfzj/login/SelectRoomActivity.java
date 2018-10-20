@@ -113,7 +113,7 @@ public class SelectRoomActivity extends BaseActivity {
         addSubscrebe(subscription);
     }
     private void authStep2(String house_path){
-        showLoadingDialog();
+        /*showLoadingDialog();
         showError(house_path);
         Subscription subscription = RetrofitHelper.getInstance().authStep2(house_path)
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
@@ -141,7 +141,7 @@ public class SelectRoomActivity extends BaseActivity {
                         finish();
                     }
                 });
-        addSubscrebe(subscription);
+        addSubscrebe(subscription);*/
     }
 
     private void initList() {

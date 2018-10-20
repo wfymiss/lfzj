@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/common_bg"
+    tools:context="com.ovov.lfzj.login.MySubActivity">
+
+    <View
+        android:id="@+id/sitview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" />
+
+    <FrameLayout
+        android:id="@+id/lin_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_title_height"
+        android:background="@color/color_ffffff"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/common_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="title"
+            android:textColor="@color/color_333333" />
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="28dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/nav_back_gray" />
+        <!--android:src="@mipmap/icon_back" />-->
+
+        <TextView
+            android:id="@+id/tv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/common_margin"
+            android:text=""
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/common_text_size_middle" />
+
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right|center_vertical"
+            android:scaleType="center"
+            android:visibility="gone" />
+
+    </FrameLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_1dp"
+        android:background="@color/common_drivder_line" />
+    <TextView
+        android:id="@+id/tv_null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:text="请添加您的物业信息"
+        android:textColor="@color/color_text_a1a1a1"
+        android:textSize="@dimen/textSize_12sp"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@+id/list_sub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/common_bg"
+        android:dividerHeight="@dimen/margin_10dp" />
+</LinearLayout>

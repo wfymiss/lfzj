@@ -28,10 +28,10 @@ public class DemoActivity extends Activity {
         head.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!wave.isWave()){
+                /*if (!wave.isWave()){
                     wave.addWave();
                     wave.start();
-                }
+                }*/
             }
         });
 
@@ -40,6 +40,6 @@ public class DemoActivity extends Activity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        wave.setImageRadius(head.getWidth() / 2);
+        //wave.setImageRadius(head.getWidth() / 2);
     }
 }

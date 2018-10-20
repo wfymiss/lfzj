@@ -7,185 +7,155 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
 
 
 import com.ovov.lfzj.R;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class WaveView extends View {
 
-    /**
-     * 波浪圆圈颜色
-     */
-    private int mColor = getResources().getColor(R.color.color_81b4ff);
-    /**
-     * 第一个圆圈的半径(也就是圆形图片的半径)
-     */
-    private int mImageRadius = 200;
-    /**
-     * 波浪圆之间间距
-     */
-    private int mWidth = 3;
-    /**
-     * 最大宽度
-     */
-    private Integer mMaxRadius = 300;
-    /**
-     * 是否正在扩散中
-     */
-    private boolean mIsWave = false;
-    // 透明度集合
-    private List<Integer> mAlphas = new ArrayList<>();
-    // 扩散圆半径集合
-    private List<Integer> mRadius = new ArrayList<>();
+    private float mInitialRadius; // 初始波纹半径
+    private float mMaxRadiusRate = 0.85f; // 如果没有设置mMaxRadius，可mMaxRadius = 最小长度 * mMaxRadiusRate;
+    private float mMaxRadius; // 最大波纹半径
+    private long mDuration = 2000; // 一个波纹从创建到消失的持续时间
+    private int mSpeed = 500; // 波纹的创建速度，每500ms创建一个
+    private Interpolator mInterpolator = new LinearInterpolator();
+
+    private List<Circle> mCircleList = new ArrayList<Circle>();
+    private boolean mIsRunning;
+
+    private boolean mMaxRadiusSet;
+
     private Paint mPaint;
-    //扩散的圆形是否是实心圆
-    private boolean isFill = true;
+    private long mLastCreateTime;
+
+    private Runnable mCreateCircle = new Runnable() {
+        @Override
+        public void run() {
+            if (mIsRunning) {
+                newCircle();
+                postDelayed(mCreateCircle, mSpeed);
+            }
+        }
+    };
 
     public WaveView(Context context) {
         this(context, null);
     }
 
     public WaveView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        setStyle(Paint.Style.FILL);
     }
 
-    public WaveView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.WaveView, defStyleAttr, 0);
-        mColor = a.getColor(R.styleable.WaveView_wave_color, mColor);
-        mWidth = a.getInt(R.styleable.WaveView_wave_width, mWidth);
-        mImageRadius = a.getInt(R.styleable.WaveView_wave_coreImageRadius, mImageRadius);
-        a.recycle();
-    }
-
-    private void init() {
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(5);
-        mAlphas.add(255);
-        mRadius.add(0);
-
-    }
-
-    /**
-     * 获取View的宽高在构造方法中拿不到的，getWidth()，getHeight()都会为零
-     *
-     * @param hasWindowFocus
-     */
-    @Override
-    public void onWindowFocusChanged(boolean hasWindowFocus) {
-        super.onWindowFocusChanged(hasWindowFocus);
-        mMaxRadius = getWidth() > getHeight() ? getHeight() / 2 : getWidth() / 2;
-        invalidate();
-    }
-
-    /**
-     * 防止window是去焦点时，也就是应用在后台时，停止View的绘制
-     */
-    @Override
-    public void invalidate() {
-        if (hasWindowFocus()) {
-            super.invalidate();
-        }
+    public void setStyle(Paint.Style style) {
+        mPaint.setStyle(style);
     }
 
     @Override
-    public void onDraw(Canvas canvas) {
-        mPaint.setColor(mColor);
-        for (int i = 0; i < mAlphas.size(); i++) {
-            // 设置透明度
-            Integer alpha = mAlphas.get(i);
-            mPaint.setAlpha(alpha);
-            // 绘制波浪圆
-            Integer radius = mRadius.get(i);
-            canvas.drawCircle(getWidth() / 2, getHeight() / 2, mImageRadius + radius, mPaint);
-
-            if (alpha > 0 && mImageRadius + radius < mMaxRadius) {
-                alpha = (int) (255.0F * (1.0F - (mImageRadius + radius) * 1.0f / mMaxRadius));
-                mAlphas.set(i, alpha);
-                mRadius.set(i, radius + 1);
-            } else if (alpha < 0 && mImageRadius + radius > mMaxRadius) {
-                // 当最外面那个圆达到了View的宽度时，移除，保证内存的回收
-                mRadius.remove(i);
-                mAlphas.remove(i);
-            }
-
-        }
-        // 判断当波浪圆扩散到指定宽度时添加新扩散圆
-        if (mRadius.get(mRadius.size() - 1) == mWidth) {
-            addWave();
-        }
-
-        if (mIsWave) {
-            invalidate();
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        if (!mMaxRadiusSet) {
+            mMaxRadius = Math.min(w, h) * mMaxRadiusRate / 2.0f;
         }
     }
 
+    public void setMaxRadiusRate(float maxRadiusRate) {
+        this.mMaxRadiusRate = maxRadiusRate;
+    }
+
+    public void setColor(int color) {
+        mPaint.setColor(color);
+    }
+
     /**
-     * 开始扩散
+     * 开始
      */
     public void start() {
-        mIsWave = true;
-        invalidate();
+        if (!mIsRunning) {
+            mIsRunning = true;
+            mCreateCircle.run();
+        }
     }
 
     /**
-     * 停止扩散
+     * 停止
      */
     public void stop() {
-        mIsWave = false;
-
-
-
+        mIsRunning = false;
     }
 
-    /**
-     * 是否扩散中
-     */
-    public boolean isWave() {
-        return mIsWave;
+    protected void onDraw(Canvas canvas) {
+        Iterator<Circle> iterator = mCircleList.iterator();
+        while (iterator.hasNext()) {
+            Circle circle = iterator.next();
+            if (System.currentTimeMillis() - circle.mCreateTime < mDuration) {
+                mPaint.setAlpha(circle.getAlpha());
+                canvas.drawCircle(getWidth() / 2, getHeight() / 2, circle.getCurrentRadius(), mPaint);
+            } else {
+                iterator.remove();
+            }
+        }
+        if (mCircleList.size() > 0) {
+            postInvalidateDelayed(10);
+        }
     }
 
-    /**
-     * 设置波浪圆颜色
-     */
-    public void setColor(int colorId) {
-        mColor = colorId;
+    public void setInitialRadius(float radius) {
+        mInitialRadius = radius;
     }
 
-    /**
-     * 设置波浪圆之间间距
-     */
-    public void setWidth(int width) {
-        mWidth = width;
+    public void setDuration(long duration) {
+        this.mDuration = duration;
     }
 
-    /**
-     * 设置中心圆半径
-     */
-    public void setMaxRadius(int maxRadius) {
-        mMaxRadius = maxRadius;
+    public void setMaxRadius(float maxRadius) {
+        this.mMaxRadius = maxRadius;
+        mMaxRadiusSet = true;
     }
 
-    public void setImageRadius(int imageRadius) {
-        mImageRadius = imageRadius;
+    public void setSpeed(int speed) {
+        mSpeed = speed;
     }
 
-    public boolean isFill() {
-        return isFill;
+    private void newCircle() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - mLastCreateTime < mSpeed) {
+            return;
+        }
+        Circle circle = new Circle();
+        mCircleList.add(circle);
+        invalidate();
+        mLastCreateTime = currentTime;
     }
 
-    public void setFill(boolean fill) {
-        isFill = fill;
+    private class Circle {
+        private long mCreateTime;
+
+        public Circle() {
+            this.mCreateTime = System.currentTimeMillis();
+        }
+
+        public int getAlpha() {
+            float percent = (System.currentTimeMillis() - mCreateTime) * 1.0f / mDuration;
+            return (int) ((1.0f - mInterpolator.getInterpolation(percent)) * 255);
+        }
+
+        public float getCurrentRadius() {
+            float percent = (System.currentTimeMillis() - mCreateTime) * 1.0f / mDuration;
+            return mInitialRadius + mInterpolator.getInterpolation(percent) * (mMaxRadius - mInitialRadius);
+        }
     }
 
-    public void addWave() {
-        mAlphas.add(255);
-        mRadius.add(0);
+    public void setInterpolator(Interpolator interpolator) {
+        mInterpolator = interpolator;
+        if (mInterpolator == null) {
+            mInterpolator = new LinearInterpolator();
+        }
     }
 }

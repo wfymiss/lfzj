@@ -9,4 +9,5 @@ public class LoginBean {
     public String error;
     public String user_id;
     public int is_user_auth;
+    public String user_type;
 }

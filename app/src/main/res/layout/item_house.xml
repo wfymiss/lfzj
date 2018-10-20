@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_house_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_20dp"
+        android:text="凯德世家"
+
+        android:layout_marginLeft="@dimen/margin_30dp"
+        android:textColor="@color/color_444444"
+        android:textSize="@dimen/textSize_15sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_1dp"
+        android:background="@color/common_drivder_line"
+        android:layout_marginTop="@dimen/dp_20"/>
+</LinearLayout>
