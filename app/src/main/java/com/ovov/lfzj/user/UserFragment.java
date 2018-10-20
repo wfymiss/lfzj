@@ -20,6 +20,7 @@ import com.ovov.lfzj.event.UpdateEvent;
 import com.ovov.lfzj.event.UserFragmentIdentityEvent;
 import com.ovov.lfzj.home.bean.SubListBean;
 import com.ovov.lfzj.home.payment.activity.PayMentRecordActivity;
+import com.ovov.lfzj.home.repair.RepairActivity;
 import com.ovov.lfzj.home.ui.MessageListActivity;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
@@ -130,7 +131,7 @@ public class UserFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.my_circle_images, R.id.tv_shop_order, R.id.tv_my, R.id.tv_myhealth,R.id.mine_family})
+    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.my_circle_images, R.id.tv_shop_order, R.id.tv_my, R.id.tv_myhealth, R.id.mine_family, R.id.tv_worker_order})
 
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -149,8 +150,9 @@ public class UserFragment extends BaseFragment {
 //            case R.id.tv_my:
 //                mUtils.startActivity(OrdersActivity.class);
 //                break;
-//            case R.id.tv_unitiy_message:
-//                mUtils.startActivity(PayActivity.class);
+            case R.id.tv_worker_order:
+                RepairActivity.toActivity(mActivity);
+                break;
 
             case R.id.iv_right:
                 SettingActivity.toActivity(mActivity);

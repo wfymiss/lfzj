@@ -32,15 +32,14 @@
         <com.ovov.lfzj.base.widget.WaveView
             android:id="@+id/wave"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            app:wave_color="@color/color_red"
-            app:wave_coreImageRadius="30"
-            app:wave_width="40">
-
-        </com.ovov.lfzj.base.widget.WaveView>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:diffuse_color="@color/colorAccent"
+            app:diffuse_coreColor="@color/colorPrimaryDark"
+            app:diffuse_coreImage="@android:drawable/ic_menu_search"
+            app:diffuse_coreRadius="100"
+            app:diffuse_maxWidth="300"
+            app:diffuse_width="4" />
 
         <ImageView
             android:id="@+id/head"
