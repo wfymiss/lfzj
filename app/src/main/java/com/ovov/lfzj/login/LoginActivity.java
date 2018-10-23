@@ -26,6 +26,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscription;
 
+import static com.ovov.lfzj.CatelApplication.OWNER_LOGIN;
+
 public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.et_phone)
@@ -119,11 +121,15 @@ public class LoginActivity extends BaseActivity {
 
                             if (userType.length <= 2 && loginBeanDataInfo.datas().user_type.contains(IdentityType.typeOwner)){
                                 MainActivity.toActivity(mActivity);
+                                LoginUserBean.getInstance().setLoginType(OWNER_LOGIN);
+                                LoginUserBean.getInstance().save();
                                 finish();
                                 return;
                             }
                             if (userType.length <= 2 && loginBeanDataInfo.datas().user_type.contains(IdentityType.typeFamily)){
                                 MainActivity.toActivity(mActivity);
+                                LoginUserBean.getInstance().setLoginType(OWNER_LOGIN);
+                                LoginUserBean.getInstance().save();
                                 finish();
                                 return;
                             }
@@ -138,11 +144,15 @@ public class LoginActivity extends BaseActivity {
                             }
                             if (userType.length >= 2 && loginBeanDataInfo.datas().user_type.equals("1|2|3")){
                                 MainActivity.toActivity(mActivity);
+                                LoginUserBean.getInstance().setLoginType(OWNER_LOGIN);
+                                LoginUserBean.getInstance().save();
                                 finish();
                                 return;
                             }
                             if (loginBeanDataInfo.datas().user_type.equals(IdentityType.typeUser)){
                                 MainActivity.toActivity(mActivity);
+                                LoginUserBean.getInstance().setLoginType(OWNER_LOGIN);
+                                LoginUserBean.getInstance().save();
                                 finish();
                                 return;
                             }

@@ -418,7 +418,7 @@ public interface CatelApiService {
                                  @Part("address") RequestBody address,
                                  @Part("position") RequestBody  position,
                                  @Part("category") RequestBody category,
-                                 @Part("content") RequestBody content,
+                                 @Part("contents") RequestBody content,
                                  @Part("username") RequestBody username,
                                  @Part("subdistrictId") RequestBody subdistrict_id,
                                  @Part() List<MultipartBody.Part> part);
