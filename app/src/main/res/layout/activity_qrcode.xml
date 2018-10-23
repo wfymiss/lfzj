@@ -7,25 +7,39 @@
     android:orientation="vertical"
     >
     <include layout="@layout/include_title_text"/>
-    <ImageView
-        android:id="@+id/iv_qrcode"
-        android:layout_width="600px"
-        android:layout_height="600px"
-       android:layout_gravity="center_horizontal"
-        android:background="@color/white"
-        android:gravity="center_horizontal"
-        android:scaleType="centerCrop" />
+    <!--<ImageView-->
+        <!--android:id="@+id/iv_qrcode"-->
+        <!--android:layout_width="600px"-->
+        <!--android:layout_height="600px"-->
+       <!--android:layout_gravity="center_horizontal"-->
+        <!--android:background="@color/white"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:scaleType="centerCrop" />-->
 
-    <TextView
-        android:id="@+id/btn_refresh"
-        android:layout_width="600px"
-        android:layout_height="100px"
-        android:layout_below="@+id/iv_qrcode"
-        android:layout_marginTop="200px"
-        android:background="#ddedf4"
-        android:gravity="center_horizontal"
-    android:layout_gravity="center_horizontal"
-        android:text="点击刷新二维码"
-        android:textColor="#504f4f"
-        android:textSize="60px" />
+    <!--<TextView-->
+        <!--android:id="@+id/btn_refresh"-->
+        <!--android:layout_width="600px"-->
+        <!--android:layout_height="100px"-->
+        <!--android:layout_below="@+id/iv_qrcode"-->
+        <!--android:layout_marginTop="200px"-->
+        <!--android:background="#ddedf4"-->
+        <!--android:gravity="center_horizontal"-->
+    <!--android:layout_gravity="center_horizontal"-->
+        <!--android:text="点击刷新二维码"-->
+        <!--android:textColor="#504f4f"-->
+        <!--android:textSize="60px" />-->
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srly"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:divider="@null"
+            android:layout_height="match_parent">
+
+        </ListView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

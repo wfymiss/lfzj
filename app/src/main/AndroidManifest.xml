@@ -408,6 +408,10 @@
         <activity android:name=".property.PropertyMainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity android:name=".user.setting.HelpActivity" />
+        <activity android:name=".user.setting.advicesActivity" />
+        <activity android:name=".home.ui.MessageDetailActivity"></activity>
     </application>
 
 </manifest>

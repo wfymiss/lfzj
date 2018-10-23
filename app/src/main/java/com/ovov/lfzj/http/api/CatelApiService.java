@@ -122,6 +122,14 @@ public interface CatelApiService {
                                             @Field("id") String id,
                                             @Field("userid") String userid);
 
+
+    @FormUrlEncoded
+    @POST("v1/user/commentzan")
+    Observable<ListInfo<SquareListInfo>> getLog(@Field("token") String token,
+                                            @Field("page") int page);
+
+
+
     @FormUrlEncoded
     @POST("v1/user/loginout")
     Observable<DataInfo> loginout(@Field("token") String token);
@@ -235,6 +243,15 @@ public interface CatelApiService {
     Observable<SubListBean> getHomeList(@Field("token") String token);
 
     @FormUrlEncoded
+    @POST("v1/recommend/infomationlist")
+    Observable<ListInfo<BannerBean>> getinfomationlist(@Field("token") String token);
+
+    @FormUrlEncoded
+    @POST("v1/recommend/infomation")
+    Observable<ListInfo<BannerBean>> getInfomation(@Field("token") String token,
+                                                       @Field("type_id") String sub_id);
+
+    @FormUrlEncoded
     @POST("/v1/examination")
     Observable<ListInfo<HealthBean>> getHealthTime(@Field("token") String token,
                                                    @Field("subdistrictr_id") String sub_id,
@@ -329,11 +346,11 @@ public interface CatelApiService {
 
 
     @FormUrlEncoded
-    @POST("/v1/notice/noticeRecommend")
+    @POST("v1/notice/noticeRecommend")
     Observable<ListInfo<NewsBean>> getNoticeList(@Field("subdistrict_id") String sub_id);
 
     @FormUrlEncoded
-    @POST("/v1/news/newsRecommend")
+    @POST("v1/news/newsRecommend")
     Observable<ListInfo<NewsBean>> getNewsList(@Field("subdistrict_id") String subdistrict_id);
 
 
@@ -345,16 +362,16 @@ public interface CatelApiService {
 
 
     @FormUrlEncoded
-    @POST("/v1/news/newsDetail")
+    @POST("v1/news/newsDetail")
     Observable<NewsDetailBean> getNewsDetailList(@Field("id") String id);
 
     @FormUrlEncoded
-    @POST("/v1/notice/noticeDetail")
+    @POST("v1/notice/noticeDetail")
     Observable<NewsDetailBean> getNoticeDetailList(@Field("id") String id);
 
     // 上传访客通行信息
     @FormUrlEncoded
-    @POST("/v1/entrance/visitorRecord")
+    @POST("v1/entrance/visitorRecord")
     Observable<ServerFeedBackInfo> getUpVisitorInfo(@Field("token") String token,
                                                     @Field("subdistrict_id") String tel,
                                                     @Field("mobile") String moblie,
@@ -365,7 +382,7 @@ public interface CatelApiService {
 
     // 访客通行日志
     @FormUrlEncoded
-    @POST("/v1/entrance/getVisitor")
+    @POST("v1/entrance/getVisitor")
     Observable<VisistorRecordResult> getVisitorLog(@Field("token") String token,
                                                    @Field("page") int page);
 
@@ -418,8 +435,6 @@ public interface CatelApiService {
     @POST("v1/work/workstaff")
     Observable<DataInfo> getWorkorderDetail(@Field("token") String token,
                                             @Field("wid") String wid);
-
-
 
 
 }
