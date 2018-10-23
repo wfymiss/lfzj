@@ -17,6 +17,7 @@ import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.utils.StatusBarUtils;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
+import com.ovov.lfzj.event.IdentityEvent;
 import com.ovov.lfzj.home.bean.SubListBean;
 import com.ovov.lfzj.home.bean.SubdistrictsBean;
 import com.ovov.lfzj.http.RetrofitHelper;
@@ -30,6 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscription;
+import rx.functions.Action1;
 
 public class MySubActivity extends BaseActivity {
 
@@ -64,6 +66,12 @@ public class MySubActivity extends BaseActivity {
         initSitView();
         initList();
         getUserInfo();
+        addRxBusSubscribe(IdentityEvent.class, new Action1<IdentityEvent>() {
+            @Override
+            public void call(IdentityEvent identityEvent) {
+                finish();
+            }
+        });
     }
 
     private void initList() {

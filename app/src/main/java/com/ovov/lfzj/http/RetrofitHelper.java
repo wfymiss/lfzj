@@ -20,6 +20,7 @@ import com.ovov.lfzj.base.bean.PropertyCheckOrderInfo;
 import com.ovov.lfzj.base.bean.PropertyPaymentInfo;
 import com.ovov.lfzj.base.bean.RegisterBean;
 import com.ovov.lfzj.base.bean.RoomInfo;
+import com.ovov.lfzj.base.bean.RoomListInfo;
 import com.ovov.lfzj.base.bean.RoomListResult;
 import com.ovov.lfzj.base.bean.ServerFeedBackInfo;
 import com.ovov.lfzj.base.bean.ShopListBean;
@@ -31,6 +32,7 @@ import com.ovov.lfzj.base.bean.UnitListResult;
 import com.ovov.lfzj.base.bean.UpdateBean;
 import com.ovov.lfzj.base.bean.UrlBean;
 import com.ovov.lfzj.base.bean.VisistorRecordResult;
+import com.ovov.lfzj.base.bean.WorkOrderListInfo;
 import com.ovov.lfzj.base.bean.WorkOrderUpInfo;
 import com.ovov.lfzj.base.utils.NetWorkUtil;
 import com.ovov.lfzj.home.bean.BannerBean;
@@ -408,6 +410,33 @@ public class RetrofitHelper {
 
     public Observable<DataInfo<MobileInfo>> getMobile(String house_path){
         return mApiService.getMobile(getToken(),house_path);
+    }
+
+    public Observable<ListInfo<RoomListInfo>> getUserHouse(){
+        return mApiService.getUserHouse(getToken(),getSubId());
+    }
+
+    public Observable<ListInfo<WorkOrderListInfo>> getWorkList(int status, int page){
+        return mApiService.getWorkList(getToken(),page,status);
+    }
+
+    public Observable<DataInfo> workAdd(String phone,String name, String address, int posistion, int category,  String content, List<MultipartBody.Part> parts){
+        RequestBody token = RequestBody.create(MediaType.parse("multipart/form-data"), getToken());
+        RequestBody mName = RequestBody.create(MediaType.parse("multipart/form-data"),name);
+        RequestBody mAddress = RequestBody.create(MediaType.parse("multipart/form-data"),address);
+        RequestBody mPosistion = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(posistion));
+        RequestBody mCategory = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(category));
+        RequestBody mContent = RequestBody.create(MediaType.parse("multipart/form-data"), content);
+        RequestBody mPhone = RequestBody.create(MediaType.parse("multipart/form-data"), phone);
+        RequestBody mSubId = RequestBody.create(MediaType.parse("multipart/form-data"), getSubId());
+
+        Log.e("accesstoken",getSubId());
+        return mApiService.workAdd(token,mPhone,mAddress,mPosistion,mCategory,mContent,mName,mSubId,parts);
+
+    }
+
+    public Observable<DataInfo> getWorkDetail(String wid){
+        return mApiService.getWorkorderDetail(getToken(),wid);
     }
 
     private static final String TAG = "RetrofitHelper";

@@ -17,14 +17,20 @@ import android.widget.TextView;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.bean.DataInfo;
+import com.ovov.lfzj.base.bean.ListInfo;
+import com.ovov.lfzj.base.bean.RoomListInfo;
 import com.ovov.lfzj.base.net.DataResultException;
+import com.ovov.lfzj.base.utils.RegexUtils;
 import com.ovov.lfzj.base.utils.RxBus;
 import com.ovov.lfzj.base.utils.RxUtil;
+import com.ovov.lfzj.base.utils.UIUtils;
 import com.ovov.lfzj.base.utils.Uri2Pathutil;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
+import com.ovov.lfzj.base.widget.RoomListDialog;
 import com.ovov.lfzj.event.ClickEvent;
 import com.ovov.lfzj.event.DeleteImageEvent;
 import com.ovov.lfzj.event.RefreshEvent;
+import com.ovov.lfzj.event.RoomSelectEvent;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.neighbour.adapter.GridPopupAdapter;
@@ -80,7 +86,7 @@ public class RepairActivity extends BaseActivity {
     TextView mRepairCategoryOther;
     @BindView(R.id.re_repair_item)
     LinearLayout mReRepairItem;
-    private int flag = 1;
+    private int repairType = 1;
     private GridPopupAdapter mGridAdapter;
     private int REQUEST_CODE_CHOOSE = 101;
     private MultipartBody.Part part;
@@ -89,6 +95,19 @@ public class RepairActivity extends BaseActivity {
     List<File> mImage = new ArrayList<>();
     private List<File> listImg;
     List<Uri> list = new ArrayList<Uri>();
+
+    private int TYPE_WATER = 1;
+    private int TYPE_ELE = 2;
+    private int TYPE_AIR = 3;
+    private int TYPE_HOT = 4;
+    private int TYPE_OTHER = 5;
+
+
+    private int AREA_FAMILY = 0;
+    private int AREA_COMMON = 1;
+    private int area;
+    private String house_path;
+
     public static void toActivity(Context context) {
         Intent intent = new Intent(context, RepairActivity.class);
         context.startActivity(intent);
@@ -105,6 +124,14 @@ public class RepairActivity extends BaseActivity {
         familySelect();
         initgrid();
         mRepairCategoryWater.setSelected(true);
+        area = AREA_FAMILY;
+        addRxBusSubscribe(RoomSelectEvent.class, new Action1<RoomSelectEvent>() {
+            @Override
+            public void call(RoomSelectEvent roomSelectEvent) {
+                mTvLocation.setText(roomSelectEvent.building_name+"号楼"+roomSelectEvent.unit+"单元"+roomSelectEvent.name);
+                house_path = roomSelectEvent.building_name+"-"+roomSelectEvent.unit+"-"+roomSelectEvent.name;
+            }
+        });
     }
 
     private void initgrid() {
@@ -139,12 +166,14 @@ public class RepairActivity extends BaseActivity {
     }
 
     private void setPhoto() {
+
+        int  size = mImage.size()>=9 ?9:9-mImage.size();
         Matisse.from(this)
                 .choose(MimeType.allOf())
                 .capture(true)
                 .captureStrategy(new CaptureStrategy(true, "com.leFu.fileProvider"))
                 .countable(true)
-                .maxSelectable(9)
+                .maxSelectable(size)
                 .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.dp_130))
                 .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                 .thumbnailScale(0.85f)
@@ -161,6 +190,7 @@ public class RepairActivity extends BaseActivity {
         mEtLocation.setVisibility(View.GONE);
         mTvLocation.setVisibility(View.VISIBLE);
         mReRepairItem.setVisibility(View.VISIBLE);
+        area = AREA_FAMILY;
     }
 
     private void commonSelect() {
@@ -171,6 +201,7 @@ public class RepairActivity extends BaseActivity {
         mEtLocation.setVisibility(View.VISIBLE);
         mTvLocation.setVisibility(View.GONE);
         mReRepairItem.setVisibility(View.GONE);
+        area = AREA_COMMON;
     }
 
     @OnClick({R.id.iv_back, R.id.tv_family, R.id.tv_common, R.id.tv_location, R.id.tv_commit, R.id.repair_category_water, R.id.repair_category_electric, R.id.repair_category_gas, R.id.repair_category_hot, R.id.repair_category_other})
@@ -186,26 +217,43 @@ public class RepairActivity extends BaseActivity {
                 commonSelect();
                 break;
             case R.id.tv_location:
+                getUserHouse();
                 break;
             case R.id.tv_commit:
-                if (!TextUtils.isEmpty(mEtName.getText()) && !TextUtils.isEmpty(mEtPhone.getText()) && !TextUtils.isEmpty(mEtLocation.getText())) {
-
-                    if (!TextUtils.isEmpty(mEtContent.getText())) {
-
-                   //     addNeighbour();
-
-
-
-                    } else {
-                        showToast("请描述故障情况");
-                        return;
-                    }
-
-                } else {
-                    showToast("请完善资料");
+                if (TextUtils.isEmpty(mEtName.getText().toString()) && TextUtils.isEmpty(mEtPhone.getText().toString())  && TextUtils.isEmpty(mEtContent.getText().toString())){
+                    showToast(R.string.text_input_all_message);
                     return;
                 }
-                WorkOrderConfirmActivity.toActivity(mActivity);
+                if (area == AREA_FAMILY && TextUtils.isEmpty(mTvLocation.getText())){
+                    showToast("请选择房间");
+                    return;
+                }
+                if (area == AREA_COMMON && TextUtils.isEmpty(mEtLocation.getText().toString())){
+                    showToast("请填写位置");
+                    return;
+                }
+                if (RegexUtils.isMobile(mEtPhone.getText().toString().trim()) != RegexUtils.VERIFY_SUCCESS ){
+                    showToast("请输入正确的手机号码");
+                    return;
+                }
+                RepairContent repairContent = new RepairContent();
+                repairContent.setContent(mEtContent.getText().toString());
+                repairContent.setmGrid(mImage);
+                repairContent.setMobile(mEtPhone.getText().toString());
+                repairContent.setName(mEtName.getText().toString());
+                if (area == AREA_FAMILY ){
+                    repairContent.setRepairArea("家庭区域");
+                    repairContent.setRepairLocation(mTvLocation.getText().toString());
+                    repairContent.setRepairType(repairType);
+                    repairContent.setAreaType(AREA_FAMILY);
+                    repairContent.setHouse_path(house_path);
+                }
+                if (area == AREA_COMMON ){
+                    repairContent.setRepairArea("公共设施");
+                    repairContent.setRepairLocation(mEtLocation.getText().toString());
+                    repairContent.setAreaType(AREA_COMMON);
+                }
+                WorkOrderConfirmActivity.toActivity(mActivity,repairContent);
                 break;
             case R.id.repair_category_water:
                 mRepairCategoryWater.setSelected(true);
@@ -213,7 +261,7 @@ public class RepairActivity extends BaseActivity {
                 mRepairCategoryGas.setSelected(false);
                 mRepairCategoryHot.setSelected(false);
                 mRepairCategoryOther.setSelected(false);
-                flag = 1;
+                repairType = TYPE_WATER;
                 break;
             case R.id.repair_category_electric:
                 mRepairCategoryWater.setSelected(false);
@@ -221,7 +269,7 @@ public class RepairActivity extends BaseActivity {
                 mRepairCategoryGas.setSelected(false);
                 mRepairCategoryHot.setSelected(false);
                 mRepairCategoryOther.setSelected(false);
-                flag = 2;
+                repairType = TYPE_ELE;
                 break;
             case R.id.repair_category_gas:
                 mRepairCategoryWater.setSelected(false);
@@ -229,7 +277,7 @@ public class RepairActivity extends BaseActivity {
                 mRepairCategoryGas.setSelected(true);
                 mRepairCategoryHot.setSelected(false);
                 mRepairCategoryOther.setSelected(false);
-                flag = 3;
+                repairType = TYPE_AIR;
                 break;
             case R.id.repair_category_hot:
                 mRepairCategoryWater.setSelected(false);
@@ -237,7 +285,7 @@ public class RepairActivity extends BaseActivity {
                 mRepairCategoryGas.setSelected(false);
                 mRepairCategoryHot.setSelected(true);
                 mRepairCategoryOther.setSelected(false);
-                flag = 4;
+                repairType = TYPE_HOT;
                 break;
             case R.id.repair_category_other:
                 mRepairCategoryWater.setSelected(false);
@@ -245,9 +293,39 @@ public class RepairActivity extends BaseActivity {
                 mRepairCategoryGas.setSelected(false);
                 mRepairCategoryHot.setSelected(false);
                 mRepairCategoryOther.setSelected(true);
-                flag = 5;
+                repairType = TYPE_OTHER;
                 break;
         }
+    }
+
+    private void getUserHouse() {
+        showLoadingDialog();
+        Subscription subscription = RetrofitHelper.getInstance().getUserHouse()
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<ListInfo<RoomListInfo>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        if (e instanceof DataResultException){
+                            DataResultException dataResultException = (DataResultException) e;
+                            showToast(dataResultException.errorInfo);
+                        }else {
+                            doFailed();
+                            showError(e.getMessage());
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(ListInfo<RoomListInfo> dataInfo) {
+                        RoomListDialog roomListDialog = new RoomListDialog(mActivity,dataInfo.datas());
+                        roomListDialog.setWidth((int) (UIUtils.getScreenWidth()*0.5));
+                        roomListDialog.show();
+                        roomListDialog.setData(dataInfo.datas());
+                        dismiss();
+                    }
+                });
+        addSubscrebe(subscription);
     }
 
 
@@ -269,7 +347,6 @@ public class RepairActivity extends BaseActivity {
                 //File file = new File("/sdcard",mSelected.get(i).getPath() + ".png");
                 ContentResolver contentResolver = getContentResolver();
                 String path = Uri2Pathutil.getFromMediaUri(this, contentResolver, list.get(i));
-                Log.e("yri", path);
                 File file = new File(path);
                 try {
                     compressedImageFile = new Compressor(this).compressToFile(file);
@@ -307,42 +384,4 @@ public class RepairActivity extends BaseActivity {
         mGridAdapter.notifyDataSetChanged();
     }
 
-
-//    private void addNeighbour() {
-//        // RequestBody firstBody = RequestBody.create(MediaType.parse("multipart/form-data"), "img");
-//        RequestBody mContent = RequestBody.create(MediaType.parse("multipart/form-data"), mEtContent.getText().toString());
-//        /*if (listImg.size() > 0)
-//            part = MultipartBody.Part.createFormData("img", listImg.get(0).getName(), RequestBody.create(null, listImg.get(0)));*/
-//        for (int i = 0; i<mImage.size();i++){
-//            part = MultipartBody.Part.createFormData("img"+i, mImage.get(i).getName(), RequestBody.create(null, mImage.get(i)));
-//            parts.add(part);
-//        }
-//
-//        showLoadingDialog();
-//        Subscription subscription = RetrofitHelper.getInstance().addNeighbour(mContent, parts)
-//                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
-//                .subscribe(new CommonSubscriber<DataInfo>() {
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        dismiss();
-//                        if (e instanceof DataResultException) {
-//                            DataResultException dataResultException = (DataResultException) e;
-//                            showToast(dataResultException.errorInfo);
-//                        } else {
-//
-//                            doFailed();
-//                            showError(e.getMessage());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onNext(DataInfo dataInfo) {
-//                        dismiss();
-//                        showToast(R.string.text_put_success);
-//                        RxBus.getDefault().post(new RefreshEvent());
-//                        finish();
-//                    }
-//                });
-//        addSubscrebe(subscription);
-//    }
 }

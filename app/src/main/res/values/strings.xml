@@ -162,6 +162,7 @@
     <string name="text_check">验收</string>
     <string name="text_identity_owner">业主身份认证</string>
     <string name="text_abandon">放弃认证</string>
+    <string name="text_input_all_message">请输入完整信息</string>
 
     <!--管家版功能标题-->
     <string name="gd">维修工单</string>

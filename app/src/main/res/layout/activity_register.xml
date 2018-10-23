@@ -11,7 +11,7 @@
         android:layout_width="@dimen/dp_70"
         android:layout_height="@dimen/dp_87"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dp_54"
+        android:layout_marginTop="150dp"
         android:src="@mipmap/ic_logo_appname"/>
     <ImageView
         android:layout_width="@dimen/dp_265"
@@ -21,12 +21,12 @@
         android:layout_gravity="center_horizontal"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="33dp"
         android:orientation="horizontal"
         android:background="@drawable/shape_login_edit"
         android:layout_marginLeft="@dimen/dp_48"
         android:layout_marginRight="@dimen/dp_48"
-        android:layout_marginTop="@dimen/dp_50">
+        android:layout_marginTop="@dimen/dp_30">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
         android:orientation="horizontal">
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="@dimen/dp_45"
+            android:layout_height="33dp"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:background="@drawable/shape_login_edit"
@@ -93,7 +93,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="33dp"
         android:orientation="horizontal"
         android:background="@drawable/shape_login_edit"
         android:layout_marginLeft="@dimen/dp_48"
@@ -119,7 +119,7 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"
+        android:layout_height="33dp"
         android:orientation="horizontal"
         android:background="@drawable/shape_login_edit"
         android:layout_marginLeft="@dimen/dp_48"
@@ -151,9 +151,10 @@
         android:layout_marginTop="@dimen/dp_28"
         android:layout_marginRight="@dimen/dp_100"
         android:layout_marginLeft="@dimen/dp_100"
-        android:paddingTop="@dimen/dp_13"
-        android:paddingBottom="@dimen/dp_13"
-        android:background="@drawable/shape_confirm"
+        android:layout_marginBottom="@dimen/margin_20dp"
+        android:paddingTop="@dimen/dp_8"
+        android:paddingBottom="@dimen/dp_8"
+        android:background="@drawable/shape_radius_5"
         android:gravity="center"
         android:id="@+id/tv_register"
         android:textColor="@color/color_ffffff"/>

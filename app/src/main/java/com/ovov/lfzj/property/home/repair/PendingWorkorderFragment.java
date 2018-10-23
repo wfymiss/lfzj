@@ -2,6 +2,8 @@ package com.ovov.lfzj.property.home.repair;
 
 import android.os.Bundle;
 
+import com.ovov.lfzj.base.bean.ListInfo;
+import com.ovov.lfzj.base.bean.WorkOrderListInfo;
 import com.ovov.lfzj.home.repair.BaseWorkerOrderFragment;
 
 import rx.Observable;
@@ -23,7 +25,7 @@ public class PendingWorkorderFragment extends BaseWorkerOrderFragment {
     }
 
     @Override
-    protected Observable<Object> getObservable(int type) {
+    protected Observable<ListInfo<WorkOrderListInfo>> getObservable(int type) {
         return null;
     }
 

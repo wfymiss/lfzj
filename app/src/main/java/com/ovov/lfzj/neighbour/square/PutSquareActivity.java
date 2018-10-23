@@ -114,12 +114,13 @@ public class PutSquareActivity extends BaseActivity {
     }
 
     private void setPhoto() {
+        int  size = mImage.size()>=9 ?9:9-mImage.size();
         Matisse.from(this)
                 .choose(MimeType.allOf())
                 .capture(true)
                 .captureStrategy(new CaptureStrategy(true, "com.leFu.fileProvider"))
                 .countable(true)
-                .maxSelectable(9)
+                .maxSelectable(size)
                 .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.dp_130))
                 .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                 .thumbnailScale(0.85f)
@@ -167,7 +168,7 @@ public class PutSquareActivity extends BaseActivity {
                 //File file = new File("/sdcard",mSelected.get(i).getPath() + ".png");
                 ContentResolver contentResolver = getContentResolver();
                 String path = Uri2Pathutil.getFromMediaUri(this, contentResolver, list.get(i));
-                Log.e("yri", path);
+                //Log.e("yri", path);
                 File file = new File(path);
                 try {
                     compressedImageFile = new Compressor(this).compressToFile(file);

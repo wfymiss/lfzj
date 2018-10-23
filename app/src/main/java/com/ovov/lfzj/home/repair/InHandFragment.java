@@ -2,6 +2,10 @@ package com.ovov.lfzj.home.repair;
 
 import android.os.Bundle;
 
+import com.ovov.lfzj.base.bean.ListInfo;
+import com.ovov.lfzj.base.bean.WorkOrderListInfo;
+import com.ovov.lfzj.http.RetrofitHelper;
+
 import rx.Observable;
 
 /**
@@ -18,8 +22,8 @@ public class InHandFragment extends BaseWorkerOrderFragment {
         return fragment;
     }
     @Override
-    protected Observable<Object> getObservable(int type) {
-        return null;
+    protected Observable<ListInfo<WorkOrderListInfo>> getObservable(int page) {
+        return RetrofitHelper.getInstance().getWorkList(2,page);
     }
 
     @Override
@@ -41,4 +45,5 @@ public class InHandFragment extends BaseWorkerOrderFragment {
     protected boolean isInHand() {
         return false;
     }
+
 }

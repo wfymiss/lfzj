@@ -46,9 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
             android:layout_marginRight="@dimen/common_margin"
-            android:textColor="@color/color_ffffff"
+            android:textColor="@color/color_text_a1a1a1"
             android:text=""
-            android:textSize="@dimen/common_text_size_middle" />
+            android:textSize="@dimen/textSize_12sp" />
 
         <ImageView
             android:id="@+id/iv_right"

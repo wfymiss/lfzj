@@ -5,8 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.ovov.lfzj.MainActivity;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseDialog;
+import com.ovov.lfzj.base.utils.RxBus;
+import com.ovov.lfzj.event.IdentityEvent;
 
 /**
  * Created by kaite on 2018/10/19.
@@ -29,6 +32,7 @@ public class IdentitySuccessDialog extends BaseDialog {
         tvTohome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RxBus.getDefault().post(new IdentityEvent());
                 dismiss();
             }
         });

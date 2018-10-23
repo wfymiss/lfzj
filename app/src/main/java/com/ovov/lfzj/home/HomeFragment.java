@@ -258,7 +258,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
                 if (UIUtils.isFastClick()) {
                     if (position == 2) {
                         //RepairCommentActivity.toActivity(mActivity);
-                        MySubActivity.toActivity(mActivity);
+                        RepairActivity.toActivity(mActivity);
                         return;
                     }
                     if (LoginUserBean.getInstance().isIs_auth()) {

@@ -21,6 +21,7 @@ import com.ovov.lfzj.event.UserFragmentIdentityEvent;
 import com.ovov.lfzj.home.bean.SubListBean;
 import com.ovov.lfzj.home.payment.activity.PayMentRecordActivity;
 import com.ovov.lfzj.home.repair.RepairActivity;
+import com.ovov.lfzj.home.repair.WorkerOrderActivity;
 import com.ovov.lfzj.home.ui.MessageListActivity;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
@@ -151,7 +152,7 @@ public class UserFragment extends BaseFragment {
 //                mUtils.startActivity(OrdersActivity.class);
 //                break;
             case R.id.tv_worker_order:
-                RepairActivity.toActivity(mActivity);
+                WorkerOrderActivity.toActivity(mActivity);
                 break;
 
             case R.id.iv_right:

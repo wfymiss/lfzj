@@ -93,9 +93,6 @@ public class IdentityConfirmActivity extends BaseActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         /*ErrorIdentityDialog errorIdentityDialog = new ErrorIdentityDialog(mActivity);
         errorIdentityDialog.show();*/
-        IdentitySuccessDialog identitySuccessDialog = new IdentitySuccessDialog(mActivity);
-        identitySuccessDialog.setWidth((int) (UIUtils.getScreenWidth()*0.8));
-        identitySuccessDialog.show();
         StatusBarUtils.setStatusBar(this, false, false);
         initSitView();
         setTitleText(R.string.text_identity_owner);
@@ -121,6 +118,13 @@ public class IdentityConfirmActivity extends BaseActivity {
         mEtBuildingNumber.addTextChangedListener(mTextWatcherbuilding);
         mEtUnitNumber.addTextChangedListener(mTextWatcherUnit);
         mEtRoomNumber.addTextChangedListener(mTextWatcherRoom);
+        addRxBusSubscribe(IdentityEvent.class, new Action1<IdentityEvent>() {
+            @Override
+            public void call(IdentityEvent identityEvent) {
+                MainActivity.toActivity(mActivity);
+                finish();
+            }
+        });
 
 
     }
@@ -262,7 +266,7 @@ public class IdentityConfirmActivity extends BaseActivity {
     }
     private void authStep2(String house_path){
         showLoadingDialog();
-        Subscription subscription = RetrofitHelper.getInstance().authStep2(house_path,mobile,mEtVerfy.getText().toString().trim())
+        Subscription subscription = RetrofitHelper.getInstance().authStep2(house_path,mEtVerfy.getText().toString().trim(),mobile)
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {
                     @Override
@@ -280,7 +284,11 @@ public class IdentityConfirmActivity extends BaseActivity {
                     @Override
                     public void onNext(DataInfo dataInfo) {
                         dismiss();
-                        showToast("认证成功");
+                        IdentitySuccessDialog identitySuccessDialog = new IdentitySuccessDialog(mActivity);
+                        identitySuccessDialog.setWidth((int) (UIUtils.getScreenWidth()*0.8));
+                        identitySuccessDialog.show();
+                        LoginUserBean.getInstance().setIs_auth(true);
+                        LoginUserBean.getInstance().save();
                     }
                 });
         addSubscrebe(subscription);
@@ -338,10 +346,10 @@ public class IdentityConfirmActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_right:
+                RxBus.getDefault().post(new IdentityEvent());
                 finish();
                 break;
             case R.id.tv_get_code:
-                Log.e("midmobile",midMobile);
                 if (TextUtils.isEmpty(mCodeEditView.getText().toString().trim())){
                     showToast("请补全手机号");
                     return;
@@ -392,6 +400,7 @@ public class IdentityConfirmActivity extends BaseActivity {
                         buildingListDialog.setWidth((int) (UIUtils.getScreenWidth() * 0.5));
                         buildingListDialog.show();
                         buildingListDialog.setData(buildingListResult.datas());
+
                     }
                 });
         addSubscrebe(subscription);

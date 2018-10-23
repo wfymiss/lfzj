@@ -7,7 +7,10 @@ import android.view.ViewGroup;
 
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseFragment;
+import com.ovov.lfzj.base.bean.ListInfo;
+import com.ovov.lfzj.base.bean.WorkOrderListInfo;
 import com.ovov.lfzj.home.HomeFragment;
+import com.ovov.lfzj.http.RetrofitHelper;
 
 import butterknife.ButterKnife;
 import rx.Observable;
@@ -29,8 +32,8 @@ public class PendingWorkorderFragment extends BaseWorkerOrderFragment {
     }
 
     @Override
-    protected Observable<Object> getObservable(int type) {
-        return null;
+    protected Observable<ListInfo<WorkOrderListInfo>> getObservable(int page) {
+        return RetrofitHelper.getInstance().getWorkList(0,page);
     }
 
     @Override
@@ -52,4 +55,5 @@ public class PendingWorkorderFragment extends BaseWorkerOrderFragment {
     protected boolean isInHand() {
         return false;
     }
+
 }

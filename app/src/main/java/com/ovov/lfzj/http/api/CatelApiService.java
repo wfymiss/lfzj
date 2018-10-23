@@ -12,6 +12,7 @@ import com.ovov.lfzj.base.bean.PropertyCheckOrderInfo;
 import com.ovov.lfzj.base.bean.PropertyPaymentInfo;
 import com.ovov.lfzj.base.bean.RegisterBean;
 import com.ovov.lfzj.base.bean.RoomInfo;
+import com.ovov.lfzj.base.bean.RoomListInfo;
 import com.ovov.lfzj.base.bean.RoomListResult;
 import com.ovov.lfzj.base.bean.ServerFeedBackInfo;
 import com.ovov.lfzj.base.bean.ShopListBean;
@@ -23,6 +24,7 @@ import com.ovov.lfzj.base.bean.UnitListResult;
 import com.ovov.lfzj.base.bean.UpdateBean;
 import com.ovov.lfzj.base.bean.UrlBean;
 import com.ovov.lfzj.base.bean.VisistorRecordResult;
+import com.ovov.lfzj.base.bean.WorkOrderListInfo;
 import com.ovov.lfzj.base.bean.WorkOrderUpInfo;
 import com.ovov.lfzj.home.bean.BannerBean;
 import com.ovov.lfzj.home.bean.HealthDetailBean;
@@ -392,18 +394,32 @@ public interface CatelApiService {
     Observable<DataInfo<MobileInfo>> getMobile(@Field("token") String token,
                                                @Field("house_path") String house_path);
 
+    @Multipart
+    @POST("v1/work/workadd")
+    Observable<DataInfo> workAdd(@Part("token") RequestBody token,
+                                 @Part("phone") RequestBody phone,
+                                 @Part("address") RequestBody address,
+                                 @Part("position") RequestBody  position,
+                                 @Part("category") RequestBody category,
+                                 @Part("content") RequestBody content,
+                                 @Part("username") RequestBody username,
+                                 @Part("subdistrictId") RequestBody subdistrict_id,
+                                 @Part() List<MultipartBody.Part> part);
+    @FormUrlEncoded
+    @POST("v1/user/get_user_house")
+    Observable<ListInfo<RoomListInfo>> getUserHouse(@Field("token") String token,
+                                                    @Field("subdistrict_id") String subdistrict_id);
+    @FormUrlEncoded
+    @POST("v1/work/worklist")
+    Observable<ListInfo<WorkOrderListInfo>> getWorkList(@Field("token") String token,
+                                                        @Field("page") int page,
+                                                        @Field("status") int status);
+    @FormUrlEncoded
+    @POST("v1/work/workstaff")
+    Observable<DataInfo> getWorkorderDetail(@Field("token") String token,
+                                            @Field("wid") String wid);
 
-    @POST("/v1/work/workadd")
-    Observable<DataInfo> workAdd(@Field("token") String token,
-                                 @Field("phone") String phone,
-                                 @Field("address") String address,
-                                 @Field("repair") String repair,
-                                 @Field("position") String position,
-                                 @Field("category") String category,
-                                 @Field("repair_time") String repair_time,
-                                 @Field("content") String content,
-                                 @Field("repair_img") String repair_img
-    );
+
 
 
 }
