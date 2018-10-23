@@ -40,6 +40,9 @@ public class CatelApplication extends BaseApplication {
     public static int MAIN_ACTIVITY_IDENTITY = 4;
     public static int NEIGHBOUR_IDENTITY = 5;
     public static int UAER_FRAGMENT_IDENTITY = 5;
+    public static String OWNER_LOGIN = "1";
+    public static String PROPERTY_LOGIN = "2";
+    public static String SELLER_LOGIN = "3";
 
 
     static {

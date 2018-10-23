@@ -11,6 +11,10 @@ import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.utils.SharedPreferenceUtil;
 import com.ovov.lfzj.guide.GuideActivity;
+import com.ovov.lfzj.property.PropertyMainActivity;
+
+import static com.ovov.lfzj.CatelApplication.OWNER_LOGIN;
+import static com.ovov.lfzj.CatelApplication.PROPERTY_LOGIN;
 
 
 public class SplashActivity extends BaseActivity {
@@ -25,7 +29,10 @@ public class SplashActivity extends BaseActivity {
                 finish();
             } else {
                 if (LoginUserBean.getInstance().isLogin()) {
-                    MainActivity.toActivity(mActivity);
+                    if (LoginUserBean.getInstance().getLoginType().equals(OWNER_LOGIN))
+                        MainActivity.toActivity(mActivity);
+                    else if (LoginUserBean.getInstance().getLoginType().equals(PROPERTY_LOGIN))
+                        PropertyMainActivity.toActivity(mActivity);
                     finish();
                 } else {
                     LoginActivity.toActivity(mActivity);

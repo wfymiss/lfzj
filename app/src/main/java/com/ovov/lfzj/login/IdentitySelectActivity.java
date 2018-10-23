@@ -23,6 +23,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscription;
 
+import static com.ovov.lfzj.CatelApplication.OWNER_LOGIN;
+import static com.ovov.lfzj.CatelApplication.PROPERTY_LOGIN;
+
 public class IdentitySelectActivity extends BaseActivity {
 
     @BindView(R.id.iv_owner)
@@ -113,9 +116,13 @@ public class IdentitySelectActivity extends BaseActivity {
                 if (isConfirm) {
                     if (type == OWNER) {
                         MainActivity.toActivity(mActivity);
+                        LoginUserBean.getInstance().setLoginType(OWNER_LOGIN);
+                        LoginUserBean.getInstance().save();
                         finish();
                     } else if (type == PROPETY && user_type.contains(IdentityType.typeProperty)) {
                         PropertyMainActivity.toActivity(mActivity);
+                        LoginUserBean.getInstance().setLoginType(PROPERTY_LOGIN);
+                        LoginUserBean.getInstance().save();
                         finish();
                     } else
                         IdentityErrorActivity.toActivity(mActivity);
