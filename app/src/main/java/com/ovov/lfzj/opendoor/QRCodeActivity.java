@@ -279,15 +279,12 @@ public class QRCodeActivity extends BaseActivity {
 //
 
 
-    @OnClick({R.id.iv_back, R.id.btn_refresh})
+    @OnClick({R.id.iv_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
 
                 finish();
-                break;
-            case R.id.btn_refresh:
-                //initQrCode();
                 break;
         }
     }

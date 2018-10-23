@@ -100,7 +100,7 @@ public class MessageDetailActivity extends BaseActivity {
                     case "2":
                         viewHolder.setText(R.id.job_name, "发布人：");
                         viewHolder.setText(R.id.version_numb, "地址：");
-                        viewHolder.setText(R.id.tv_bbs_detail, noticeBean.getTitle());
+                        //viewHolder.setText(R.id.tv_bbs_detail, noticeBean.getTitle());
                         viewHolder.setText(R.id.tv_reciver, noticeBean.getMessage());
                         viewHolder.setText(R.id.tv_version, noticeBean.getMessage());
                         viewHolder.setText(R.id.tv_time, noticeBean.getTime());
@@ -176,7 +176,7 @@ public class MessageDetailActivity extends BaseActivity {
                         viewHolder.setText(R.id.tv_time, noticeBean.getTime());
                         break;
                     case "11":
-                        viewHolder.setText(R.id.tv_bbs_detail, noticeBean.getTitle());
+                        //viewHolder.setText(R.id.tv_bbs_detail, noticeBean.getTitle());
                         viewHolder.setText(R.id.tv_reciver, noticeBean.getMessage());
                         viewHolder.setText(R.id.tv_version, noticeBean.getMessage());
                         viewHolder.setText(R.id.tv_time, noticeBean.getTime());
