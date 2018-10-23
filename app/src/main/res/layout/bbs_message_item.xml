@@ -12,7 +12,7 @@
         android:padding="@dimen/margin_25dp">
 
         <TextView
-            android:id="@+id/tv_bbs_detail"
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -26,13 +26,14 @@
         <TextView
             android:id="@+id/tv_reciver_time"
             style="@style/bbs_item_text"
-            android:layout_below="@+id/tv_bbs_detail"
+            android:layout_below="@+id/tv_title"
             android:layout_marginTop="@dimen/margin_10dp"
             android:text="@string/text_reciver" />
 
         <TextView
+            android:id="@+id/tv_reciver"
             style="@style/bbs_item_text"
-            android:layout_below="@+id/tv_bbs_detail"
+            android:layout_below="@+id/tv_title"
             android:layout_marginLeft="9dp"
             android:layout_marginTop="@dimen/margin_10dp"
             android:layout_toRightOf="@+id/tv_reciver_time"
@@ -52,7 +53,7 @@
             android:layout_marginTop="26dp"
             android:layout_marginRight="24dp"
             android:layout_marginBottom="21dp"
-            android:layout_below="@+id/tv_bbs_detail"
+            android:layout_below="@+id/tv_title"
             android:src="@mipmap/arrows" />
 
     </RelativeLayout>

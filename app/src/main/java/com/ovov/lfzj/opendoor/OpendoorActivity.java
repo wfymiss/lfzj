@@ -296,7 +296,6 @@ public class OpendoorActivity extends BaseActivity {
                 break;
 
             case R.id.head:
-
                 //防止重复点击 出现不一样的圆形
                 if (UIUtils.isFastClick()) {
                     if (flag) {

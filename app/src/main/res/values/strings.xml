@@ -36,7 +36,7 @@
     <string name="text_replay_num">转发 %s</string>
     <string name="hint">请输入搜索内容</string>
     <string name="text_activity_detail">活动详情</string>
-    <string name="text_qrcode">二维码扫描</string>
+    <string name="text_qrcode">开门记录</string>
     <string name="text_keylist">钥匙列表</string>
     <string name="text_update_key">更新</string>
     <string name="text_opendoor_setting">智能设备设置</string>
@@ -125,7 +125,7 @@
     <string name="text_loginout_failer">退出失败</string>
     <string name="text_login_invaild">登录失效，请重新登录</string>
     <string name="text_send">发送</string>
-    <string name="text_reciver">回复时间:</string>
+    <string name="text_reciver">最新回复:</string>
     <string name="text_input_comment">请输入评论内容</string>
     <string name="text_comment_success">评论成功</string>
     <string name="text_select_sub">选择小区</string>

@@ -255,6 +255,10 @@ public class RetrofitHelper {
         return mApiService.getHomeSquareList(getToken(), page, id);
     }
 
+    public Observable<ListInfo<SquareListInfo>> getLog(int page) {
+        return mApiService.getLog(getToken(), page);
+    }
+
     public Observable<DataInfo> addSquareComment(String id, String content) {
         return mApiService.addSquareComment(getToken(), id, getUserId(), content);
     }
@@ -364,6 +368,13 @@ public class RetrofitHelper {
 
     public Observable<DataInfo> findPwd(String mobile, String pwd, String verfy) {
         return mApiService.findPwd(mobile, pwd, verfy);
+    }
+    public Observable<ListInfo<BannerBean>> getinfomationlist() {
+        return mApiService.getinfomationlist(getToken());
+    }
+
+    public Observable<ListInfo<BannerBean>> getInfomation(String id) {
+        return mApiService.getInfomation(getToken(),id);
     }
 
     public Observable<ListInfo<NewsBean>> getNoticeList() {

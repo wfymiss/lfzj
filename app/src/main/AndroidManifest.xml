@@ -371,40 +371,54 @@
             android:name=".home.ui.NoticeDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <activity android:name=".property.home.repair.WorkerOrderActivity"
+        <activity
+            android:name=".property.home.repair.WorkerOrderActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".home.repair.RepairActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.repair.RepairActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".home.repair.WorkerOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.repair.WorkerOrderActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".home.repair.WorkerOrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.repair.WorkerOrderDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".home.repair.WorkOrderConfirmActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.repair.WorkOrderConfirmActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity android:name=".wxapi.WXEntryActivity" />
-        <activity android:name=".user.activity.HealthSubscribeActivity"
+        <activity
+            android:name=".user.activity.HealthSubscribeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.HealthDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".user.activity.HealthDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".opendoor.DemoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".opendoor.DemoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".user.activity.FamilyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".user.activity.FamilyActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".home.repair.RepairCommentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.repair.RepairCommentActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".login.MySubActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.MySubActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".user.setting.HelpActivity" />
+        <activity android:name=".user.setting.advicesActivity" />
+        <activity android:name=".home.ui.MessageDetailActivity"></activity>
     </application>
 
 </manifest>
