@@ -10,12 +10,15 @@ import android.view.View;
 import com.blankj.utilcode.util.FileUtils;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseMainActivity;
+import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.market.MarketFragment;
 import com.ovov.lfzj.neighbour.NeighbourFragment;
+import com.ovov.lfzj.opendoor.OpendoorActivity;
 import com.ovov.lfzj.property.home.HomeFragment;
 import com.ovov.lfzj.property.user.UserFragment;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
+import butterknife.OnClick;
 import rx.functions.Action1;
 
 import static com.ovov.lfzj.MainActivity.BASE_FILE;
@@ -90,5 +93,13 @@ public class PropertyMainActivity extends BaseMainActivity {
     @Override
     public boolean menuClicked(int index) {
         return false;
+    }
+
+    @OnClick(R.id.iv_open)
+    public void onViewClicked() {
+        OpendoorActivity.toActivity(mActivity);
+
+
+
     }
 }

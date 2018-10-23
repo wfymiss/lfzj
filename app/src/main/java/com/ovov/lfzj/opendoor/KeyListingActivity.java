@@ -93,7 +93,12 @@ public class KeyListingActivity extends BaseActivity {
 
     @Override
     public void init() {
-        setTitleText(R.string.text_keylist);
+        if (LoginUserBean.getInstance().getLoginType().equals("1")) {
+            setTitleText(R.string.text_keylist);
+        }else {
+            setTitleText("钥匙");
+        }
+
         setRightText(R.string.text_update_key);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         EventBus.getDefault().register(this);       // 小区楼宇列表点击 popup监听事件
@@ -136,7 +141,8 @@ public class KeyListingActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_right:
-                if (role_id != null && role_id.equals("5")) {             //  role_id = 3 管家身份登录——拥有获取各楼宇钥匙权利
+
+                if (LoginUserBean.getInstance().getLoginType().equals("2")) {             //  role_id = 3 管家身份登录——拥有获取各楼宇钥匙权利
                     // 管家获取楼宇钥匙
                     if (popup != null) {         // 如果小区楼宇弹出框存在，关闭弹出框初始化为空
                         popup.dismiss();
@@ -172,6 +178,7 @@ public class KeyListingActivity extends BaseActivity {
                     upKey = true;    // 更新钥匙upKey = true  标记
                 }
                 break;
+
         }
     }
 
@@ -260,36 +267,37 @@ public class KeyListingActivity extends BaseActivity {
         });
     }
 
-//    // 获取选定的楼宇钥匙
-//    private void getBuildingKeyList() {
-//        okHttpClient = new OkHttpClient();
-//        FormBody.Builder builder = new FormBody.Builder();
-//        builder.add("token", token);
-//        builder.add("subdistrict_id", sub_id);
-//        builder.add("building_number", build_id);
-//        FormBody formBody = builder.build();
-//        request = new Request.Builder().url(build_keyPath).post(formBody).build();
-//        call = okHttpClient.newCall(request);
-//        call.enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String keyResult = response.body().string();
-//                //  用户钥匙 保存在本地
-//                if (keyResult != null) {
-//                    SharedPreferences spf = KeyListingActivity.this.getSharedPreferences("key_list", Context.MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = spf.edit();
-//                    editor.putString("keyjson", keyResult);    // 保存更新的钥匙字符串
-//                    editor.commit();      // 保存用户信息到本地
-//                    Message msg = new Message();
-//                    msg.obj = keyResult;
-//                    handler.sendMessage(msg);
-//                }
-//            }
-//        });//   }
+    // 获取选定的楼宇钥匙
+    private void getBuildingKeyList() {
+        okHttpClient = new OkHttpClient();
+        FormBody.Builder builder = new FormBody.Builder();
+        builder.add("token", token);
+        builder.add("subdistrict_id", sub_id);
+        builder.add("building_number", build_id);
+        FormBody formBody = builder.build();
+        request = new Request.Builder().url(build_keyPath).post(formBody).build();
+        call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String keyResult = response.body().string();
+                //  用户钥匙 保存在本地
+                if (keyResult != null) {
+                    SharedPreferences spf = KeyListingActivity.this.getSharedPreferences("key_list", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = spf.edit();
+                    editor.putString("keyjson", keyResult);    // 保存更新的钥匙字符串
+                    editor.commit();      // 保存用户信息到本地
+                    Message msg = new Message();
+                    msg.obj = keyResult;
+                    handler.sendMessage(msg);
+                }
+            }
+        });
+         }
 
 
     @Subscribe
@@ -299,7 +307,7 @@ public class KeyListingActivity extends BaseActivity {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  //获取当前时间
             Date curDate = new Date(System.currentTimeMillis());
             key_gaintime = formatter.format(curDate);
-         //   getBuildingKeyList();   // 楼宇弹出框，获取选定楼宇钥匙———保存在本地
+            getBuildingKeyList();   // 楼宇弹出框，获取选定楼宇钥匙———保存在本地
         }
     }
 
