@@ -55,8 +55,8 @@ public class BuildingListPopup extends PopupWindow {
         adapter.setTitleItemListener(new BuildingListTitleAdapter.TitleItemListener() {
             @Override
             public void titleItemClick(int position, String building, String type_id) {
-                EventBus.getDefault().post(new BuildingListEvent(building,"1"));
-                RxBus.getDefault().post(new BuildingListEvent(building,"1"));
+                EventBus.getDefault().post(new BuildingListEvent(building,"0","1"));
+                RxBus.getDefault().post(new BuildingListEvent(building,"0","1"));
                 dismiss();
             }
         });

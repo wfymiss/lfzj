@@ -47,6 +47,11 @@ import com.ovov.lfzj.home.bean.WXPayInfo;
 import com.ovov.lfzj.home.bean.WxPaySuccessResult;
 import com.ovov.lfzj.http.api.CatelApiService;
 import com.ovov.lfzj.market.order.bean.ShopBean;
+import com.ovov.lfzj.property.bean.InformMeterResult;
+import com.ovov.lfzj.property.bean.MeterResult;
+import com.ovov.lfzj.property.bean.PaymentDetailBean;
+import com.ovov.lfzj.property.bean.ReadMeterResult;
+import com.ovov.lfzj.property.bean.ShopListResult;
 import com.ovov.lfzj.user.bean.HealthBean;
 
 import java.io.File;
@@ -189,7 +194,8 @@ public class RetrofitHelper {
     private String getUserId() {
         return LoginUserBean.getInstance().getUserId();
     }
-    private String getSubId(){
+
+    private String getSubId() {
         return LoginUserBean.getInstance().getSub_id();
     }
 
@@ -207,7 +213,7 @@ public class RetrofitHelper {
     }
 
     public Observable<BuildingListResult> getBuildingList() {
-        return mApiService.getBuildingList(getToken());
+        return mApiService.getBuildingList("2");
     }
 
     public Observable<ServerFeedBackInfo> setOrderConfirm(String orderId, String subId) {
@@ -219,11 +225,11 @@ public class RetrofitHelper {
     }
 
     public Observable<UnitListResult> getUnitList(String building) {
-        return mApiService.getUnitList(getToken(), building);
+        return mApiService.getUnitList( building,"2");
     }
 
     public Observable<RoomListResult> getRoomList(String building, String unit) {
-        return mApiService.getRoomList(getToken(), building, unit);
+        return mApiService.getRoomList("1[[", building, unit);
     }
 
     public Observable<WorkOrderUpInfo> ownerCommitWorkeroeder(String category, String posistion, String did, String contact, String phone, String time, String addr, String content, String sub_id, String list_img) {
@@ -306,6 +312,12 @@ public class RetrofitHelper {
 
     }
 
+    public Observable<ReadMeterResult> getReadMeterResult(String houses_id, String value, String meter_number, String gid, String explains, String created_time) {
+        return mApiService.getReadMeterResult(getToken(), houses_id, value, meter_number, gid, explains, created_time);
+
+
+    }
+
     public Observable<DataInfo> confirmPayResult(String type, String order_id, String
             order_number) {
         return mApiService.confirmPayResult(getToken(), type, order_id, order_number, LoginUserBean.getInstance().getSub_id());
@@ -334,8 +346,8 @@ public class RetrofitHelper {
         return mApiService.getRoom(sub_id, building_id, unit_id);
     }
 
-    public Observable<DataInfo> authStep2(String house_path,String captcha,String mobile) {
-        return mApiService.authStep2(getToken(), house_path,captcha,mobile);
+    public Observable<DataInfo> authStep2(String house_path, String captcha, String mobile) {
+        return mApiService.authStep2(getToken(), house_path, captcha, mobile);
     }
 
     public Observable<DataInfo> userInfoUpdate(String name, String birthday, String
@@ -354,14 +366,15 @@ public class RetrofitHelper {
     }
 
     public Observable<ListInfo<HealthBean>> getHealthTime(String time) {
-        return mApiService.getHealthTime(getToken(),"1",time);
+        return mApiService.getHealthTime(getToken(), "1", time);
     }
 
-    public Observable<HealthDetailBean> getHealthDetail( ) {
-        return mApiService.getHealthDetail(getToken(),"1");
+    public Observable<HealthDetailBean> getHealthDetail() {
+        return mApiService.getHealthDetail(getToken(), "1");
     }
-    public Observable<BannerBean> getHealthOrder(String Time_id,String time) {
-        return mApiService.getHealthOrder(getToken(),"1",Time_id,time);
+
+    public Observable<BannerBean> getHealthOrder(String Time_id, String time) {
+        return mApiService.getHealthOrder(getToken(), "1", Time_id, time);
     }
 
     public Observable<SubListBean> gethomeList() {
@@ -371,12 +384,13 @@ public class RetrofitHelper {
     public Observable<DataInfo> findPwd(String mobile, String pwd, String verfy) {
         return mApiService.findPwd(mobile, pwd, verfy);
     }
+
     public Observable<ListInfo<BannerBean>> getinfomationlist() {
         return mApiService.getinfomationlist(getToken());
     }
 
     public Observable<ListInfo<BannerBean>> getInfomation(String id) {
-        return mApiService.getInfomation(getToken(),id);
+        return mApiService.getInfomation(getToken(), id);
     }
 
     public Observable<ListInfo<NewsBean>> getNoticeList() {
@@ -390,16 +404,18 @@ public class RetrofitHelper {
     public Observable<NewsDetailBean> getNewsDetailList(String id) {
         return mApiService.getNewsDetailList(id);
     }
+
     public Observable<NewsDetailBean> getNoticeDetailList(String id) {
         return mApiService.getNoticeDetailList(id);
     }
+
     public Observable<ShopListBean<ShopBean>> getOrderList(int page, int status) {
         return mApiService.getOrderList(LoginUserBean.getInstance().getPhone(), status, page);
     }
 
-    public Observable<ServerFeedBackInfo> getUpVisitorInfo(String sub_id,String v_name,
-                                                               String v_phone,String v_num,String active_time) {
-        return mApiService.getUpVisitorInfo(getToken(),sub_id,LoginUserBean.getInstance().getPhone(),v_name, v_phone,v_num,active_time);
+    public Observable<ServerFeedBackInfo> getUpVisitorInfo(String sub_id, String v_name,
+                                                           String v_phone, String v_num, String active_time) {
+        return mApiService.getUpVisitorInfo(getToken(), sub_id, LoginUserBean.getInstance().getPhone(), v_name, v_phone, v_num, active_time);
 
     }
 
@@ -407,50 +423,71 @@ public class RetrofitHelper {
         return mApiService.getVisitorLog(getToken(), page);
     }
 
-    public Observable<DataInfo<UpdateBean>> checkVersion(int versionCode){
-        return mApiService.checkVersion(1,versionCode);
+    public Observable<DataInfo<UpdateBean>> checkVersion(int versionCode) {
+        return mApiService.checkVersion(1, versionCode);
     }
 
-    public Observable<DataInfo<UrlBean>> getMarketUrl(){
+    public Observable<DataInfo<UrlBean>> getMarketUrl() {
         return mApiService.getMarketUrl(getToken());
     }
 
-    public Observable<DataInfo> addFamily(String name,String mobile){
-        return mApiService.addFamily(getToken(),getSubId(),name,mobile);
+    public Observable<MeterResult> getMeterType() {
+        return mApiService.getMeterType(getToken());
     }
 
-    public Observable<DataInfo<MobileInfo>> getMobile(String house_path){
-        return mApiService.getMobile(getToken(),house_path);
+    public Observable<ShopListResult> getDJShopList() {
+        return mApiService.getDJShopList("1");
     }
 
-    public Observable<ListInfo<RoomListInfo>> getUserHouse(){
-        return mApiService.getUserHouse(getToken(),getSubId());
+    public Observable<DataInfo<PaymentDetailBean>> getOwnerPayment(String is_shop, int status, String year ,String houseid) {
+        return mApiService.getOwnerPayment( is_shop, status, year, "1",houseid);
     }
 
-    public Observable<ListInfo<WorkOrderListInfo>> getWorkList(int status, int page){
-        return mApiService.getWorkList(getToken(),page,status);
+    public Observable<DataInfo> addFamily(String name, String mobile) {
+        return mApiService.addFamily(getToken(), getSubId(), name, mobile);
     }
 
-    public Observable<DataInfo> workAdd(String phone,String name, String address, int posistion, int category,  String content, List<MultipartBody.Part> parts){
+    public Observable<DataInfo<PaymentDetailBean>> getShopPayment(String is_shop, int status, String year ,String houseid) {
+        return mApiService.getShopPayment("1", is_shop, status, year,houseid);
+    }
+
+    public Observable<InformMeterResult> getinformationMeter(String building_id, String unit, String number, String gid) {
+        return mApiService.getinformationMeter(getToken(), building_id, unit, number, gid);
+    }
+
+    public Observable<DataInfo<MobileInfo>> getMobile(String house_path) {
+        return mApiService.getMobile(getToken(), house_path);
+    }
+
+    public Observable<ListInfo<RoomListInfo>> getUserHouse() {
+        return mApiService.getUserHouse(getToken(), getSubId());
+    }
+
+    public Observable<ListInfo<WorkOrderListInfo>> getWorkList(int status, int page) {
+        return mApiService.getWorkList(getToken(), page, status);
+    }
+
+    public Observable<DataInfo> workAdd(String phone, String name, String address, int posistion, int category, String content, List<MultipartBody.Part> parts) {
         RequestBody token = RequestBody.create(MediaType.parse("multipart/form-data"), getToken());
-        RequestBody mName = RequestBody.create(MediaType.parse("multipart/form-data"),name);
-        RequestBody mAddress = RequestBody.create(MediaType.parse("multipart/form-data"),address);
+        RequestBody mName = RequestBody.create(MediaType.parse("multipart/form-data"), name);
+        RequestBody mAddress = RequestBody.create(MediaType.parse("multipart/form-data"), address);
         RequestBody mPosistion = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(posistion));
         RequestBody mCategory = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(category));
         RequestBody mContent = RequestBody.create(MediaType.parse("multipart/form-data"), content);
         RequestBody mPhone = RequestBody.create(MediaType.parse("multipart/form-data"), phone);
         RequestBody mSubId = RequestBody.create(MediaType.parse("multipart/form-data"), getSubId());
 
-        Log.e("accesstoken",getSubId());
-        return mApiService.workAdd(token,mPhone,mAddress,mPosistion,mCategory,mContent,mName,mSubId,parts);
+        Log.e("accesstoken", getSubId());
+        return mApiService.workAdd(token, mPhone, mAddress, mPosistion, mCategory, mContent, mName, mSubId, parts);
 
     }
 
-    public Observable<DataInfo> getWorkDetail(String wid){
-        return mApiService.getWorkorderDetail(getToken(),wid);
+    public Observable<DataInfo> getWorkDetail(String wid) {
+        return mApiService.getWorkorderDetail(getToken(), wid);
     }
 
     private static final String TAG = "RetrofitHelper";
+
     public void download(@NonNull String url, final String filePath, Subscriber subscriber) {
 
         // subscribeOn()改变调用它之前代码的线程
@@ -478,6 +515,7 @@ public class RetrofitHelper {
                 .subscribe(subscriber);
 
     }
+
     /**
      * 将输入流写入文件
      *

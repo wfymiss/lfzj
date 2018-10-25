@@ -46,6 +46,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.ovov.lfzj.CatelApplication.PROPERTY_LOGIN;
+
 /**
  * 钥匙列表
  */
@@ -67,7 +69,7 @@ public class KeyListingActivity extends BaseActivity {
     private String role_id = null;                     // 身份判断 未认证0，已认证1，家人2
  //   private String keyPath= "http://app.catel-link.com/v1/entrance/applyKey";       //  更新钥匙列表
     private String keyPath= CatelApiService.HOST+"v1/entrance/applyKey";       // 更新钥匙列表
-    private String build_keyPath="https://api.catel-link.com/front/Entrance/property/getKeys";   // 获取选定的楼宇钥匙
+    private String build_keyPath=CatelApiService.HOST+"v1/entrance/getKeys";   // 获取选定的楼宇钥匙
     private boolean upKey = false;
     private OkHttpClient okHttpClient;
     private Request request;
@@ -93,20 +95,21 @@ public class KeyListingActivity extends BaseActivity {
 
     @Override
     public void init() {
-        if (LoginUserBean.getInstance().getLoginType().equals("1")) {
-            setTitleText(R.string.text_keylist);
+        if (LoginUserBean.getInstance().getLoginType().equals(PROPERTY_LOGIN)) {
+            setRightText("钥匙");
+
         }else {
-            setTitleText("钥匙");
+            setRightText(R.string.text_update_key);
         }
 
-        setRightText(R.string.text_update_key);
+        setTitleText(R.string.text_keylist);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         EventBus.getDefault().register(this);       // 小区楼宇列表点击 popup监听事件
 //        present=new OpenDoorPresent(this);    // 初始化更新钥匙方法
         token=LoginUserBean.getInstance().getAccess_token();
-        sub_id="1";
+        sub_id="2";
      //   storageTokenRead();    //  获取token
-//        postKeyList();        // 从本地解析钥匙
+        postKeyList();        // 从本地解析钥匙
         upDataKeyList();      // 更新钥匙列表———保存在本地
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);    //recycler 竖向滑动
@@ -142,7 +145,7 @@ public class KeyListingActivity extends BaseActivity {
                 break;
             case R.id.tv_right:
 
-                if (LoginUserBean.getInstance().getLoginType().equals("2")) {             //  role_id = 3 管家身份登录——拥有获取各楼宇钥匙权利
+                if (LoginUserBean.getInstance().getLoginType().equals(PROPERTY_LOGIN)) {             //  role_id = 3 管家身份登录——拥有获取各楼宇钥匙权利
                     // 管家获取楼宇钥匙
                     if (popup != null) {         // 如果小区楼宇弹出框存在，关闭弹出框初始化为空
                         popup.dismiss();
@@ -182,12 +185,12 @@ public class KeyListingActivity extends BaseActivity {
         }
     }
 
-//    // 获取本地钥匙
-//    private void postKeyList() {
-//        SharedPreferences spf = this.getSharedPreferences("key_list", Context.MODE_PRIVATE);
-//        String keyjson = spf.getString("keyjson", "");
-//        keyListJson(keyjson);     // 解析钥匙
-//    }
+    // 获取本地钥匙
+    private void postKeyList() {
+        SharedPreferences spf = this.getSharedPreferences("key_list", Context.MODE_PRIVATE);
+        String keyjson = spf.getString("keyjson", "");
+        keyListJson(keyjson);     // 解析钥匙
+    }
 
     //   解析钥匙key
     private void keyListJson(String keyjson) {

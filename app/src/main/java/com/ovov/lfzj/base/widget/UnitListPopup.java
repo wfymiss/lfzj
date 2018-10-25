@@ -55,8 +55,8 @@ public class UnitListPopup extends PopupWindow {
        adapter.setTitleItemListener(new BuildingListTitleAdapter.TitleItemListener() {
            @Override
            public void titleItemClick(int position, String building, String type_id) {
-               EventBus.getDefault().post(new BuildingListEvent(building,"2"));
-               RxBus.getDefault().post(new BuildingListEvent(building,"2"));
+               EventBus.getDefault().post(new BuildingListEvent(building,"0","2"));
+               RxBus.getDefault().post(new BuildingListEvent(building,"0","2"));
                dismiss();
            }
        });
