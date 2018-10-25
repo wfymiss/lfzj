@@ -9,7 +9,7 @@
     <string name="text_user_register">用户注册</string>
     <string name="text_find_pwd">找回密码</string>
     <string name="edit_phone_hint">请输入手机号码</string>
-    <string name="edit_pwd_hint">密码</string>
+    <string name="edit_pwd_hint">请输入密码，6-13位字母或数字</string>
     <string name="edit_verify_hint">验证码</string>
     <string name="text_get_verify">获取验证码</string>
     <string name="text_confirm_pwd">确认密码</string>

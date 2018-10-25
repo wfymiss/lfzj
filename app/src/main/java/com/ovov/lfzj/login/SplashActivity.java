@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 
 import com.ovov.lfzj.MainActivity;
 import com.ovov.lfzj.R;
@@ -29,10 +30,15 @@ public class SplashActivity extends BaseActivity {
                 finish();
             } else {
                 if (LoginUserBean.getInstance().isLogin()) {
-                    if (LoginUserBean.getInstance().getLoginType().equals(OWNER_LOGIN))
+                    if (LoginUserBean.getInstance().getLoginType() != null && LoginUserBean.getInstance().getLoginType().equals(OWNER_LOGIN))
                         MainActivity.toActivity(mActivity);
-                    else if (LoginUserBean.getInstance().getLoginType().equals(PROPERTY_LOGIN))
+                    else if (LoginUserBean.getInstance().getLoginType() != null &&LoginUserBean.getInstance().getLoginType().equals(PROPERTY_LOGIN))
                         PropertyMainActivity.toActivity(mActivity);
+                    else {
+                        LoginUserBean.getInstance().reset();
+                        LoginUserBean.getInstance().save();
+                        LoginActivity.toActivity(mActivity);
+                    }
                     finish();
                 } else {
                     LoginActivity.toActivity(mActivity);

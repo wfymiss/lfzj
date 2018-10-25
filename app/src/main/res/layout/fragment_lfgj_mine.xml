@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="@mipmap/ic_back_lfgj"
+                        android:layout_alignParentTop="true" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/my_circle_images"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="150dp"
+                        android:clickable="true"
+                        android:src="@mipmap/default_head_img" />
+
+                    <TextView
+                        android:id="@+id/my_nickname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/my_circle_images"
+                        android:layout_marginTop="15dp"
+                        android:layout_centerHorizontal="true"
+                        android:text="小图头像"
+                        android:textColor="#2a2a2a"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/my_sign"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/my_nickname"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginRight="50dp"
+                        android:layout_marginTop="15dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lineSpacingExtra="3dp"
+                        android:maxEms="15"
+                        android:maxLines="1"
+                        android:text="仰望星空"
+                        android:textColor="@color/gray_dark"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#d7d4d4" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#d7d4d4" />
+            </LinearLayout>
+
+            <com.ovov.lfzj.base.widget.NoScrollGridView
+                android:id="@+id/my_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:layout_marginTop="20dp"
+                android:numColumns="3"
+                android:scrollbars="none" />
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

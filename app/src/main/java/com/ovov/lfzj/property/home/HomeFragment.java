@@ -15,10 +15,18 @@ import com.ovov.lfzj.base.BaseFragment;
 import com.ovov.lfzj.base.banner.BannerAdapter;
 import com.ovov.lfzj.base.banner.BannerLayout;
 
+import com.ovov.lfzj.base.bean.DataInfo;
+import com.ovov.lfzj.base.bean.LoginUserBean;
+import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.ActivityUtils;
+import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
 import com.ovov.lfzj.home.bean.BannerBean;
+import com.ovov.lfzj.home.bean.SubListBean;
 import com.ovov.lfzj.home.repair.RepairActivity;
+import com.ovov.lfzj.http.RetrofitHelper;
+import com.ovov.lfzj.http.subscriber.CommonSubscriber;
+import com.ovov.lfzj.login.LoginActivity;
 import com.ovov.lfzj.property.home.adapter.HomeGridAdapter;
 import com.ovov.lfzj.property.home.repair.WorkerOrderActivity;
 import com.squareup.picasso.Picasso;
@@ -31,6 +39,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import rx.Subscription;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,9 +81,40 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void init() {
 
+        isLogin();
         initGrid();
         initBanner();
+        getUserInfo();
 
+    }
+
+    private void getUserInfo() {
+        showLoadingDialog();
+        Subscription subscription = RetrofitHelper.getInstance().gethomeList()
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<SubListBean>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        if (e instanceof DataResultException){
+                            DataResultException dataResultException = (DataResultException) e;
+                            showToast(dataResultException.errorInfo);
+                        }else {
+                            doFailed();
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(SubListBean subListBean) {
+                        dismiss();
+                        LoginUserBean.getInstance().setUserInfoBean(subListBean.getDatas().getUser());
+                        LoginUserBean.getInstance().setAppPermission(subListBean.getDatas().getApp_permission());
+                        LoginUserBean.getInstance().save();
+
+                    }
+                });
+        addSubscrebe(subscription);
     }
 
     private void initBanner() {
@@ -150,6 +190,37 @@ public class HomeFragment extends BaseFragment {
             data_list.add(map);
         }
         return data_list;
+    }
+
+    private void isLogin() {
+        showLoadingDialog();
+        Subscription subscription = RetrofitHelper.getInstance().isLogin()
+                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        if (e instanceof DataResultException) {
+                            DataResultException dataResultException = (DataResultException) e;
+                            showToast(R.string.text_login_invaild);
+                            LoginUserBean.getInstance().reset();
+                            LoginUserBean.getInstance().save();
+                            LoginActivity.toActivity(mActivity);
+                            mActivity.finish();
+                        } else {
+
+                            doFailed();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        dismiss();
+                    }
+                });
+        addSubscrebe(subscription);
     }
 
     @Override

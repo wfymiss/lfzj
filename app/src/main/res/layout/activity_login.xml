@@ -8,11 +8,14 @@
     android:background="@mipmap/ic_login_back"
     tools:context="com.ovov.lfzj.login.LoginActivity">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
     <ImageView
         android:layout_width="@dimen/dp_70"
         android:layout_height="@dimen/dp_87"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="200dp"
         android:src="@mipmap/ic_logo_appname"/>
     <ImageView
         android:layout_width="@dimen/dp_265"
@@ -46,6 +49,7 @@
             android:background="#00000000"
             android:id="@+id/et_phone"
             android:inputType="phone"
+            android:textSize="@dimen/textSize_12sp"
             android:layout_marginLeft="@dimen/dp_18"/>
 
     </LinearLayout>
@@ -69,10 +73,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:hint="@string/edit_pwd_hint"
+            android:hint="密码"
             android:textColor="@color/color_444444"
             android:background="#00000000"
             android:id="@+id/et_pwd"
+            android:textSize="@dimen/textSize_12sp"
             android:inputType="textPassword"
             android:layout_marginLeft="@dimen/dp_18"/>
 
@@ -95,7 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="24dp"
         android:layout_gravity="center_horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -119,4 +124,8 @@
             android:layout_marginLeft="@dimen/dp_5"
             android:textSize="@dimen/common_text_size_big"/>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 </LinearLayout>

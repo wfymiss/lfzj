@@ -10,6 +10,7 @@ import com.ovov.lfzj.MainActivity;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.IdentityType;
+import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.RxUtil;
@@ -120,10 +121,7 @@ public class IdentitySelectActivity extends BaseActivity {
                         LoginUserBean.getInstance().save();
                         finish();
                     } else if (type == PROPETY && user_type.contains(IdentityType.typeProperty)) {
-                        PropertyMainActivity.toActivity(mActivity);
-                        LoginUserBean.getInstance().setLoginType(PROPERTY_LOGIN);
-                        LoginUserBean.getInstance().save();
-                        finish();
+                        changeRole(Integer.parseInt(PROPERTY_LOGIN));
                     } else
                         IdentityErrorActivity.toActivity(mActivity);
                 } else {
@@ -153,5 +151,34 @@ public class IdentitySelectActivity extends BaseActivity {
                 }
                 break;
         }
+    }
+
+    private void changeRole(int login_type) {
+        showLoadingDialog();
+        Subscription subscription = RetrofitHelper.getInstance().changeRole(login_type)
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        if (e instanceof DataResultException){
+                            DataResultException dataResultException = (DataResultException) e;
+                            showToast(dataResultException.errorInfo);
+                        }else {
+                            showError(e.getMessage());
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        dismiss();
+                        PropertyMainActivity.toActivity(mActivity);
+                        LoginUserBean.getInstance().setLoginType(PROPERTY_LOGIN);
+                        LoginUserBean.getInstance().save();
+                        finish();
+                    }
+                });
+        addSubscrebe(subscription);
     }
 }

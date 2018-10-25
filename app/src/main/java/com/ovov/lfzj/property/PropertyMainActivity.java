@@ -13,6 +13,7 @@ import com.ovov.lfzj.base.BaseMainActivity;
 import com.ovov.lfzj.market.MarketFragment;
 import com.ovov.lfzj.neighbour.NeighbourFragment;
 import com.ovov.lfzj.property.home.HomeFragment;
+import com.ovov.lfzj.property.user.PropertyUserFragment;
 import com.ovov.lfzj.property.user.UserFragment;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
@@ -72,9 +73,8 @@ public class PropertyMainActivity extends BaseMainActivity {
             case 0:
                 mFragments[index] = HomeFragment.newInstance();
                 break;
-
             case 1:
-                mFragments[index] = UserFragment.newInstance();
+                mFragments[index] = PropertyUserFragment.newInstance();
                 break;
         }
     }

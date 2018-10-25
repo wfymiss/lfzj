@@ -32,8 +32,10 @@ import com.ovov.lfzj.base.bean.UnitListResult;
 import com.ovov.lfzj.base.bean.UpdateBean;
 import com.ovov.lfzj.base.bean.UrlBean;
 import com.ovov.lfzj.base.bean.VisistorRecordResult;
+import com.ovov.lfzj.base.bean.WorkDetailBean;
 import com.ovov.lfzj.base.bean.WorkOrderListInfo;
 import com.ovov.lfzj.base.bean.WorkOrderUpInfo;
+import com.ovov.lfzj.base.bean.WorkerListInfo;
 import com.ovov.lfzj.base.utils.NetWorkUtil;
 import com.ovov.lfzj.home.bean.BannerBean;
 import com.ovov.lfzj.home.bean.HealthDetailBean;
@@ -206,37 +208,6 @@ public class RetrofitHelper {
 
     }
 
-    public Observable<BuildingListResult> getBuildingList() {
-        return mApiService.getBuildingList(getToken());
-    }
-
-    public Observable<ServerFeedBackInfo> setOrderConfirm(String orderId, String subId) {
-        return mApiService.setOrderConfirm(getToken(), orderId, subId);
-    }
-
-    public Observable<ServerFeedBackInfo> addComment(String sub_id, String wo_id, String content, int rat) {
-        return mApiService.setWorkComment(getToken(), sub_id, wo_id, content, rat);
-    }
-
-    public Observable<UnitListResult> getUnitList(String building) {
-        return mApiService.getUnitList(getToken(), building);
-    }
-
-    public Observable<RoomListResult> getRoomList(String building, String unit) {
-        return mApiService.getRoomList(getToken(), building, unit);
-    }
-
-    public Observable<WorkOrderUpInfo> ownerCommitWorkeroeder(String category, String posistion, String did, String contact, String phone, String time, String addr, String content, String sub_id, String list_img) {
-        return mApiService.ownerCommitWorkOrder(getToken(), category, posistion, did, contact, phone, time, addr, content, sub_id, list_img);
-    }
-
-    public Observable<WorkOrderUpInfo> propertyCommitWorkeroeder(String position, String category, String contact, String desc_img, String time, String phone, String addr, String content, String building, String unit, String room) {
-        return mApiService.propertyCommitWorkOrder(getToken(), position, category, contact, desc_img, time, phone, addr, content, building, unit, room);
-    }
-
-    public Observable<ActivityUpImageInfo> uploadImage(MultipartBody.Part part) {
-        return mApiService.upLoadActivityImage(getToken(), part);
-    }
 
     public Observable<DataInfo> addNeighbour(RequestBody content, List<MultipartBody.Part> parts) {
         RequestBody mUserId = RequestBody.create(MediaType.parse("multipart/form-data"), getUserId());
@@ -431,6 +402,14 @@ public class RetrofitHelper {
         return mApiService.getWorkList(getToken(),page,status);
     }
 
+    public Observable<ListInfo<WorkerListInfo>> getWorks(){
+        return mApiService.getWorks();
+    }
+
+    public Observable<DataInfo> workerDispath(String wid,String worker_id){
+        return mApiService.workDispath(getToken(),wid,worker_id);
+    }
+
     public Observable<DataInfo> workAdd(String phone,String name, String address, int posistion, int category,  String content, List<MultipartBody.Part> parts){
         RequestBody token = RequestBody.create(MediaType.parse("multipart/form-data"), getToken());
         RequestBody mName = RequestBody.create(MediaType.parse("multipart/form-data"),name);
@@ -446,8 +425,12 @@ public class RetrofitHelper {
 
     }
 
-    public Observable<DataInfo> getWorkDetail(String wid){
+    public Observable<DataInfo<WorkDetailBean>> getWorkDetail(String wid){
         return mApiService.getWorkorderDetail(getToken(),wid);
+    }
+
+    public Observable<DataInfo> changeRole(int login_type){
+        return mApiService.changeRole(getToken(),login_type);
     }
 
     private static final String TAG = "RetrofitHelper";

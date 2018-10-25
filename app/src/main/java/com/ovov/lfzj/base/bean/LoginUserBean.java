@@ -52,6 +52,15 @@ public class LoginUserBean implements Serializable, Cloneable {
     private String subname;
 
     private List<SquareDetailInfo.ForwardBean> forwardBean;
+    private SubListBean.SubdataBean.AppPermission appPermission;
+
+    public SubListBean.SubdataBean.AppPermission getAppPermission() {
+        return appPermission;
+    }
+
+    public void setAppPermission(SubListBean.SubdataBean.AppPermission appPermission) {
+        this.appPermission = appPermission;
+    }
 
     public List<SquareDetailInfo.ForwardBean> getForwardBean() {
         return forwardBean;
@@ -166,6 +175,7 @@ public class LoginUserBean implements Serializable, Cloneable {
         Neighbourid = "";
         forwardBean = null;
         loginType = "";
+        appPermission = null;
     }
 
     public void save() {

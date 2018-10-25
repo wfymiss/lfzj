@@ -1,4 +1,4 @@
-package com.ovov.lfzj.home.repair;
+package com.ovov.lfzj.property.home.repair;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +21,8 @@ import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
 import com.ovov.lfzj.base.widget.ScaleImageView;
+import com.ovov.lfzj.event.DispathEvent;
+import com.ovov.lfzj.home.repair.WorkerOrderDetailActivity;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -36,6 +38,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import rx.Observable;
 import rx.Subscription;
+import rx.functions.Action1;
 
 import static com.ovov.lfzj.CatelApplication.LOADMORE;
 import static com.ovov.lfzj.CatelApplication.REFRESH;
@@ -94,11 +97,37 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
                 switch (workOrderListInfo.receipt_staff) {
                     case 0:
                         viewHolder.setText(R.id.tv_status, "待维修");
-
+                        if (LoginUserBean.getInstance().getAppPermission().gongdan_paidan) {
+                            tvDispatch.setText("派单");
+                            tvDispatch.setVisibility(View.VISIBLE);
+                            tvDispatch.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    DispathActivity.toActivity(mActivity, String.valueOf(workOrderListInfo.id));
+                                }
+                            });
+                        } else if (LoginUserBean.getInstance().getAppPermission().gongdan_jiedan ){
+                            tvDispatch.setText("接单");
+                            tvDispatch.setVisibility(View.VISIBLE);
+                        }else {
+                            tvDispatch.setVisibility(View.GONE);
+                        }
                         break;
                     case 1:
                         viewHolder.setText(R.id.tv_status, "派单中");
+                        if (LoginUserBean.getInstance().getAppPermission().gongdan_paidan) {
+                            tvDispatch.setText("改派");
+                            tvDispatch.setVisibility(View.VISIBLE);
+                            tvCancel.setVisibility(View.VISIBLE);
 
+                        } else if (LoginUserBean.getInstance().getAppPermission().gongdan_jiedan ){
+                            tvDispatch.setText("接单");
+                            tvDispatch.setVisibility(View.VISIBLE);
+                            tvCancel.setVisibility(View.GONE);
+                        }else {
+                            tvDispatch.setVisibility(View.GONE);
+                            tvCancel.setVisibility(View.GONE);
+                        }
                         break;
                     case 2:
                         viewHolder.setText(R.id.tv_status, "维修中");
@@ -165,6 +194,12 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
             }
         });
         mRefresh.autoRefresh();
+        addRxBusSubscribe(DispathEvent.class, new Action1<DispathEvent>() {
+            @Override
+            public void call(DispathEvent dispathEvent) {
+                mRefresh.autoRefresh();
+            }
+        });
 
     }
 

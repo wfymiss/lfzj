@@ -92,11 +92,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/gridView"
+        android:layout_below="@+id/tv_location"
         android:text="派单"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/padding_15dp"
-        android:textColor="@color/color_ffffff"
+        android:textColor="@color/colorPrimary"
         android:textSize="@dimen/textSize_12sp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
@@ -106,5 +106,24 @@
         android:paddingLeft="@dimen/margin_12dp"
         android:layout_marginTop="@dimen/padding_12dp"
         android:layout_marginBottom="@dimen/padding_12dp"
+        android:background="@drawable/shape_dispath"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_location"
+        android:text="取消派单"
+        android:layout_marginRight="@dimen/padding_15dp"
+        android:textColor="@color/color_444444"
+        android:textSize="@dimen/textSize_12sp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:visibility="gone"
+        android:id="@+id/tv_cancel"
+        android:layout_toLeftOf="@+id/tv_dispatch"
+        android:paddingRight="@dimen/margin_12dp"
+        android:paddingLeft="@dimen/margin_12dp"
+        android:layout_marginTop="@dimen/padding_12dp"
+        android:layout_marginBottom="@dimen/padding_12dp"
         android:background="@drawable/shape_repair_blue"/>
+
 </RelativeLayout>

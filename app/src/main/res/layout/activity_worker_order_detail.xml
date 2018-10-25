@@ -55,6 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_ffffff"
+                android:id="@+id/lin_trouble"
                 android:orientation="horizontal">
 
                 <TextView
@@ -81,6 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_ffffff"
+                android:id="@+id/lin_price"
                 android:orientation="horizontal">
 
                 <TextView
@@ -107,6 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_ffffff"
+                android:id="@+id/lin_repair_name"
                 android:orientation="horizontal">
 
                 <TextView
@@ -141,6 +144,7 @@
                 android:gravity="center"
                 android:layout_marginTop="28dp"
                 android:layout_marginBottom="@dimen/padding_15dp"
+                android:id="@+id/tv_check"
                 android:padding="16dp"
                 android:layout_marginLeft="@dimen/dp_20"
                 android:layout_marginRight="@dimen/dp_20"

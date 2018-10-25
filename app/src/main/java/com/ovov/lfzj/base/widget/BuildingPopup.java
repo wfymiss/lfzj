@@ -51,7 +51,7 @@ public class BuildingPopup extends PopupWindow {
 
     private void init(Context ncontext) {
         adapter=new BuildingPopupAdapter(ncontext);
-       getBuilding();
+       //getBuilding();
         LayoutInflater infalter = LayoutInflater.from(ncontext);
         mview=infalter.inflate(R.layout.building_popup,null);
         recyclerView= (RecyclerView) mview.findViewById(R.id.comm_popup_recy);
@@ -68,7 +68,7 @@ public class BuildingPopup extends PopupWindow {
         });
     }
 
-    private void getBuilding(){
+    /*private void getBuilding(){
         Subscription subscription = RetrofitHelper.getInstance().getBuildingList()
                 .compose(RxUtil.<BuildingListResult>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<BuildingListResult>() {
@@ -87,7 +87,7 @@ public class BuildingPopup extends PopupWindow {
         addSubscrebe(subscription);
 
     }
-
+*/
 
     private void setPopupWindow() {
         this.setContentView(mview); //设置View

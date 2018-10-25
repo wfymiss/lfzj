@@ -54,6 +54,7 @@ public class WorkerOrderActivity extends BaseActivity {
         list.add(InHandFragment.newInstance());
         list.add(HasCompleteFragment.newInstance());
         FragmentBaseAdapter adapter = new FragmentBaseAdapter(getSupportFragmentManager(), list, titles);   //绑定fragment
+        mWorkerOrderViewpager.setOffscreenPageLimit(titles.size());
         mWorkerOrderViewpager.setAdapter(adapter);
         mWokerOrderTablayout.setupWithViewPager(mWorkerOrderViewpager);  //标题与页面同步
         //切换活动论坛页面

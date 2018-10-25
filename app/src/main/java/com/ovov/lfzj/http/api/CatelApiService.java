@@ -24,8 +24,10 @@ import com.ovov.lfzj.base.bean.UnitListResult;
 import com.ovov.lfzj.base.bean.UpdateBean;
 import com.ovov.lfzj.base.bean.UrlBean;
 import com.ovov.lfzj.base.bean.VisistorRecordResult;
+import com.ovov.lfzj.base.bean.WorkDetailBean;
 import com.ovov.lfzj.base.bean.WorkOrderListInfo;
 import com.ovov.lfzj.base.bean.WorkOrderUpInfo;
+import com.ovov.lfzj.base.bean.WorkerListInfo;
 import com.ovov.lfzj.home.bean.BannerBean;
 import com.ovov.lfzj.home.bean.HealthDetailBean;
 import com.ovov.lfzj.home.bean.NewsBean;
@@ -148,7 +150,7 @@ public interface CatelApiService {
 
     // 上传开门日志
     @FormUrlEncoded
-    @POST("/v1/entrance/logRecord")
+    @POST("v1/entrance/logRecord")
     Observable<OpenLogUpInfo> getUpOpenLog(@Field("token") String token,
                                            @Field("subdistrict_id") String sub_id,
                                            @Field("sn_name") String sn_name,
@@ -156,71 +158,6 @@ public interface CatelApiService {
                                            @Field("result") String result,
                                            @Field("phone") String phone);
 
-    @FormUrlEncoded
-    @POST("front/company/index/building_list")
-    Observable<BuildingListResult> getBuildingList(@Field("token") String token);
-
-    // 业主工单验收、确认
-    @FormUrlEncoded
-    @POST("front/property/index/wo_completed")
-    Observable<ServerFeedBackInfo> setOrderConfirm(@Field("token") String tokern,
-                                                   @Field("wo_id") String order_id,
-                                                   @Field("subdistrict_id") String sub_id);
-
-    // 工单维修评论
-    @FormUrlEncoded
-    @POST("front/property/index/wo_feedback")
-    Observable<ServerFeedBackInfo> setWorkComment(@Field("token") String token, @Field("subdistrict_id") String sub_id,
-                                                  @Field("wo_id") String wo_id, @Field("suggest") String content, @Field("rating") int rating);
-
-    //获取单元
-    @FormUrlEncoded
-    @POST("front/company/index/unit_list")
-    Observable<UnitListResult> getUnitList(@Field("token") String token,
-                                           @Field("building") String building);
-
-    //获取房间
-    @FormUrlEncoded
-    @POST("front/company/index/room_list")
-    Observable<RoomListResult> getRoomList(@Field("token") String token,
-                                           @Field("building") String building,
-                                           @Field("unit") String unit);
-
-    //楼管家提交工单
-    @FormUrlEncoded
-    @POST("front/Company/index/orderCommit")
-    Observable<WorkOrderUpInfo> propertyCommitWorkOrder(@Field("token") String token,
-                                                        @Field("position") String position,
-                                                        @Field("category") String category,
-                                                        @Field("contact") String contact,
-                                                        @Field("desc_img") String desc_img,
-                                                        @Field("time") String time,
-                                                        @Field("phone") String phone,
-                                                        @Field("addr") String addr,
-                                                        @Field("content") String content,
-                                                        @Field("building") String building,
-                                                        @Field("unit") String unit,
-                                                        @Field("room") String room);
-
-    // 维修提交工单
-    @FormUrlEncoded
-    @POST("front/property/index/wo_commit")
-    Observable<WorkOrderUpInfo> ownerCommitWorkOrder(@Field("token") String token,
-                                                     @Field("category") String category,
-                                                     @Field("position") String position,
-                                                     @Field("did") String did,
-                                                     @Field("contact") String contact,
-                                                     @Field("phone") String phone,
-                                                     @Field("time") String time,
-                                                     @Field("addr") String addr,
-                                                     @Field("content") String content,
-                                                     @Field("subdistrict_id") String subdistrict_id,
-                                                     @Field("desc_img") String list_img);
-
-    //发布活动图片
-    @Multipart
-    @POST("front/activity/index/upload")
-    Observable<ActivityUpImageInfo> upLoadActivityImage(@Part("token") String token, @Part MultipartBody.Part part);
 
 
     @FormUrlEncoded
@@ -239,7 +176,7 @@ public interface CatelApiService {
     Observable<ListInfo<BannerBean>> getShopList(@Field("token") String token);
 
     @FormUrlEncoded
-    @POST("/v1/user/get_user_info")
+    @POST("v1/user/get_user_info")
     Observable<SubListBean> getHomeList(@Field("token") String token);
 
     @FormUrlEncoded
@@ -252,18 +189,18 @@ public interface CatelApiService {
                                                        @Field("type_id") String sub_id);
 
     @FormUrlEncoded
-    @POST("/v1/examination")
+    @POST("v1/examination")
     Observable<ListInfo<HealthBean>> getHealthTime(@Field("token") String token,
                                                    @Field("subdistrictr_id") String sub_id,
                                                    @Field("time") String time);
 
     @FormUrlEncoded
-    @POST("/v1/examination/examinationlist")
+    @POST("v1/examination/examinationlist")
     Observable<HealthDetailBean> getHealthDetail(@Field("token") String time,
                                                  @Field("subdistrictr_id") String sub_id);
 
     @FormUrlEncoded
-    @POST("/v1/examination/examinationadd")
+    @POST("v1/examination/examinationadd")
     Observable<BannerBean> getHealthOrder(@Field("token") String token,
                                           @Field("subdistrictr_id") String sub_id,
                                           @Field("time_id") String time_id,
@@ -433,8 +370,19 @@ public interface CatelApiService {
                                                         @Field("status") int status);
     @FormUrlEncoded
     @POST("v1/work/workstaff")
-    Observable<DataInfo> getWorkorderDetail(@Field("token") String token,
-                                            @Field("wid") String wid);
+    Observable<DataInfo<WorkDetailBean>> getWorkorderDetail(@Field("token") String token,
+                                                            @Field("wid") String wid);
+    @FormUrlEncoded
+    @POST("v1/user/change_role")
+    Observable<DataInfo> changeRole(@Field("token") String token,
+                                    @Field("login_type") int login_type);
+    @POST("v1/work/get_works")
+    Observable<ListInfo<WorkerListInfo>> getWorks();
+    @FormUrlEncoded
+    @POST("v1/work/workdispatch")
+    Observable<DataInfo> workDispath(@Field("token") String token,
+                                     @Field("wid") String wid,
+                                     @Field("worker_id") String worker_id);
 
 
 }
