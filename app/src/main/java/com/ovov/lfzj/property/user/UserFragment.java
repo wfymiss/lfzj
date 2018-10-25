@@ -49,8 +49,8 @@ public class UserFragment extends BaseFragment {
     Unbinder unbinder;
     /* @BindView(R.id.tv_shop_order)
      TextView tvShopOrder;*/
-    @BindView(R.id.tv_shop_order)
-    TextView tvShopOrder;
+//    @BindView(R.id.tv_shop_order)
+//    TextView tvShopOrder;
     @BindView(R.id.tv_username_info)
     TextView tvUsernameInfo;
     /* @BindView(R.id.tv_order)
@@ -125,7 +125,7 @@ public class UserFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.my_circle_images, R.id.tv_shop_order, R.id.tv_my})
+    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.my_circle_images, R.id.tv_my})
 
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -135,9 +135,9 @@ public class UserFragment extends BaseFragment {
 //            case R.id.tv_order:
 //                mUtils.startActivity(EvaluateActivity.class);
 //                break;
-            case R.id.tv_shop_order:
-                mUtils.startActivity(OrderActivity.class);
-                break;
+//            case R.id.tv_shop_order:
+//                mUtils.startActivity(OrderActivity.class);
+//               break;
 //            case R.id.tv_service_order:
 //                mUtils.startActivity(OrderedActivity.class);
 //                break;

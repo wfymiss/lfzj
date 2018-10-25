@@ -61,15 +61,15 @@ public class KeyListingActivity extends BaseActivity {
     private LinearLayoutManager linearLayoutManager;
     private List<KeyReplyInfo.DataBean> list = new ArrayList<>();
     //    private OpenDoorPresent present;   // 定义更新钥匙列表方法
-    private String build_id = null;   // 楼宇ID
+    private String build_id = "";   // 楼宇ID
     private String key_gaintime = null;  // 获取钥匙系统本地时间
     private String token = null;   // 用户token
-    private String sub_id = null;   // 小区id
+    private String sub_id = "1";   // 小区id
     //private UserInfo infoData=null;                    // 定义用户信息
     private String role_id = null;                     // 身份判断 未认证0，已认证1，家人2
- //   private String keyPath= "http://app.catel-link.com/v1/entrance/applyKey";       //  更新钥匙列表
-    private String keyPath= CatelApiService.HOST+"v1/entrance/applyKey";       // 更新钥匙列表
-    private String build_keyPath=CatelApiService.HOST+"v1/entrance/getKeys";   // 获取选定的楼宇钥匙
+    //   private String keyPath= "http://app.catel-link.com/v1/entrance/applyKey";       //  更新钥匙列表
+    private String keyPath = CatelApiService.HOST + "v1/entrance/applyKey";       // 更新钥匙列表
+    private String build_keyPath = CatelApiService.HOST + "v1/entrance/getKeys";   // 获取选定的楼宇钥匙
     private boolean upKey = false;
     private OkHttpClient okHttpClient;
     private Request request;
@@ -84,10 +84,11 @@ public class KeyListingActivity extends BaseActivity {
     };
 
 
-    public static void toActivity(Context context){
-        Intent intent = new Intent(context,KeyListingActivity.class);
+    public static void toActivity(Context context) {
+        Intent intent = new Intent(context, KeyListingActivity.class);
         context.startActivity(intent);
     }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_key_listing;
@@ -95,22 +96,20 @@ public class KeyListingActivity extends BaseActivity {
 
     @Override
     public void init() {
+        token = LoginUserBean.getInstance().getAccess_token();
         if (LoginUserBean.getInstance().getLoginType().equals(PROPERTY_LOGIN)) {
             setRightText("钥匙");
-
-        }else {
+            getBuildingKeyList();
+        } else {
             setRightText(R.string.text_update_key);
+            upDataKeyList();
         }
 
         setTitleText(R.string.text_keylist);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         EventBus.getDefault().register(this);       // 小区楼宇列表点击 popup监听事件
-//        present=new OpenDoorPresent(this);    // 初始化更新钥匙方法
-        token=LoginUserBean.getInstance().getAccess_token();
-        sub_id="2";
-     //   storageTokenRead();    //  获取token
-        postKeyList();        // 从本地解析钥匙
-        upDataKeyList();      // 更新钥匙列表———保存在本地
+
+        // 更新钥匙列表———保存在本地
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);    //recycler 竖向滑动
         recyclerView.setAdapter(adapter);
@@ -185,12 +184,12 @@ public class KeyListingActivity extends BaseActivity {
         }
     }
 
-    // 获取本地钥匙
-    private void postKeyList() {
-        SharedPreferences spf = this.getSharedPreferences("key_list", Context.MODE_PRIVATE);
-        String keyjson = spf.getString("keyjson", "");
-        keyListJson(keyjson);     // 解析钥匙
-    }
+//    // 获取本地钥匙
+//    private void postKeyList() {
+//        SharedPreferences spf = this.getSharedPreferences("key_list", Context.MODE_PRIVATE);
+//        String keyjson = spf.getString("keyjson", "");
+//        keyListJson(keyjson);     // 解析钥匙
+//    }
 
     //   解析钥匙key
     private void keyListJson(String keyjson) {
@@ -255,7 +254,7 @@ public class KeyListingActivity extends BaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String keyResult = response.body().string();
-                Log.e("okhttp",keyResult);
+
                 //  用户钥匙 保存在本地
                 if (keyResult != null) {
                     SharedPreferences spf = KeyListingActivity.this.getSharedPreferences("key_list", Context.MODE_PRIVATE);
@@ -300,7 +299,7 @@ public class KeyListingActivity extends BaseActivity {
                 }
             }
         });
-         }
+    }
 
 
     @Subscribe

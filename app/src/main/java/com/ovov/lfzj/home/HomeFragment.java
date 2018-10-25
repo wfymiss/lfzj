@@ -167,9 +167,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
         homePresenter = new HomePresenter(this);
         homePresenter.gethomeList();
         initList();
-        if (LoginUserBean.getInstance().isIs_auth()) {
-            homePresenter.getNoticeList();
-        }
+        homePresenter.getNoticeList();
         homePresenter.getNewsList();
         initBanner();
 
