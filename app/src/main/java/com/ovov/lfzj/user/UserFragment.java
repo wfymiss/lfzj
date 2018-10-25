@@ -26,6 +26,7 @@ import com.ovov.lfzj.home.ui.MessageListActivity;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.login.IdentityConfirmActivity;
+import com.ovov.lfzj.login.MySubActivity;
 import com.ovov.lfzj.market.order.OrderActivity;
 import com.ovov.lfzj.user.activity.FamilyActivity;
 import com.ovov.lfzj.user.activity.HealthSubscribeActivity;
@@ -52,8 +53,8 @@ public class UserFragment extends BaseFragment {
     Unbinder unbinder;
     /* @BindView(R.id.tv_shop_order)
      TextView tvShopOrder;*/
-    @BindView(R.id.tv_shop_order)
-    TextView tvShopOrder;
+//    @BindView(R.id.tv_shop_order)
+//    TextView tvShopOrder;
     @BindView(R.id.tv_username_info)
     TextView tvUsernameInfo;
     /* @BindView(R.id.tv_order)
@@ -70,8 +71,8 @@ public class UserFragment extends BaseFragment {
     TextView mTvNickname;
     @BindView(R.id.tv_sign)
     TextView mTvSign;
-    @BindView(R.id.tv_myhealth)
-    TextView tvMyhealth;
+//    @BindView(R.id.tv_myhealth)
+//    TextView tvMyhealth;
     /*@BindView(R.id.tv_unitiy_message)
     TextView tvUnitiyMessage;*/
     private ActivityUtils mUtils;
@@ -132,7 +133,7 @@ public class UserFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.my_circle_images, R.id.tv_shop_order, R.id.tv_my, R.id.tv_myhealth, R.id.mine_family, R.id.tv_worker_order})
+    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.my_circle_images, R.id.tv_my, R.id.mine_family, R.id.tv_worker_order})
 
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -142,9 +143,9 @@ public class UserFragment extends BaseFragment {
 //            case R.id.tv_order:
 //                mUtils.startActivity(EvaluateActivity.class);
 //                break;
-            case R.id.tv_shop_order:
-                mUtils.startActivity(OrderActivity.class);
-                break;
+        //    case R.id.tv_shop_order:
+             //   mUtils.startActivity(OrderActivity.class);
+           //     break;
 //            case R.id.tv_service_order:
 //                mUtils.startActivity(OrderedActivity.class);
 //                break;
@@ -159,8 +160,9 @@ public class UserFragment extends BaseFragment {
                 SettingActivity.toActivity(mActivity);
                 break;
             case R.id.tv_identity:
-                IdentityConfirmActivity.toActivity(mActivity);
-                mActivity.finish();
+                MySubActivity.toActivity(mActivity);
+               // IdentityConfirmActivity.toActivity(mActivity);
+            //    mActivity.finish();
                 break;
             case R.id.my_circle_images:
                 UserInfoActivity.toActivity(mActivity, subListBean.getDatas().getUser());
@@ -181,9 +183,9 @@ public class UserFragment extends BaseFragment {
                 FamilyActivity.toActivity(mActivity);
                 break;
 
-            case R.id.tv_myhealth:
-                HealthSubscribeActivity.toActivity(mActivity);
-                break;
+//            case R.id.tv_myhealth:
+//                HealthSubscribeActivity.toActivity(mActivity);
+//                break;
         }
     }
 

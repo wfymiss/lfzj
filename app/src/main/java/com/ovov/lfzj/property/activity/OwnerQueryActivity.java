@@ -290,7 +290,7 @@ public class OwnerQueryActivity extends BaseActivity implements ReadingView {
 
     @Override
     public void setRoomList(RoomListResult result) {
-        if (result.getDatas() != null && result.getDatas().getHouses_list().size() > 0) {
+        if (result.getDatas().getHouses_list() != null && result.getDatas().getHouses_list().size() > 0) {
             for (int i = 0; i < result.getDatas().getHouses_list().size(); i++) {
                 String room_numb = result.getDatas().getHouses_list().get(i).getHouse_number();
                 String room_getid= result.getDatas().getHouses_list().get(i).getId();
@@ -309,6 +309,13 @@ public class OwnerQueryActivity extends BaseActivity implements ReadingView {
             editor.putString("room_id",room);
             editor.putString("room_number", room_id);
             editor.commit();
+        }else {
+            SharedPreferences spf = this.getSharedPreferences("room", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = spf.edit();
+            editor.putString("room_id","");
+            editor.putString("room_number", "");
+            editor.commit();
+
         }
     }
 
