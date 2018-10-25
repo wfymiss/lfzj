@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,33 +34,34 @@ public class RoomListPopup extends PopupWindow {
     private LinearLayoutManager linearLayoutManager;
     private ActivityTitleInfo info;  // 活动标题实体类
     private BuildingListTitleAdapter adapter;
-    private List<ActivityTitleInfo> list=new ArrayList<>();
+    private List<ActivityTitleInfo> list = new ArrayList<>();
     private String activity_category[];  // 活动标题
+    private String number[];  // 活动标题
     private String category_id[];    // 活动标题ID
 
-    public RoomListPopup(Context mcontext){
-        this.context=mcontext;
+    public RoomListPopup(Context mcontext) {
+        this.context = mcontext;
         init(context);   //布局
         setPopupWindow();   //布局属性
     }
 
     private void init(Context ncontext) {
-        adapter=new BuildingListTitleAdapter(ncontext);    // 初始化认证的小区适配器
+        adapter = new BuildingListTitleAdapter(ncontext);    // 初始化认证的小区适配器
         activityCategory();  // 获取活动标题
         LayoutInflater infalter = LayoutInflater.from(ncontext);
-        mview=infalter.inflate(R.layout.popup_activity_title,null);   // 弹出框页面视图
-        recyclerView= (RecyclerView) mview.findViewById(R.id.activity_title_recy);
+        mview = infalter.inflate(R.layout.popup_activity_title, null);   // 弹出框页面视图
+        recyclerView = (RecyclerView) mview.findViewById(R.id.activity_title_recy);
         linearLayoutManager = new LinearLayoutManager(ncontext, LinearLayoutManager.VERTICAL, false);    //竖向刷新
         recyclerView.setLayoutManager(linearLayoutManager);  //recycler 刷新
         recyclerView.setAdapter(adapter);
-       adapter.setTitleItemListener(new BuildingListTitleAdapter.TitleItemListener() {
-           @Override
-           public void titleItemClick(int position, String building, String type_id) {
-               EventBus.getDefault().post(new BuildingListEvent(building,"3"));
-               RxBus.getDefault().post(new BuildingListEvent(building,"3"));
-               dismiss();
-           }
-       });
+        adapter.setTitleItemListener(new BuildingListTitleAdapter.TitleItemListener() {
+            @Override
+            public void titleItemClick(int position, String building, String type_id) {
+                EventBus.getDefault().post(new BuildingListEvent(building,type_id,"3"));
+                RxBus.getDefault().post(new BuildingListEvent(building, type_id,"3"));
+                dismiss();
+            }
+        });
     }
 
     private void setPopupWindow() {
@@ -80,11 +82,16 @@ public class RoomListPopup extends PopupWindow {
 
     // 获取活动标题
     private void activityCategory() {
-        SharedPreferences spf=context.getSharedPreferences("room", Context.MODE_PRIVATE);
-        String category=spf.getString("room_id","");
-        activity_category=category.split(",");   //转换成数组
-        for (int i=0;i<activity_category.length;i++){
-            info=new ActivityTitleInfo();
+        SharedPreferences spf = context.getSharedPreferences("room", Context.MODE_PRIVATE);
+        String category = spf.getString("room_id", "");
+        String numb = spf.getString("room_number", "");
+        Log.e("21312313131", numb + "");
+
+        activity_category = category.split(",");   //转换成数组
+        number = numb.split(",");   //转换成数组
+        for (int i = 0; i < number.length; i++) {
+            info = new ActivityTitleInfo();
+            info.setTitle_id(number[i]);
             info.setTitle(activity_category[i]);
             list.add(info);
         }

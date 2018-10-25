@@ -3,6 +3,8 @@ package com.ovov.lfzj.home.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -52,6 +54,14 @@ public class MessageDetailActivity extends BaseActivity {
     public void init() {
         id = getIntent().getExtras().get("id").toString();
         initList();
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                if (id==13){
+//
+//                }
+            }
+        });
     }
 
     private void initData() {

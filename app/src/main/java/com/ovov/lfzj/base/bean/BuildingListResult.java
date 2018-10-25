@@ -17,7 +17,7 @@ public class BuildingListResult {
     private int status;
     private String error_code;
     private String error_msg;
-    private List<DataBean> data;
+    private List<DataBean> datas;
 
     public String getError_code() {
         return error_code;
@@ -44,19 +44,24 @@ public class BuildingListResult {
     }
 
     public List<DataBean> getData() {
-        return data;
+        return datas;
     }
 
     public void setData(List<DataBean> data) {
-        this.data = data;
+        this.datas = data;
     }
 
     public static class DataBean {
         /**
          * building_id : 1
          */
-
         private String building_id;
+
+        private String building;
+
+        public String getBuilding() {
+            return building;
+        }
 
         public String getBuilding_id() {
             return building_id;

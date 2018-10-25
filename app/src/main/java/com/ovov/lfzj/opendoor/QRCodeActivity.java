@@ -103,14 +103,14 @@ public class QRCodeActivity extends BaseActivity {
     }
 
     private void initList() {
-        mAdaptet = new CommonAdapter<NewsBean>(QRCodeActivity.this, noticeList, R.layout.news_item) {
+        mAdaptet = new CommonAdapter<NewsBean>(QRCodeActivity.this, noticeList, R.layout.layout_key_list) {
 
 
             @Override
             public void convert(ViewHolder viewHolder, NewsBean noticeBean, final int i) {
-                viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
-                viewHolder.setText(R.id.tv_comment, noticeBean.getSummary());
-                viewHolder.setText(R.id.tv_time, noticeBean.getCreated_at());
+//                viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
+//                viewHolder.setText(R.id.tv_comment, noticeBean.getSummary());
+//                viewHolder.setText(R.id.tv_time, noticeBean.getCreated_at());
 
             }
         };

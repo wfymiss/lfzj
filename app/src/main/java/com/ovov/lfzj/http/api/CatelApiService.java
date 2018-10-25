@@ -39,6 +39,11 @@ import com.ovov.lfzj.home.bean.SubListBean;
 import com.ovov.lfzj.home.bean.WXPayInfo;
 import com.ovov.lfzj.home.bean.WxPaySuccessResult;
 import com.ovov.lfzj.market.order.bean.ShopBean;
+import com.ovov.lfzj.property.bean.InformMeterResult;
+import com.ovov.lfzj.property.bean.MeterResult;
+import com.ovov.lfzj.property.bean.PaymentDetailBean;
+import com.ovov.lfzj.property.bean.ReadMeterResult;
+import com.ovov.lfzj.property.bean.ShopListResult;
 import com.ovov.lfzj.user.bean.HealthBean;
 
 import java.util.List;
@@ -46,6 +51,7 @@ import java.util.List;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -128,8 +134,7 @@ public interface CatelApiService {
     @FormUrlEncoded
     @POST("v1/user/commentzan")
     Observable<ListInfo<SquareListInfo>> getLog(@Field("token") String token,
-                                            @Field("page") int page);
-
+                                                @Field("page") int page);
 
 
     @FormUrlEncoded
@@ -158,6 +163,114 @@ public interface CatelApiService {
                                            @Field("result") String result,
                                            @Field("phone") String phone);
 
+    @FormUrlEncoded
+    @POST("/v1/entrance/getSubdistrict_buildings")
+    Observable<BuildingListResult> getBuildingList(@Field("subdistrict_id") String token);
+
+    // 业主工单验收、确认
+    @FormUrlEncoded
+    @POST("front/property/index/wo_completed")
+    Observable<ServerFeedBackInfo> setOrderConfirm(@Field("token") String tokern,
+                                                   @Field("wo_id") String order_id,
+                                                   @Field("subdistrict_id") String sub_id);
+
+    // 工单维修评论
+    @FormUrlEncoded
+    @POST("front/property/index/wo_feedback")
+    Observable<ServerFeedBackInfo> setWorkComment(@Field("token") String token, @Field("subdistrict_id") String sub_id,
+                                                  @Field("wo_id") String wo_id, @Field("suggest") String content, @Field("rating") int rating);
+
+    //获取单元
+    @FormUrlEncoded
+    @POST("/v1/user/get_unit_list")
+    Observable<UnitListResult> getUnitList(@Field("building") String building,
+                                           @Field("subdistrict_id") String subdistrict_id);
+
+    //获取业主抄表账单详情
+    @FormUrlEncoded
+    @POST("front/company/index/informationMeter")
+    Observable<InformMeterResult> getinformationMeter(@Field("token") String token,
+                                                      @Field("building_id") String building_id,
+                                                      @Field("unit") String unit,
+                                                      @Field("number") String number,
+                                                      @Field("gid") String gid);
+
+    @FormUrlEncoded
+    @POST("/v1/bills/shopLists")
+    Observable<ShopListResult> getDJShopList(@Field("subdistrict_id") String subdistrict_id);
+
+
+    @FormUrlEncoded
+    @POST("/v1/bills/billsLists")
+    Observable<DataInfo<PaymentDetailBean>> getOwnerPayment(@Field("house_type") String is_shop,
+                                                            @Field("status") int status,
+                                                            @Field("year") String year,
+                                                            @Field("subdistrict_id") String subdistrict_id,
+                                                            @Field("house_id") String house_id);
+
+
+    @FormUrlEncoded
+    @POST("/v1/bills/billsLists")
+    Observable<DataInfo<PaymentDetailBean>> getShopPayment(@Field("subdistrict_id") String subdistrict_id,
+                                                           @Field("house_type") String is_shop,
+                                                           @Field("status") int status,
+                                                           @Field("year") String year,
+                                                           @Field("house_id") String house_id);
+
+    //获取房间
+    @FormUrlEncoded
+    @POST("/v1/user/unit_list")
+    Observable<RoomListResult> getRoomList(@Field("subdistrict_id") String subdistrict_id,
+                                           @Field("building") String building_id,
+                                           @Field("unit_id") String unit_id);
+
+
+    //管家生成抄表生成账单
+    @FormUrlEncoded
+    @POST("front/company/index/readMeter")
+    Observable<ReadMeterResult> getReadMeterResult(@Field("token") String token,
+                                                   @Field("houses_id") String houses_id,
+                                                   @Field("value") String value,
+                                                   @Field("meter_number") String meter_number,
+                                                   @Field("gid") String gid,
+                                                   @Field("explains") String explains,
+                                                   @Field("created_time") String created_time);
+
+    //楼管家提交工单
+    @FormUrlEncoded
+    @POST("front/Company/index/orderCommit")
+    Observable<WorkOrderUpInfo> propertyCommitWorkOrder(@Field("token") String token,
+                                                        @Field("position") String position,
+                                                        @Field("category") String category,
+                                                        @Field("contact") String contact,
+                                                        @Field("desc_img") String desc_img,
+                                                        @Field("time") String time,
+                                                        @Field("phone") String phone,
+                                                        @Field("addr") String addr,
+                                                        @Field("content") String content,
+                                                        @Field("building") String building,
+                                                        @Field("unit") String unit,
+                                                        @Field("room") String room);
+
+    // 维修提交工单
+    @FormUrlEncoded
+    @POST("front/property/index/wo_commit")
+    Observable<WorkOrderUpInfo> ownerCommitWorkOrder(@Field("token") String token,
+                                                     @Field("category") String category,
+                                                     @Field("position") String position,
+                                                     @Field("did") String did,
+                                                     @Field("contact") String contact,
+                                                     @Field("phone") String phone,
+                                                     @Field("time") String time,
+                                                     @Field("addr") String addr,
+                                                     @Field("content") String content,
+                                                     @Field("subdistrict_id") String subdistrict_id,
+                                                     @Field("desc_img") String list_img);
+
+    //发布活动图片
+    @Multipart
+    @POST("front/activity/index/upload")
+    Observable<ActivityUpImageInfo> upLoadActivityImage(@Part("token") String token, @Part MultipartBody.Part part);
 
 
     @FormUrlEncoded
@@ -186,7 +299,7 @@ public interface CatelApiService {
     @FormUrlEncoded
     @POST("v1/recommend/infomation")
     Observable<ListInfo<BannerBean>> getInfomation(@Field("token") String token,
-                                                       @Field("type_id") String sub_id);
+                                                   @Field("type_id") String sub_id);
 
     @FormUrlEncoded
     @POST("v1/examination")
@@ -256,7 +369,7 @@ public interface CatelApiService {
     @FormUrlEncoded
     @POST("v1/user/unit_list")
     Observable<DataInfo<RoomInfo>> getRoom(@Field("subdistrict_id") String sub_id,
-                                           @Field("building_id") String buildingid,
+                                           @Field("building") String buildingid,
                                            @Field("unit_id") String unit_id);
 
     @FormUrlEncoded
@@ -343,6 +456,7 @@ public interface CatelApiService {
                                    @Field("subdistrict_id") String sub_id,
                                    @Field("name") String name,
                                    @Field("mobile") String mobile);
+
     @FormUrlEncoded
     @POST("v1/house/get_user_info")
     Observable<DataInfo<MobileInfo>> getMobile(@Field("token") String token,
@@ -353,21 +467,24 @@ public interface CatelApiService {
     Observable<DataInfo> workAdd(@Part("token") RequestBody token,
                                  @Part("phone") RequestBody phone,
                                  @Part("address") RequestBody address,
-                                 @Part("position") RequestBody  position,
+                                 @Part("position") RequestBody position,
                                  @Part("category") RequestBody category,
                                  @Part("contents") RequestBody content,
                                  @Part("username") RequestBody username,
                                  @Part("subdistrictId") RequestBody subdistrict_id,
                                  @Part() List<MultipartBody.Part> part);
+
     @FormUrlEncoded
     @POST("v1/user/get_user_house")
     Observable<ListInfo<RoomListInfo>> getUserHouse(@Field("token") String token,
                                                     @Field("subdistrict_id") String subdistrict_id);
+
     @FormUrlEncoded
     @POST("v1/work/worklist")
     Observable<ListInfo<WorkOrderListInfo>> getWorkList(@Field("token") String token,
                                                         @Field("page") int page,
                                                         @Field("status") int status);
+
     @FormUrlEncoded
     @POST("v1/work/workstaff")
     Observable<DataInfo<WorkDetailBean>> getWorkorderDetail(@Field("token") String token,

@@ -8,9 +8,21 @@ public class BuildingListEvent {
     private String building;
     private String id;
 
-    public BuildingListEvent(String building, String id) {
+    public void setIndex(String index) {
+        this.index = index;
+    }
+
+    public String getIndex() {
+
+        return index;
+    }
+
+    private String index;
+
+    public BuildingListEvent(String building, String id,String index) {
         this.building = building;
         this.id = id;
+        this.index =index;
     }
 
     public String getId() {

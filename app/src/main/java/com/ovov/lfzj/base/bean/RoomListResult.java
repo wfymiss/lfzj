@@ -16,7 +16,11 @@ public class RoomListResult {
     private int status;
     private String error_code;
     private String error_msg;
-    private List<DataBean> data;
+    private DataBean datas;
+
+    public DataBean getDatas() {
+        return datas;
+    }
 
     public String getError_code() {
         return error_code;
@@ -42,18 +46,16 @@ public class RoomListResult {
         this.status = status;
     }
 
-    public List<DataBean> getData() {
-        return data;
-    }
-
-    public void setData(List<DataBean> data) {
-        this.data = data;
-    }
 
     public static class DataBean {
         /**
          * number : 0
          */
+private List<Houses>houses_list;
+
+        public List<Houses> getHouses_list() {
+            return houses_list;
+        }
 
         private String number;
 
@@ -63,6 +65,42 @@ public class RoomListResult {
 
         public void setNumber(String number) {
             this.number = number;
+        }
+    }
+    public static class Houses {
+
+        /**
+         * id : 1
+         * house_number : 401
+         * str_id : 401
+         */
+
+        private String id;
+        private String house_number;
+        private String str_id;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getHouse_number() {
+            return house_number;
+        }
+
+        public void setHouse_number(String house_number) {
+            this.house_number = house_number;
+        }
+
+        public String getStr_id() {
+            return str_id;
+        }
+
+        public void setStr_id(String str_id) {
+            this.str_id = str_id;
         }
     }
 }

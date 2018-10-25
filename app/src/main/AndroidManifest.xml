@@ -413,6 +413,27 @@
         <activity android:name=".user.setting.advicesActivity" />
         <activity android:name=".home.ui.MessageDetailActivity"></activity>
         <activity android:name=".property.home.repair.DispathActivity"/>
+        <activity
+            android:name=".property.activity.TeanatQueryActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".property.activity.OwnerQueryActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".property.activity.PaymentDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".property.activity.PaymentQueryActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.ui.MessageDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

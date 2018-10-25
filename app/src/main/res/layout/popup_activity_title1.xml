@@ -17,7 +17,7 @@
             android:textSize="18dp"
             android:textColor="@color/blu"
             android:gravity="center"
-            android:text=""
+            android:text="选择小区"
 
             android:background="@mipmap/ic_select_building"
             android:layout_width="match_parent"

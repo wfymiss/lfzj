@@ -27,6 +27,7 @@ import com.ovov.lfzj.home.repair.RepairActivity;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.login.LoginActivity;
+import com.ovov.lfzj.property.activity.PaymentQueryActivity;
 import com.ovov.lfzj.property.home.adapter.HomeGridAdapter;
 import com.ovov.lfzj.property.home.repair.WorkerOrderActivity;
 import com.squareup.picasso.Picasso;
@@ -147,6 +148,10 @@ public class HomeFragment extends BaseFragment {
                     case 1:
                         break;
                     case 2:
+                        if (activityUtils == null) {
+                            activityUtils = new ActivityUtils(HomeFragment.this);
+                        }
+                        activityUtils.startActivity(PaymentQueryActivity.class);
                         break;
                     case 3:
                         //投诉建议界面

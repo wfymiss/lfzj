@@ -1,4 +1,4 @@
-package com.ovov.lfzj.base.bean;
+package com.ovov.lfzj.property.bean;
 
 import java.util.List;
 
@@ -6,17 +6,17 @@ import java.util.List;
  * Created by Administrator on 2017/12/7.
  */
 
-public class UnitListResult {
+public class MeterResult {
 
     /**
-     * data : [{"unit":"1"},{"unit":"2"},{"unit":"3"}]
+     * data : [{"name":"水表","gid":"46"},{"name":"电表","gid":"45"},{"name":"煤气表","gid":"44"}]
      * status : 0
      */
 
     private int status;
     private String error_code;
     private String error_msg;
-    private List<DataBean> datas;
+    private List<DataBean> data;
 
     public String getError_code() {
         return error_code;
@@ -43,26 +43,36 @@ public class UnitListResult {
     }
 
     public List<DataBean> getData() {
-        return datas;
+        return data;
     }
 
     public void setData(List<DataBean> data) {
-        this.datas = data;
+        this.data = data;
     }
 
     public static class DataBean {
         /**
-         * unit : 1
+         * name : 水表
+         * gid : 46
          */
 
-        private String unit;
+        private String name;
+        private String gid;
 
-        public String getUnit() {
-            return unit;
+        public String getName() {
+            return name;
         }
 
-        public void setUnit(String unit) {
-            this.unit = unit;
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getGid() {
+            return gid;
+        }
+
+        public void setGid(String gid) {
+            this.gid = gid;
         }
     }
 }

@@ -18,9 +18,12 @@ public class UnitInfo {
 
     public int id;
     public String buildings;
-    public String str_id;
+    public String building_id;
     public List<BuildingSunBean> building_sun;
 
+    public String getBuilding_id() {
+        return building_id;
+    }
 
     public static class BuildingSunBean {
         /**
