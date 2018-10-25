@@ -25,7 +25,7 @@ public class ReadingPresenter {
 
     public void getMeterType() {
 
-        Subscription subscription = RetrofitHelper.getInstance().getMeterType()
+        /*Subscription subscription = RetrofitHelper.getInstance().getMeterType()
                 .compose(RxUtil.<MeterResult>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<MeterResult>() {
                     @Override
@@ -46,7 +46,7 @@ public class ReadingPresenter {
                     }
 
                 });
-     //   addSubscrebe(subscription);
+     //   addSubscrebe(subscription);*/
 
     }
     public void getBuildingList() {
