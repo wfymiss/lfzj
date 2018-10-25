@@ -124,6 +124,6 @@
         android:paddingLeft="@dimen/margin_12dp"
         android:layout_marginTop="@dimen/padding_12dp"
         android:layout_marginBottom="@dimen/padding_12dp"
-        android:background="@drawable/shape_repair_blue"/>
+        android:background="@drawable/shape_repair_gray"/>
 
 </RelativeLayout>

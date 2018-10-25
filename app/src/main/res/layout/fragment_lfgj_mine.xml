@@ -40,7 +40,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="150dp"
                         android:clickable="true"
-                        android:src="@mipmap/default_head_img" />
+                        android:src="@mipmap/ic_default_head" />
 
                     <TextView
                         android:id="@+id/my_nickname"
@@ -49,7 +49,7 @@
                         android:layout_below="@+id/my_circle_images"
                         android:layout_marginTop="15dp"
                         android:layout_centerHorizontal="true"
-                        android:text="小图头像"
+                        android:text="原磊"
                         android:textColor="#2a2a2a"
                         android:textSize="18sp" />
 
@@ -68,7 +68,7 @@
                         android:lineSpacingExtra="3dp"
                         android:maxEms="15"
                         android:maxLines="1"
-                        android:text="仰望星空"
+                        android:text="维修主管"
                         android:textColor="@color/gray_dark"
                         android:textSize="16sp" />
                 </RelativeLayout>

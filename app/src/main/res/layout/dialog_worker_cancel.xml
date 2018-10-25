@@ -12,7 +12,7 @@
         android:gravity="center_vertical"
         android:paddingBottom="@dimen/padding_15dp"
         android:paddingTop="@dimen/padding_15dp"
-        android:text="取消派单的理由"
+        android:text="取消订单的理由"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp" />
 
@@ -21,7 +21,78 @@
         android:layout_height="@dimen/margin_2dp"
         android:background="@color/colorPrimary" />
 
+    <LinearLayout
+        android:id="@+id/lin_reason1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/tv_reason1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/padding_15dp"
+            android:layout_marginLeft="@dimen/padding_15dp"
+            android:layout_marginTop="@dimen/padding_15dp"
+            android:text="不在维修范围"
+            android:textColor="@color/color_444444"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_reason1"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/select_reason" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_1dp"
+        android:background="@color/color_dcdcdc" />
+
+    <LinearLayout
+        android:id="@+id/lin_reason2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_reason2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_15dp"
+            android:text="没有配件"
+            android:layout_marginBottom="@dimen/padding_15dp"
+            android:layout_marginTop="@dimen/padding_15dp"
+            android:textColor="@color/color_444444"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/iv_reason2"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/select_reason" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_1dp"
+        android:background="@color/color_dcdcdc" />
 
     <EditText
         android:id="@+id/et_mark"

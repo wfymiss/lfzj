@@ -213,6 +213,7 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
                                 mData.addAll(listInfo.datas());
                                 mAdapter.notifyDataSetChanged();
                             }else {
+                                mData.clear();
                                 mLinNull.setVisibility(View.VISIBLE);
                             }
 

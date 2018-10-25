@@ -500,6 +500,23 @@ public interface CatelApiService {
     Observable<DataInfo> workDispath(@Field("token") String token,
                                      @Field("wid") String wid,
                                      @Field("worker_id") String worker_id);
+    @FormUrlEncoded
+    @POST("v1/work/workreceipt")
+    Observable<DataInfo> workReceipt(@Field("token") String token,
+                                     @Field("wid") String wid);
+    @FormUrlEncoded
+    @POST("v1/work/workercancels")
+    Observable<DataInfo> workCancel(@Field("token") String token,
+                                    @Field("wid") String wid,
+                                    @Field("word_time") String word_time,
+                                    @Field("content") String reason,
+                                    @Field("remarks") String remarks);
+    @FormUrlEncoded
+    @POST("v1/work/propertycancellation")
+    Observable<DataInfo> cancelWorkOrder(@Field("token") String token,
+                                         @Field("wid") String wid,
+                                         @Field("word_time") String time,
+                                         @Field("remarks") String remarks);
 
 
 }

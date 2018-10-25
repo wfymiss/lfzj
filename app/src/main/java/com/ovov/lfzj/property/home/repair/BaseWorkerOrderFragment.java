@@ -14,15 +14,20 @@ import com.mcxtzhang.commonadapter.lvgv.CommonAdapter;
 import com.mcxtzhang.commonadapter.lvgv.ViewHolder;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseFragment;
+import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.bean.WorkOrderListInfo;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.RxUtil;
+import com.ovov.lfzj.base.utils.UIUtils;
+import com.ovov.lfzj.base.widget.CancelDispathDialog;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
 import com.ovov.lfzj.base.widget.ScaleImageView;
+import com.ovov.lfzj.base.widget.WorkerCancelDialog;
 import com.ovov.lfzj.event.DispathEvent;
 import com.ovov.lfzj.home.repair.WorkerOrderDetailActivity;
+import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -30,7 +35,9 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -94,7 +101,7 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
                 TextView tvDispatch = viewHolder.getView(R.id.tv_dispatch);
                 TextView tvCancel = viewHolder.getView(R.id.tv_cancel);
 
-                switch (workOrderListInfo.receipt_staff) {
+                /*switch (workOrderListInfo.receipt_staff) {
                     case 0:
                         viewHolder.setText(R.id.tv_status, "待维修");
                         if (LoginUserBean.getInstance().getAppPermission().gongdan_paidan) {
@@ -106,10 +113,10 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
                                     DispathActivity.toActivity(mActivity, String.valueOf(workOrderListInfo.id));
                                 }
                             });
-                        } else if (LoginUserBean.getInstance().getAppPermission().gongdan_jiedan ){
-                            tvDispatch.setText("接单");
-                            tvDispatch.setVisibility(View.VISIBLE);
-                        }else {
+                        } else if (LoginUserBean.getInstance().getAppPermission().gongdan_jiedan) {
+                            *//*tvDispatch.setText("接单");
+                            tvDispatch.setVisibility(View.VISIBLE);*//*
+                        } else {
                             tvDispatch.setVisibility(View.GONE);
                         }
                         break;
@@ -120,11 +127,26 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
                             tvDispatch.setVisibility(View.VISIBLE);
                             tvCancel.setVisibility(View.VISIBLE);
 
-                        } else if (LoginUserBean.getInstance().getAppPermission().gongdan_jiedan ){
+                        } else if (LoginUserBean.getInstance().getAppPermission().gongdan_jiedan) {
                             tvDispatch.setText("接单");
                             tvDispatch.setVisibility(View.VISIBLE);
-                            tvCancel.setVisibility(View.GONE);
-                        }else {
+                            tvCancel.setText("取消接单");
+                            tvCancel.setVisibility(View.VISIBLE);
+                            tvDispatch.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    workRecipet(workOrderListInfo.id);
+                                }
+                            });
+                            tvCancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    WorkerCancelDialog workerCancelDialog = new WorkerCancelDialog(mActivity);
+                                    workerCancelDialog.setWidth((int) (UIUtils.getScreenWidth() * 0.75));
+                                    workerCancelDialog.show();
+                                }
+                            });
+                        } else {
                             tvDispatch.setVisibility(View.GONE);
                             tvCancel.setVisibility(View.GONE);
                         }
@@ -146,7 +168,99 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
                         break;
                     default:
                         break;
+                }*/
+
+                switch (workOrderListInfo.status) {
+                    case 0:
+                        switch (workOrderListInfo.status_wx) {
+                            case 0:
+                                switch (workOrderListInfo.status_jd) {
+                                    case 0:
+                                        switch (workOrderListInfo.status_pd) {
+                                            case 0:
+                                                viewHolder.setText(R.id.tv_status, "未派单");
+                                                if (LoginUserBean.getInstance().getAppPermission().gongdan_paidan) {
+                                                    tvDispatch.setText("派单");
+                                                    tvDispatch.setVisibility(View.VISIBLE);
+                                                    tvDispatch.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            DispathActivity.toActivity(mActivity, String.valueOf(workOrderListInfo.id));
+                                                        }
+                                                    });
+                                                } else if (LoginUserBean.getInstance().getAppPermission().gongdan_jiedan) {
+                                                    /*tvDispatch.setText("接单");
+                            tvDispatch.setVisibility(View.VISIBLE);*/
+
+                                                } else {
+                                                    tvDispatch.setVisibility(View.GONE);
+                                                }
+                                                break;
+                                            case 1:
+                                                viewHolder.setText(R.id.tv_status, "派单中");
+                                                if (LoginUserBean.getInstance().getAppPermission().gongdan_paidan) {
+                                                    tvDispatch.setText("改派");
+                                                    tvDispatch.setVisibility(View.VISIBLE);
+                                                    tvCancel.setVisibility(View.VISIBLE);
+                                                    tvCancel.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            CancelDispathDialog dispathDialog = new CancelDispathDialog(mActivity);
+                                                            dispathDialog.setWidth((int) (UIUtils.getScreenWidth()*0.75));
+                                                            dispathDialog.show();
+                                                        }
+                                                    });
+
+                                                } else if (LoginUserBean.getInstance().getAppPermission().gongdan_jiedan) {
+                                                    tvDispatch.setText("接单");
+                                                    tvDispatch.setVisibility(View.VISIBLE);
+                                                    tvCancel.setText("取消接单");
+                                                    tvCancel.setVisibility(View.VISIBLE);
+                                                    tvDispatch.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            workRecipet(workOrderListInfo.id);
+                                                        }
+                                                    });
+                                                    tvCancel.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            WorkerCancelDialog workerCancelDialog = new WorkerCancelDialog(mActivity);
+                                                            workerCancelDialog.setWidth((int) (UIUtils.getScreenWidth() * 0.75));
+                                                            workerCancelDialog.show();
+                                                        }
+                                                    });
+                                                } else {
+                                                    tvDispatch.setVisibility(View.GONE);
+                                                    tvCancel.setVisibility(View.GONE);
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                    case 1:
+                                        viewHolder.setText(R.id.tv_status, "维修中");
+                                        break;
+                                    case 2:
+                                        viewHolder.setText(R.id.tv_status, "已拒单");
+                                        break;
+                                }
+                                break;
+                            case 1:
+                                viewHolder.setText(R.id.tv_status, "维修中");
+                                break;
+                            case 2:
+                                viewHolder.setText(R.id.tv_status, "待验收");
+                                break;
+                        }
+                        break;
+                    case 1:
+                        viewHolder.setText(R.id.tv_status, "已完成");
+                        break;
+                    case 2:
+                        viewHolder.setText(R.id.tv_status, "已取消");
+                        break;
                 }
+
                 NoScrollGridView mGridImage = viewHolder.getView(R.id.gridView);
                 List<String> mGrid = workOrderListInfo.repair_img;
                 if (mGrid.size() > 0) {
@@ -203,6 +317,35 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
 
     }
 
+    private void workRecipet(int id) {
+        showLoadingDialog();
+        Subscription subscription = RetrofitHelper.getInstance().workReciept(String.valueOf(id))
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        if (e instanceof DataResultException) {
+                            DataResultException dataResultException = (DataResultException) e;
+                            showToast(dataResultException.errorInfo);
+                        } else {
+                            doFailed();
+                            dismiss();
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        dismiss();
+                        showToast("接单成功");
+                        mRefresh.autoRefresh();
+                    }
+                });
+        addSubscrebe(subscription);
+
+    }
+
     private void initData(int refreshType) {
         if (refreshType == REFRESH) {
             page = 1;
@@ -242,12 +385,14 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
                         }
                         if (refreshType == REFRESH) {
                             mRefresh.finishRefresh(true);
-                            if (listInfo.datas().size() > 0){
+                            if (listInfo.datas().size() > 0) {
                                 mLinNull.setVisibility(View.GONE);
                                 mData.clear();
                                 mData.addAll(listInfo.datas());
                                 mAdapter.notifyDataSetChanged();
-                            }else {
+                            } else {
+                                mData.clear();
+                                mAdapter.notifyDataSetChanged();
                                 mLinNull.setVisibility(View.VISIBLE);
                             }
 
@@ -265,5 +410,12 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    private String getTime() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss
+//获取当前时间
+        Date date = new Date(System.currentTimeMillis());
+        return simpleDateFormat.format(date);
     }
 }

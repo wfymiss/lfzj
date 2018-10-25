@@ -45,5 +45,10 @@ public class WorkOrderListInfo {
     public String repair_video;
     public int receipt_staff;
     public int household;
+    public String status_id;
+    public int status;
+    public int status_wx;
+    public int status_pd;
+    public int status_jd;
 
 }

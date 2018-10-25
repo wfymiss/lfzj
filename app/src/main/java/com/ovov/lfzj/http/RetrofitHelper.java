@@ -498,70 +498,15 @@ public class RetrofitHelper {
     public Observable<DataInfo> changeRole(int login_type) {
         return mApiService.changeRole(getToken(), login_type);
     }
-
-    private static final String TAG = "RetrofitHelper";
-
-    public void download(@NonNull String url, final String filePath, Subscriber subscriber) {
-
-        // subscribeOn()改变调用它之前代码的线程
-        // observeOn()改变调用它之后代码的线程
-        mApiService
-                .download(url)
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .map(new Func1<ResponseBody, InputStream>() {
-
-                    @Override
-                    public InputStream call(ResponseBody responseBody) {
-                        Log.e(TAG, "call: ");
-                        return responseBody.byteStream();
-                    }
-                })
-                .observeOn(Schedulers.computation()) // 用于计算任务
-                .doOnNext(new Action1<InputStream>() {
-                    @Override
-                    public void call(InputStream inputStream) {
-                        writeFile(inputStream, filePath);
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);
-
+    public Observable<DataInfo> workReciept(String wid){
+        return mApiService.workReceipt(getToken(),wid);
+    }
+    public Observable<DataInfo> workerCancels(String wid,String time,String reason,String remark){
+        return mApiService.workCancel(getToken(),wid,time,reason,remark);
     }
 
-    /**
-     * 将输入流写入文件
-     *
-     * @param inputString
-     * @param filePath
-     */
-    private void writeFile(InputStream inputString, String filePath) {
-        Log.e(TAG, "writeFile: ");
-        File file = new File(filePath);
-        if (file.exists()) {
-            file.delete();
-        }
-
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(file);
-
-            byte[] b = new byte[1024];
-
-            int len;
-            while ((len = inputString.read(b)) != -1) {
-                fos.write(b, 0, len);
-            }
-            inputString.close();
-            fos.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-//            listener.onFail("FileNotFoundException");
-        } catch (IOException e) {
-//            listener.onFail("IOException");
-        }
-
-
+    public Observable<DataInfo> cancelWorkOrder(String wid,String time,String remarks){
+        return mApiService.cancelWorkOrder(getToken(),wid,time,remarks);
     }
+
 }

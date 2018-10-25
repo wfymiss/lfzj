@@ -16,6 +16,7 @@ import com.ovov.lfzj.base.banner.BannerAdapter;
 import com.ovov.lfzj.base.banner.BannerLayout;
 
 import com.ovov.lfzj.base.bean.DataInfo;
+import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.ActivityUtils;
@@ -54,13 +55,18 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.home_lfgj_grid)
     NoScrollGridView homeLfgjGrid;
 
-    private int[] image = {R.mipmap.lfgj_gd, R.mipmap.lfgj_cb, R.mipmap.lfgj_payfee, R.mipmap.lfgj_jy, R.mipmap.lfgj_db, R.mipmap.lfgj_gg, R.mipmap.lfgj_information, R.mipmap.lfgj_phone, R.mipmap.lfgj_db, R.mipmap.icon_service_dispath, R.mipmap.icon_dispatch,R.mipmap.icon_property_commit_workorder,R.mipmap.icon_service_dispath};
+    /*private int[] image = {R.mipmap.lfgj_gd, R.mipmap.lfgj_cb, R.mipmap.lfgj_payfee, R.mipmap.lfgj_jy, R.mipmap.lfgj_db, R.mipmap.lfgj_gg, R.mipmap.lfgj_information, R.mipmap.lfgj_phone, R.mipmap.lfgj_db, R.mipmap.icon_service_dispath, R.mipmap.icon_dispatch,R.mipmap.icon_property_commit_workorder,R.mipmap.icon_service_dispath};
     private int[] title = {R.string.gd, R.string.cb, R.string.payfee, R.string.jy, R.string.schema, R.string.sqgg, R.string.nbtz, R.string.phone, R.string.workflow, R.string.dispatch,R.string.zg_dispatch,R.string.property_commit,R.string.text_express};
+*/
+
+    private int[] image = {R.mipmap.lfgj_gd, R.mipmap.lfgj_payfee};
+    private int[] title = {R.string.gd,  R.string.payfee};
 
     private List<Map<String, Object>> data_list;
     private ActivityUtils activityUtils;
     private String token = null;
     private String sub_id = null;
+    private BannerAdapter<BannerBean> bannerAdapter;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -86,6 +92,7 @@ public class HomeFragment extends BaseFragment {
         initGrid();
         initBanner();
         getUserInfo();
+        initBannerData();
 
     }
 
@@ -119,16 +126,43 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void initBanner() {
-       BannerAdapter<BannerBean> bannerAdapter = new BannerAdapter<BannerBean>() {
-            @Override
-            protected void bind(ViewHolder holder, BannerBean data) {
-                Picasso.with(getContext()).load(data.getImg()).into(holder.mImageView);
-            }
+        bannerAdapter = new BannerAdapter<BannerBean>() {
+             @Override
+             protected void bind(ViewHolder holder, BannerBean data) {
+                 Picasso.with(getContext()).load(data.getImg()).into(holder.mImageView);
+             }
 
-        };
+         };
        lfgjBanner.setAdapter(bannerAdapter);
     }
+    private void initBannerData() {
+        Subscription subscription = RetrofitHelper.getInstance().getBanner()
+                .compose(RxUtil.<ListInfo<BannerBean>>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<ListInfo<BannerBean>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof DataResultException) {
+                            DataResultException dataResultException = (DataResultException) e;
+                            showToast(dataResultException.errorInfo);
+                        } else {
+                            doFailed();
+                            e.printStackTrace();
+                        }
 
+                    }
+
+                    @Override
+                    public void onNext(ListInfo<BannerBean> listInfoDataInfo) {
+                        bannerAdapter.reset(listInfoDataInfo.datas());
+
+
+                    }
+
+                });
+        addSubscrebe(subscription);
+
+
+    }
     private void initGrid() {
 
         data_list = new ArrayList<>();
@@ -146,12 +180,13 @@ public class HomeFragment extends BaseFragment {
                         WorkerOrderActivity.toActivity(getContext());
                         break;
                     case 1:
-                        break;
-                    case 2:
                         if (activityUtils == null) {
                             activityUtils = new ActivityUtils(HomeFragment.this);
                         }
                         activityUtils.startActivity(PaymentQueryActivity.class);
+                        break;
+                    case 2:
+
                         break;
                     case 3:
                         //投诉建议界面
@@ -188,7 +223,7 @@ public class HomeFragment extends BaseFragment {
 
     // 首页GridView 功能菜单
     public List<Map<String, Object>> getbtnData() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 2; i++) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("image", image[i]);
             map.put("text", title[i]);
