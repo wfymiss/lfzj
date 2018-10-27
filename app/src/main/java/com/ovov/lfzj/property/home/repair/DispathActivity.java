@@ -45,11 +45,8 @@ public class DispathActivity extends BaseActivity {
     private List<WorkerListInfo> mData;
     private CommonAdapter<WorkerListInfo> mAdapter;
 
-    public static void toActivity(Context context, String orderId) {
+    public static void toActivity(Context context) {
         Intent intent = new Intent(context, DispathActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("orderid", orderId);
-        intent.putExtras(bundle);
         context.startActivity(intent);
     }
 
@@ -61,8 +58,6 @@ public class DispathActivity extends BaseActivity {
     @Override
     public void init() {
         setTitleText("维修工");
-        Bundle bundle = getIntent().getExtras();
-        orderId = bundle.getString("orderid");
         initList();
         mRefresh.setEnableLoadmore(false);
         mRefresh.setOnRefreshListener(new OnRefreshListener() {
@@ -93,38 +88,10 @@ public class DispathActivity extends BaseActivity {
         mListDispath.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                dispath(mData.get((int) id).id);
+                RxBus.getDefault().post(new DispathEvent(mData.get((int) id).id,mData.get((int) id).name));
+                finish();
             }
         });
-    }
-
-    private void dispath(String id) {
-        showLoadingDialog();
-        Subscription subscription = RetrofitHelper.getInstance().workerDispath(orderId,id)
-                .compose(RxUtil.rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<DataInfo>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        dismiss();
-                        if (e instanceof DataResultException){
-                            DataResultException dataResultException = (DataResultException) e;
-                            showToast(dataResultException.errorInfo);
-                        }else {
-                            doFailed();
-                            showError(e.getMessage());
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onNext(DataInfo dataInfo) {
-                        dismiss();
-                        showToast("派单成功");
-                        RxBus.getDefault().post(new DispathEvent());
-                        finish();
-                    }
-                });
-        addSubscrebe(subscription);
     }
 
     private void initData() {

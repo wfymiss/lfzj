@@ -19,9 +19,15 @@ import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.bean.WorkOrderListInfo;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.RxUtil;
+import com.ovov.lfzj.base.utils.UIUtils;
+import com.ovov.lfzj.base.utils.WorkerOrderTypeUtils;
+import com.ovov.lfzj.base.widget.CancelDispathDialog;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
 import com.ovov.lfzj.base.widget.ScaleImageView;
+import com.ovov.lfzj.base.widget.WorkerCancelDialog;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
+import com.ovov.lfzj.property.home.repair.DispathActivity;
+import com.ovov.lfzj.property.home.repair.PropertyWorkerOrderDetailActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -90,32 +96,51 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
                 viewHolder.setText(R.id.tv_location, workOrderListInfo.address);
                 TextView tvDispatch = viewHolder.getView(R.id.tv_dispatch);
                 TextView tvCancel = viewHolder.getView(R.id.tv_cancel);
+                switch (WorkerOrderTypeUtils.getStatus(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd)) {
+                    case 1://未派单
+                        viewHolder.setText(R.id.tv_status, WorkerOrderTypeUtils.getStatusName(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd));
+                        break;
+                    case 2://派单中
+                        viewHolder.setText(R.id.tv_status, WorkerOrderTypeUtils.getStatusName(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd));
+                        break;
+                    case 3://维修中
+                        tvDispatch.setVisibility(View.GONE);
+                        viewHolder.setText(R.id.tv_status, WorkerOrderTypeUtils.getStatusName(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd));
+                        break;
+                    case 4://已拒单
+                        viewHolder.setText(R.id.tv_status, WorkerOrderTypeUtils.getStatusName(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd));
+                        break;
+                    case 5://待验收
 
-                switch (workOrderListInfo.receipt_staff) {
-                    case 0:
-                        viewHolder.setText(R.id.tv_status, "待维修");
+                        viewHolder.setText(R.id.tv_status, WorkerOrderTypeUtils.getStatusName(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd));
 
+                        tvDispatch.setVisibility(View.VISIBLE);
+                        tvDispatch.setText("验收");
+                        tvDispatch.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                WorkerOrderDetailActivity.toActivity(mActivity, workOrderListInfo.id);
+                            }
+                        });
                         break;
-                    case 1:
-                        viewHolder.setText(R.id.tv_status, "派单中");
-
+                    case 6://已完成
+                        if (workOrderListInfo.work_evaluate.evaluation_content == null) {
+                            viewHolder.setText(R.id.tv_status, "未评价");
+                            tvDispatch.setVisibility(View.VISIBLE);
+                            tvDispatch.setText("去评价");
+                            tvDispatch.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    RepairCommentActivity.toActivity(mActivity, String.valueOf(workOrderListInfo.id));
+                                }
+                            });
+                        } else {
+                            tvDispatch.setVisibility(View.GONE);
+                            viewHolder.setText(R.id.tv_status, WorkerOrderTypeUtils.getStatusName(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd));
+                        }
                         break;
-                    case 2:
-                        viewHolder.setText(R.id.tv_status, "维修中");
-                        break;
-                    case 3:
-                        viewHolder.setText(R.id.tv_status, "已完成");
-                        break;
-                    case 4:
-                        viewHolder.setText(R.id.tv_status, "待评价");
-                        break;
-                    case 5:
-                        viewHolder.setText(R.id.tv_status, "已评价");
-                        break;
-                    case 6:
-                        viewHolder.setText(R.id.tv_status, "业主取消");
-                        break;
-                    default:
+                    case 7://已取消
+                        viewHolder.setText(R.id.tv_status, WorkerOrderTypeUtils.getStatusName(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd));
                         break;
                 }
                 NoScrollGridView mGridImage = viewHolder.getView(R.id.gridView);
@@ -207,13 +232,14 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
                         }
                         if (refreshType == REFRESH) {
                             mRefresh.finishRefresh(true);
-                            if (listInfo.datas().size() > 0){
+                            if (listInfo.datas().size() > 0) {
                                 mLinNull.setVisibility(View.GONE);
                                 mData.clear();
                                 mData.addAll(listInfo.datas());
                                 mAdapter.notifyDataSetChanged();
-                            }else {
+                            } else {
                                 mData.clear();
+                                mAdapter.notifyDataSetChanged();
                                 mLinNull.setVisibility(View.VISIBLE);
                             }
 

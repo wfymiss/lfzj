@@ -21,7 +21,7 @@ import static com.ovov.lfzj.base.utils.UIUtils.getResources;
 public class GirdAdapter extends BaseAdapter {
 
     private String[] proName = getResources().getStringArray(R.array.find_gv_title);
-    private Integer[] mImages = {R.drawable.pay, R.drawable.friend, R.drawable.idcar, R.drawable.openlock, R.drawable.go};
+    private Integer[] mImages = {R.drawable.pay, R.mipmap.ic_game, R.drawable.idcar, R.drawable.openlock, R.drawable.go};
 
     private Context context;
     public GirdAdapter(Context homeFragment) {

@@ -502,11 +502,27 @@ public class RetrofitHelper {
         return mApiService.workReceipt(getToken(),wid);
     }
     public Observable<DataInfo> workerCancels(String wid,String time,String reason,String remark){
-        return mApiService.workCancel(getToken(),wid,time,reason,remark);
+        return mApiService.workCancel(getToken(),wid,reason,remark);
     }
 
-    public Observable<DataInfo> cancelWorkOrder(String wid,String time,String remarks){
-        return mApiService.cancelWorkOrder(getToken(),wid,time,remarks);
+    public Observable<DataInfo> cancelWorkOrder(String wid,String remarks){
+        return mApiService.cancelWorkOrder(getToken(),wid,remarks);
+    }
+
+    public Observable<DataInfo> workerConfirm(String wid,String cost,String trouble){
+        return mApiService.workerCommit(getToken(),wid,cost,trouble);
+    }
+
+    public Observable<DataInfo> workerOrderCheck(String wid){
+        return mApiService.workerOrderCheck(getToken(),wid);
+    }
+
+    public Observable<DataInfo> repairComment(String wid,String content,String ratingSpeed,String ratingAttitude,String ratingTec){
+        return mApiService.repairComment(getToken(),wid,content,ratingSpeed,ratingAttitude,ratingTec);
+    }
+
+    public Observable<DataInfo> ownerCancelWorkerOrder(String wid,String reason,String remarks){
+        return mApiService.ownerCancelWorkerOrder(getToken(),wid,reason,remarks);
     }
 
 }

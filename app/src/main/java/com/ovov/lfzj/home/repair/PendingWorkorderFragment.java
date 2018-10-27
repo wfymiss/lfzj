@@ -9,11 +9,13 @@ import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseFragment;
 import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.WorkOrderListInfo;
+import com.ovov.lfzj.event.OwnerCancelSuccessEvent;
 import com.ovov.lfzj.home.HomeFragment;
 import com.ovov.lfzj.http.RetrofitHelper;
 
 import butterknife.ButterKnife;
 import rx.Observable;
+import rx.functions.Action1;
 
 /**
  * Created by kaite on 2018/10/12.
@@ -34,6 +36,17 @@ public class PendingWorkorderFragment extends BaseWorkerOrderFragment {
     @Override
     protected Observable<ListInfo<WorkOrderListInfo>> getObservable(int page) {
         return RetrofitHelper.getInstance().getWorkList(0,page);
+    }
+
+    @Override
+    public void init() {
+        super.init();
+        addRxBusSubscribe(OwnerCancelSuccessEvent.class, new Action1<OwnerCancelSuccessEvent>() {
+            @Override
+            public void call(OwnerCancelSuccessEvent ownerCancelSuccessEvent) {
+                mRefresh.autoRefresh();
+            }
+        });
     }
 
     @Override

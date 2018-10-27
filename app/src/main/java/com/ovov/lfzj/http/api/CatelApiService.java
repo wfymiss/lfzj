@@ -508,15 +508,37 @@ public interface CatelApiService {
     @POST("v1/work/workercancels")
     Observable<DataInfo> workCancel(@Field("token") String token,
                                     @Field("wid") String wid,
-                                    @Field("word_time") String word_time,
-                                    @Field("content") String reason,
+                                    @Field("contents") String reason,
                                     @Field("remarks") String remarks);
     @FormUrlEncoded
     @POST("v1/work/propertycancellation")
     Observable<DataInfo> cancelWorkOrder(@Field("token") String token,
                                          @Field("wid") String wid,
-                                         @Field("word_time") String time,
                                          @Field("remarks") String remarks);
+    @FormUrlEncoded
+    @POST("v1/work/confirmwork")
+    Observable<DataInfo> workerCommit(@Field("token") String token,
+                                      @Field("wid") String wid,
+                                      @Field("material_cost") String material_cost,
+                                      @Field("failure_briefing") String trouble);
+    @FormUrlEncoded
+    @POST("v1/work/workcheck")
+    Observable<DataInfo> workerOrderCheck(@Field("token") String token,
+                                          @Field("wid") String wid);
+    @FormUrlEncoded
+    @POST("v1/work/ownerevaluate")
+    Observable<DataInfo> repairComment(@Field("token") String token,
+                                       @Field("wid") String wid,
+                                       @Field("evaluation_content") String content,
+                                       @Field("door_speed") String ratingSpeed,
+                                       @Field("service_attitude") String ratingAttitude,
+                                       @Field("repair_technology") String ratingTec);
+    @FormUrlEncoded
+    @POST("v1/work/ownercanceling")
+    Observable<DataInfo> ownerCancelWorkerOrder(@Field("token") String token,
+                                                @Field("wid") String wid,
+                                                @Field("contents") String reason,
+                                                @Field("remarks") String remarks);
 
 
 }

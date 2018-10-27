@@ -12,10 +12,9 @@ import android.widget.TextView;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseDialog;
 import com.ovov.lfzj.base.utils.RxBus;
-import com.ovov.lfzj.event.DetailCancelDispathEvent;
 import com.ovov.lfzj.event.DetailWorkerCancelEvent;
-import com.ovov.lfzj.event.ListCancelDispathEvent;
 import com.ovov.lfzj.event.ListWorkerCancelEvent;
+import com.ovov.lfzj.event.OwnerCancelEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -23,16 +22,14 @@ import org.greenrobot.eventbus.EventBus;
  * Created by kaite on 2018/10/25.
  */
 
-public class WorkerCancelDialog extends BaseDialog {
+public class OwnerCancelDialog extends BaseDialog {
 
-    private int type;//1是表示从列表进入2表示从详情进入
-    private int posistion;
+
     private String reason;
 
-    public WorkerCancelDialog(Context context, int type,int posistion) {
+    public OwnerCancelDialog(Context context) {
         super(context);
-        this.type = type;
-        this.posistion = posistion;
+
     }
 
     @Override
@@ -42,15 +39,19 @@ public class WorkerCancelDialog extends BaseDialog {
 
     @Override
     protected View getView() {
-        View view = LayoutInflater.from(context).inflate(R.layout.dialog_worker_cancel, null, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_owner_cancel, null, false);
         TextView tvReason1 = view.findViewById(R.id.tv_reason1);
         TextView tvReason2 = view.findViewById(R.id.tv_reason2);
+        TextView tvReason3 = view.findViewById(R.id.tv_reason3);
+
         ImageView ivReason1 = view.findViewById(R.id.iv_reason1);
         ImageView ivReason2 = view.findViewById(R.id.iv_reason2);
+        ImageView ivReason3 = view.findViewById(R.id.iv_reason3);
         TextView tvConfirm = view.findViewById(R.id.tv_confirm);
         TextView tvCancel = view.findViewById(R.id.tv_cancel);
         LinearLayout linReason1 = view.findViewById(R.id.lin_reason1);
         LinearLayout linReason2 = view.findViewById(R.id.lin_reason2);
+        LinearLayout linreason3 = view.findViewById(R.id.lin_reason3);
         EditText etRemarks = view.findViewById(R.id.et_mark);
         ivReason1.setSelected(true);
         reason = tvReason1.getText().toString();
@@ -60,6 +61,7 @@ public class WorkerCancelDialog extends BaseDialog {
                 reason = tvReason1.getText().toString();
                 ivReason1.setSelected(true);
                 ivReason2.setSelected(false);
+                ivReason3.setSelected(false);
             }
         });
         linReason2.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +70,16 @@ public class WorkerCancelDialog extends BaseDialog {
                 reason = tvReason2.getText().toString();
                 ivReason2.setSelected(true);
                 ivReason1.setSelected(false);
+                ivReason3.setSelected(false);
+            }
+        });
+        linreason3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reason = tvReason3.getText().toString();
+                ivReason2.setSelected(false);
+                ivReason1.setSelected(false);
+                ivReason3.setSelected(true);
             }
         });
         tvCancel.setOnClickListener(new View.OnClickListener() {
@@ -83,11 +95,7 @@ public class WorkerCancelDialog extends BaseDialog {
                     showToast("请输入备注");
                     return;
                 }
-                if (type == 1)
-                    EventBus.getDefault().post(new ListWorkerCancelEvent(etRemarks.getText().toString(),reason,posistion));
-                else if (type == 2){
-                    EventBus.getDefault().post(new DetailWorkerCancelEvent(etRemarks.getText().toString(),reason));
-                }
+                RxBus.getDefault().post(new OwnerCancelEvent(reason,etRemarks.getText().toString()));
                 dismiss();
             }
         });

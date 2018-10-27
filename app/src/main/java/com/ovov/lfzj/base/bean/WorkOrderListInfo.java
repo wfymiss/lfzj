@@ -50,5 +50,13 @@ public class WorkOrderListInfo {
     public int status_wx;
     public int status_pd;
     public int status_jd;
+    public WorkDetailBean.WorkEvaluateBean work_evaluate;
+
+    public static class WorkEvaluateBean{
+        public String evaluation_content;
+        public String door_speed;
+        public String service_attitude;
+        public String repair_technology;
+    }
 
 }

@@ -29,7 +29,7 @@
     <!--发现页图片对应的位子-->
     <string-array name="find_gv_title">
         <item>缴费</item>
-        <item>邻里圈</item>
+        <item>花圃</item>
         <item>报修</item>
         <item>开门</item>
         <item>访客通行</item>

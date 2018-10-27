@@ -3,9 +3,12 @@ package com.ovov.lfzj.home.repair;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.mcxtzhang.commonadapter.lvgv.CommonAdapter;
@@ -15,8 +18,17 @@ import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.WorkDetailBean;
 import com.ovov.lfzj.base.net.DataResultException;
+import com.ovov.lfzj.base.utils.RxBus;
 import com.ovov.lfzj.base.utils.RxUtil;
+import com.ovov.lfzj.base.utils.UIUtils;
+import com.ovov.lfzj.base.utils.WorkerOrderTypeUtils;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
+import com.ovov.lfzj.base.widget.OwnerCancelDialog;
+import com.ovov.lfzj.base.widget.RemindDialogUtil;
+import com.ovov.lfzj.event.OwnerCancelEvent;
+import com.ovov.lfzj.event.OwnerCancelSuccessEvent;
+import com.ovov.lfzj.event.RepairCommentSuccessEvent;
+import com.ovov.lfzj.event.WorkerOrderCheckSuccessEvent;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.squareup.picasso.Picasso;
@@ -27,6 +39,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscription;
+import rx.functions.Action1;
 
 public class WorkerOrderDetailActivity extends BaseActivity {
 
@@ -50,12 +63,6 @@ public class WorkerOrderDetailActivity extends BaseActivity {
     TextView tvNumber;
     @BindView(R.id.tv_time)
     TextView tvTime;
-    @BindView(R.id.tv_trouble)
-    TextView tvTrouble;
-    @BindView(R.id.tv_price)
-    TextView tvPrice;
-    @BindView(R.id.tv_repair_name)
-    TextView tvRepairName;
     @BindView(R.id.lin_item)
     LinearLayout linItem;
     @BindView(R.id.lin_trouble)
@@ -66,6 +73,32 @@ public class WorkerOrderDetailActivity extends BaseActivity {
     LinearLayout mLinRepairName;
     @BindView(R.id.tv_check)
     TextView mTvCheck;
+    @BindView(R.id.tv_trouble)
+    TextView tvTrouble;
+    @BindView(R.id.tv_price)
+    TextView tvPrice;
+    @BindView(R.id.tv_repair_name)
+    TextView tvRepairName;
+    @BindView(R.id.rating_speed)
+    RatingBar mRatingSpeed;
+    @BindView(R.id.rating_attitude)
+    RatingBar mRatingAttitude;
+    @BindView(R.id.rating_technology)
+    RatingBar mRatingTechnology;
+    @BindView(R.id.lin_comment)
+    LinearLayout mLinComment;
+    @BindView(R.id.re_number)
+    LinearLayout reNumber;
+    @BindView(R.id.lin_umber)
+    LinearLayout linUmber;
+    @BindView(R.id.tv_comment)
+    TextView mTvComment;
+    @BindView(R.id.tv_reason)
+    TextView mTvReason;
+    @BindView(R.id.tv_remarks)
+    TextView mTvRemarks;
+    @BindView(R.id.lin_cancel_content)
+    LinearLayout mLinCancelContent;
     private String id;
 
     public static void toActivity(Context context, int id) {
@@ -84,6 +117,18 @@ public class WorkerOrderDetailActivity extends BaseActivity {
         setTitleText(R.string.text_worker_order_detail);
         id = String.valueOf(getIntent().getIntExtra("id", 0));
         initData();
+        addRxBusSubscribe(RepairCommentSuccessEvent.class, new Action1<RepairCommentSuccessEvent>() {
+            @Override
+            public void call(RepairCommentSuccessEvent repairCommentSuccessEvent) {
+                initData();
+            }
+        });
+        addRxBusSubscribe(OwnerCancelEvent.class, new Action1<OwnerCancelEvent>() {
+            @Override
+            public void call(OwnerCancelEvent ownerCancelEvent) {
+                cancelWorkerOrder(ownerCancelEvent.reason, ownerCancelEvent.remarks);
+            }
+        });
     }
 
     private void initData() {
@@ -107,33 +152,71 @@ public class WorkerOrderDetailActivity extends BaseActivity {
                     @Override
                     public void onNext(DataInfo<WorkDetailBean> dataInfo) {
                         dismiss();
-                        switch (dataInfo.datas().receipt_staff) {
-                            case 0:
-                                tvStatus.setText("待维修");
-                                mLinTrouble.setVisibility(View.GONE);
-                                mLinPrice.setVisibility(View.GONE);
-                                mLinRepairName.setVisibility(View.GONE);
+
+                        switch (WorkerOrderTypeUtils.getStatus(dataInfo.datas().status, dataInfo.datas().status_wx, dataInfo.datas().status_jd, dataInfo.datas().status_pd)) {
+                            case 1://未派单
+                                tvStatus.setText(WorkerOrderTypeUtils.getStatusName(dataInfo.datas().status, dataInfo.datas().status_wx, dataInfo.datas().status_jd, dataInfo.datas().status_pd));
+                                break;
+                            case 2://派单中
+                                tvStatus.setText(WorkerOrderTypeUtils.getStatusName(dataInfo.datas().status, dataInfo.datas().status_wx, dataInfo.datas().status_jd, dataInfo.datas().status_pd));
+                                mTvCheck.setVisibility(View.VISIBLE);
+                                mTvCheck.setText("撤销工单");
+                                mTvCheck.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        //cancelWorkerOrder();
+                                        OwnerCancelDialog ownerCancelDialog = new OwnerCancelDialog(mActivity);
+                                        ownerCancelDialog.setWidth((int) (UIUtils.getScreenWidth() * 0.75));
+                                        ownerCancelDialog.show();
+                                    }
+                                });
+                                break;
+                            case 3://维修中
+                                tvStatus.setText(WorkerOrderTypeUtils.getStatusName(dataInfo.datas().status, dataInfo.datas().status_wx, dataInfo.datas().status_jd, dataInfo.datas().status_pd));
+
+                                mLinRepairName.setVisibility(View.VISIBLE);
+                                tvRepairName.setText(dataInfo.datas().worker_user.name);
+                                break;
+                            case 5://待验收
+                                tvStatus.setText(WorkerOrderTypeUtils.getStatusName(dataInfo.datas().status, dataInfo.datas().status_wx, dataInfo.datas().status_jd, dataInfo.datas().status_pd));
+
+                                mTvCheck.setVisibility(View.VISIBLE);
+                                mLinTrouble.setVisibility(View.VISIBLE);
+                                mLinPrice.setVisibility(View.VISIBLE);
+                                mLinRepairName.setVisibility(View.VISIBLE);
+                                tvTrouble.setText(dataInfo.datas().worker_offer.failure_briefing);
+                                tvPrice.setText(dataInfo.datas().worker_offer.material_cost);
+                                tvRepairName.setText(dataInfo.datas().worker_user.name);
+                                break;
+                            case 6://已完成
+                                if (dataInfo.datas().work_evaluate.evaluation_content == null) {
+                                    tvStatus.setText("未评价");
+
+                                } else {
+                                    tvStatus.setText(WorkerOrderTypeUtils.getStatusName(dataInfo.datas().status, dataInfo.datas().status_wx, dataInfo.datas().status_jd, dataInfo.datas().status_pd));
+                                    mLinComment.setVisibility(View.VISIBLE);
+                                    mTvComment.setText(dataInfo.datas().work_evaluate.evaluation_content);
+                                    mRatingSpeed.setRating(Float.parseFloat(dataInfo.datas().work_evaluate.door_speed));
+                                    mRatingAttitude.setRating(Float.parseFloat(dataInfo.datas().work_evaluate.service_attitude));
+                                    mRatingTechnology.setRating(Float.parseFloat(dataInfo.datas().work_evaluate.repair_technology));
+                                }
                                 mTvCheck.setVisibility(View.GONE);
+                                mLinTrouble.setVisibility(View.VISIBLE);
+                                mLinPrice.setVisibility(View.VISIBLE);
+                                mLinRepairName.setVisibility(View.VISIBLE);
+                                tvTrouble.setText(dataInfo.datas().worker_offer.failure_briefing);
+                                tvPrice.setText(dataInfo.datas().worker_offer.material_cost);
+                                tvRepairName.setText(dataInfo.datas().worker_user.name);
                                 break;
-                            case 1:
-                                tvStatus.setText("派单中");
-                                break;
-                            case 2:
-                                tvStatus.setText("维修中");
-                                break;
-                            case 3:
-                                tvStatus.setText("已完成");
-                                break;
-                            case 4:
-                                tvStatus.setText("待评价");
-                                break;
-                            case 5:
-                                tvStatus.setText("已评价");
-                                break;
-                            case 6:
-                                tvStatus.setText("业主取消");
-                                break;
-                            default:
+                            case 7://已取消
+                                mTvCheck.setVisibility(View.GONE);
+                                mLinCancelContent.setVisibility(View.VISIBLE);
+                                if (dataInfo.datas().work_revoke.content != null) {
+                                    mTvReason.setVisibility(View.VISIBLE);
+                                    mTvReason.setText(dataInfo.datas().work_revoke.content);
+                                }
+                                mTvRemarks.setText(dataInfo.datas().work_revoke.remarks);
+                                tvStatus.setText(WorkerOrderTypeUtils.getStatusName(dataInfo.datas().status, dataInfo.datas().status_wx, dataInfo.datas().status_jd, dataInfo.datas().status_pd));
                                 break;
                         }
                         tvName.setText(dataInfo.datas().username);
@@ -163,6 +246,36 @@ public class WorkerOrderDetailActivity extends BaseActivity {
         addSubscrebe(subscription);
     }
 
+    //业主撤销工单
+    private void cancelWorkerOrder(String reason, String remarks) {
+        showLoadingDialog();
+        Subscription subscription = RetrofitHelper.getInstance().ownerCancelWorkerOrder(id, reason, remarks)
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        if (e instanceof DataResultException) {
+                            DataResultException dataResultException = (DataResultException) e;
+                            showToast(dataResultException.errorInfo);
+                        } else {
+                            doFailed();
+                            showError(e.getMessage());
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        dismiss();
+                        showToast("撤销成功");
+                        initData();
+                        RxBus.getDefault().post(new OwnerCancelSuccessEvent());
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
     @OnClick({R.id.iv_back, R.id.tv_check})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -170,7 +283,62 @@ public class WorkerOrderDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_check:
+                recieptRemind();
                 break;
         }
     }
+
+    // 接单提醒
+    private void recieptRemind() {
+        final RemindDialogUtil.Builder dialogBuilder = new RemindDialogUtil.Builder(mActivity);
+        dialogBuilder.setContent("确认验收吗？");
+        final RemindDialogUtil dialog = dialogBuilder.Create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialogBuilder.setConfirmListener(new RemindDialogUtil.Builder.ConfirmClickListener() {
+            @Override
+            public void onClickListener() {
+                dialog.dismiss();
+                checkWorkerOrder();
+            }
+        });
+        dialog.show();
+
+        WindowManager windowManager = mActivity.getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+        lp.width = (int) (display.getWidth() * 0.68);
+        lp.alpha = 0.96f;
+        dialog.getWindow().setAttributes(lp);
+    }
+
+    private void checkWorkerOrder() {
+        showLoadingDialog();
+        Subscription subscription = RetrofitHelper.getInstance().workerOrderCheck(id)
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        if (e instanceof DataResultException) {
+                            DataResultException dataResultExceptio = (DataResultException) e;
+                            showToast(dataResultExceptio.errorInfo);
+                        } else {
+                            doFailed();
+                            showError(e.getMessage());
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        dismiss();
+                        showToast("验收成功");
+                        initData();
+                        RxBus.getDefault().post(new WorkerOrderCheckSuccessEvent());
+                        RepairCommentActivity.toActivity(mActivity, id);
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
 }

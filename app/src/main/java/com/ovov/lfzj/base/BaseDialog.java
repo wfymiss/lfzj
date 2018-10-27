@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 
 import com.ovov.lfzj.base.utils.RxBus;
@@ -116,6 +117,10 @@ public abstract class BaseDialog {
     public void dismiss() {
         unSubscribe();
         dialog.dismiss();
+    }
+
+    public void showToast(String msg){
+        Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
     }
 
     public boolean isShowing() {

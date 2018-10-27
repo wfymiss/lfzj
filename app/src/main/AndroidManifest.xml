@@ -408,7 +408,6 @@
         <activity android:name=".property.PropertyMainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
-            android:screenOrientation="portrait" />
         <activity android:name=".user.setting.HelpActivity" />
         <activity android:name=".user.setting.advicesActivity" />
         <activity android:name=".property.home.repair.DispathActivity"/>
@@ -433,6 +432,7 @@
             android:name=".home.ui.MessageDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
+        <activity android:name=".property.home.repair.PropertyWorkerOrderDetailActivity"/>
     </application>
 
 </manifest>

@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/common_bg"
     tools:context="com.ovov.lfzj.home.repair.WorkerOrderDetailActivity">
 
-    <include layout="@layout/include_title_text"/>
+    <include layout="@layout/include_title_text"
+        android:id="@+id/title"/>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_above="@+id/lin_dispath">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -47,6 +51,51 @@
                 android:layout_height="@dimen/margin_10dp"
                 android:background="@color/common_bg"/>
             <include layout="@layout/include_workorder_detail" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_ffffff"
+                android:id="@+id/lin_cancel_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_10dp"
+                    android:background="@color/common_bg"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_15dp"
+                    android:layout_marginTop="@dimen/padding_15dp"
+                    android:text="工单取消理由"
+                    android:textColor="@color/color_text_a1a1a1"
+                    android:textSize="@dimen/sp_15" />
+
+                <TextView
+                    android:id="@+id/tv_reason"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:text="管道损坏"
+                    android:visibility="gone"
+                    android:drawablePadding="@dimen/margin_10dp"
+                    android:drawableLeft="@mipmap/ic_cancel_reason_unselect"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:textColor="@color/color_444444"
+                    android:textSize="@dimen/textSize_15sp" />
+                <TextView
+                    android:id="@+id/tv_remarks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:text="管道损坏"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/margin_10dp"
+                    android:textColor="@color/color_444444"
+                    android:textSize="@dimen/textSize_15sp" />
+            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin_10dp"
@@ -137,51 +186,99 @@
                     android:textColor="@color/color_444444"
                     android:textSize="@dimen/textSize_15sp" />
             </LinearLayout>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_10dp"
+                android:background="@color/common_bg"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_80"
+                android:background="@color/color_ffffff"
+                android:paddingLeft="@dimen/padding_15dp"
+                android:paddingTop="10dp"
+                android:hint="填写简要故障情况"
+                android:visibility="gone"
+                android:gravity="top"
+                android:textSize="@dimen/textSize_15sp"
+                android:id="@+id/et_trouble"
+                android:textColor="@color/color_444444"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_1dp"
+                android:background="@color/common_bg"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_ffffff"
-                android:id="@+id/lin_cancel_content"
+                android:id="@+id/lin_repair_quote"
                 android:visibility="gone"
-                android:orientation="vertical">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin_10dp"
-                    android:background="@color/common_bg"/>
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_15dp"
                     android:layout_marginLeft="@dimen/padding_15dp"
                     android:layout_marginTop="@dimen/padding_15dp"
-                    android:text="工单取消理由"
+                    android:text="材料报价"
+                    android:textColor="@color/color_text_a1a1a1"
+                    android:textSize="@dimen/sp_15" />
+
+               <EditText
+                   android:layout_width="0dp"
+                   android:layout_height="match_parent"
+                   android:layout_weight="1"
+                   android:layout_marginLeft="@dimen/margin_10dp"
+                   android:paddingRight="@dimen/margin_10dp"
+                   android:hint="输入报价"
+                   android:id="@+id/et_cost"
+                   android:background="@color/color_ffffff"
+                   android:gravity="right|center_vertical"
+                   android:textSize="@dimen/textSize_15sp"
+                   android:layout_gravity="center_vertical"
+
+                   />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="元"
+                    android:textColor="@color/color_444444"
+                    android:textSize="@dimen/textSize_15sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/margin_15dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_ffffff"
+                android:id="@+id/lin_repair_worker_select"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/padding_15dp"
+                    android:layout_marginLeft="@dimen/padding_15dp"
+                    android:layout_marginTop="@dimen/padding_15dp"
+                    android:text="维修工"
                     android:textColor="@color/color_text_a1a1a1"
                     android:textSize="@dimen/sp_15" />
 
                 <TextView
-                    android:id="@+id/tv_reason"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_15"
-                    android:layout_marginTop="@dimen/dp_15"
-                    android:text="管道损坏"
-                    android:visibility="gone"
-                    android:drawablePadding="@dimen/margin_10dp"
-                    android:drawableLeft="@mipmap/ic_cancel_reason_unselect"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:textColor="@color/color_444444"
-                    android:textSize="@dimen/textSize_15sp" />
-                <TextView
-                    android:id="@+id/tv_remarks"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_15"
-                    android:layout_marginTop="@dimen/dp_15"
-                    android:text="管道损坏"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:layout_marginBottom="@dimen/margin_10dp"
-                    android:textColor="@color/color_444444"
-                    android:textSize="@dimen/textSize_15sp" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_30dp"
+                    android:hint="请选择维修工"
+                    android:id="@+id/tv_select_worker"
+                    android:background="@color/color_ffffff"
+                    android:gravity="center_vertical"
+                    android:drawableRight="@drawable/ic_arrow_right"
+                    android:layout_marginRight="@dimen/padding_15dp"
+                    android:textSize="@dimen/textSize_15sp"
+                    android:layout_gravity="center_vertical"
+
+                    />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -300,19 +397,18 @@
                         />
                 </LinearLayout>
             </LinearLayout>
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/text_check"
+                android:text="@string/common_commit"
                 android:textSize="@dimen/textSize_15sp"
                 android:textColor="@color/color_ffffff"
                 android:gravity="center"
-                android:visibility="gone"
                 android:layout_marginTop="28dp"
                 android:layout_marginBottom="@dimen/padding_15dp"
                 android:id="@+id/tv_check"
                 android:padding="16dp"
+                android:visibility="gone"
                 android:layout_marginLeft="@dimen/dp_20"
                 android:layout_marginRight="@dimen/dp_20"
                 android:background="@drawable/shape_radius_5"/>
@@ -320,4 +416,54 @@
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lin_dispath"
+        android:background="@color/color_ffffff"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/margin_1dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_location"
+            android:text="取消工单"
+            android:layout_marginRight="@dimen/padding_15dp"
+            android:textColor="@color/color_444444"
+            android:textSize="@dimen/textSize_12sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:visibility="visible"
+            android:id="@+id/tv_cancel"
+            android:layout_toLeftOf="@+id/tv_dispatch"
+            android:paddingRight="@dimen/margin_12dp"
+            android:paddingLeft="@dimen/margin_12dp"
+            android:layout_marginTop="@dimen/padding_12dp"
+            android:layout_marginBottom="@dimen/padding_12dp"
+            android:background="@drawable/shape_repair_gray"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_location"
+            android:text="派单"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/padding_15dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textSize_12sp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:visibility="visible"
+            android:id="@+id/tv_dispatch"
+            android:paddingRight="@dimen/margin_12dp"
+            android:paddingLeft="@dimen/margin_12dp"
+            android:layout_marginTop="@dimen/padding_12dp"
+            android:layout_marginBottom="@dimen/padding_12dp"
+            android:background="@drawable/shape_dispath"/>
+    </LinearLayout>
+</RelativeLayout>

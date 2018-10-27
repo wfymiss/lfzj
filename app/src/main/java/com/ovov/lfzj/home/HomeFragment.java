@@ -264,7 +264,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
                             PayMentRecordActivity.toActivity(mActivity);
                         }
                         if (position == 1) {
-                            MyCommunityActivity.toMyActivity(getActivity(), "1");
+                            GameActivity.toActivity(mActivity);
                         }
 
                         if (position == 3) {
