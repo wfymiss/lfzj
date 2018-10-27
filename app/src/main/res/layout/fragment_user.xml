@@ -242,10 +242,11 @@
                 <!--android:layout_height="@dimen/margin_1dp"-->
                 <!--android:background="@color/color_dcdcdc" />-->
 
-            <!--<TextView-->
-                <!--style="@style/text_mine_size"-->
-                <!--android:drawableLeft="@mipmap/courier"-->
-                <!--android:text="@string/mine_courier" />-->
+            <TextView
+                style="@style/text_mine_size"
+                android:id="@+id/mine_advice"
+                android:drawableLeft="@mipmap/courier"
+                android:text="@string/mine_advice" />
 
             <!--<View-->
                 <!--android:layout_width="match_parent"-->
@@ -258,10 +259,10 @@
                 <!--android:drawableLeft="@mipmap/order"-->
                 <!--android:text="@string/mine_order" />-->
 
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/margin_1dp"-->
-                <!--android:background="@color/color_dcdcdc" />-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_1dp"
+                android:background="@color/color_dcdcdc" />
 
             <TextView
                 style="@style/text_mine_size"

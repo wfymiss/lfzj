@@ -221,11 +221,9 @@ public class PaymentDetailActivity extends BaseActivity implements OnDateSetList
     private void storageTokenRead() {
         SharedPreferences spf = this.getSharedPreferences("indenti", Context.MODE_PRIVATE);
         token = spf.getString("token", "");
-        Log.e("token", token);
     }
 
     private void initList() {
-        Log.e("dadadadada",mData+"");
         mAdapter = new CommonAdapter<PaymentDetailBean.BillListBean>(this, mData, R.layout.item_payment_child) {
             @Override
             public void convert(ViewHolder viewHolder, PaymentDetailBean.BillListBean dataBean, int i) {

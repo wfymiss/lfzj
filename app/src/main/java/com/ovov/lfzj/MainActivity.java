@@ -1,16 +1,13 @@
 package com.ovov.lfzj;
 
 
-import android.*;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
@@ -19,7 +16,6 @@ import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.FileUtils;
@@ -33,7 +29,6 @@ import com.ovov.lfzj.base.utils.StatusBarUtils;
 import com.ovov.lfzj.base.utils.Tools;
 import com.ovov.lfzj.base.widget.CommonProgressDialog;
 import com.ovov.lfzj.base.widget.UpdateDialog;
-import com.ovov.lfzj.base.widget.IdentityDialog;
 import com.ovov.lfzj.event.DownloadEvent;
 import com.ovov.lfzj.event.IdentityEvent;
 import com.ovov.lfzj.event.LoginOutEvent;
@@ -42,9 +37,6 @@ import com.ovov.lfzj.event.SquareDetailIdentityEvent;
 import com.ovov.lfzj.event.SwitchEvent;
 import com.ovov.lfzj.home.HomeFragment;
 import com.ovov.lfzj.http.RetrofitHelper;
-import com.ovov.lfzj.http.api.CatelApiService;
-import com.ovov.lfzj.http.download.DownloadUtils;
-import com.ovov.lfzj.http.download.JsDownloadListener;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.login.IdentityConfirmActivity;
 import com.ovov.lfzj.login.LoginActivity;
@@ -55,8 +47,6 @@ import com.ovov.lfzj.user.UserFragment;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.yanzhenjie.permission.AndPermission;
 
-import org.greenrobot.eventbus.Subscribe;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -65,15 +55,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
-import rx.Subscriber;
 import rx.Subscription;
 import rx.functions.Action1;
-
-
-import static com.ovov.lfzj.CatelApplication.MAIN_ACTIVITY_IDENTITY;
 
 public class MainActivity extends BaseMainActivity {
 

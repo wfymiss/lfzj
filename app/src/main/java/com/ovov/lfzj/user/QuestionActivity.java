@@ -1,6 +1,5 @@
-package com.ovov.lfzj.user.setting;
+package com.ovov.lfzj.user;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,11 +17,12 @@ import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.SquareListInfo;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.RxUtil;
-import com.ovov.lfzj.home.repair.WorkerOrderActivity;
+import com.ovov.lfzj.home.bean.BannerBean;
+import com.ovov.lfzj.home.bean.NewsBean;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
-import com.ovov.lfzj.user.activity.HelpInfoActivity;
 import com.ovov.lfzj.user.activity.QuestionInfoActivity;
+import com.ovov.lfzj.user.setting.SettingActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -32,13 +32,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscription;
 
 import static com.ovov.lfzj.CatelApplication.LOADMORE;
 import static com.ovov.lfzj.CatelApplication.REFRESH;
 
-public class HelpActivity extends BaseActivity {
+public class QuestionActivity extends BaseActivity {
 
 
     @BindView(R.id.tv_title)
@@ -54,19 +55,18 @@ public class HelpActivity extends BaseActivity {
     private int page;
 
     public static void toActivity(Context context) {
-        Intent intent = new Intent(context, HelpActivity.class);
+        Intent intent = new Intent(context, QuestionActivity.class);
         context.startActivity(intent);
     }
 
-
     @Override
     public int getLayoutId() {
-        return R.layout.activity_advices;
+        return R.layout.activity_question;
     }
 
     @Override
     public void init() {
-        tvTitle.setText("意见反馈");
+        tvTitle.setText("常见问题解答");
         initList();
         smartrefresh.setEnableLoadmore(false);
         smartrefresh.setOnRefreshListener(new OnRefreshListener() {
@@ -94,7 +94,7 @@ public class HelpActivity extends BaseActivity {
             page = page + 1;
         }
 
-        Subscription subscription = RetrofitHelper.getInstance().getFeedBackLists(page)
+        Subscription subscription = RetrofitHelper.getInstance().questionLists(page)
                 .compose(RxUtil.<ListInfo<SquareListInfo>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<ListInfo<SquareListInfo>>() {
                     @Override
@@ -149,13 +149,14 @@ public class HelpActivity extends BaseActivity {
     }
 
     private void initList() {
-        newsAdapter = new CommonAdapter<SquareListInfo>(this, datas, R.layout.item_advice) {
+        newsAdapter = new CommonAdapter<SquareListInfo>(this, datas, R.layout.item_qusetion_list) {
 
 
             @Override
-            public void convert(ViewHolder viewHolder, SquareListInfo noticeBean, final int i) {
-                viewHolder.setText(R.id.tv_title_que, noticeBean.getQuestion());
-                viewHolder.setText(R.id.tv_content, noticeBean.getAnswer());
+            public void convert(ViewHolder viewHolder,SquareListInfo noticeBean, final int i) {
+                viewHolder.setText(R.id.tv_title_que, noticeBean.getTitle());
+                viewHolder.setText(R.id.tv_content, noticeBean.getInfo());
+                viewHolder.setText(R.id.tv_id, noticeBean.getStr());
             }
         };
         lv.setAdapter(newsAdapter);
@@ -164,8 +165,7 @@ public class HelpActivity extends BaseActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                HelpInfoActivity.toActivity(mActivity, datas.get(position).getTime(),
-                        datas.get(position).getQuestion(), datas.get(position).getAnswer(), datas.get(position).getReply_time());
+                QuestionInfoActivity.toActivity(mActivity,datas.get(position).getId());
             }
         });
 
@@ -176,4 +176,5 @@ public class HelpActivity extends BaseActivity {
     public void onViewClicked() {
         finish();
     }
+
 }

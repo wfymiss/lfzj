@@ -25,6 +25,7 @@ public class SquareListInfo {
      * forwardInfo : {"id":121,"user_id":3,"comment":"转发测试","zan":0,"time":1536908894,"forward_id":98,"isfile":0,"userInfo":{"name":null,"user_logo":null}}
      */
 
+
     public String id;
     public String user_id;
     public String comment;
@@ -37,9 +38,37 @@ public class SquareListInfo {
     public UserInfoBean userInfo;
     public String forwardNum;
     public ForwardInfoBean forwardInfo;
+    /**
+     * uid : 5174
+     * question : 反馈反馈反馈反馈
+     * answer :
+     * reply_time :
+     */
+
+    private String question;
+    private String answer;
+    private String reply_time;
+
+    public String getId() {
+        return id;
+    }
+
     public List<String> imgUrl;
     public int isZan;
     public TranspondInfo transpondInfo;
+    /**
+     * title : 乐福智慧社区
+     * info : 乐福智慧社区乐福智慧社区乐福智慧社区乐福智慧社区乐福智慧社区乐福智慧社区
+     * str : Q1
+     */
+
+    private String title;
+    private String info;
+    private String str;
+
+    public String getTime() {
+        return time;
+    }
 
     public void setReplyNum(String replyNum) {
         this.replyNum = replyNum;
@@ -61,6 +90,51 @@ public class SquareListInfo {
 
     public void setSelect(boolean select) {
         isSelect = select;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public String getStr() {
+        return str;
+    }
+
+    public void setStr(String str) {
+        this.str = str;
+    }
+
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public String getReply_time() {
+        return reply_time;
     }
 
     public static class UserInfoBean {

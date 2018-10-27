@@ -269,12 +269,23 @@ public class RetrofitHelper {
         return mApiService.getLog(getToken(), page);
     }
 
+    public Observable<ListInfo<SquareListInfo>> getFeedBackLists(int page) {
+        return mApiService.getFeedBackLists(getToken(), page);
+    }
+    public Observable<ListInfo<SquareListInfo>> questionLists(int page) {
+        return mApiService.questionLists( page);
+    }
+
+
     public Observable<DataInfo> addSquareComment(String id, String content) {
         return mApiService.addSquareComment(getToken(), id, getUserId(), content);
     }
 
     public Observable<DataInfo<String>> squareGood(String id) {
         return mApiService.squareGood(getToken(), id, getUserId());
+    }
+  public Observable<DataInfo<SquareListInfo>> questionInfo(String id) {
+        return mApiService.questionInfo( id);
     }
 
     public Observable<DataInfo> loginout() {
