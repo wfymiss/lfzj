@@ -1,5 +1,7 @@
 package com.ovov.lfzj.user.setting;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,6 +29,10 @@ public class AdvicesActivity extends BaseActivity {
     @BindView(R.id.service)
     TextView service;
 
+    public static void toActivity(Context context){
+        Intent intent = new Intent(context,AdvicesActivity.class);
+        context.startActivity(intent);
+    }
     @Override
     public int getLayoutId() {
         return R.layout.activity_help;

@@ -15,8 +15,10 @@ import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.net.DataResultException;
+import com.ovov.lfzj.base.utils.RxBus;
 import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
+import com.ovov.lfzj.event.RepairSuccessEvent;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.squareup.picasso.Picasso;
@@ -142,6 +144,8 @@ public class WorkOrderConfirmActivity extends BaseActivity {
                         dismiss();
                         showToast("提交成功");
                         WorkerOrderActivity.toActivity(mActivity);
+                        finish();
+                        RxBus.getDefault().post(new RepairSuccessEvent());
 
                     }
                 });

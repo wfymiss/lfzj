@@ -409,7 +409,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
         <activity android:name=".user.setting.HelpActivity" />
-        <activity android:name=".user.setting.advicesActivity" />
+        <activity android:name=".user.setting.AdvicesActivity" />
         <activity android:name=".property.home.repair.DispathActivity"/>
         <activity
             android:name=".property.activity.TeanatQueryActivity"

@@ -30,6 +30,7 @@ import com.ovov.lfzj.base.widget.RoomListDialog;
 import com.ovov.lfzj.event.ClickEvent;
 import com.ovov.lfzj.event.DeleteImageEvent;
 import com.ovov.lfzj.event.RefreshEvent;
+import com.ovov.lfzj.event.RepairSuccessEvent;
 import com.ovov.lfzj.event.RoomSelectEvent;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
@@ -130,6 +131,12 @@ public class RepairActivity extends BaseActivity {
             public void call(RoomSelectEvent roomSelectEvent) {
                 mTvLocation.setText(roomSelectEvent.building_name+"号楼"+roomSelectEvent.unit+"单元"+roomSelectEvent.name);
                 house_path = roomSelectEvent.building_name+"-"+roomSelectEvent.unit+"-"+roomSelectEvent.name;
+            }
+        });
+        addRxBusSubscribe(RepairSuccessEvent.class, new Action1<RepairSuccessEvent>() {
+            @Override
+            public void call(RepairSuccessEvent repairSuccessEvent) {
+                finish();
             }
         });
     }

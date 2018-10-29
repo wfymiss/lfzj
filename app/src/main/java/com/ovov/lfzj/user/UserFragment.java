@@ -148,7 +148,7 @@ public class UserFragment extends BaseFragment {
              //   mUtils.startActivity(OrderActivity.class);
            //     break;
             case R.id.mine_advice:
-                mUtils.startActivity(AdvicesActivity.class);
+                AdvicesActivity.toActivity(mActivity);
                 break;
 //            case R.id.tv_my:
 //                mUtils.startActivity(OrdersActivity.class);
