@@ -432,6 +432,9 @@
             android:name=".home.ui.MessageDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
+        <activity android:name=".user.QuestionActivity" />
+        <activity android:name=".user.activity.QuestionInfoActivity" />
+        <activity android:name=".user.activity.HelpInfoActivity"></activity>
         <activity android:name=".property.home.repair.PropertyWorkerOrderDetailActivity"/>
     </application>
 

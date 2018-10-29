@@ -30,6 +30,7 @@ import com.ovov.lfzj.login.MySubActivity;
 import com.ovov.lfzj.market.order.OrderActivity;
 import com.ovov.lfzj.user.activity.FamilyActivity;
 import com.ovov.lfzj.user.activity.HealthSubscribeActivity;
+import com.ovov.lfzj.user.setting.AdvicesActivity;
 import com.ovov.lfzj.user.setting.SettingActivity;
 import com.squareup.picasso.Picasso;
 
@@ -133,7 +134,7 @@ public class UserFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.my_circle_images, R.id.tv_my, R.id.mine_family, R.id.tv_worker_order})
+    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.my_circle_images, R.id.tv_my, R.id.mine_family, R.id.tv_worker_order,R.id.mine_advice})
 
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -146,9 +147,9 @@ public class UserFragment extends BaseFragment {
         //    case R.id.tv_shop_order:
              //   mUtils.startActivity(OrderActivity.class);
            //     break;
-//            case R.id.tv_service_order:
-//                mUtils.startActivity(OrderedActivity.class);
-//                break;
+            case R.id.mine_advice:
+                mUtils.startActivity(AdvicesActivity.class);
+                break;
 //            case R.id.tv_my:
 //                mUtils.startActivity(OrdersActivity.class);
 //                break;

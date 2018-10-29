@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title_que"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:drawableRight="@mipmap/dayu"
+        android:text="问题一"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginLeft="@dimen/margin_10dp"
+        android:layout_marginBottom="@dimen/padding_14dp"
+        android:layout_marginRight="@dimen/margin_10dp"
+        android:text="    这里是业主提出的问题最多显示两行，这里是业主提出的问题最多显示两行，多余文字省略"
+        android:textSize="15sp" />
+
+
+</LinearLayout>

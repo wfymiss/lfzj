@@ -511,7 +511,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
     }
 
-
     private void initpopuwindow(final TextView textView) {
         View view = View.inflate(getContext(), R.layout.popup_activity_title1, null);
         ListView lv_appointment = (ListView) view.findViewById(R.id.activity_title_recy);

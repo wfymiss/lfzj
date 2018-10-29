@@ -132,9 +132,21 @@ public interface CatelApiService {
 
 
     @FormUrlEncoded
+    @POST("v1/question/questionInfo")
+    Observable<DataInfo<SquareListInfo>> questionInfo(@Field("id") String id);
+
+
+    @FormUrlEncoded
     @POST("v1/user/commentzan")
     Observable<ListInfo<SquareListInfo>> getLog(@Field("token") String token,
+                                                @Field("page") int page); @FormUrlEncoded
+    @POST("v1/feedBack/feedBackLists")
+    Observable<ListInfo<SquareListInfo>> getFeedBackLists(@Field("token") String token,
                                                 @Field("page") int page);
+
+    @FormUrlEncoded
+    @POST("v1/question/questionLists")
+    Observable<ListInfo<SquareListInfo>> questionLists(@Field("page") int page);
 
 
     @FormUrlEncoded
