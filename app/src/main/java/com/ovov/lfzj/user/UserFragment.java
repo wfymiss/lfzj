@@ -135,7 +135,7 @@ public class UserFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.my_circle_images, R.id.tv_my, R.id.set_ly, R.id.tv_worker_order, R.id.mine_advice})
+    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.set_ly, R.id.tv_my, R.id.mine_family, R.id.tv_worker_order, R.id.mine_advice})
 
     public void onViewClicked(View view) {
         switch (view.getId()) {
