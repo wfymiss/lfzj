@@ -6,332 +6,295 @@
     android:orientation="vertical">
 
     <!--<ScrollView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/mine"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/lin_title"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/margin_20dp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                style="@style/common_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/mine_title" />
+
+            <ImageView
+                android:id="@+id/iv_right"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="right|center_vertical"
+                android:scaleType="center"
+                android:src="@mipmap/ic_setting_user" />
+        </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/set_ly"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@mipmap/mine_backgroud"
-            android:orientation="vertical">
-
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/lin_title"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="@dimen/margin_20dp">
-
-                <TextView
-                    android:id="@+id/tv_title"
-                    style="@style/common_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="@string/mine_title" />
-
-                <ImageView
-                    android:id="@+id/iv_right"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="right|center_vertical"
-                    android:scaleType="center"
-                    android:src="@mipmap/ic_setting_user" />
-            </RelativeLayout>
-
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/margin_20dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/my_circle_images"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_20dp"
+                android:layout_marginLeft="@dimen/padding_12dp"
                 android:clickable="true"
-
                 android:src="@mipmap/ic_default_head" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/dp_14"
-                android:text="@string/text_user_hint"
-                android:id="@+id/tv_nickname"
-                android:textSize="@dimen/sp_15" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_12dp"
-                android:text="@string/text_hint"
-                android:id="@+id/tv_sign"
-                android:maxLines="1"
-                android:layout_marginRight="@dimen/dp_20"
-                android:layout_marginLeft="@dimen/dp_20"
-                android:textSize="@dimen/textSize_12sp" />
-
-
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_12dp"
-                android:layout_marginTop="40dp">
+                android:orientation="vertical">
 
-                <RelativeLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tv_nickname"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_marginLeft="@dimen/padding_12dp"
+                    android:text="@string/text_user_hint"
+                    android:textSize="@dimen/sp_15" />
 
-                    <TextView
-                        android:id="@+id/text_balance"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="center"
-                        android:text="粮票"
-                        android:textColor="#ff444444"
-                        android:textSize="@dimen/textSize_12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/text_balance"
-                        android:layout_centerHorizontal="true"
-                        android:text="0"
-                        android:textColor="@color/color_red"
-                        android:textSize="@dimen/textSize_12sp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tv_sign"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="@dimen/padding_14dp"
+                    android:maxLines="1"
+                    android:text="@string/text_hint"
+                    android:textSize="@dimen/textSize_12sp" />
 
-                    <TextView
-                        android:id="@+id/text_integral"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:gravity="center"
-                        android:text="积分"
-                        android:textColor="#ff444444"
-                        android:textSize="@dimen/textSize_12sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/text_integral"
-                        android:layout_centerHorizontal="true"
-                        android:text="0"
-                        android:textColor="@color/color_3587"
-                        android:textSize="@dimen/textSize_12sp" />
-                </RelativeLayout>
             </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="11dp"
+                android:src="@mipmap/xiaoyu" />
+
         </LinearLayout>
+    </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_10dp"
-                android:background="@color/color_ffefefef" />
-
-
-            <TextView
-                android:id="@+id/tv_username_info"
-                style="@style/text_mine_size"
-                android:drawableLeft="@mipmap/message"
-                android:text="@string/mine_message" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_1dp"
-                android:background="@color/color_ffefefef" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_10dp"
+        android:background="@color/color_ffefefef" />
 
 
-            <!--<TextView-->
-                <!--style="@style/text_mine_size"-->
-                <!--android:drawableLeft="@mipmap/bbs"-->
-                <!--android:text="@string/mine_bbs" />-->
+    <TextView
+        android:id="@+id/tv_username_info"
+        style="@style/text_mine_size"
+        android:drawableLeft="@mipmap/message"
+        android:text="@string/mine_message" />
 
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/margin_1dp"-->
-                <!--android:background="@color/color_dcdcdc" />-->
-
-            <!--<TextView-->
-                <!--style="@style/text_mine_size"-->
-                <!--android:drawableLeft="@mipmap/huodong"-->
-                <!--android:text="@string/mine_activity" />-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/margin_1dp"-->
-                <!--android:background="@color/color_dcdcdc" />-->
-
-            <TextView
-                android:id="@+id/mine_family"
-                style="@style/text_mine_size"
-                android:drawableLeft="@mipmap/home"
-                android:text="@string/mine_house" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_1dp"
-                android:background="@color/color_dcdcdc" />
-
-            <!--<TextView-->
-                <!--style="@style/text_mine_size"-->
-                <!--android:drawableLeft="@mipmap/house"-->
-                <!--android:text="@string/mine_home" />-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/margin_1dp"-->
-                <!--android:background="@color/color_dcdcdc" />-->
-
-            <!--<TextView-->
-                <!--style="@style/text_mine_size"-->
-                <!--android:drawableLeft="@mipmap/education"-->
-                <!--android:text="@string/mine_education" />-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/margin_1dp"-->
-                <!--android:background="@color/color_dcdcdc" />-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/tv_myhealth"-->
-                <!--style="@style/text_mine_size"-->
-                <!--android:drawableLeft="@mipmap/health"-->
-                <!--android:text="@string/mine_health" />-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/margin_11dp"-->
-                <!--android:background="@color/color_ffefefef" />-->
-
-            <!--<TextView-->
-                <!--style="@style/text_mine_size"-->
-                <!--android:drawableLeft="@mipmap/reward"-->
-                <!--android:text="@string/mine_reward" />-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/margin_1dp"-->
-                <!--android:background="@color/color_dcdcdc" />-->
-
-            <!--<TextView-->
-                <!--style="@style/text_mine_size"-->
-                <!--android:drawableLeft="@mipmap/money"-->
-                <!--android:text="@string/mine_money" />-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/margin_1dp"-->
-                <!--android:background="@color/color_dcdcdc" />-->
-
-            <!--<TextView-->
-                <!--style="@style/text_mine_size"-->
-                <!--android:drawableLeft="@mipmap/center"-->
-                <!--android:text="@string/mine_centre" />-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/margin_1dp"-->
-                <!--android:background="@color/color_dcdcdc" />-->
-
-            <TextView
-                style="@style/text_mine_size"
-                android:id="@+id/mine_advice"
-                android:drawableLeft="@mipmap/courier"
-                android:text="@string/mine_advice" />
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/margin_11dp"-->
-                <!--android:background="@color/color_ffefefef" />-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/tv_order"-->
-                <!--style="@style/text_mine_size"-->
-                <!--android:drawableLeft="@mipmap/order"-->
-                <!--android:text="@string/mine_order" />-->
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_1dp"
-                android:background="@color/color_dcdcdc" />
-
-            <TextView
-                style="@style/text_mine_size"
-                android:id="@+id/tv_worker_order"
-                android:drawableLeft="@mipmap/maintenance"
-                android:text="@string/mine_maintenance" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_1dp"
-                android:background="@color/color_dcdcdc" />
-
-            <!--<TextView-->
-                <!--android:id="@+id/tv_shop_order"-->
-                <!--style="@style/text_mine_size"-->
-                <!--android:drawableLeft="@mipmap/shop"-->
-                <!--android:text="@string/mine_shop" />-->
-
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/margin_1dp"-->
-                <!--android:background="@color/color_ffefefef" />-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/tv_service_order"-->
-                <!--style="@style/text_mine_size"-->
-                <!--android:drawableLeft="@mipmap/sevice"-->
-                <!--android:text="@string/mine_sevice" />-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_1dp"
+        android:background="@color/color_ffefefef" />
 
 
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/margin_11dp"-->
-                <!--android:background="@color/color_ffefefef" />-->
+    <!--<TextView-->
+    <!--style="@style/text_mine_size"-->
+    <!--android:drawableLeft="@mipmap/bbs"-->
+    <!--android:text="@string/mine_bbs" />-->
 
-            <TextView
-                style="@style/text_mine_size"
-                android:drawableLeft="@mipmap/idcard"
-                android:id="@+id/tv_identity"
-                android:text="@string/mine_idcard" />
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/margin_1dp"-->
+    <!--android:background="@color/color_dcdcdc" />-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_1dp"
-                android:background="@color/color_ffefefef" />
+    <!--<TextView-->
+    <!--style="@style/text_mine_size"-->
+    <!--android:drawableLeft="@mipmap/huodong"-->
+    <!--android:text="@string/mine_activity" />-->
 
-            <TextView
-                android:id="@+id/tv_my"
-                style="@style/text_mine_size"
-                android:drawableLeft="@mipmap/until"
-                android:text="@string/mine_utility" />
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/margin_1dp"-->
+    <!--android:background="@color/color_dcdcdc" />-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin_1dp"
-                android:background="@color/color_ffefefef" />
+    <TextView
+        android:id="@+id/mine_family"
+        style="@style/text_mine_size"
+        android:drawableLeft="@mipmap/home"
+        android:text="@string/mine_house" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_1dp"
+        android:background="@color/color_dcdcdc" />
+
+    <!--<TextView-->
+    <!--style="@style/text_mine_size"-->
+    <!--android:drawableLeft="@mipmap/house"-->
+    <!--android:text="@string/mine_home" />-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/margin_1dp"-->
+    <!--android:background="@color/color_dcdcdc" />-->
+
+    <!--<TextView-->
+    <!--style="@style/text_mine_size"-->
+    <!--android:drawableLeft="@mipmap/education"-->
+    <!--android:text="@string/mine_education" />-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/margin_1dp"-->
+    <!--android:background="@color/color_dcdcdc" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_myhealth"-->
+    <!--style="@style/text_mine_size"-->
+    <!--android:drawableLeft="@mipmap/health"-->
+    <!--android:text="@string/mine_health" />-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/margin_11dp"-->
+    <!--android:background="@color/color_ffefefef" />-->
+
+    <!--<TextView-->
+    <!--style="@style/text_mine_size"-->
+    <!--android:drawableLeft="@mipmap/reward"-->
+    <!--android:text="@string/mine_reward" />-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/margin_1dp"-->
+    <!--android:background="@color/color_dcdcdc" />-->
+
+    <!--<TextView-->
+    <!--style="@style/text_mine_size"-->
+    <!--android:drawableLeft="@mipmap/money"-->
+    <!--android:text="@string/mine_money" />-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/margin_1dp"-->
+    <!--android:background="@color/color_dcdcdc" />-->
+
+    <!--<TextView-->
+    <!--style="@style/text_mine_size"-->
+    <!--android:drawableLeft="@mipmap/center"-->
+    <!--android:text="@string/mine_centre" />-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/margin_1dp"-->
+    <!--android:background="@color/color_dcdcdc" />-->
+
+    <TextView
+        android:id="@+id/mine_advice"
+        style="@style/text_mine_size"
+        android:drawableLeft="@mipmap/help"
+        android:text="@string/mine_advice" />
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/margin_11dp"-->
+    <!--android:background="@color/color_ffefefef" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_order"-->
+    <!--style="@style/text_mine_size"-->
+    <!--android:drawableLeft="@mipmap/order"-->
+    <!--android:text="@string/mine_order" />-->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_1dp"
+        android:background="@color/color_dcdcdc" />
+
+    <TextView
+        android:id="@+id/tv_worker_order"
+        style="@style/text_mine_size"
+        android:drawableLeft="@mipmap/maintenance"
+        android:text="@string/mine_maintenance" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_1dp"
+        android:background="@color/color_dcdcdc" />
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_shop_order"-->
+    <!--style="@style/text_mine_size"-->
+    <!--android:drawableLeft="@mipmap/shop"-->
+    <!--android:text="@string/mine_shop" />-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/margin_1dp"-->
+    <!--android:background="@color/color_ffefefef" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_service_order"-->
+    <!--style="@style/text_mine_size"-->
+    <!--android:drawableLeft="@mipmap/sevice"-->
+    <!--android:text="@string/mine_sevice" />-->
 
 
-            <!--<TextView-->
-                <!--android:id="@+id/tv_unitiy_message"-->
-                <!--style="@style/text_mine_size"-->
-                <!--android:drawableLeft="@mipmap/message"-->
-                <!--android:text="@string/mine_utility_order" />-->
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/margin_11dp"-->
+    <!--android:background="@color/color_ffefefef" />-->
 
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/margin_1dp"-->
-                <!--android:background="@color/color_dcdcdc" />-->
+    <TextView
+        android:id="@+id/tv_identity"
+        style="@style/text_mine_size"
+        android:drawableLeft="@mipmap/idcard"
+        android:text="@string/mine_idcard" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_1dp"
+        android:background="@color/color_ffefefef" />
+
+    <TextView
+        android:id="@+id/tv_my"
+        style="@style/text_mine_size"
+        android:drawableLeft="@mipmap/until"
+        android:text="@string/mine_utility" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_1dp"
+        android:background="@color/color_ffefefef" />
+
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_unitiy_message"-->
+    <!--style="@style/text_mine_size"-->
+    <!--android:drawableLeft="@mipmap/message"-->
+    <!--android:text="@string/mine_utility_order" />-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/margin_1dp"-->
+    <!--android:background="@color/color_dcdcdc" />-->
 
 
     <!--</ScrollView>-->

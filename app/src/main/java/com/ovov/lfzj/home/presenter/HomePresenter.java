@@ -40,7 +40,7 @@ public class HomePresenter {
                             homeView.showMsg(dataResultException.errorInfo);
                         } else {
 
-                            homeView.doFailed();
+                         //   homeView.doFailed();
                             e.printStackTrace();
                         }
 
@@ -70,7 +70,7 @@ public class HomePresenter {
                             homeView.showMsg(dataResultException.errorInfo);
                         } else {
 
-                            homeView.doFailed();
+                        //    homeView.doFailed();
                             e.printStackTrace();
                         }
 
@@ -100,7 +100,7 @@ public class HomePresenter {
                             homeView.showMsg(dataResultException.errorInfo);
                         } else {
 
-                            homeView.doFailed();
+                       //     homeView.doFailed();
                             e.printStackTrace();
                         }
                     }

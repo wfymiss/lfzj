@@ -72,7 +72,8 @@ public class UserFragment extends BaseFragment {
     TextView mTvNickname;
     @BindView(R.id.tv_sign)
     TextView mTvSign;
-//    @BindView(R.id.tv_myhealth)
+
+    //    @BindView(R.id.tv_myhealth)
 //    TextView tvMyhealth;
     /*@BindView(R.id.tv_unitiy_message)
     TextView tvUnitiyMessage;*/
@@ -134,7 +135,7 @@ public class UserFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.my_circle_images, R.id.tv_my, R.id.mine_family, R.id.tv_worker_order,R.id.mine_advice})
+    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.my_circle_images, R.id.tv_my, R.id.set_ly, R.id.tv_worker_order, R.id.mine_advice})
 
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -144,9 +145,9 @@ public class UserFragment extends BaseFragment {
 //            case R.id.tv_order:
 //                mUtils.startActivity(EvaluateActivity.class);
 //                break;
-        //    case R.id.tv_shop_order:
-             //   mUtils.startActivity(OrderActivity.class);
-           //     break;
+            //    case R.id.tv_shop_order:
+            //   mUtils.startActivity(OrderActivity.class);
+            //     break;
             case R.id.mine_advice:
                 AdvicesActivity.toActivity(mActivity);
                 break;
@@ -162,10 +163,10 @@ public class UserFragment extends BaseFragment {
                 break;
             case R.id.tv_identity:
                 MySubActivity.toActivity(mActivity);
-               // IdentityConfirmActivity.toActivity(mActivity);
-            //    mActivity.finish();
+                // IdentityConfirmActivity.toActivity(mActivity);
+                //    mActivity.finish();
                 break;
-            case R.id.my_circle_images:
+            case R.id.set_ly:
                 UserInfoActivity.toActivity(mActivity, subListBean.getDatas().getUser());
                 break;
             case R.id.tv_username_info:
@@ -214,14 +215,22 @@ public class UserFragment extends BaseFragment {
                         dismiss();
                         if (listInfoDataInfo.getCode().equals("200")) {
                             subListBean = listInfoDataInfo;
-                            mTvNickname.setText(listInfoDataInfo.getDatas().getUser().nickname);
+                            if (!listInfoDataInfo.getDatas().getUser().nickname.equals("") && !TextUtils.isEmpty(listInfoDataInfo.getDatas().getUser().nickname)) {
+                                mTvNickname.setText(listInfoDataInfo.getDatas().getUser().nickname);
+                            } else {
+                                mTvNickname.setText(R.string.text_user_hint);
+                            }
                             if (listInfoDataInfo.getDatas().getUser().signature != null && !TextUtils.isEmpty(listInfoDataInfo.getDatas().getUser().signature)) {
                                 mTvSign.setText(listInfoDataInfo.getDatas().getUser().signature);
+                            } else {
+                                mTvSign.setText(R.string.text_hint);
                             }
                             if (listInfoDataInfo.getDatas().getUser().user_logo != null && !listInfoDataInfo.getDatas().getUser().user_logo.equals(""))
                                 Picasso.with(mActivity).load(listInfoDataInfo.getDatas().getUser().user_logo).placeholder(R.mipmap.ic_default_head).into(mCircleImages);
                             LoginUserBean.getInstance().setUserInfoBean(listInfoDataInfo.getDatas().getUser());
                             LoginUserBean.getInstance().save();
+                        } else {
+                            mTvNickname.setText("");
                         }
                     }
                 });

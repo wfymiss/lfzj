@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -36,6 +37,7 @@ public class GameActivity extends BaseActivity {
     public int getLayoutId() {
         return R.layout.activity_game;
     }
+
     @SuppressLint("JavascriptInterface")
     @Override
     public void init() {
@@ -74,7 +76,7 @@ public class GameActivity extends BaseActivity {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.contains("www.flower-exit.com")){
+            if (url.contains("www.flower-exit.com")) {
                 finish();
             }
             return true;
@@ -84,7 +86,15 @@ public class GameActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        if (mWebGame != null) {
+            mWebGame.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+            mWebGame.clearHistory();
+            //  ((ViewGroup)mWebGame.getParent()).removeView(mWebGame);
+            mWebGame.removeAllViews();
+            mWebGame.destroy();
+            mWebGame = null;
+        }
         super.onDestroy();
-        mWebGame.clearView();
+
     }
 }

@@ -3,8 +3,10 @@ package com.ovov.lfzj;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -24,18 +26,23 @@ import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.bean.UpdateBean;
 import com.ovov.lfzj.base.net.DataResultException;
+import com.ovov.lfzj.base.utils.ActivityUtils;
 import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.utils.StatusBarUtils;
 import com.ovov.lfzj.base.utils.Tools;
 import com.ovov.lfzj.base.widget.CommonProgressDialog;
+import com.ovov.lfzj.base.widget.IdentityDialog;
 import com.ovov.lfzj.base.widget.UpdateDialog;
 import com.ovov.lfzj.event.DownloadEvent;
 import com.ovov.lfzj.event.IdentityEvent;
 import com.ovov.lfzj.event.LoginOutEvent;
 import com.ovov.lfzj.event.MainIdentityEvent;
+import com.ovov.lfzj.event.Recievertype;
+import com.ovov.lfzj.event.RevieverEvent;
 import com.ovov.lfzj.event.SquareDetailIdentityEvent;
 import com.ovov.lfzj.event.SwitchEvent;
 import com.ovov.lfzj.home.HomeFragment;
+import com.ovov.lfzj.home.payment.activity.PayMentRecordActivity;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.login.IdentityConfirmActivity;
@@ -47,6 +54,8 @@ import com.ovov.lfzj.user.UserFragment;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.yanzhenjie.permission.AndPermission;
 
+import org.greenrobot.eventbus.Subscribe;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -54,28 +63,67 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Set;
 
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import rx.Subscription;
 import rx.functions.Action1;
+
+import static com.ovov.lfzj.CatelApplication.MAIN_ACTIVITY_IDENTITY;
 
 public class MainActivity extends BaseMainActivity {
 
     private CommonProgressDialog pBar;
     public static final String BASE_FILE = Environment.getExternalStorageDirectory().getPath() + "/lfzj/";
     private String path;
-    private static String DOWNLOAD_NAME = "乐福院子" ;
+    private static String DOWNLOAD_NAME = "乐福院子";
     private RxPermissions rxPermission;
+    private MyReceiver receiver;
+
+    private ActivityUtils activityUtils;
+
+    TagAliasCallback tagAliasCallback = new TagAliasCallback() {
+        @Override
+        public void gotResult(int i, String s, Set<String> set) {
+        }
+    };
+    private String phone;
 
     public static void toActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
     }
 
+
+    private void registerBroadcast() {
+        // 注册广播接收者
+        Log.i("hhhh", "rrrrrrrr");
+        receiver = new MyReceiver();
+        Log.i("hhhh", "yyyyyyyyyyyyyyyyy");
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("exit_app");
+        this.registerReceiver(receiver, filter);
+    }
+
+    class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i("hhhh", "dddddddd" + intent.getAction());
+            if (intent.getAction().equals("exit_app")) {
+                Log.i("hhhh", "ffffffffffff" + intent.getAction());
+                finish();
+            }
+        }
+    }
+
     @Override
     public void init() {
         super.init();
+        //极光推送
+        registerBroadcast();
+        JPushInterface.setAlias(this, phone, tagAliasCallback);                                //  极光
         StatusBarUtils.setStatusBar(this, false, false);
         FileUtils.createOrExistsDir(BASE_FILE);
         initFragment(0);
@@ -154,7 +202,7 @@ public class MainActivity extends BaseMainActivity {
             public void call(LoginOutEvent loginOutEvent) {
                 LoginUserBean.getInstance().reset();
                 LoginUserBean.getInstance().save();
-                JPushInterface.deleteAlias(mActivity,1);
+                JPushInterface.deleteAlias(mActivity, 1);
                 LoginActivity.toActivity(mActivity);
 
                 for (int i = 0; i < mActivities.size(); i++) {
@@ -174,10 +222,10 @@ public class MainActivity extends BaseMainActivity {
                 .subscribe(new CommonSubscriber<DataInfo<UpdateBean>>() {
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof DataResultException){
+                        if (e instanceof DataResultException) {
                             DataResultException dataResultException = (DataResultException) e;
                             showToast(dataResultException.errorInfo);
-                        }else {
+                        } else {
                             doFailed();
                             showError(e.getMessage());
                             e.printStackTrace();
@@ -186,13 +234,29 @@ public class MainActivity extends BaseMainActivity {
 
                     @Override
                     public void onNext(DataInfo<UpdateBean> updateBeanDataInfo) {
-                        if (updateBeanDataInfo.datas().needUpdate()){
-                            UpdateDialog updateDialog = new UpdateDialog(mActivity,updateBeanDataInfo.datas().apk_url,updateBeanDataInfo.datas().upgrade_point);
+                        if (updateBeanDataInfo.datas().needUpdate()) {
+                            UpdateDialog updateDialog = new UpdateDialog(mActivity, updateBeanDataInfo.datas().apk_url, updateBeanDataInfo.datas().upgrade_point);
                             updateDialog.show();
                         }
                     }
                 });
         addSubscrebe(subscription);
+    }
+
+
+    //收到推送以后点击事件的处理
+    @Subscribe
+    public void onEventMainThread(RevieverEvent event) {
+
+        if (event.getType().equals(Recievertype.CREATE_FEE)) {
+            if (activityUtils == null)
+                activityUtils = new ActivityUtils(this);
+//            activityUtils.startActivity(PayMentRecordActivity.class);
+        } else if (event.getType().equals(Recievertype.OWNER_WORK_ORDER)) {
+            if (activityUtils == null)
+                activityUtils = new ActivityUtils(this);
+//            activityUtils.startActivity(WorkerOrderActivity.class);
+        }
     }
 
     @Override
@@ -260,17 +324,16 @@ public class MainActivity extends BaseMainActivity {
 
     @OnClick(R.id.iv_open)
     public void onViewClicked() {
-        OpendoorActivity.toActivity(mActivity);
-//        if (LoginUserBean.getInstance().isIs_auth()) {
-//            OpendoorActivity.toActivity(mActivity);
-//        } else {
-//            IdentityDialog identityDialog = new IdentityDialog(mActivity, MAIN_ACTIVITY_IDENTITY);
-//            identityDialog.show();
-//        }
+        // OpendoorActivity.toActivity(mActivity);
+        if (LoginUserBean.getInstance().isIs_auth()) {
+            OpendoorActivity.toActivity(mActivity);
+        } else {
+            IdentityDialog identityDialog = new IdentityDialog(mActivity, MAIN_ACTIVITY_IDENTITY);
+            identityDialog.show();
+        }
 
 
     }
-
 
 
     private void intall() {
@@ -325,12 +388,12 @@ public class MainActivity extends BaseMainActivity {
          * @param grantResults 请求结果。
          */
         AndPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-        if (requestCode == 111){
+        if (requestCode == 111) {
             File apkFile = new File(Environment
                     .getExternalStorageDirectory(), DOWNLOAD_NAME);
             Uri apkUri = FileProvider.getUriForFile(this, "com.leFu.fileProvider", apkFile);//在AndroidManifest中的android:authorities值
-            Log.e("uri...",apkFile.getPath()+"");
-            Log.e("uri...",apkUri+"");
+            Log.e("uri...", apkFile.getPath() + "");
+            Log.e("uri...", apkUri + "");
             Intent install = new Intent(Intent.ACTION_VIEW);
             install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);//添加这一句表示对目标应用临时授权该Uri所代表的文件

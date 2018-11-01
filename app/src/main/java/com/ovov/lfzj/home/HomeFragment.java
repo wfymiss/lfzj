@@ -142,7 +142,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 initData(REFRESH);
-                //  initBanner();
+                initBanner();
             }
         });
         mActivityListSwf.setOnLoadmoreListener(new OnLoadmoreListener() {
@@ -183,7 +183,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
                             DataResultException dataResultException = (DataResultException) e;
                             showToast(dataResultException.errorInfo);
                         } else {
-                            doFailed();
+                         //   doFailed();
                             e.printStackTrace();
                         }
 
@@ -233,17 +233,17 @@ public class HomeFragment extends BaseFragment implements HomeView {
             }
         });
 
-        RelativeLayout reSearch = addheadlayout.findViewById(R.id.pro_searchView);
+//        RelativeLayout reSearch = addheadlayout.findViewById(R.id.pro_searchView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         gridView1.setLayoutManager(linearLayoutManager);
         shopAdapter1 = new CardAdapter(ima, getContext());
-        reSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SearchActivity.toActivity(mActivity);
-            }
-        });
+//        reSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                SearchActivity.toActivity(mActivity);
+//            }
+//        });
         bannerAdapter = new BannerAdapter<BannerBean>() {
             @Override
             protected void bind(ViewHolder holder, BannerBean data) {
@@ -254,17 +254,17 @@ public class HomeFragment extends BaseFragment implements HomeView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (UIUtils.isFastClick()) {
-                    if (position == 2) {
-                        //RepairCommentActivity.toActivity(mActivity);
-                        RepairActivity.toActivity(mActivity);
-                        return;
-                    }
+
                     if (LoginUserBean.getInstance().isIs_auth()) {
                         if (position == 0) {
                             PayMentRecordActivity.toActivity(mActivity);
                         }
                         if (position == 1) {
                             GameActivity.toActivity(mActivity);
+                        }
+                        if (position == 2) {
+                            //RepairCommentActivity.toActivity(mActivity);
+                            RepairActivity.toActivity(mActivity);
                         }
 
                         if (position == 3) {
@@ -490,7 +490,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
                             mActivity.finish();
                         } else {
 
-                            doFailed();
+                        //    doFailed();
                         }
 
 

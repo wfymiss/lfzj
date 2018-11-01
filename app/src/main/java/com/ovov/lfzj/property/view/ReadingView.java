@@ -19,5 +19,7 @@ public interface ReadingView {
     void setUnitList(UnitListResult result);
     void setInformMeter(InformMeterResult result);
     void setReadMeterResult(ReadMeterResult result);
+    void showLoad();
+    void dissmiss();
     void showMsg(String msg);
 }

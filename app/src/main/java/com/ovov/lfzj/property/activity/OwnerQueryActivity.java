@@ -349,6 +349,16 @@ public class OwnerQueryActivity extends BaseActivity implements ReadingView {
     }
 
     @Override
+    public void showLoad() {
+        showLoadingDialog();
+    }
+
+    @Override
+    public void dissmiss() {
+        dismiss();
+    }
+
+    @Override
     public void showMsg(String msg) {
         Toast.makeText(this,msg, Toast.LENGTH_SHORT).show();
     }

@@ -6,4 +6,9 @@ package com.ovov.lfzj.base.bean;
 
 public class UrlBean {
     public String url;
+    public String msg;
+
+    public String getMsg() {
+        return msg;
+    }
 }

@@ -4,7 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,6 +18,7 @@ import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.SquareListInfo;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.RxUtil;
+import com.ovov.lfzj.base.widget.WaveView;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 
@@ -28,14 +33,10 @@ public class QuestionInfoActivity extends BaseActivity {
     TextView tvTitle;
     @BindView(R.id.iv_back)
     ImageView ivBack;
-    @BindView(R.id.tv_id)
-    TextView tvId;
-    @BindView(R.id.tv_content)
-    TextView tvContent;
-    @BindView(R.id.tv_title_que)
-    TextView tv_title_que;
-    @BindView(R.id.layout)
-    RelativeLayout layout;
+    @BindView(R.id.web)
+    WebView web;
+    @BindView(R.id.lin_title)
+    FrameLayout lin_title;
     private String id;
 
     public static void toActivity(Context context, String id) {
@@ -46,12 +47,13 @@ public class QuestionInfoActivity extends BaseActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.item_qusetion_list;
+        return R.layout.activity_news_detail;
     }
 
     @Override
     public void init() {
-        layout.setVisibility(View.VISIBLE);
+        web.setWebViewClient(new WebViewClient());
+        web.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);//滚动条风格，为0指滚动条不占用空间，直接覆盖在网页上
         tvTitle.setText("问题详情");
         id = getIntent().getExtras().get("id").toString();
         initdata();
@@ -66,7 +68,7 @@ public class QuestionInfoActivity extends BaseActivity {
                         dismiss();
                         if (e instanceof DataResultException) {
                             DataResultException dataResultException = (DataResultException) e;
-                            showToast(R.string.text_login_invaild);
+                            showToast("数据获取异常");
                         } else {
 
                             doFailed();
@@ -77,8 +79,8 @@ public class QuestionInfoActivity extends BaseActivity {
 
                     @Override
                     public void onNext(DataInfo<SquareListInfo> dataInfo) {
-                        tv_title_que.setText(dataInfo.datas().getTitle());
-                        tvContent.setText(dataInfo.datas().getInfo());
+                        web.getSettings().setDefaultTextEncodingName("UTF -8");//设置默认为utf-8
+                        web.loadData(dataInfo.datas().getInfo(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
                     }
                 });
         addSubscrebe(subscription);

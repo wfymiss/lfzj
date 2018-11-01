@@ -1,7 +1,9 @@
 package com.ovov.lfzj.opendoor;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -43,6 +45,8 @@ public class VistitorActivity extends BaseActivity {
     ListView listView;
     @BindView(R.id.iv_back)
     ImageView ivBack;
+    @BindView(R.id.lin_null)
+    LinearLayout lin_null;
     private ActivityUtils activityUtil;
     private List<String> listName;
     private VIsitorListAdapter adapter;
@@ -118,19 +122,25 @@ public class VistitorActivity extends BaseActivity {
                     public void onNext(VisistorRecordResult listInfoDataInfo) {
 
                         if (listInfoDataInfo.getCode().equals("200")) {
-                            if (listInfoDataInfo.getData().size() < 0) {
-                                visitorList.setEnableLoadmore(false);
-                            }
-                            if (type == REFRESH) {
-                                visitorList.finishRefresh(true);
-                                adapter.setData(listInfoDataInfo.getData());
 
+                            if (listInfoDataInfo.getData() == null || listInfoDataInfo.getData().size() == 0) {
+                                lin_null.setVisibility(View.VISIBLE);
+                                visitorList.setEnableLoadmore(false);
                             } else {
-                                adapter.addAll(listInfoDataInfo.getData());
-                                visitorList.finishLoadmore(true);
+                                lin_null.setVisibility(View.GONE);
+                                if (type == REFRESH) {
+                                    visitorList.finishRefresh(true);
+                                    adapter.setData(listInfoDataInfo.getData());
+
+                                } else {
+                                    visitorList.finishLoadmore(true);
+                                    adapter.setData(listInfoDataInfo.getData());
+                                }
                             }
+
                         } else {
                             if (type == REFRESH) {
+                                lin_null.setVisibility(View.VISIBLE);
                                 visitorList.finishRefresh(false);
 
                             } else {
@@ -181,7 +191,6 @@ public class VistitorActivity extends BaseActivity {
     public int getLayoutId() {
         return R.layout.activity_visitor;
     }
-
 
 
     @OnClick(R.id.iv_back)

@@ -137,12 +137,19 @@ public interface CatelApiService {
 
 
     @FormUrlEncoded
-    @POST("v1/user/commentzan")
+    @POST("/v1/entrance/getLog")
     Observable<ListInfo<SquareListInfo>> getLog(@Field("token") String token,
-                                                @Field("page") int page); @FormUrlEncoded
+                                                @Field("page") int page);
+
+    @FormUrlEncoded
     @POST("v1/feedBack/feedBackLists")
     Observable<ListInfo<SquareListInfo>> getFeedBackLists(@Field("token") String token,
-                                                @Field("page") int page);
+                                                          @Field("page") int page);
+
+
+    @FormUrlEncoded
+    @POST("v1/feedBack/feedBackInfo")
+    Observable<DataInfo<SquareListInfo>> getFeedBackInfo(@Field("id") String id);
 
     @FormUrlEncoded
     @POST("v1/question/questionLists")
@@ -164,16 +171,15 @@ public interface CatelApiService {
                                        @Field("id") String id,
                                        @Field("comment") String comment);
 
-
     // 上传开门日志
     @FormUrlEncoded
     @POST("v1/entrance/logRecord")
     Observable<OpenLogUpInfo> getUpOpenLog(@Field("token") String token,
                                            @Field("subdistrict_id") String sub_id,
+                                           @Field("phone") String phone,
                                            @Field("sn_name") String sn_name,
-                                           @Field("link") String link,
-                                           @Field("result") String result,
-                                           @Field("phone") String phone);
+                                           @Field("link") int link,
+                                           @Field("result") int result);
 
     @FormUrlEncoded
     @POST("/v1/entrance/getSubdistrict_buildings")
@@ -189,14 +195,24 @@ public interface CatelApiService {
     // 工单维修评论
     @FormUrlEncoded
     @POST("front/property/index/wo_feedback")
-    Observable<ServerFeedBackInfo> setWorkComment(@Field("token") String token, @Field("subdistrict_id") String sub_id,
-                                                  @Field("wo_id") String wo_id, @Field("suggest") String content, @Field("rating") int rating);
+    Observable<ServerFeedBackInfo> setWorkComment(@Field("token") String token,
+                                                  @Field("subdistrict_id") String sub_id,
+                                                  @Field("wo_id") String wo_id,
+                                                  @Field("suggest") String content,
+                                                  @Field("rating") int rating);
 
     //获取单元
     @FormUrlEncoded
-    @POST("/v1/user/get_unit_list")
+    @POST("v1/user/get_unit_list")
     Observable<UnitListResult> getUnitList(@Field("building") String building,
                                            @Field("subdistrict_id") String subdistrict_id);
+
+
+    //上传反馈
+    @FormUrlEncoded
+    @POST("v1/feedBack/feedBackAdd")
+    Observable<DataInfo<UrlBean>> Upload(@Field("token") String token,
+                                         @Field("text") String text);
 
     //获取业主抄表账单详情
     @FormUrlEncoded
@@ -208,12 +224,12 @@ public interface CatelApiService {
                                                       @Field("gid") String gid);
 
     @FormUrlEncoded
-    @POST("/v1/bills/shopLists")
+    @POST("v1/bills/shopLists")
     Observable<ShopListResult> getDJShopList(@Field("subdistrict_id") String subdistrict_id);
 
 
     @FormUrlEncoded
-    @POST("/v1/bills/billsLists")
+    @POST("v1/bills/billsLists")
     Observable<DataInfo<PaymentDetailBean>> getOwnerPayment(@Field("house_type") String is_shop,
                                                             @Field("status") int status,
                                                             @Field("year") String year,
@@ -222,7 +238,7 @@ public interface CatelApiService {
 
 
     @FormUrlEncoded
-    @POST("/v1/bills/billsLists")
+    @POST("v1/bills/billsLists")
     Observable<DataInfo<PaymentDetailBean>> getShopPayment(@Field("subdistrict_id") String subdistrict_id,
                                                            @Field("house_type") String is_shop,
                                                            @Field("status") int status,
@@ -231,7 +247,7 @@ public interface CatelApiService {
 
     //获取房间
     @FormUrlEncoded
-    @POST("/v1/user/unit_list")
+    @POST("v1/user/unit_list")
     Observable<RoomListResult> getRoomList(@Field("subdistrict_id") String subdistrict_id,
                                            @Field("building") String building_id,
                                            @Field("unit_id") String unit_id);
@@ -312,6 +328,10 @@ public interface CatelApiService {
     @POST("v1/recommend/infomation")
     Observable<ListInfo<BannerBean>> getInfomation(@Field("token") String token,
                                                    @Field("type_id") String sub_id);
+    @FormUrlEncoded
+    @POST("v1/recommend/infomationdetail")
+    Observable<DataInfo<BannerBean>> getInfomationdetail(@Field("token") String token,
+                                                   @Field("id") String sub_id);
 
     @FormUrlEncoded
     @POST("v1/examination")
@@ -501,42 +521,51 @@ public interface CatelApiService {
     @POST("v1/work/workstaff")
     Observable<DataInfo<WorkDetailBean>> getWorkorderDetail(@Field("token") String token,
                                                             @Field("wid") String wid);
+
     @FormUrlEncoded
     @POST("v1/user/change_role")
     Observable<DataInfo> changeRole(@Field("token") String token,
                                     @Field("login_type") int login_type);
+
     @POST("v1/work/get_works")
     Observable<ListInfo<WorkerListInfo>> getWorks();
+
     @FormUrlEncoded
     @POST("v1/work/workdispatch")
     Observable<DataInfo> workDispath(@Field("token") String token,
                                      @Field("wid") String wid,
                                      @Field("worker_id") String worker_id);
+
     @FormUrlEncoded
     @POST("v1/work/workreceipt")
     Observable<DataInfo> workReceipt(@Field("token") String token,
                                      @Field("wid") String wid);
+
     @FormUrlEncoded
     @POST("v1/work/workercancels")
     Observable<DataInfo> workCancel(@Field("token") String token,
                                     @Field("wid") String wid,
                                     @Field("contents") String reason,
                                     @Field("remarks") String remarks);
+
     @FormUrlEncoded
     @POST("v1/work/propertycancellation")
     Observable<DataInfo> cancelWorkOrder(@Field("token") String token,
                                          @Field("wid") String wid,
                                          @Field("remarks") String remarks);
+
     @FormUrlEncoded
     @POST("v1/work/confirmwork")
     Observable<DataInfo> workerCommit(@Field("token") String token,
                                       @Field("wid") String wid,
                                       @Field("material_cost") String material_cost,
                                       @Field("failure_briefing") String trouble);
+
     @FormUrlEncoded
     @POST("v1/work/workcheck")
     Observable<DataInfo> workerOrderCheck(@Field("token") String token,
                                           @Field("wid") String wid);
+
     @FormUrlEncoded
     @POST("v1/work/ownerevaluate")
     Observable<DataInfo> repairComment(@Field("token") String token,
@@ -545,6 +574,7 @@ public interface CatelApiService {
                                        @Field("door_speed") String ratingSpeed,
                                        @Field("service_attitude") String ratingAttitude,
                                        @Field("repair_technology") String ratingTec);
+
     @FormUrlEncoded
     @POST("v1/work/ownercanceling")
     Observable<DataInfo> ownerCancelWorkerOrder(@Field("token") String token,

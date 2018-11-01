@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.google.zxing.BarcodeFormat;
@@ -61,6 +62,8 @@ public class QRCodeActivity extends BaseActivity {
     ListView recyclerview;
     @BindView(R.id.srly)
     SmartRefreshLayout mActivityListSwf;
+    @BindView(R.id.lin_null)
+    LinearLayout lin_null;
     private static int QRC_WIDTH = 600;    //定义二维码长度
     private static int QRC_HEIGHT = 600;   //定义二维码宽度
     private List<String> keys = new ArrayList<String>();
@@ -68,7 +71,7 @@ public class QRCodeActivity extends BaseActivity {
     private int page;
     private CommonAdapter mAdaptet;
 
-    private List<NewsBean> noticeList = new ArrayList<>();
+    private List<SquareListInfo> noticeList = new ArrayList<>();
 
     @Override
     public int getLayoutId() {
@@ -103,14 +106,14 @@ public class QRCodeActivity extends BaseActivity {
     }
 
     private void initList() {
-        mAdaptet = new CommonAdapter<NewsBean>(QRCodeActivity.this, noticeList, R.layout.layout_key_list) {
+        mAdaptet = new CommonAdapter<SquareListInfo>(QRCodeActivity.this, noticeList, R.layout.layout_key_list) {
 
 
             @Override
-            public void convert(ViewHolder viewHolder, NewsBean noticeBean, final int i) {
-//                viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
-//                viewHolder.setText(R.id.tv_comment, noticeBean.getSummary());
-//                viewHolder.setText(R.id.tv_time, noticeBean.getCreated_at());
+            public void convert(ViewHolder viewHolder, SquareListInfo noticeBean, final int i) {
+                viewHolder.setVisible(R.id.create_at, true);
+                viewHolder.setText(R.id.create_at, noticeBean.getCreated_at());
+                viewHolder.setText(R.id.key_list_name, noticeBean.getLocation_id());
 
             }
         };
@@ -151,19 +154,24 @@ public class QRCodeActivity extends BaseActivity {
                     public void onNext(ListInfo<SquareListInfo> listInfoDataInfo) {
 
                         if (listInfoDataInfo.success()) {
-                            if (listInfoDataInfo.datas().size() < 0) {
+                            if (listInfoDataInfo.datas() ==null ||listInfoDataInfo.datas().size()==0 ) {
+                                lin_null.setVisibility(View.VISIBLE);
                                 mActivityListSwf.setEnableLoadmore(false);
-                            }
-                            if (type == REFRESH) {
-                                mActivityListSwf.finishRefresh(true);
-                                mAdaptet.setDatas(listInfoDataInfo.datas());
-
                             } else {
-                                mActivityListSwf.finishLoadmore(true);
-                                mAdaptet.addDatas(listInfoDataInfo.datas());
+                                lin_null.setVisibility(View.GONE);
+                                if (type == REFRESH) {
+                                    mActivityListSwf.finishRefresh(true);
+                                    mAdaptet.setDatas(listInfoDataInfo.datas());
+
+                                } else {
+                                    mActivityListSwf.finishLoadmore(true);
+                                    mAdaptet.addDatas(listInfoDataInfo.datas());
+                                }
                             }
+
                         } else {
                             if (type == REFRESH) {
+                                lin_null.setVisibility(View.VISIBLE);
                                 mActivityListSwf.finishRefresh(false);
 
                             } else {

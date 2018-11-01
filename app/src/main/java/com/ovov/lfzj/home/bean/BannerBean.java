@@ -9,6 +9,16 @@ public class BannerBean {
     private String img;
     private String code;
     private String datas;
+    private String logo_url;
+
+    public String getReply() {
+        return reply;
+    }
+
+    public String getLogo_url() {
+        return logo_url;
+    }
+
     /**
      * id : 1
      * title : 论坛消息
@@ -16,6 +26,8 @@ public class BannerBean {
      * time :
      */
 
+
+    private String reply;
     private String id;
     private String title;
     private String message;

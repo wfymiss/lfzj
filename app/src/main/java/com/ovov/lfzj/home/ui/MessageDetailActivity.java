@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Subscription;
 
 public class MessageDetailActivity extends BaseActivity {
@@ -36,6 +38,8 @@ public class MessageDetailActivity extends BaseActivity {
     ImageView ivBack;
     @BindView(R.id.lv)
     ListView lv;
+    @BindView(R.id.lin_null)
+    LinearLayout lin_null;
     private CommonAdapter newsAdapter;
     String id;
 
@@ -52,14 +56,16 @@ public class MessageDetailActivity extends BaseActivity {
 
     @Override
     public void init() {
+        tvTitle.setText("消息列表");
         id = getIntent().getExtras().get("id").toString();
         initList();
+        noticeList.clear();
+        initData();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                if (id==13){
-//
-//                }
+                String itemid = noticeList.get(position).getId();
+                MessageInfoActivity.toActivity(MessageDetailActivity.this, itemid);
             }
         });
     }
@@ -85,110 +91,122 @@ public class MessageDetailActivity extends BaseActivity {
                     public void onNext(ListInfo<BannerBean> listInfoDataInfo) {
 
                         if (listInfoDataInfo.success()) {
-                            newsAdapter.setDatas(listInfoDataInfo.datas());
+                            if (listInfoDataInfo.datas().size() > 0) {
+                                lin_null.setVisibility(View.GONE);
+                                noticeList.addAll(listInfoDataInfo.datas());
+                                newsAdapter.setDatas(listInfoDataInfo.datas());
+                            } else {
+                                lin_null.setVisibility(View.VISIBLE);
+                            }
+
 
                         }
                     }
                 });
         addSubscrebe(subscription);
+
+
     }
 
     private void initList() {
 
 
-        newsAdapter = new CommonAdapter<BannerBean>(this, noticeList, getLayout()) {
+        newsAdapter = new CommonAdapter<BannerBean>(this, noticeList, R.layout.job_message_item) {
 
             @Override
             public void convert(ViewHolder viewHolder, BannerBean noticeBean, final int i) {
                 switch (id) {
                     case "1":
                         viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
+                        viewHolder.setText(R.id.tv_version, noticeBean.getReply());
                         viewHolder.setText(R.id.tv_reciver, noticeBean.getMessage());
+                        viewHolder.setText(R.id.job_name, "原贴内容:");
                         viewHolder.setText(R.id.tv_time, noticeBean.getTime());
+                        viewHolder.setText(R.id.version_numb, "最新回复:");
 
                         break;
                     case "2":
-                        viewHolder.setText(R.id.job_name, "发布人：");
-                        viewHolder.setText(R.id.version_numb, "地址：");
-                        //viewHolder.setText(R.id.tv_bbs_detail, noticeBean.getTitle());
+                        viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
+                        viewHolder.setText(R.id.job_name, "发布人:");
+                        viewHolder.setText(R.id.version_numb, "地址:");
+                        viewHolder.setText(R.id.tv_version, noticeBean.getReply());
                         viewHolder.setText(R.id.tv_reciver, noticeBean.getMessage());
-                        viewHolder.setText(R.id.tv_version, noticeBean.getMessage());
                         viewHolder.setText(R.id.tv_time, noticeBean.getTime());
                         break;
                     case "3":
-                        viewHolder.setText(R.id.tv_title, "订单编号：");
-                        viewHolder.setText(R.id.job_name, "订单状态：");
-                        viewHolder.setText(R.id.tv_title_numb, "订单标号");
-                        viewHolder.setText(R.id.version_numb, "收货地址：");
-                        viewHolder.setText(R.id.tv_reciver, "状态");
+                        viewHolder.setText(R.id.tv_title, "订单编号:");
+                        viewHolder.setText(R.id.tv_title_numb, noticeBean.getTitle());
+                        viewHolder.setText(R.id.tv_version, noticeBean.getReply());
+                        viewHolder.setText(R.id.tv_reciver, noticeBean.getMessage());
+                        viewHolder.setText(R.id.job_name, "订单状态:");
                         viewHolder.setText(R.id.tv_time, noticeBean.getTime());
-                        viewHolder.setText(R.id.tv_version, "shouhuo");
+                        viewHolder.setText(R.id.version_numb, "收货地址");
+                        viewHolder.setText(R.id.tv_time, noticeBean.getTime());
                         break;
                     case "4":
-                        viewHolder.setVisible(R.id.tv_reciver, false);
-                        viewHolder.setVisible(R.id.tv_title_numb, false);
-                        viewHolder.setText(R.id.job_name, noticeBean.getTitle());
-                        viewHolder.setText(R.id.tv_version, noticeBean.getMessage());
+                        viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
+                        viewHolder.setText(R.id.tv_version, noticeBean.getReply());
+                        viewHolder.setText(R.id.tv_reciver, noticeBean.getMessage());
+                        viewHolder.setText(R.id.job_name, "新版编号:");
                         viewHolder.setText(R.id.tv_time, noticeBean.getTime());
+                        viewHolder.setText(R.id.version_numb, "更新内容:");
                         break;
                     case "5":
-                        viewHolder.setText(R.id.tv_title, "受理情况：");
-                        viewHolder.setVisible(R.id.tv_title_numb, false);
-                        viewHolder.setVisible(R.id.tv_version, false);
-                        viewHolder.setText(R.id.job_name, "订单状态：");
+                        viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
+                        viewHolder.setText(R.id.tv_version, noticeBean.getReply());
                         viewHolder.setText(R.id.tv_reciver, noticeBean.getMessage());
-                        viewHolder.setText(R.id.version_numb, noticeBean.getMessage());
+                        viewHolder.setText(R.id.job_name, "订单状态:");
                         viewHolder.setText(R.id.tv_time, noticeBean.getTime());
+                        viewHolder.setText(R.id.version_numb, "预约详情:");
                         break;
                     case "6":
-                        viewHolder.setText(R.id.tv_title, "订单编号：");
-                        viewHolder.setText(R.id.job_name, "订单状态：");
-                        viewHolder.setVisible(R.id.tv_version, false);
-                        viewHolder.setText(R.id.tv_title_numb, "订单标号");
+                        viewHolder.setText(R.id.tv_title, "订单编号:");
+                        viewHolder.setText(R.id.tv_title_numb, noticeBean.getTitle());
+                        viewHolder.setText(R.id.job_name, "订单状态:");
+                        viewHolder.setText(R.id.tv_version, noticeBean.getReply());
                         viewHolder.setText(R.id.tv_reciver, noticeBean.getMessage());
-                        viewHolder.setText(R.id.version_numb, noticeBean.getMessage());
+                        viewHolder.setText(R.id.version_numb, "订单详情");
                         viewHolder.setText(R.id.tv_time, noticeBean.getTime());
                         break;
                     case "7":
-                        viewHolder.setText(R.id.tv_title, "保修项目：");
-                        viewHolder.setText(R.id.job_name, "工单状态：");
-                        viewHolder.setVisible(R.id.tv_version, false);
-                        viewHolder.setText(R.id.tv_title_numb, "项目详情");
+                        viewHolder.setText(R.id.tv_title, "保修项目:");
+                        viewHolder.setText(R.id.job_name, "工单状态:");
+                        viewHolder.setText(R.id.version_numb, "受理详情:");
+                        viewHolder.setText(R.id.tv_title_numb, noticeBean.getTitle());
                         viewHolder.setText(R.id.tv_reciver, noticeBean.getMessage());
-                        viewHolder.setText(R.id.version_numb, noticeBean.getMessage());
+                        viewHolder.setText(R.id.tv_version, noticeBean.getReply());
                         viewHolder.setText(R.id.tv_time, noticeBean.getTime());
                         break;
                     case "8":
-                        viewHolder.setText(R.id.tv_title, "受理情况：");
-                        viewHolder.setVisible(R.id.tv_title_numb, false);
-                        viewHolder.setVisible(R.id.tv_version, false);
-                        viewHolder.setText(R.id.job_name, "账单状态：");
+                        viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
+                        viewHolder.setText(R.id.job_name, "账单状态:");
+                        viewHolder.setText(R.id.version_numb, "受理详情:");
                         viewHolder.setText(R.id.tv_reciver, noticeBean.getMessage());
-                        viewHolder.setText(R.id.version_numb, noticeBean.getMessage());
+                        viewHolder.setText(R.id.tv_version, noticeBean.getReply());
                         viewHolder.setText(R.id.tv_time, noticeBean.getTime());
                         break;
                     case "9":
-                        viewHolder.setText(R.id.tv_title, "您有一件快递待领取：");
-                        viewHolder.setVisible(R.id.tv_title_numb, false);
-                        viewHolder.setVisible(R.id.tv_version, false);
-                        viewHolder.setText(R.id.job_name, "快递公司：");
+                        viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
+                        viewHolder.setText(R.id.version_numb, "取件详情:");
+                        viewHolder.setText(R.id.job_name, "快递公司:");
                         viewHolder.setText(R.id.tv_reciver, noticeBean.getMessage());
-                        viewHolder.setText(R.id.version_numb, noticeBean.getMessage());
+                        viewHolder.setText(R.id.tv_version, noticeBean.getReply());
                         viewHolder.setText(R.id.tv_time, noticeBean.getTime());
                         break;
                     case "10":
-                        viewHolder.setText(R.id.tv_title, "兴建：");
-                        viewHolder.setVisible(R.id.tv_title_numb, false);
-                        viewHolder.setVisible(R.id.tv_version, false);
-                        viewHolder.setText(R.id.job_name, "回复内容：");
+                        viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
+                        viewHolder.setText(R.id.job_name, "信件主题:");
+                        viewHolder.setText(R.id.version_numb, "回复内容:");
                         viewHolder.setText(R.id.tv_reciver, noticeBean.getMessage());
-                        viewHolder.setText(R.id.version_numb, noticeBean.getMessage());
+                        viewHolder.setText(R.id.tv_version, noticeBean.getReply());
                         viewHolder.setText(R.id.tv_time, noticeBean.getTime());
                         break;
                     case "11":
-                        //viewHolder.setText(R.id.tv_bbs_detail, noticeBean.getTitle());
+                        viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
+                        viewHolder.setText(R.id.job_name, "通知状态:");
+                        viewHolder.setText(R.id.version_numb, "通知详情:");
                         viewHolder.setText(R.id.tv_reciver, noticeBean.getMessage());
-                        viewHolder.setText(R.id.tv_version, noticeBean.getMessage());
+                        viewHolder.setText(R.id.tv_version, noticeBean.getReply());
                         viewHolder.setText(R.id.tv_time, noticeBean.getTime());
                         break;
 
@@ -199,16 +217,10 @@ public class MessageDetailActivity extends BaseActivity {
         };
         lv.setAdapter(newsAdapter);
     }
-    public int getLayout() {
 
-        if (id.equals(1)) {
-            return R.layout.bbs_message_item;
-        } else {
-            return R.layout.job_message_item;
-        }
 
+    @OnClick(R.id.iv_back)
+    public void onViewClicked() {
+        finish();
     }
-
-    ;
-
 }

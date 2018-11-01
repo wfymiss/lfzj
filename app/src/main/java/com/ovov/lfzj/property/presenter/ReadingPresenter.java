@@ -49,8 +49,9 @@ public class ReadingPresenter {
      //   addSubscrebe(subscription);*/
 
     }
-    public void getBuildingList() {
 
+    public void getBuildingList() {
+        readingView.showLoad();
         Subscription subscription = RetrofitHelper.getInstance().getBuildingList()
                 .compose(RxUtil.<BuildingListResult>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<BuildingListResult>() {
@@ -67,6 +68,7 @@ public class ReadingPresenter {
                     public void onNext(BuildingListResult listInfoDataInfo) {
 
                         if (listInfoDataInfo.getData().size() != 0) {
+                            readingView.dissmiss();
                             readingView.setBuildingList(listInfoDataInfo);
                         }
                     }
@@ -75,7 +77,8 @@ public class ReadingPresenter {
     }
 
 
-    public void getUnitList( String building) {
+    public void getUnitList(String building) {
+        readingView.showLoad();
         Subscription subscription = RetrofitHelper.getInstance().getUnitList(building)
                 .compose(RxUtil.<UnitListResult>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<UnitListResult>() {
@@ -92,6 +95,7 @@ public class ReadingPresenter {
                     public void onNext(UnitListResult listInfoDataInfo) {
 
                         if (listInfoDataInfo.getData().size() != 0) {
+                            readingView.dissmiss();
                             readingView.setUnitList(listInfoDataInfo);
                         }
                     }
@@ -100,9 +104,9 @@ public class ReadingPresenter {
     }
 
 
-    public void getRoomList( String building, String unit) {
-
-        Subscription subscription = RetrofitHelper.getInstance().getRoomList(building,unit)
+    public void getRoomList(String building, String unit) {
+        readingView.showLoad();
+        Subscription subscription = RetrofitHelper.getInstance().getRoomList(building, unit)
                 .compose(RxUtil.<RoomListResult>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<RoomListResult>() {
                     @Override
@@ -118,6 +122,7 @@ public class ReadingPresenter {
                     public void onNext(RoomListResult listInfoDataInfo) {
 
                         if (listInfoDataInfo.getDatas().getHouses_list().size() != 0) {
+                            readingView.dissmiss();
                             readingView.setRoomList(listInfoDataInfo);
                         }
                     }

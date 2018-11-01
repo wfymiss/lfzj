@@ -209,8 +209,8 @@ public class RetrofitHelper {
         return mApiService.register(mobile, verify, password);
     }
 
-    public Observable<OpenLogUpInfo> openLogUp(String token, String sub_id, String sn_name, String open_type, String open_status, String open_time) {
-        return mApiService.getUpOpenLog(token, sub_id, sn_name, open_type, open_status, open_time);
+    public Observable<OpenLogUpInfo> openLogUp(  String sn_name, int open_type, int open_status) {
+        return mApiService.getUpOpenLog(getToken(), LoginUserBean.getInstance().getSub_id(),LoginUserBean.getInstance().getPhone(), sn_name, open_type, open_status);
 
     }
 
@@ -228,6 +228,11 @@ public class RetrofitHelper {
 
     public Observable<UnitListResult> getUnitList(String building) {
         return mApiService.getUnitList(building, "2");
+    }
+
+
+    public Observable<DataInfo<UrlBean>> Upload(String building) {
+        return mApiService.Upload(getToken(),building);
     }
 
     public Observable<RoomListResult> getRoomList(String building, String unit) {
@@ -271,6 +276,9 @@ public class RetrofitHelper {
 
     public Observable<ListInfo<SquareListInfo>> getFeedBackLists(int page) {
         return mApiService.getFeedBackLists(getToken(), page);
+    }
+    public Observable<DataInfo<SquareListInfo>> getFeedBackInfo(String page) {
+        return mApiService.getFeedBackInfo(page);
     }
     public Observable<ListInfo<SquareListInfo>> questionLists(int page) {
         return mApiService.questionLists( page);
@@ -404,6 +412,9 @@ public class RetrofitHelper {
 
     public Observable<ListInfo<BannerBean>> getInfomation(String id) {
         return mApiService.getInfomation(getToken(), id);
+    }
+    public Observable<DataInfo<BannerBean>> getInfomationdetail(String id) {
+        return mApiService.getInfomationdetail(getToken(), id);
     }
 
     public Observable<ListInfo<NewsBean>> getNoticeList() {
