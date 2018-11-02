@@ -4,7 +4,9 @@ package com.ovov.lfzj.neighbour.square;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +28,10 @@ import com.ovov.lfzj.base.bean.SquareListInfo;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.ActivityUtils;
 import com.ovov.lfzj.base.utils.RxUtil;
-import com.ovov.lfzj.base.utils.UIUtils;
-import com.ovov.lfzj.base.widget.EditDialog;
 import com.ovov.lfzj.base.widget.IdentityDialog;
 import com.ovov.lfzj.base.widget.NewEditDialog;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
+import com.ovov.lfzj.base.widget.ScaleImageView;
 import com.ovov.lfzj.event.AddCommentEvent;
 import com.ovov.lfzj.event.GoodEvent;
 import com.ovov.lfzj.event.LstSendEvent;
@@ -38,6 +39,7 @@ import com.ovov.lfzj.event.RefreshEvent;
 import com.ovov.lfzj.event.SendEvent;
 import com.ovov.lfzj.event.ToIdentityEvent;
 import com.ovov.lfzj.event.TransmitEvent;
+import com.ovov.lfzj.home.GameActivity;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.login.IdentityConfirmActivity;
@@ -58,6 +60,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 import rx.Subscription;
@@ -78,6 +81,8 @@ public class SquareFragment extends BaseFragment {
     ListView mActivityListRecycler;
     @BindView(R.id.activity_list_swf)
     SmartRefreshLayout mActivityListSwf;
+    @BindView(R.id.tv_put_image)
+    TextView mTvPutImage;
     private int col;
     Unbinder unbinder;
     private List<SquareListInfo> mData;
@@ -124,7 +129,8 @@ public class SquareFragment extends BaseFragment {
     @Override
     public void init() {
         initlist();
-        identityDialog = new IdentityDialog(mActivity,SQUARE_FRAGMENT_IDENTITY);
+        mTvPutImage.setVisibility(View.VISIBLE);
+        identityDialog = new IdentityDialog(mActivity, SQUARE_FRAGMENT_IDENTITY);
         mActivityListSwf.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -186,8 +192,6 @@ public class SquareFragment extends BaseFragment {
                 mActivity.finish();
             }
         });
-
-
 
     }
 
@@ -276,10 +280,21 @@ public class SquareFragment extends BaseFragment {
             public void convert(ViewHolder viewHolder, final SquareListInfo squareListInfo, final int i) {
                 viewHolder.setText(R.id.tv_nickname, squareListInfo.userInfo.nickname);
                 viewHolder.setText(R.id.tv_content, squareListInfo.comment);
-                viewHolder.setText(R.id.tv_pl, squareListInfo.replyNum);
-                viewHolder.setText(R.id.tv_good, squareListInfo.zanNum + "");
-                viewHolder.setText(R.id.tv_transmit, squareListInfo.forwardNum);
+                viewHolder.setText(R.id.tv_pl, "评论");
+                viewHolder.setText(R.id.tv_good, "赞");
+                viewHolder.setText(R.id.tv_transmit, "转发");
                 viewHolder.setText(R.id.tv_time, squareListInfo.time);
+                TextView tvCommentlist = viewHolder.getView(R.id.tv_list_comment);
+                if (squareListInfo.reply.nickname != null) {
+                    tvCommentlist.setVisibility(View.VISIBLE);
+                    if (squareListInfo.reply.nickname.equals("") && TextUtils.isEmpty(squareListInfo.reply.nickname)) {
+                        viewHolder.setText(R.id.tv_list_comment, squareListInfo.reply.mobile + ":" + squareListInfo.reply.content);
+                    } else {
+                        viewHolder.setText(R.id.tv_list_comment, squareListInfo.reply.nickname + ":" + squareListInfo.reply.content);
+                    }
+                } else {
+                    tvCommentlist.setVisibility(View.GONE);
+                }
                 RelativeLayout reGood = viewHolder.getView(R.id.re_good);
                 reGood.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -311,7 +326,7 @@ public class SquareFragment extends BaseFragment {
                 reComment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity,squareListInfo.id,i,0);
+                        SquareDetailActivity.toActivity(mActivity, squareListInfo.id, i, 0);
 
                     }
                 });
@@ -341,6 +356,14 @@ public class SquareFragment extends BaseFragment {
                         int height = width;
                         ivGrid.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
                         Picasso.with(mActivity).load(s).into(ivGrid);
+                        ivGrid.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ScaleImageView scaleImageView = new ScaleImageView(mActivity);
+                                scaleImageView.setUrls(mGridData, i);
+                                scaleImageView.create();
+                            }
+                        });
                     }
                 };
                 if (squareListInfo.transpondInfo != null) {
@@ -390,7 +413,7 @@ public class SquareFragment extends BaseFragment {
                         } else {
                             img = squareListInfo.userInfo.user_logo;
                         }
-                        MyCommunityActivity.toUserActivity(getActivity(), squareListInfo.userInfo.nickname, img, "2", squareListInfo.user_id,squareListInfo.userInfo.signature);
+                        MyCommunityActivity.toUserActivity(getActivity(), squareListInfo.userInfo.nickname, img, "2", squareListInfo.user_id, squareListInfo.userInfo.signature);
                     }
                 });
                 TextView tvTransmitName = viewHolder.getView(R.id.tv_transmit_nickname);
@@ -402,19 +425,19 @@ public class SquareFragment extends BaseFragment {
                         } else {
                             tranimg = squareListInfo.userInfo.user_logo;
                         }
-                        MyCommunityActivity.toUserActivity(mActivity, squareListInfo.transpondInfo.userInfo.nickname, tranimg, "2", squareListInfo.transpondInfo.user_id,squareListInfo.userInfo.signature);
+                        MyCommunityActivity.toUserActivity(mActivity, squareListInfo.transpondInfo.userInfo.nickname, tranimg, "2", squareListInfo.transpondInfo.user_id, squareListInfo.userInfo.signature);
                     }
                 });
                 mTransmitImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        SquareDetailActivity.toActivity(mActivity, squareListInfo.transpondInfo.id, i,1);
+                        SquareDetailActivity.toActivity(mActivity, squareListInfo.transpondInfo.id, i, 1);
                     }
                 });
                 reTransmit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity, squareListInfo.transpondInfo.id, i,1);
+                        SquareDetailActivity.toActivity(mActivity, squareListInfo.transpondInfo.id, i, 1);
 
                     }
                 });
@@ -423,14 +446,14 @@ public class SquareFragment extends BaseFragment {
                 mImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        SquareDetailActivity.toActivity(getActivity(), squareListInfo.id, i,0);
+                        SquareDetailActivity.toActivity(getActivity(), squareListInfo.id, i, 0);
                     }
                 });
                 LinearLayout mRecontainer = viewHolder.getView(R.id.container);
                 mRecontainer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(getActivity(), squareListInfo.id, i,0);
+                        SquareDetailActivity.toActivity(getActivity(), squareListInfo.id, i, 0);
                     }
                 });
 
@@ -438,28 +461,35 @@ public class SquareFragment extends BaseFragment {
             }
         };
         mActivityListRecycler.setAdapter(mAdapter);
-        /*View view = LayoutInflater.from(getActivity()).inflate(R.layout.neighbour_list_header, null, false);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.neighbour_list_header, null, false);
         mActivityListRecycler.addHeaderView(view);
+        List<Integer> mGridData = new ArrayList<>();
+        mGridData.add(R.mipmap.ic_square_flower);
         RecyclerView mGameRecycler = (RecyclerView) view.findViewById(R.id.recycler);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mGameRecycler.setLayoutManager(linearLayoutManager);
         mGameRecycler.addItemDecoration(new SpacesItemDecoration(20));
-        *//*com.mcxtzhang.commonadapter.rv.CommonAdapter<String> mGameAdapter = new com.mcxtzhang.commonadapter.rv.CommonAdapter<String>(getActivity(),mGridData,R.layout.item_game) {
+        com.mcxtzhang.commonadapter.rv.CommonAdapter<Integer> mGameAdapter = new com.mcxtzhang.commonadapter.rv.CommonAdapter<Integer>(getActivity(),mGridData,R.layout.item_game) {
             @Override
-            public void convert(com.mcxtzhang.commonadapter.rv.ViewHolder viewHolder, String integer) {
+            public void convert(com.mcxtzhang.commonadapter.rv.ViewHolder viewHolder, Integer integer) {
                 ImageView ivGame = viewHolder.getView(R.id.iv_game);
                 Picasso.with(getActivity()).load(integer).into(ivGame);
+                ivGame.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        GameActivity.toActivity(mActivity);
+                    }
+                });
             }
         };
-        mGameRecycler.setAdapter(mGameAdapter);*/
-        mActivityListRecycler.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        mGameRecycler.setAdapter(mGameAdapter);
 
-            }
-        });
+    }
 
+    @OnClick(R.id.tv_put_image)
+    public void onViewClicked() {
+        PutSquareActivity.toActivity(mActivity);
     }
 
     public static class SpacesItemDecoration extends RecyclerView.ItemDecoration {

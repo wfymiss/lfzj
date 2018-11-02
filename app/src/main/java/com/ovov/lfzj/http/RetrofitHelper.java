@@ -11,6 +11,7 @@ import com.ovov.lfzj.base.BaseApplication;
 import com.ovov.lfzj.base.bean.ActivityUpImageInfo;
 import com.ovov.lfzj.base.bean.BuildingListResult;
 import com.ovov.lfzj.base.bean.DataInfo;
+import com.ovov.lfzj.base.bean.GoodListBean;
 import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.LoginBean;
 import com.ovov.lfzj.base.bean.LoginUserBean;
@@ -258,7 +259,7 @@ public class RetrofitHelper {
     }
 
     public Observable<DataInfo<SquareDetailInfo>> getSquareDetail(String id) {
-        return mApiService.getSquareDetail(getToken(), id, getUserId());
+        return mApiService.getSquareDetail(getToken(), id);
     }
 
     public Observable<ListInfo<SquareListInfo>> getHomeSquareList(int page, String id) {
@@ -278,7 +279,7 @@ public class RetrofitHelper {
 
 
     public Observable<DataInfo> addSquareComment(String id, String content) {
-        return mApiService.addSquareComment(getToken(), id, getUserId(), content);
+        return mApiService.addSquareComment(getToken(), id,content);
     }
 
     public Observable<DataInfo<String>> squareGood(String id) {
@@ -534,6 +535,18 @@ public class RetrofitHelper {
 
     public Observable<DataInfo> ownerCancelWorkerOrder(String wid,String reason,String remarks){
         return mApiService.ownerCancelWorkerOrder(getToken(),wid,reason,remarks);
+    }
+
+    public Observable<DataInfo> addSquareReply(String reply_id,String content){
+        return mApiService.addSquareReply(getToken(),reply_id,content);
+    }
+
+    public Observable<DataInfo> deleteSquare(String id){
+        return mApiService.squareDelete(getToken(),id);
+    }
+
+    public Observable<ListInfo<GoodListBean>> getGoodList(String id){
+        return mApiService.goodList(getToken(),id);
     }
 
 }

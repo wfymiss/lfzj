@@ -59,6 +59,8 @@ public class WorkOrderConfirmActivity extends BaseActivity {
     private RepairContent repairContent;
     private List<File> mData;
     List<MultipartBody.Part>  parts = new ArrayList<>();
+    private String address;
+
     public static void toActivity(Context context, RepairContent repairContent) {
         Intent intent = new Intent(context, WorkOrderConfirmActivity.class);
         Bundle bundle = new Bundle();
@@ -121,9 +123,14 @@ public class WorkOrderConfirmActivity extends BaseActivity {
           MultipartBody.Part part = MultipartBody.Part.createFormData("repair_img[]", mData.get(i).getName(), RequestBody.create(null, mData.get(i)));
           parts.add(part);
         }
+        if (repairContent.getAreaType() == 0){
+            address = repairContent.getHouse_path();
+        }else {
+            address = repairContent.getRepairLocation();
+        }
         showLoadingDialog();
         Log.e("repair",repairContent.getRepairType()+"repairmobile:"+repairContent.getMobile());
-        Subscription subscription = RetrofitHelper.getInstance().workAdd(repairContent.getMobile(),repairContent.getName(),repairContent.getHouse_path(),repairContent.getAreaType(),repairContent.getRepairType(),repairContent.getContent(),parts)
+        Subscription subscription = RetrofitHelper.getInstance().workAdd(repairContent.getMobile(),repairContent.getName(),address,repairContent.getAreaType(),repairContent.getRepairType(),repairContent.getContent(),parts)
                 .compose(RxUtil.rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {
                     @Override

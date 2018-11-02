@@ -45,11 +45,6 @@
             android:textSize="@dimen/sp_15" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.2dp"
-        android:background="@color/background_underline_color" />
-
     <android.support.v4.view.ViewPager
         android:id="@+id/neigh_viewpage"
         android:layout_width="match_parent"

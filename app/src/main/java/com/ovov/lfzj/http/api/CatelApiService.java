@@ -4,6 +4,7 @@ package com.ovov.lfzj.http.api;
 import com.ovov.lfzj.base.bean.ActivityUpImageInfo;
 import com.ovov.lfzj.base.bean.BuildingListResult;
 import com.ovov.lfzj.base.bean.DataInfo;
+import com.ovov.lfzj.base.bean.GoodListBean;
 import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.LoginBean;
 import com.ovov.lfzj.base.bean.MobileInfo;
@@ -107,14 +108,17 @@ public interface CatelApiService {
     @FormUrlEncoded
     @POST("v1/user/commentlist")
     Observable<DataInfo<SquareDetailInfo>> getSquareDetail(@Field("token") String token,
-                                                           @Field("id") String id,
-                                                           @Field("userid") String userid);
+                                                           @Field("id") String id);
 
     @FormUrlEncoded
     @POST("v1/user/addreply")
     Observable<DataInfo> addSquareComment(@Field("token") String token,
                                           @Field("id") String id,
-                                          @Field("userid") String userid,
+                                          @Field("content") String content);
+    @FormUrlEncoded
+    @POST("v1/user/addreply")
+    Observable<DataInfo> addSquareReply(@Field("token") String token,
+                                          @Field("reply_id") String reply_id,
                                           @Field("content") String content);
 
     @FormUrlEncoded
@@ -551,6 +555,14 @@ public interface CatelApiService {
                                                 @Field("wid") String wid,
                                                 @Field("contents") String reason,
                                                 @Field("remarks") String remarks);
+    @FormUrlEncoded
+    @POST("v1/user/commentdel")
+    Observable<DataInfo> squareDelete(@Field("token") String token,
+                                      @Field("id") String id);
+    @FormUrlEncoded
+    @POST("v1/user/zanlist")
+    Observable<ListInfo<GoodListBean>> goodList(@Field("token") String token,
+                                                @Field("id") String id);
 
 
 }

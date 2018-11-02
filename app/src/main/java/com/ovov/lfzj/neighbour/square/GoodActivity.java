@@ -2,28 +2,22 @@ package com.ovov.lfzj.neighbour.square;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.mcxtzhang.commonadapter.rv.CommonAdapter;
 import com.mcxtzhang.commonadapter.rv.ViewHolder;
 import com.ovov.lfzj.R;
-import com.ovov.lfzj.base.BaseFragment;
-
-import com.ovov.lfzj.base.bean.DataInfo;
-import com.ovov.lfzj.base.bean.LoginUserBean;
+import com.ovov.lfzj.base.BaseActivity;
+import com.ovov.lfzj.base.bean.GoodListBean;
+import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.SquareDetailInfo;
-
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.RxUtil;
-import com.ovov.lfzj.event.GoodEvent;
-import com.ovov.lfzj.event.SquareGoodEvent;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.neighbour.MyCommunityActivity;
@@ -34,88 +28,113 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 import rx.Subscription;
-import rx.functions.Action1;
 
 
 /**
  * A simple {@link Fragment} subclass.
+ * 点赞列表页面
  */
-public class BaseGoodFragment extends BaseFragment {
+
+public class GoodActivity extends BaseActivity {
 
     @BindView(R.id.list_comment)
     RecyclerView mListComment;
 
     Unbinder unbinder;
     private SquareDetailInfo squareDetailInfo;
-    private List<SquareDetailInfo.FabulousBean> mData;
-    private CommonAdapter<SquareDetailInfo.FabulousBean> mAdapter;
+    private List<GoodListBean> mData;
+    private CommonAdapter<GoodListBean> mAdapter;
+    private String id;
 
+    public static void toActivity(Context context, String id) {
+        Intent intent = new Intent(context, GoodActivity.class);
+        intent.putExtra("id", id);
+        context.startActivity(intent);
 
-    public static BaseGoodFragment newInstance() {
-
-        Bundle args = new Bundle();
-
-        BaseGoodFragment fragment = new BaseGoodFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public BaseGoodFragment() {
-        // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_activity_comment, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        init();
-
-        return view;
+    public int getLayoutId() {
+        return R.layout.fragment_activity_comment;
     }
-
 
     @Override
     public void init() {
-        super.init();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        setTitleText("点赞列表");
+        id = getIntent().getStringExtra("id");
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
         mData = new ArrayList<>();
         mListComment.setLayoutManager(linearLayoutManager);
-        mAdapter = new CommonAdapter<SquareDetailInfo.FabulousBean>(getActivity(), mData, R.layout.item_good) {
+        mAdapter = new CommonAdapter<GoodListBean>(mActivity, mData, R.layout.item_good) {
             @Override
-            public void convert(ViewHolder viewHolder, final SquareDetailInfo.FabulousBean replyBean) {
-                viewHolder.setText(R.id.tv_nickname, replyBean.userInfo.nickname);
+            public void convert(ViewHolder viewHolder, final GoodListBean replyBean) {
+                viewHolder.setText(R.id.tv_nickname, replyBean.nickname);
                 viewHolder.setText(R.id.tv_time, replyBean.time);
                 CircleImageView ivHeader = viewHolder.getView(R.id.iv_header);
-                if (replyBean.userInfo.user_logo != null && !replyBean.userInfo.user_logo.equals("")) {
-                    Picasso.with(mActivity).load(replyBean.userInfo.user_logo).into(ivHeader);
+                if (replyBean.user_logo != null && !replyBean.user_logo.equals("")) {
+                    Picasso.with(mActivity).load(replyBean.user_logo).into(ivHeader);
                 }
                 ivHeader.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MyCommunityActivity.toUserActivity(mActivity,replyBean.userInfo.nickname,replyBean.userInfo.user_logo,"2",replyBean.user_id,replyBean.userInfo.signature);
+                        MyCommunityActivity.toUserActivity(mActivity, replyBean.nickname, replyBean.user_logo, "2", replyBean.user_id, replyBean.signature);
                     }
                 });
             }
 
         };
         mListComment.setAdapter(mAdapter);
-
-        getSquareDetail();
-        addRxBusSubscribe(GoodEvent.class, new Action1<GoodEvent>() {
+        getGoodList();
+        /*addRxBusSubscribe(GoodEvent.class, new Action1<GoodEvent>() {
             @Override
             public void call(GoodEvent goodEvent) {
                 getSquareDetail();
             }
         });
-
+*/
     }
 
-    private void getSquareDetail() {
+    private void getGoodList() {
+        showLoadingDialog();
+        Subscription subscription = RetrofitHelper.getInstance().getGoodList(id)
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<ListInfo<GoodListBean>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        if (e instanceof DataResultException) {
+                            DataResultException dataResultException = (DataResultException) e;
+                            showToast(dataResultException.errorInfo);
+                        } else {
+                            doFailed();
+                            showError(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onNext(ListInfo<GoodListBean> listInfo) {
+                        dismiss();
+                        mData.clear();
+                        mData.addAll(listInfo.datas());
+                        mAdapter.notifyDataSetChanged();
+
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
+    @OnClick(R.id.iv_back)
+    public void onViewClicked() {
+        finish();
+    }
+
+
+
+   /* private void getSquareDetail() {
         Subscription subscription = RetrofitHelper.getInstance().getSquareDetail(LoginUserBean.getInstance().getId())
                 .compose(RxUtil.<DataInfo<SquareDetailInfo>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<SquareDetailInfo>>() {
@@ -142,22 +161,7 @@ public class BaseGoodFragment extends BaseFragment {
                 });
         addSubscrebe(subscription);
     }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-       /* squareDetailInfo = ((SquareDetailActivity) getActivity()).getSquareDetailinfo();
-        LoginUserBean.getInstance().setId(squareDetailInfo.id);
-        LoginUserBean.getInstance().save();*/
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-
-    }
+*/
 
 
 }

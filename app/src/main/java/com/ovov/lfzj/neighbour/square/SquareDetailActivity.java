@@ -3,16 +3,19 @@ package com.ovov.lfzj.neighbour.square;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,34 +24,28 @@ import com.mcxtzhang.commonadapter.lvgv.CommonAdapter;
 import com.mcxtzhang.commonadapter.lvgv.ViewHolder;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
-import com.ovov.lfzj.base.adapter.FragmentBaseAdapter;
 import com.ovov.lfzj.base.bean.DataInfo;
-import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.bean.SquareDetailInfo;
 import com.ovov.lfzj.base.net.DataResultException;
+import com.ovov.lfzj.base.utils.KeyBoardShowListener;
 import com.ovov.lfzj.base.utils.RxBus;
 import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.utils.UIUtils;
-import com.ovov.lfzj.base.widget.EditDialog;
-import com.ovov.lfzj.base.widget.IdentityDialog;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
 import com.ovov.lfzj.base.widget.ScaleImageView;
 import com.ovov.lfzj.base.widget.ShareAppPopup;
-import com.ovov.lfzj.event.AddCommentEvent;
+import com.ovov.lfzj.base.widget.TransmitpopupWindow;
 import com.ovov.lfzj.event.GoodEvent;
-import com.ovov.lfzj.event.SendEvent;
-import com.ovov.lfzj.event.SquareDetailIdentityEvent;
-import com.ovov.lfzj.event.ToIdentityEvent;
-import com.ovov.lfzj.event.TransmitEvent;
+import com.ovov.lfzj.event.ShareSquareEvent;
+import com.ovov.lfzj.event.TransmitSquareEvent;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
-import com.ovov.lfzj.login.IdentityConfirmActivity;
+import com.ovov.lfzj.neighbour.MyCommunityActivity;
 import com.ovov.lfzj.neighbour.TransmitActivity;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.squareup.picasso.Picasso;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,53 +57,54 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import rx.Subscription;
 import rx.functions.Action1;
 
-import static com.ovov.lfzj.CatelApplication.SQUARE_DETAIL_IDENTITY;
 import static com.ovov.lfzj.CatelApplication.isGood;
+import static com.ovov.lfzj.CatelApplication.noGood;
 
 public class SquareDetailActivity extends BaseActivity {
 
 
-    @BindView(R.id.gridView)
-    NoScrollGridView mGridView;
-    @BindView(R.id.tablayout)
-    TabLayout mTablayout;
-    @BindView(R.id.viewpage)
-    ViewPager mViewpage;
-    @BindView(R.id.tv_content)
-    TextView mTvContent;
-    @BindView(R.id.iv_head)
-    CircleImageView mIvHead;
-    @BindView(R.id.tv_nickname)
-    TextView mTvNickname;
-    @BindView(R.id.tv_time)
-    TextView mTvTime;
-    @BindView(R.id.tv_transmit_nickname)
-    TextView mTvTransmitNickname;
-    @BindView(R.id.tv_transmit_content)
-    TextView mTvTransmitContent;
-    @BindView(R.id.transmit_gridView)
-    NoScrollGridView mTransmitGridView;
-    @BindView(R.id.re_transmit_content)
-    RelativeLayout mReTransmitContent;
+    @BindView(R.id.list_square_detail)
+    ListView mListSquareDetail;
+    @BindView(R.id.refresh)
+    SmartRefreshLayout mRefresh;
+    @BindView(R.id.et_comment)
+    EditText mEtComment;
+    @BindView(R.id.tv_send)
+    TextView mTvSend;
     @BindView(R.id.iv_good)
     ImageView mIvGood;
-    @BindView(R.id.iv_right)
-    ImageView mIvRight;
+    @BindView(R.id.re_good)
+    RelativeLayout mReGood;
+    @BindView(R.id.activity_share)
+    ImageView mActivityShare;
+    @BindView(R.id.re_trasmit)
+    RelativeLayout mReTrasmi;
     private String id;
-    private String commentNum;
-    private String goodNum;
-    private String forwardNum;
-    private List<String> mGridData;
+    List<SquareDetailInfo.ReplyBean> mData = new ArrayList<>();
+    private CommonAdapter<SquareDetailInfo.ReplyBean> mAdapter;
+    private List<SquareDetailInfo.ReplyBean.RevertBean> mChildData = new ArrayList<>();
+    private View view;
+    private List<String> mGridData = new ArrayList<>();
     private CommonAdapter<String> mGridAdapter;
-    private SquareDetailInfo mSquareDetailInfo;
-    private String mImg;
-    private EditDialog editDialog;
-    private CommonAdapter<String> mTransmitGridAdapter;
-    private List<String> mTransmitGridData;
-    private boolean mIsGood;
+    private int TYPE_COMMENT = 1;
+    private int TYPE_REPLY = 2;
+    private int replyType;
+    private String reply_id;
+    private KeyBoardShowListener keyBoardShowListener;
+    private InputMethodManager imm;
+    private CircleImageView mIvHeader;
+    private TextView mTvNickname;
+    private TextView mTvTime;
+    private TextView mTvContent;
+    private NoScrollGridView mGridSelf;
+    private RelativeLayout mReTransmit;
+    private TextView mTvTransmitContent;
+    private NoScrollGridView mGridTransmit;
+    private TextView mTvGoods;
+    private boolean good;
     private int posistion;
-    private IdentityDialog identityDialog;
-    private int type;
+    private LinearLayout mLayoutsquare;
+    private SquareDetailInfo squareDetailInfo;
 
     public static void toActivity(Context context, String id, int posistion, int type) {
         Intent intent = new Intent(context, SquareDetailActivity.class);
@@ -123,155 +121,212 @@ public class SquareDetailActivity extends BaseActivity {
         return R.layout.activity_square_detail;
     }
 
+
     @Override
     public void init() {
-        EventBus.getDefault().register(this);
-        id = getIntent().getExtras().getString("id");
-        posistion = getIntent().getExtras().getInt("posistion");
-        type = getIntent().getExtras().getInt("type");
+        replyType = TYPE_COMMENT;
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        setTitleText("");
+        Bundle bundle = getIntent().getExtras();
+        id = bundle.getString("id");
+        posistion = bundle.getInt("posistion");
+        view = LayoutInflater.from(mActivity).inflate(R.layout.square_list_header, null, false);
 
+        initList();
+        mRefresh.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                getSquareDetail();
+            }
+        });
+        mRefresh.setEnableLoadmore(false);
+        mRefresh.autoRefresh();
+        keyBoardShowListener = new KeyBoardShowListener(mActivity);
+        keyBoardShowListener.setKeyboardListener(
+                new KeyBoardShowListener.OnKeyboardVisibilityListener() {
+                    @Override
+                    public void onVisibilityChanged(boolean visible) {
+                        if (visible) {
+                            //软键盘已弹出
+                            mReGood.setVisibility(View.GONE);
+                            mReTrasmi.setVisibility(View.GONE);
+                            mTvSend.setVisibility(View.VISIBLE);
+                        } else {
+                            //软键盘未弹出
+                            if (TextUtils.isEmpty(mEtComment.getText().toString().trim())) {
+                                replyType = TYPE_COMMENT;
+                                mEtComment.setHint("写评论...");
+                                mReGood.setVisibility(View.VISIBLE);
+                                mReTrasmi.setVisibility(View.VISIBLE);
+                                mTvSend.setVisibility(View.GONE);
+                            } else {
+                                mReGood.setVisibility(View.GONE);
+                                mReTrasmi.setVisibility(View.GONE);
+                                mTvSend.setVisibility(View.VISIBLE);
+                            }
 
+                        }
+                    }
+                }, mActivity);
 
-        identityDialog = new IdentityDialog(mActivity, SQUARE_DETAIL_IDENTITY);
-        mIvRight.setImageResource(R.mipmap.ic_share);
-        mIvRight.setVisibility(View.VISIBLE);
-
-        mGridData = new ArrayList<>();
-        mTransmitGridData = new ArrayList<>();
-        mGridAdapter = new CommonAdapter<String>(SquareDetailActivity.this, mGridData, R.layout.user_img_item) {
+        mGridAdapter = new CommonAdapter<String>(mActivity, mGridData, R.layout.item_grid_image) {
             @Override
             public void convert(ViewHolder viewHolder, String s, int i) {
-                ImageView ivGrid = viewHolder.getView(R.id.iv_user_img);
-                Picasso.with(SquareDetailActivity.this).load(s).into(ivGrid);
-                ivGrid.setOnClickListener(new View.OnClickListener() {
+                ImageView ivImage = viewHolder.getView(R.id.iv_image);
+                Picasso.with(mActivity).load(s).into(ivImage);
+                ivImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         ScaleImageView scaleImageView = new ScaleImageView(mActivity);
-                        scaleImageView.setUrls(mGridData,i);
+                        scaleImageView.setUrls(mGridData, i);
                         scaleImageView.create();
                     }
                 });
             }
         };
-        mGridView.setAdapter(mGridAdapter);
-        mTransmitGridAdapter = new CommonAdapter<String>(SquareDetailActivity.this, mTransmitGridData, R.layout.user_img_item) {
+        addRxBusSubscribe(TransmitSquareEvent.class, new Action1<TransmitSquareEvent>() {
             @Override
-            public void convert(ViewHolder viewHolder, String s, int i) {
-                ImageView ivGrid = viewHolder.getView(R.id.iv_user_img);
-                Picasso.with(SquareDetailActivity.this).load(s).into(ivGrid);
+            public void call(TransmitSquareEvent transmitSquareEvent) {
+                if (squareDetailInfo.imgUrl.size() > 0)
+                    TransmitActivity.toActivity(mActivity, squareDetailInfo.userInfo.nickname, squareDetailInfo.comment, squareDetailInfo.imgUrl.get(0), squareDetailInfo.id);
+                else
+                    TransmitActivity.toActivity(mActivity, squareDetailInfo.userInfo.nickname, squareDetailInfo.comment, "", squareDetailInfo.id);
+
+            }
+        });
+        addRxBusSubscribe(ShareSquareEvent.class, new Action1<ShareSquareEvent>() {
+            @Override
+            public void call(ShareSquareEvent shareSquareEvent) {
+                String url = "http://life.catel-link.com/comment/share?id=" + squareDetailInfo.id;
+                showShareApp(url, "乐福院子", squareDetailInfo.comment, "");
+            }
+        });
+
+
+    }
+
+    private void initList() {
+
+        mAdapter = new CommonAdapter<SquareDetailInfo.ReplyBean>(mActivity, mData, R.layout.item_activity_comment) {
+            @Override
+            public void convert(ViewHolder viewHolder, SquareDetailInfo.ReplyBean replyBean, int i) {
+                viewHolder.setText(R.id.tv_nickname, replyBean.userInfo.nickname);
+                viewHolder.setText(R.id.tv_content, replyBean.content);
+                viewHolder.setText(R.id.tv_time, replyBean.time);
+                CircleImageView ivHeader = viewHolder.getView(R.id.iv_header);
+                NoScrollGridView mChildGrid = viewHolder.getView(R.id.grid_child);
+                RelativeLayout mReComment = viewHolder.getView(R.id.re_comment);
+                mReComment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                        reply_id = String.valueOf(replyBean.id);
+                        replyType = TYPE_REPLY;
+                        mEtComment.setHint("回复:" + replyBean.userInfo.nickname);
+                        mEtComment.setFocusable(true);
+                        mEtComment.setFocusableInTouchMode(true);
+                        mEtComment.requestFocus();
+                    }
+                });
+                if (replyBean.revert.size() > 0) {
+                    mChildGrid.setVisibility(View.VISIBLE);
+                } else {
+                    mChildGrid.setVisibility(View.GONE);
+                }
+                mChildData.clear();
+                mChildData.addAll(replyBean.revert);
+                CommonAdapter<SquareDetailInfo.ReplyBean.RevertBean> mChildAdapter = new CommonAdapter<SquareDetailInfo.ReplyBean.RevertBean>(mActivity, mChildData, R.layout.item_square_detail_child) {
+                    @Override
+                    public void convert(ViewHolder viewHolder, SquareDetailInfo.ReplyBean.RevertBean revertBean, int i) {
+                        TextView tvContent = viewHolder.getView(R.id.tv_content);
+                        String content;
+                        if (TextUtils.isEmpty(revertBean.nickname)) {
+                            content = "" + "<font color='#3385FF'>" + revertBean.mobile + ":</font>" + "<font color='#6F6F6F'>" + revertBean.content + "</font>";
+                            tvContent.setText(Html.fromHtml(content));
+                        } else {
+                            content = "" + "<font color='#3385FF'>" + revertBean.nickname + ":</font>" + "<font color='#6F6F6F'>" + revertBean.content + "</font>";
+                            tvContent.setText(Html.fromHtml(content));
+                        }
+                    }
+                };
+                mChildGrid.setAdapter(mChildAdapter);
+                if (replyBean.userInfo.user_logo != null && !replyBean.userInfo.user_logo.equals("")) {
+                    Picasso.with(mActivity).load(replyBean.userInfo.user_logo).into(ivHeader);
+                } else {
+                    Picasso.with(mActivity).load(R.mipmap.ic_default_head).into(ivHeader);
+                }
+                ivHeader.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MyCommunityActivity.toUserActivity(mActivity, replyBean.userInfo.nickname, replyBean.userInfo.user_logo, "2", replyBean.user_id, replyBean.userInfo.signature);
+                    }
+                });
             }
         };
-        mTransmitGridView.setAdapter(mTransmitGridAdapter);
-        mReTransmitContent.setOnClickListener(new View.OnClickListener() {
+        mListSquareDetail.setAdapter(mAdapter);
+        mListSquareDetail.addHeaderView(view);
+        mIvHeader = view.findViewById(R.id.iv_head);
+        mTvNickname = view.findViewById(R.id.tv_nickname);
+        mTvTime = view.findViewById(R.id.tv_time);
+        mTvContent = view.findViewById(R.id.tv_content);
+        mGridSelf = view.findViewById(R.id.gridView);
+        mReTransmit = view.findViewById(R.id.re_transmit_content);
+        mTvTransmitContent = view.findViewById(R.id.tv_transmit_content);
+        mGridTransmit = view.findViewById(R.id.transmit_gridView);
+        mTvGoods = view.findViewById(R.id.tv_goods);
+        mLayoutsquare = view.findViewById(R.id.layout_square);
+        mLayoutsquare.setVisibility(View.GONE);
+        mTvGoods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SquareDetailActivity.toActivity(mActivity, mSquareDetailInfo.transpondInfo.id, posistion, 1);
+                GoodActivity.toActivity(mActivity,squareDetailInfo.id);
             }
         });
-        mTransmitGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                SquareDetailActivity.toActivity(mActivity, mSquareDetailInfo.transpondInfo.id, position, 1);
-            }
-        });
-
-
-        getSquareDetail();
-
-
-//        addRxBusSubscribe(SendEvent.class, new Action1<SendEvent>() {
-//            @Override
-//            public void call(SendEvent sendEvent) {
-//
-//
-//            }
-//        });
-        addRxBusSubscribe(TransmitEvent.class, new Action1<TransmitEvent>() {
-            @Override
-            public void call(TransmitEvent transmitEvent) {
-                finish();
-            }
-        });
-        addRxBusSubscribe(SquareDetailIdentityEvent.class, new Action1<SquareDetailIdentityEvent>() {
-            @Override
-            public void call(SquareDetailIdentityEvent toIdentityEvent) {
-                IdentityConfirmActivity.toActivity(mActivity);
-                mActivity.finish();
-            }
-        });
-
-
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void send(SendEvent sendEvent) {
-        addComment(sendEvent.content);
-
-    }
-
-    private void initTab() {
-        List<String> titles = new ArrayList<>();
-        titles.add(commentNum);
-        titles.add(goodNum);
-        titles.add(forwardNum);
-        for (int i = 0; i < titles.size(); i++) {
-            mTablayout.addTab(mTablayout.newTab().setText(titles.get(i)));
-        }
-        mTablayout.setTabMode(TabLayout.GRAVITY_CENTER);   //  标题居中
-        List<Fragment> list = new ArrayList<>();
-        list.add(new SquareCommentFragment());
-        list.add(new BaseGoodFragment());
-        list.add(new SquareRelayFragment());
-
-        FragmentBaseAdapter adapter = new FragmentBaseAdapter(this.getSupportFragmentManager(), list, titles);   //绑定fragment
-        mViewpage.setAdapter(adapter);
-        mTablayout.setupWithViewPager(mViewpage);  //标题与页面同步
 
     }
 
 
-    @OnClick({R.id.iv_back, R.id.iv_right, R.id.re_pl, R.id.re_good, R.id.re_share})
+    @OnClick({R.id.iv_back, R.id.iv_right, R.id.re_trasmit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.iv_right:
-                String url = "http://life.catel-link.com/comment/share?id=" + mSquareDetailInfo.id;
-                showShareApp(url, "乐福院子", mSquareDetailInfo.comment, "");
+               /* String url = "http://life.catel-link.com/comment/share?id=" + mSquareDetailInfo.id;
+                showShareApp(url, "乐福院子", mSquareDetailInfo.comment, "");*/
                 break;
-            case R.id.re_pl:
-                if (LoginUserBean.getInstance().isIs_auth()) {
-                    editDialog = new EditDialog(mActivity, Integer.parseInt(id));
-                    editDialog.setWidth((int) (UIUtils.getScreenWidth() * 0.7));
-                    editDialog.show();
-                } else {
-                    identityDialog.show();
-                }
-
-
-                break;
-            case R.id.re_good:
-                if (LoginUserBean.getInstance().isIs_auth())
-                    squareGood();
-                else
-                    identityDialog.show();
-                break;
-            case R.id.re_share:
-                //showShareApp("","乐福院子","乐福院子","");
-                if (LoginUserBean.getInstance().isIs_auth()) {
-                    if (mSquareDetailInfo.imgUrl.size() > 0) {
-                        mImg = mSquareDetailInfo.imgUrl.get(0);
-                    } else {
-                        mImg = "";
-                    }
-                    TransmitActivity.toActivity(mActivity, mSquareDetailInfo.userInfo.nickname, mSquareDetailInfo.comment, mImg, mSquareDetailInfo.id);
-                } else {
-                    identityDialog.show();
-                }
-
+            case R.id.re_trasmit:
+                showTransmit();
                 break;
         }
+    }
+
+    //设置头像
+    private void showTransmit() {
+        TransmitpopupWindow pop = new TransmitpopupWindow(mActivity);
+        // 开启 popup 时界面透明
+        WindowManager.LayoutParams lp = this.getWindow().getAttributes();
+        lp.alpha = 0.7f;
+//                if (bgAlpha == 1) {
+//                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);//不移除该Flag的话,在有视频的页面上的视频会出现黑屏的bug
+//                } else {
+//                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);//此行代码主要是解决在华为手机上半透明效果无效的bug
+//                }
+        this.getWindow().setAttributes(lp);
+        // popupwindow 第一个参数指定popup 显示页面
+        pop.showAtLocation(this.findViewById(R.id.layout_square), Gravity.BOTTOM | Gravity.CENTER_VERTICAL, 0, 0);     // 第一个参数popup显示activity页面
+        // popup 退出时界面恢复
+        pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = getWindow().getAttributes();
+                lp.alpha = 1f;
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                getWindow().setAttributes(lp);
+            }
+        });
     }
 
     private void squareGood() {
@@ -294,20 +349,9 @@ public class SquareDetailActivity extends BaseActivity {
                     @Override
                     public void onNext(DataInfo<String> dataInfo) {
                         dismiss();
-
                         showToast(dataInfo.datas());
-                        if (mSquareDetailInfo.isZan == isGood) {
-                            mIvGood.setSelected(false);
-                            mIsGood = false;
-                        } else {
-                            mIvGood.setSelected(true);
-                            mIsGood = true;
-                        }
-                        if (type != 1)
-                            RxBus.getDefault().post(new GoodEvent(mIsGood, posistion));
-
-                        getSquareDetail();
-
+                        mRefresh.autoRefresh();
+                        RxBus.getDefault().post(new GoodEvent(good, posistion));
                     }
                 });
         addSubscrebe(subscription);
@@ -338,7 +382,7 @@ public class SquareDetailActivity extends BaseActivity {
     private void addComment(String content) {
         showLoadingDialog();
 
-        Subscription subscription = RetrofitHelper.getInstance().addSquareComment(mSquareDetailInfo.id, content)
+        Subscription subscription = RetrofitHelper.getInstance().addSquareComment(id, content)
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {
                     @Override
@@ -357,25 +401,57 @@ public class SquareDetailActivity extends BaseActivity {
                     @Override
                     public void onNext(DataInfo dataInfo) {
                         dismiss();
-                        editDialog.dismiss();
-                        showToast(R.string.text_comment_success);
-                        if (type != 1)
-                            RxBus.getDefault().post(new AddCommentEvent(posistion));
-                        getSquareDetail();
+                        showToast("评论成功");
+                        mRefresh.autoRefresh();
+                        mEtComment.setText("");
+                        imm.hideSoftInputFromWindow(mEtComment.getWindowToken(), 0);
+
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
+    private void addReply(String content) {
+        showLoadingDialog();
+
+        Subscription subscription = RetrofitHelper.getInstance().addSquareReply(reply_id, content)
+                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        if (e instanceof DataResultException) {
+                            DataResultException dataResultException = (DataResultException) e;
+                            showToast(dataResultException.errorInfo);
+                        } else {
+
+                            doFailed();
+                            showError(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        dismiss();
+                        showToast("回复成功");
+                        replyType = TYPE_COMMENT;
+                        mRefresh.autoRefresh();
+                        mEtComment.setText("");
+                        mEtComment.setHint("写评论...");
+                        imm.hideSoftInputFromWindow(mEtComment.getWindowToken(), 0);
+
                     }
                 });
         addSubscrebe(subscription);
     }
 
     private void getSquareDetail() {
-        showLoadingDialog();
         Subscription subscription = RetrofitHelper.getInstance().getSquareDetail(id)
                 .compose(RxUtil.<DataInfo<SquareDetailInfo>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<SquareDetailInfo>>() {
                     @Override
                     public void onError(Throwable e) {
-
-                        dismiss();
+                        mRefresh.finishRefresh();
                         if (e instanceof DataResultException) {
                             DataResultException dataResultException = (DataResultException) e;
                             showToast(dataResultException.errorInfo);
@@ -389,55 +465,79 @@ public class SquareDetailActivity extends BaseActivity {
 
                     @Override
                     public void onNext(final DataInfo<SquareDetailInfo> squareDetailInfoDataInfo) {
-                        dismiss();
-                        mSquareDetailInfo = squareDetailInfoDataInfo.datas();
+
+                        squareDetailInfo = squareDetailInfoDataInfo.datas();
                         setTitleText(squareDetailInfoDataInfo.datas().userInfo.nickname);
-                        mTvContent.setText(squareDetailInfoDataInfo.datas().comment);
+                        mRefresh.finishRefresh();
+                        mData.clear();
+                        mData.addAll(squareDetailInfoDataInfo.datas().replys);
+                        mAdapter.notifyDataSetChanged();
+
+                        if (squareDetailInfoDataInfo.datas().userInfo.user_logo != null && !TextUtils.isEmpty(squareDetailInfoDataInfo.datas().userInfo.user_logo)) {
+                            Picasso.with(mActivity).load(squareDetailInfoDataInfo.datas().userInfo.user_logo).into(mIvHeader);
+                        }
                         mTvNickname.setText(squareDetailInfoDataInfo.datas().userInfo.nickname);
-                        if (squareDetailInfoDataInfo.datas().userInfo.user_logo != null && !TextUtils.isEmpty(squareDetailInfoDataInfo.datas().userInfo.user_logo))
-                            Picasso.with(mActivity).load(squareDetailInfoDataInfo.datas().userInfo.user_logo).placeholder(R.mipmap.ic_default_head).error(R.mipmap.ic_default_head).into(mIvHead);
                         mTvTime.setText(squareDetailInfoDataInfo.datas().time);
-                        commentNum = String.format(getString(R.string.text_pl_num), String.valueOf(squareDetailInfoDataInfo.datas().replyNum));
-                        goodNum = String.format(getString(R.string.text_good_num), String.valueOf(squareDetailInfoDataInfo.datas().zanNum));
-                        forwardNum = String.format(getString(R.string.text_replay_num), String.valueOf(squareDetailInfoDataInfo.datas().forwardNum));
+                        mTvContent.setText(squareDetailInfoDataInfo.datas().comment);
+                        if (squareDetailInfoDataInfo.datas().imgUrl.size() > 0) {
+                            mGridData.clear();
+                            mGridData.addAll(squareDetailInfoDataInfo.datas().imgUrl);
+                            mGridSelf.setAdapter(mGridAdapter);
+                        }
+                        if (!TextUtils.isEmpty(squareDetailInfoDataInfo.datas().zanStr)) {
+                            mTvGoods.setVisibility(View.VISIBLE);
+                            mTvGoods.setText(squareDetailInfoDataInfo.datas().zanStr);
+                        } else {
+                            mTvGoods.setVisibility(View.GONE);
+                        }
+
+                        if (squareDetailInfoDataInfo.datas().transpondInfo != null) {
+                            mReTransmit.setVisibility(View.VISIBLE);
+                            mTvTransmitContent.setText(squareDetailInfoDataInfo.datas().transpondInfo.comment);
+                            if (squareDetailInfoDataInfo.datas().transpondInfo.imgUrl.size() > 0) {
+                                mGridData.clear();
+                                mGridData.addAll(squareDetailInfoDataInfo.datas().transpondInfo.imgUrl);
+                                mGridTransmit.setAdapter(mGridAdapter);
+                            }
+                        } else {
+                            mReTransmit.setVisibility(View.GONE);
+                        }
+                        mTvSend.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (TextUtils.isEmpty(mEtComment.getText().toString().trim())) {
+                                    showToast("请输入评论");
+                                    return;
+                                }
+                                Log.e("typeeeeee", replyType + "");
+                                if (replyType == TYPE_COMMENT) {
+                                    addComment(mEtComment.getText().toString().trim());
+                                } else {
+                                    addReply(mEtComment.getText().toString().trim());
+                                }
+                            }
+                        });
                         if (squareDetailInfoDataInfo.datas().isZan == isGood) {
                             mIvGood.setSelected(true);
                         } else {
                             mIvGood.setSelected(false);
                         }
-
-                        if (squareDetailInfoDataInfo.datas().transpondInfo != null) {
-                            mReTransmitContent.setVisibility(View.VISIBLE);
-                            mGridView.setVisibility(View.GONE);
-                            mTvTransmitContent.setText(squareDetailInfoDataInfo.datas().transpondInfo.comment);
-                            mTvTransmitNickname.setText("@" + squareDetailInfoDataInfo.datas().transpondInfo.userInfo.nickname + ":");
-
-                            if (squareDetailInfoDataInfo.datas().transpondInfo.imgUrl.size() > 0) {
-                                mTransmitGridData.clear();
-                                mTransmitGridData.addAll(squareDetailInfoDataInfo.datas().transpondInfo.imgUrl);
-                                mTransmitGridAdapter.notifyDataSetChanged();
+                        mReGood.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                squareGood();
+                                if (squareDetailInfoDataInfo.datas().isZan == isGood) {
+                                    good = false;
+                                } else {
+                                    good = true;
+                                }
                             }
-                        } else {
-                            mReTransmitContent.setVisibility(View.GONE);
-                            mGridView.setVisibility(View.VISIBLE);
-                            if (squareDetailInfoDataInfo.datas().imgUrl.size() > 0) {
-                                mGridData.clear();
-                                mGridData.addAll(squareDetailInfoDataInfo.datas().imgUrl);
-                                mGridAdapter.notifyDataSetChanged();
-                            }
-                        }
-                        LoginUserBean.getInstance().setId(squareDetailInfoDataInfo.datas().id);
-                        LoginUserBean.getInstance().setForwardBean(squareDetailInfoDataInfo.datas().forward);
-                        LoginUserBean.getInstance().save();
+                        });
+                        mLayoutsquare.setVisibility(View.VISIBLE);
 
-                        initTab();
                     }
                 });
         addSubscrebe(subscription);
-    }
-
-    public SquareDetailInfo getSquareDetailinfo() {
-        return mSquareDetailInfo;
     }
 
 }

@@ -167,6 +167,7 @@
         <activity
             android:name=".neighbour.square.SquareDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".neighbour.MyCommunityActivity"
@@ -436,6 +437,7 @@
         <activity android:name=".user.activity.QuestionInfoActivity" />
         <activity android:name=".user.activity.HelpInfoActivity"></activity>
         <activity android:name=".property.home.repair.PropertyWorkerOrderDetailActivity"/>
+        <activity android:name=".neighbour.square.GoodActivity"/>
     </application>
 
 </manifest>

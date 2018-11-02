@@ -78,7 +78,7 @@ public class H5PayActivityActivity extends BaseActivity implements PaymentPayVie
         if (i == 0) {
 
         }
-        String url = "https://api.catel-link.com/front/pay/wexinpay/index?type=" + type + "&order_id=" + order_id + "&subdistrict_id="+LoginUserBean.getInstance().getSub_id()+ "&order_number=" + order_number + "&version=2";
+        String url = "http://api_test.catel-link.com/v1/pay/index?type=" + type + "&order_id=" + order_id + "&subdistrict_id="+LoginUserBean.getInstance().getSub_id()+ "&order_number=" + order_number + "&version=2";
         Log.e("url", url);
         initWeb(url);
 

@@ -108,7 +108,7 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
                         viewHolder.setText(R.id.tv_status, WorkerOrderTypeUtils.getStatusName(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd));
                         break;
                     case 4://已拒单
-                        viewHolder.setText(R.id.tv_status, WorkerOrderTypeUtils.getStatusName(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd));
+                        //viewHolder.setText(R.id.tv_status, WorkerOrderTypeUtils.getStatusName(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd));
                         break;
                     case 5://待验收
 
@@ -141,6 +141,7 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
                         break;
                     case 7://已取消
                         viewHolder.setText(R.id.tv_status, WorkerOrderTypeUtils.getStatusName(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd));
+                        tvDispatch.setVisibility(View.GONE);
                         break;
                 }
                 NoScrollGridView mGridImage = viewHolder.getView(R.id.gridView);

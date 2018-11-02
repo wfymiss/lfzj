@@ -38,6 +38,7 @@ public class SquareListInfo {
     public UserInfoBean userInfo;
     public String forwardNum;
     public ForwardInfoBean forwardInfo;
+    public ReplyBean reply;
     /**
      * uid : 5174
      * question : 反馈反馈反馈反馈
@@ -180,6 +181,17 @@ public class SquareListInfo {
             public String signature;
 
         }
+    }
+
+    public static class ReplyBean{
+        public String id;
+        public String reply_id;
+        public String user_id;
+        public String comment_id;
+        public String content;
+        public String time;
+        public String nickname;
+        public String mobile;
     }
 
 }

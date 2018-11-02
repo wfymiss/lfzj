@@ -228,10 +228,13 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
                         }
                         break;
                     case 5://待验收
+                        tvDispatch.setVisibility(View.GONE);
                         break;
                     case 6://已完成
+                        tvDispatch.setVisibility(View.GONE);
                         break;
                     case 7://已取消
+                        tvDispatch.setVisibility(View.GONE);
                         break;
                 }
 
