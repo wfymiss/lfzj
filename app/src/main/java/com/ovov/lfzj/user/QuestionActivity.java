@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -50,6 +51,9 @@ public class QuestionActivity extends BaseActivity {
     ListView lv;
     @BindView(R.id.smartrefresh)
     SmartRefreshLayout smartrefresh;
+
+    @BindView(R.id.lin_title)
+    FrameLayout linTitle;
     private CommonAdapter newsAdapter;
     private List<SquareListInfo> datas = new ArrayList<>();
     private int page;
@@ -155,7 +159,7 @@ public class QuestionActivity extends BaseActivity {
             @Override
             public void convert(ViewHolder viewHolder,SquareListInfo noticeBean, final int i) {
                 viewHolder.setText(R.id.tv_title_que, noticeBean.getTitle());
-                viewHolder.setText(R.id.tv_content, noticeBean.getInfo());
+                viewHolder.setText(R.id.tv_content, noticeBean.getBrief());
                 viewHolder.setText(R.id.tv_id, noticeBean.getStr());
             }
         };

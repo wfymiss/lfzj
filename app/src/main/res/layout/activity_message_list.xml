@@ -14,21 +14,44 @@
         android:layout_height="wrap_content"
         android:background="@mipmap/messageim" />
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/srly"
+    <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout-->
+    <!--android:id="@+id/srly"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+    <LinearLayout
+        android:id="@+id/lin_null"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <ListView
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:dividerHeight="10dp"
-            android:layout_margin="@dimen/margin_10dp"
-            android:divider="@null">
+        <ImageView
+            android:layout_width="136dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="150dp"
+            android:src="@mipmap/ic_null_message" />
 
-        </ListView>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_20dp"
+            android:text="暂无消息"
+            android:textColor="@color/color_444444"
+            android:textSize="@dimen/textSize_15sp" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_10dp"
+        android:divider="@null"
+        android:dividerHeight="10dp">
+
+    </ListView>
+    <!--</com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
 
     <!--<RelativeLayout-->
     <!--android:layout_width="match_parent"-->

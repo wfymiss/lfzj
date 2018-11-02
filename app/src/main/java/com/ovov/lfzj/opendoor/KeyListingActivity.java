@@ -211,6 +211,7 @@ public class KeyListingActivity extends BaseActivity {
                     JSONObject object2 = array.getJSONObject(i);
                     key = object2.getString("key");
                     keyName = object2.getString("sn_name");
+
 //                    distributeTime=object2.getString("created_time");
                     distributeTime = key_gaintime;  //  获取钥匙本地时间
                     keyinfo.setSn_name(keyName);

@@ -90,11 +90,79 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_15dp"
             android:layout_marginRight="@dimen/margin_10dp"
-            android:maxLines="1"
             android:ellipsize="end"
             android:textColor="#ffa1a1a1"
             android:textSize="15sp" />
 
+        <WebView
+            android:id="@+id/web"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
+
+        </WebView>
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_1dp"
+        android:background="@color/common_drivder_line" />
+    <LinearLayout
+        android:id="@+id/liner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+
+        <TextView
+            android:id="@+id/tv_kefu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_15dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text=""
+            android:textColor="#ff444444"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/padding_13dp"
+            android:text=""
+            android:textColor="#ff444444"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/liner1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="17dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/padding_12dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+
+        <TextView
+            android:id="@+id/tv_a_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_10dp"
+            android:layout_marginLeft="@dimen/margin_15dp"
+            android:ellipsize="end"
+            android:maxEms="15"
+            android:maxLines="2"
+            android:textColor="#ffa1a1a1"
+            android:textSize="15sp" />
     </LinearLayout>
 
 

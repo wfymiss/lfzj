@@ -420,7 +420,6 @@
             android:name=".property.activity.OwnerQueryActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".property.activity.PaymentDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -433,11 +432,30 @@
             android:name=".home.ui.MessageDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <activity android:name=".user.QuestionActivity" />
-        <activity android:name=".user.activity.QuestionInfoActivity" />
-        <activity android:name=".user.activity.HelpInfoActivity"></activity>
-        <activity android:name=".property.home.repair.PropertyWorkerOrderDetailActivity"/>
-        <activity android:name=".neighbour.square.GoodActivity"/>
+        <activity
+            android:name=".user.QuestionActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".user.activity.QuestionInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".user.activity.HelpInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".property.home.repair.PropertyWorkerOrderDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".user.setting.AddadvicesActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.ui.MessageInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="do_success">操作成功</string>
-    <string name="do_failed">操作失败</string>
+    <string name="do_failed">数据加载失败</string>
     <string name="loading">请求中,请稍候</string>
     <string name="common_sure">确定</string>
     <string name="common_cancel">取消</string>

@@ -24,7 +24,22 @@ public class SquareListInfo {
      * forwardNum : 0
      * forwardInfo : {"id":121,"user_id":3,"comment":"转发测试","zan":0,"time":1536908894,"forward_id":98,"isfile":0,"userInfo":{"name":null,"user_logo":null}}
      */
+    public String location_id;
+    public String created_at;
 
+    public String getLocation_id() {
+        return location_id;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public String brief;
+
+    public String getBrief() {
+        return brief;
+    }
 
     public String id;
     public String user_id;
@@ -75,7 +90,7 @@ public class SquareListInfo {
         this.replyNum = replyNum;
     }
 
-    private boolean isSelect=false;     // 账单是否被选中
+    private boolean isSelect = false;     // 账单是否被选中
 
     public void setZanNum(int zanNum) {
         this.zanNum = zanNum;
@@ -170,6 +185,7 @@ public class SquareListInfo {
         public String forward_id;
         public String isfile;
         public UserInfoBeanX userInfo;
+
         public static class UserInfoBeanX {
             /**
              * name : null

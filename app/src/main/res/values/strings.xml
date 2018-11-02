@@ -35,6 +35,7 @@
     <string name="text_good_num">赞 %s</string>
     <string name="text_replay_num">转发 %s</string>
     <string name="hint">请输入搜索内容</string>
+    <string name="hint_addad">欢迎提出您的宝贵意见，您留下的每个字都将用来改善乐福院子，努力提供给您更好的用户体验！</string>
     <string name="text_activity_detail">活动详情</string>
     <string name="text_qrcode">开门记录</string>
     <string name="text_keylist">钥匙列表</string>

@@ -378,6 +378,7 @@ public class IdentityConfirmActivity extends BaseActivity {
     }
 
     private void getBuildinglist() {
+        showLoadingDialog();
         Subscription subscription = RetrofitHelper.getInstance().getSubList()
                 .compose(RxUtil.rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<ListInfo<SublistInfo>>() {
@@ -396,6 +397,7 @@ public class IdentityConfirmActivity extends BaseActivity {
 
                     @Override
                     public void onNext(ListInfo<SublistInfo> buildingListResult) {
+                        dismiss();
                         BuildingListDialog buildingListDialog = new BuildingListDialog(mActivity,buildingListResult.datas());
                         buildingListDialog.setWidth((int) (UIUtils.getScreenWidth() * 0.5));
                         buildingListDialog.show();

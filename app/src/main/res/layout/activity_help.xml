@@ -8,24 +8,53 @@
     android:orientation="vertical"
     tools:context="com.ovov.lfzj.user.setting.HelpActivity">
 
-    <include layout="@layout/include_title_text" />
-
-    <TextView
-        android:id="@+id/question"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="@dimen/margin_10dp"
-        android:drawableRight="@mipmap/arrows"
-        android:gravity="center_vertical"
-        android:text="常见问题解答" />
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="title"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="28dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@mipmap/nav_icon_back_white" />
+    </RelativeLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:orientation="vertical">
-
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="@dimen/margin_10dp"
+            android:drawableRight="@mipmap/arrows"
+            android:gravity="center_vertical"
+            android:text="常见问题解答" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_1dp"
+            android:layout_marginLeft="@dimen/margin_10dp"
+            android:layout_marginRight="@dimen/margin_10dp"
+            android:background="@color/color_ffefefef" />
         <TextView
             android:id="@+id/suggestion"
             android:layout_width="match_parent"

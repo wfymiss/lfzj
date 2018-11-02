@@ -96,6 +96,8 @@ public class OpendoorActivity extends BaseActivity {
     ImageView head;
     @BindView(R.id.head1)
     ImageView head1;
+    @BindView(R.id.refresh_tv)
+    TextView refresh_tv;
     private static int QRC_WIDTH = 600;    //定义二维码长度
     private static int QRC_HEIGHT = 600;   //定义二维码宽度
     @BindView(R.id.but)
@@ -109,10 +111,10 @@ public class OpendoorActivity extends BaseActivity {
     private String[] arrayKey = null;                 // 解析钥匙数组
     private SoundPool soundPool = null;              // 声明开门声音对象
     private String token, sub_id, sub_name = null;               // 用户token ， 小区 id ，小区名称
-    private String sn_name = null;                    //设备名称
+    private String sn_name = "";                    //设备名称
     private String retrieve_key = null;              // key json字符串
-    private String open_type = null;                 // 开门方式
-    private String open_status = null;               // 开门结果
+    private int open_type = 1;                 // 开门方式
+    private int open_status;               // 开门结果
     private int open_num = 0;                        // 用户开门失败次数
 
     private Message msg = new Message();              // 开门反馈结果
@@ -135,7 +137,9 @@ public class OpendoorActivity extends BaseActivity {
 
                         //wave.start();
                         checkBluetoothPermission();       // 蓝牙开门
-                    } else{
+
+                    } else {
+
                         feedback("请在钥匙列表更新钥匙");
                         wave.stop();
                         wave.clearAnimation();
@@ -143,33 +147,24 @@ public class OpendoorActivity extends BaseActivity {
 
                     break;
                 case OPEN_DOOR_BACK:                // 开门成功返回信息结果
+                    head.setImageResource(R.mipmap.lock_success);
+                    open_status = 1;
+                    postOpenData(open_status);
 
-//                    iconResult.setVisibility(View.VISIBLE);
-//                    iconResult.setImageResource(R.mipmap.icon_sucess);
-//                    opendoorAnim.clearAnimation();
-//                    opendoorAnim.invalidate();
-//                    opendoorAnim.setVisibility(View.GONE);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            head.setImageResource(R.mipmap.lock_im);
                             wave.stop();
                             wave.clearAnimation();
 
                         }
-                    },3000);
-                    postOpenData();                  // 开门结果上传数据
+                    }, 3000);
+                    // 开门结果上传数据
 //                    String back = (String) open_msg.obj;
 //                    feedback(back);                     // 开门返回信息结果 ——二维码 ？
                     break;
                 case OPEN_DOOR_fail:
-                    //  蓝牙开门失败
-//                    iconResult.setVisibility(View.VISIBLE);
-//                    iconResult.setImageResource(R.mipmap.icon_faile);
-//                    opendoorAnim.clearAnimation();
-//                    opendoorAnim.invalidate();
-//                    opendoorAnim.setVisibility(View.GONE);
-
-
                     String back_fail = (String) open_msg.obj;
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -178,12 +173,11 @@ public class OpendoorActivity extends BaseActivity {
                             wave.clearAnimation();
                             feedback(back_fail);                  // 开门失败返回信息结果
                         }
-                    },3000);
+                    }, 3000);
 
-
-                    postOpenData();                 // 开门结果上传数据
-
-
+                    open_status = 0;
+                    postOpenData(open_status);                 // 开门结果上传数据
+                    Log.e("dadadadada",sn_name);// 上传开门日志
                     break;
             }
         }
@@ -228,6 +222,7 @@ public class OpendoorActivity extends BaseActivity {
         SharedPreferences spf = this.getSharedPreferences("key_list", Context.MODE_PRIVATE);
         String keyjson = spf.getString("keyjson", "");
         retrieve_key = keyjson;
+        Log.e("dada",retrieve_key);
         if (keyjson != null && !keyjson.trim().equals("")) {
             Json(keyjson);     // 解析钥匙
         }
@@ -276,7 +271,7 @@ public class OpendoorActivity extends BaseActivity {
 //        }
 //    }
 
-    @OnClick({R.id.re_scan, R.id.re_code, R.id.re_apply_key, R.id.icon_setting, R.id.head, R.id.but})
+    @OnClick({R.id.re_scan, R.id.re_code, R.id.re_apply_key, R.id.icon_setting, R.id.head, R.id.but, R.id.refresh_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.re_scan:         //  钥匙列表
@@ -293,6 +288,10 @@ public class OpendoorActivity extends BaseActivity {
                 break;
             case R.id.icon_setting:
                 finish();
+                break;
+            case R.id.refresh_tv:
+                //生成二维码
+                initQrCode();
                 break;
 
             case R.id.head:
@@ -312,14 +311,21 @@ public class OpendoorActivity extends BaseActivity {
             case R.id.but:
                 if (flag) {
                     but.setText("切换至蓝牙开门");
-                    //生成二维码
-                    initQrCode();
+                    if (keys.size() > 0) {
+                        //生成二维码
+                        initQrCode();
+                    } else {
+                        feedback("请在钥匙列表更新钥匙");
+                    }
+
+                    refresh_tv.setVisibility(View.VISIBLE);
                     flag = false;
                 } else {
                     wave.stop();
                     wave.clearAnimation();
                     head1.setVisibility(View.GONE);
                     head.setVisibility(View.VISIBLE);
+                    refresh_tv.setVisibility(View.INVISIBLE);
                     but.setText("切换至二维码开门");
                     head.setImageResource(R.mipmap.lock_im);
                     flag = true;
@@ -333,7 +339,7 @@ public class OpendoorActivity extends BaseActivity {
             QRUtils.loadConfig(this.getApplicationContext());
             String qrStr = null;
             qrStr = QRUtils.createDoorControlQR(this,
-                    "0123456788", keys, 10, 10, 0, "12341234");    //  生成钥匙字符串
+                    "0123456788", keys, 10, 1, 0, "12341234");    //  生成钥匙字符串
             Bitmap contentbitmap = ceateBitmap(qrStr);
             if (contentbitmap != null) {
                 head.setVisibility(View.GONE);
@@ -596,7 +602,7 @@ public class OpendoorActivity extends BaseActivity {
             LLingOpenDoorHandler open_handler = LLingOpenDoorHandler
                     .getSingle(OpendoorActivity.this);
             open_handler.doOpenDoor(config, listener);       // 开门方法调用
-            open_type = "蓝牙";    // 用蓝牙方式开门（上传开门方式）
+            //        open_type = "蓝牙";    // 用蓝牙方式开门（上传开门方式）
         } else {
             feedback("请在钥匙列表更新钥匙");
         }
@@ -628,7 +634,7 @@ public class OpendoorActivity extends BaseActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            open_status = "成功";      // 提交开门成功参数值
+//            open_status = "成功";      // 提交开门成功参数值
             open_num = 0;    // 开门成功时，开门失败次数归零
             soundPool.play(2, 1, 1, 0, 0, 1);      // 摇一摇开门成功声音
             initMsg();        // 初始化message
@@ -684,7 +690,7 @@ public class OpendoorActivity extends BaseActivity {
                 default:
                     break;
             }
-            open_status = "失败";
+            //open_status = "失败";
             if (deviceKey != null) {            // 开门使用钥匙不为空时上传数据
                 try {
                     JSONObject object = new JSONObject(retrieve_key);
@@ -737,6 +743,7 @@ public class OpendoorActivity extends BaseActivity {
 
     // 开门结果信息弹出
     public void feedback(String msg) {
+        head.setImageResource(R.mipmap.lock_loser);
         wave.setVisibility(View.INVISIBLE);
         wave.stop();
         backLog = new FeedbackDialog.BuilderLog(OpendoorActivity.this);
@@ -763,24 +770,26 @@ public class OpendoorActivity extends BaseActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                head.setImageResource(R.mipmap.lock_im);
                 dialog.dismiss();
             }
-        }, 2000);
+        }, 3000);
     }
 
     //  开门成功上传开门数据
-    private void postOpenData() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  // 获取当前时间
-        Date curDate = new Date(System.currentTimeMillis());
-        String open_time = formatter.format(curDate);
+    private void postOpenData(int open_status) {
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  // 获取当前时间
+//        Date curDate = new Date(System.currentTimeMillis());
+//        String open_time = formatter.format(curDate);
         if (sn_name != null) {
-            getUpDoorLog(token, sub_id, sn_name, open_type, open_status, open_time);      // 上传开门日志
+            getUpDoorLog(sn_name, open_type, open_status);
+
         }
     }
 
-    private void getUpDoorLog(String token, String sub_id, String sn_name, String open_type, String open_status, String open_time) {
+    private void getUpDoorLog(String sn_name, int open_type, int open_status) {
 
-        Subscription subscription = RetrofitHelper.getInstance().openLogUp(token, sub_id, sn_name, open_type, open_status, open_time)
+        Subscription subscription = RetrofitHelper.getInstance().openLogUp(sn_name, open_type, open_status)
                 .compose(RxUtil.<OpenLogUpInfo>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<OpenLogUpInfo>() {
                     @Override

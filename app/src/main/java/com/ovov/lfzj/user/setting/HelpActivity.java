@@ -66,6 +66,7 @@ public class HelpActivity extends BaseActivity {
 
     @Override
     public void init() {
+
         tvTitle.setText("意见反馈");
         initList();
         smartrefresh.setEnableLoadmore(false);
@@ -85,6 +86,12 @@ public class HelpActivity extends BaseActivity {
 
         smartrefresh.autoRefresh();
 
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        smartrefresh.autoRefresh();
     }
 
     private void initData(final int type) {
@@ -154,8 +161,7 @@ public class HelpActivity extends BaseActivity {
 
             @Override
             public void convert(ViewHolder viewHolder, SquareListInfo noticeBean, final int i) {
-                viewHolder.setText(R.id.tv_title_que, noticeBean.getQuestion());
-                viewHolder.setText(R.id.tv_content, noticeBean.getAnswer());
+                viewHolder.setText(R.id.tv_content, noticeBean.getQuestion());
             }
         };
         lv.setAdapter(newsAdapter);
@@ -164,16 +170,20 @@ public class HelpActivity extends BaseActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                HelpInfoActivity.toActivity(mActivity, datas.get(position).getTime(),
-                        datas.get(position).getQuestion(), datas.get(position).getAnswer(), datas.get(position).getReply_time());
+                HelpInfoActivity.toActivity(mActivity, datas.get(position).getId());
             }
         });
 
     }
 
 
-    @OnClick(R.id.iv_back)
-    public void onViewClicked() {
-        finish();
+    @OnClick({R.id.iv_back, R.id.tv_right})
+    public void onViewClicked(View view) {
+        if (view.getId() == R.id.iv_back) {
+            finish();
+        } else {
+            AddadvicesActivity.toActivity(mActivity);
+        }
+
     }
 }

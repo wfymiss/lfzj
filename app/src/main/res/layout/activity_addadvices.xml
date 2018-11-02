@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.ovov.lfzj.user.setting.AddadvicesActivity">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="title"
-            android:textColor="@color/color_ffffff" />
+            android:textColor="@color/white" />
 
         <ImageView
             android:id="@+id/iv_back"
@@ -41,29 +43,34 @@
             android:layout_gravity="right|center_vertical"
             android:layout_marginRight="@dimen/common_margin"
             android:background="@drawable/help_shape_item"
-            android:text="新增"
             android:gravity="center"
+            android:text="提交"
             android:textColor="@color/color_ffffff"
             android:textSize="@dimen/common_text_size_middle" />
 
     </RelativeLayout>
 
-
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_1dp"
-        android:background="@color/common_drivder_line" />
+        android:layout_height="@dimen/dp_5"
+        android:background="@color/gray" />
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/smartrefresh"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:background="@color/white"
+        android:layout_height="200dp">
 
-        <ListView
-            android:id="@+id/lv"
+        <EditText
+            android:id="@+id/edit"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="top|left"
+            android:layout_margin="@dimen/dp_20"
+            android:hint="@string/hint_addad"
+            android:textColor="@color/color_text_a1a1a1"
+            android:textSize="@dimen/textSize_14sp" />
+    </RelativeLayout>
 
 
 </LinearLayout>
