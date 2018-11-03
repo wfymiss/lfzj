@@ -37,6 +37,7 @@ import com.ovov.lfzj.base.bean.WorkDetailBean;
 import com.ovov.lfzj.base.bean.WorkOrderListInfo;
 import com.ovov.lfzj.base.bean.WorkOrderUpInfo;
 import com.ovov.lfzj.base.bean.WorkerListInfo;
+import com.ovov.lfzj.base.bean.YouzanLoginBean;
 import com.ovov.lfzj.base.utils.NetWorkUtil;
 import com.ovov.lfzj.home.bean.BannerBean;
 import com.ovov.lfzj.home.bean.HealthDetailBean;
@@ -559,6 +560,10 @@ public class RetrofitHelper {
 
     public Observable<ListInfo<GoodListBean>> getGoodList(String id){
         return mApiService.goodList(getToken(),id);
+    }
+
+    public Observable<DataInfo<YouzanLoginBean>> youzanLogin(){
+        return mApiService.youzanLogin(getUserId());
     }
 
 }

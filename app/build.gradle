@@ -159,6 +159,4 @@ dependencies {
     compile 'com.youzanyun.open.mobile:x5sdk:6.4.12'
 
 
-
-
 }

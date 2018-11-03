@@ -29,6 +29,7 @@ import com.ovov.lfzj.base.bean.WorkDetailBean;
 import com.ovov.lfzj.base.bean.WorkOrderListInfo;
 import com.ovov.lfzj.base.bean.WorkOrderUpInfo;
 import com.ovov.lfzj.base.bean.WorkerListInfo;
+import com.ovov.lfzj.base.bean.YouzanLoginBean;
 import com.ovov.lfzj.home.bean.BannerBean;
 import com.ovov.lfzj.home.bean.HealthDetailBean;
 import com.ovov.lfzj.home.bean.NewsBean;
@@ -597,6 +598,9 @@ public interface CatelApiService {
     @POST("v1/user/zanlist")
     Observable<ListInfo<GoodListBean>> goodList(@Field("token") String token,
                                                 @Field("id") String id);
+    @FormUrlEncoded
+    @POST("v1/shop/yzLogin")
+    Observable<DataInfo<YouzanLoginBean>> youzanLogin(@Field("user_id") String user_id);
 
 
 }

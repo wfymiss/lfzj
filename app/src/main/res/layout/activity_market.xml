@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ovov.lfzj.market.MarketActivity">
+    <FrameLayout
+        android:id="@+id/lin_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_title_height"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/common_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商城"
+            />
+
+        <TextView
+            android:id="@+id/tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="返回"
+            android:textColor="@color/color_ffffff"
+            android:textSize="15sp"
+            android:drawablePadding="@dimen/margin_10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_10dp"
+            android:drawableLeft="@mipmap/nav_icon_back_white"/>
+        <!--android:src="@mipmap/icon_back" />-->
+
+        <TextView
+            android:id="@+id/tv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/common_margin"
+            android:textColor="@color/color_ffffff"
+            android:text=""
+            android:textSize="@dimen/common_text_size_middle" />
+
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right|center_vertical"
+            android:scaleType="center"
+            android:visibility="gone" />
+
+    </FrameLayout>
+    <com.youzan.androidsdkx5.YouzanBrowser
+        android:id="@+id/youzan_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.youzan.androidsdkx5.YouzanBrowser>
+</LinearLayout>
