@@ -1,12 +1,13 @@
 package com.ovov.lfzj.base.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by kaite on 2018/9/14.
  */
 
-public class SquareListInfo {
+public class SquareListInfo implements Serializable {
 
 
     /**
@@ -153,7 +154,7 @@ public class SquareListInfo {
         return reply_time;
     }
 
-    public static class UserInfoBean {
+    public static class UserInfoBean implements Serializable{
         /**
          * name :
          * user_logo : null
@@ -165,7 +166,7 @@ public class SquareListInfo {
 
     }
 
-    public static class ForwardInfoBean {
+    public static class ForwardInfoBean implements Serializable{
         /**
          * id : 121
          * user_id : 3
@@ -186,7 +187,7 @@ public class SquareListInfo {
         public String isfile;
         public UserInfoBeanX userInfo;
 
-        public static class UserInfoBeanX {
+        public static class UserInfoBeanX implements Serializable{
             /**
              * name : null
              * user_logo : null
@@ -199,7 +200,7 @@ public class SquareListInfo {
         }
     }
 
-    public static class ReplyBean{
+    public static class ReplyBean implements Serializable{
         public String id;
         public String reply_id;
         public String user_id;

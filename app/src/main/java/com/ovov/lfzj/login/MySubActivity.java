@@ -18,6 +18,7 @@ import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.utils.StatusBarUtils;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
 import com.ovov.lfzj.event.IdentityEvent;
+import com.ovov.lfzj.event.IdentitySuccessEvent;
 import com.ovov.lfzj.home.bean.SubListBean;
 import com.ovov.lfzj.home.bean.SubdistrictsBean;
 import com.ovov.lfzj.http.RetrofitHelper;
@@ -72,6 +73,7 @@ public class MySubActivity extends BaseActivity {
                 finish();
             }
         });
+
     }
 
     private void initList() {

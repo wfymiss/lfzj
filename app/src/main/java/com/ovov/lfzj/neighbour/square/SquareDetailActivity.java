@@ -26,6 +26,7 @@ import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.SquareDetailInfo;
+import com.ovov.lfzj.base.bean.SquareListInfo;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.KeyBoardShowListener;
 import com.ovov.lfzj.base.utils.RxBus;
@@ -105,13 +106,13 @@ public class SquareDetailActivity extends BaseActivity {
     private int posistion;
     private LinearLayout mLayoutsquare;
     private SquareDetailInfo squareDetailInfo;
+    private SquareListInfo squareListInfo;
 
-    public static void toActivity(Context context, String id, int posistion, int type) {
+    public static void toActivity(Context context, int posistion, SquareListInfo squareListInfo) {
         Intent intent = new Intent(context, SquareDetailActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("id", id);
         bundle.putInt("posistion", posistion);
-        bundle.putInt("type", type);
+        bundle.putSerializable("squarelist",squareListInfo);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
@@ -128,10 +129,26 @@ public class SquareDetailActivity extends BaseActivity {
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         setTitleText("");
         Bundle bundle = getIntent().getExtras();
-        id = bundle.getString("id");
+        squareListInfo = (SquareListInfo) bundle.getSerializable("squarelist");
         posistion = bundle.getInt("posistion");
+        id = squareListInfo.id;
+        setTitleText(squareListInfo.userInfo.nickname);
         view = LayoutInflater.from(mActivity).inflate(R.layout.square_list_header, null, false);
-
+        mGridAdapter = new CommonAdapter<String>(mActivity, mGridData, R.layout.user_img_item) {
+            @Override
+            public void convert(ViewHolder viewHolder, String s, int i) {
+                ImageView ivImage = viewHolder.getView(R.id.iv_user_img);
+                Picasso.with(mActivity).load(s).into(ivImage);
+                ivImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ScaleImageView scaleImageView = new ScaleImageView(mActivity);
+                        scaleImageView.setUrls(mGridData, i);
+                        scaleImageView.create();
+                    }
+                });
+            }
+        };
         initList();
         mRefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -169,21 +186,7 @@ public class SquareDetailActivity extends BaseActivity {
                     }
                 }, mActivity);
 
-        mGridAdapter = new CommonAdapter<String>(mActivity, mGridData, R.layout.item_grid_image) {
-            @Override
-            public void convert(ViewHolder viewHolder, String s, int i) {
-                ImageView ivImage = viewHolder.getView(R.id.iv_image);
-                Picasso.with(mActivity).load(s).into(ivImage);
-                ivImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ScaleImageView scaleImageView = new ScaleImageView(mActivity);
-                        scaleImageView.setUrls(mGridData, i);
-                        scaleImageView.create();
-                    }
-                });
-            }
-        };
+
         addRxBusSubscribe(TransmitSquareEvent.class, new Action1<TransmitSquareEvent>() {
             @Override
             public void call(TransmitSquareEvent transmitSquareEvent) {
@@ -264,6 +267,7 @@ public class SquareDetailActivity extends BaseActivity {
                 });
             }
         };
+
         mListSquareDetail.setAdapter(mAdapter);
         mListSquareDetail.addHeaderView(view);
         mIvHeader = view.findViewById(R.id.iv_head);
@@ -276,13 +280,37 @@ public class SquareDetailActivity extends BaseActivity {
         mGridTransmit = view.findViewById(R.id.transmit_gridView);
         mTvGoods = view.findViewById(R.id.tv_goods);
         mLayoutsquare = view.findViewById(R.id.layout_square);
-        mLayoutsquare.setVisibility(View.GONE);
+        mLayoutsquare.setVisibility(View.VISIBLE);
         mTvGoods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GoodActivity.toActivity(mActivity,squareDetailInfo.id);
             }
         });
+        if (squareListInfo.userInfo.user_logo != null && !TextUtils.isEmpty(squareListInfo.userInfo.user_logo)) {
+            Picasso.with(mActivity).load(squareListInfo.userInfo.user_logo).into(mIvHeader);
+        }
+        mTvNickname.setText(squareListInfo.userInfo.nickname);
+        mTvTime.setText(squareListInfo.time);
+        mTvContent.setText(squareListInfo.comment);
+        if (squareListInfo.imgUrl.size() > 0) {
+            mGridData.clear();
+            mGridData.addAll(squareListInfo.imgUrl);
+            mGridSelf.setAdapter(mGridAdapter);
+        }
+
+
+        if (squareListInfo.transpondInfo != null) {
+            mReTransmit.setVisibility(View.VISIBLE);
+            mTvTransmitContent.setText(squareListInfo.transpondInfo.comment);
+            if (squareListInfo.transpondInfo.imgUrl.size() > 0) {
+                mGridData.clear();
+                mGridData.addAll(squareListInfo.transpondInfo.imgUrl);
+                mGridTransmit.setAdapter(mGridAdapter);
+            }
+        } else {
+            mReTransmit.setVisibility(View.GONE);
+        }
 
     }
 
@@ -316,7 +344,7 @@ public class SquareDetailActivity extends BaseActivity {
 //                }
         this.getWindow().setAttributes(lp);
         // popupwindow 第一个参数指定popup 显示页面
-        pop.showAtLocation(this.findViewById(R.id.layout_square), Gravity.BOTTOM | Gravity.CENTER_VERTICAL, 0, 0);     // 第一个参数popup显示activity页面
+        pop.showAtLocation(this.findViewById(R.id.layout_square_1), Gravity.BOTTOM | Gravity.CENTER_VERTICAL, 0, 0);     // 第一个参数popup显示activity页面
         // popup 退出时界面恢复
         pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -330,13 +358,11 @@ public class SquareDetailActivity extends BaseActivity {
     }
 
     private void squareGood() {
-        showLoadingDialog();
         Subscription subscription = RetrofitHelper.getInstance().squareGood(id)
                 .compose(RxUtil.<DataInfo<String>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<String>>() {
                     @Override
                     public void onError(Throwable e) {
-                        dismiss();
                         if (e instanceof DataResultException) {
                             DataResultException dataResultException = (DataResultException) e;
                             showToast(dataResultException.errorInfo);
@@ -348,7 +374,6 @@ public class SquareDetailActivity extends BaseActivity {
 
                     @Override
                     public void onNext(DataInfo<String> dataInfo) {
-                        dismiss();
                         showToast(dataInfo.datas());
                         mRefresh.autoRefresh();
                         RxBus.getDefault().post(new GoodEvent(good, posistion));
@@ -366,7 +391,7 @@ public class SquareDetailActivity extends BaseActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         getWindow().setAttributes(lp);
         // popupwindow 第一个参数指定popup 显示页面
-        shareAppPopup.showAtLocation(findViewById(R.id.layout_square), Gravity.BOTTOM | Gravity.BOTTOM, 0, 0);     // 第一个参数popup显示activity页面
+        shareAppPopup.showAtLocation(findViewById(R.id.layout_square_1), Gravity.BOTTOM | Gravity.BOTTOM, 0, 0);     // 第一个参数popup显示activity页面
         // popup 退出时界面恢复
         shareAppPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -412,14 +437,12 @@ public class SquareDetailActivity extends BaseActivity {
     }
 
     private void addReply(String content) {
-        showLoadingDialog();
 
         Subscription subscription = RetrofitHelper.getInstance().addSquareReply(reply_id, content)
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {
                     @Override
                     public void onError(Throwable e) {
-                        dismiss();
                         if (e instanceof DataResultException) {
                             DataResultException dataResultException = (DataResultException) e;
                             showToast(dataResultException.errorInfo);
@@ -432,7 +455,6 @@ public class SquareDetailActivity extends BaseActivity {
 
                     @Override
                     public void onNext(DataInfo dataInfo) {
-                        dismiss();
                         showToast("回复成功");
                         replyType = TYPE_COMMENT;
                         mRefresh.autoRefresh();
@@ -467,23 +489,11 @@ public class SquareDetailActivity extends BaseActivity {
                     public void onNext(final DataInfo<SquareDetailInfo> squareDetailInfoDataInfo) {
 
                         squareDetailInfo = squareDetailInfoDataInfo.datas();
-                        setTitleText(squareDetailInfoDataInfo.datas().userInfo.nickname);
+
                         mRefresh.finishRefresh();
                         mData.clear();
                         mData.addAll(squareDetailInfoDataInfo.datas().replys);
                         mAdapter.notifyDataSetChanged();
-
-                        if (squareDetailInfoDataInfo.datas().userInfo.user_logo != null && !TextUtils.isEmpty(squareDetailInfoDataInfo.datas().userInfo.user_logo)) {
-                            Picasso.with(mActivity).load(squareDetailInfoDataInfo.datas().userInfo.user_logo).into(mIvHeader);
-                        }
-                        mTvNickname.setText(squareDetailInfoDataInfo.datas().userInfo.nickname);
-                        mTvTime.setText(squareDetailInfoDataInfo.datas().time);
-                        mTvContent.setText(squareDetailInfoDataInfo.datas().comment);
-                        if (squareDetailInfoDataInfo.datas().imgUrl.size() > 0) {
-                            mGridData.clear();
-                            mGridData.addAll(squareDetailInfoDataInfo.datas().imgUrl);
-                            mGridSelf.setAdapter(mGridAdapter);
-                        }
                         if (!TextUtils.isEmpty(squareDetailInfoDataInfo.datas().zanStr)) {
                             mTvGoods.setVisibility(View.VISIBLE);
                             mTvGoods.setText(squareDetailInfoDataInfo.datas().zanStr);
@@ -491,17 +501,6 @@ public class SquareDetailActivity extends BaseActivity {
                             mTvGoods.setVisibility(View.GONE);
                         }
 
-                        if (squareDetailInfoDataInfo.datas().transpondInfo != null) {
-                            mReTransmit.setVisibility(View.VISIBLE);
-                            mTvTransmitContent.setText(squareDetailInfoDataInfo.datas().transpondInfo.comment);
-                            if (squareDetailInfoDataInfo.datas().transpondInfo.imgUrl.size() > 0) {
-                                mGridData.clear();
-                                mGridData.addAll(squareDetailInfoDataInfo.datas().transpondInfo.imgUrl);
-                                mGridTransmit.setAdapter(mGridAdapter);
-                            }
-                        } else {
-                            mReTransmit.setVisibility(View.GONE);
-                        }
                         mTvSend.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -533,7 +532,7 @@ public class SquareDetailActivity extends BaseActivity {
                                 }
                             }
                         });
-                        mLayoutsquare.setVisibility(View.VISIBLE);
+
 
                     }
                 });

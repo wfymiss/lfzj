@@ -121,7 +121,6 @@ public class UserFragment extends BaseFragment {
             @Override
             public void call(UserFragmentIdentityEvent userFragmentIdentityEvent) {
                 IdentityConfirmActivity.toActivity(mActivity);
-                mActivity.finish();
             }
         });
 

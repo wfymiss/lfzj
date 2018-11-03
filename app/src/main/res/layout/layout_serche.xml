@@ -19,14 +19,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
        android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/black"
-        android:drawableRight="@mipmap/rightaroow"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/color_ffffff"
+        android:drawableRight="@mipmap/ic_xia"
         android:layout_marginRight="2dp"
         android:drawablePadding="@dimen/margin_4dp"
         android:text="请选择"
-        android:textSize="@dimen/textSize_12sp"
+        android:textSize="@dimen/textSize_18sp"
 
         />
 

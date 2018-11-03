@@ -189,7 +189,6 @@ public class SquareFragment extends BaseFragment {
             @Override
             public void call(ToIdentityEvent toIdentityEvent) {
                 IdentityConfirmActivity.toActivity(mActivity);
-                mActivity.finish();
             }
         });
 
@@ -310,12 +309,7 @@ public class SquareFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         if (LoginUserBean.getInstance().isIs_auth()) {
-                            if (squareListInfo.imgUrl.size() > 0) {
-                                mImg = squareListInfo.imgUrl.get(0);
-                            } else {
-                                mImg = "";
-                            }
-                            TransmitActivity.toActivity(mActivity, squareListInfo.userInfo.nickname, squareListInfo.comment, mImg, squareListInfo.id);
+                            SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
                         } else {
                             identityDialog.show();
                         }
@@ -326,7 +320,7 @@ public class SquareFragment extends BaseFragment {
                 reComment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity, squareListInfo.id, i, 0);
+                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
 
                     }
                 });
@@ -431,13 +425,13 @@ public class SquareFragment extends BaseFragment {
                 mTransmitImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        SquareDetailActivity.toActivity(mActivity, squareListInfo.transpondInfo.id, i, 1);
+                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
                     }
                 });
                 reTransmit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity, squareListInfo.transpondInfo.id, i, 1);
+                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
 
                     }
                 });
@@ -446,14 +440,14 @@ public class SquareFragment extends BaseFragment {
                 mImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        SquareDetailActivity.toActivity(getActivity(), squareListInfo.id, i, 0);
+                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
                     }
                 });
                 LinearLayout mRecontainer = viewHolder.getView(R.id.container);
                 mRecontainer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(getActivity(), squareListInfo.id, i, 0);
+                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
                     }
                 });
 
@@ -461,7 +455,7 @@ public class SquareFragment extends BaseFragment {
             }
         };
         mActivityListRecycler.setAdapter(mAdapter);
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.neighbour_list_header, null, false);
+        /*View view = LayoutInflater.from(getActivity()).inflate(R.layout.neighbour_list_header, null, false);
         mActivityListRecycler.addHeaderView(view);
         List<Integer> mGridData = new ArrayList<>();
         mGridData.add(R.mipmap.ic_square_flower);
@@ -483,7 +477,7 @@ public class SquareFragment extends BaseFragment {
                 });
             }
         };
-        mGameRecycler.setAdapter(mGameAdapter);
+        mGameRecycler.setAdapter(mGameAdapter);*/
 
     }
 

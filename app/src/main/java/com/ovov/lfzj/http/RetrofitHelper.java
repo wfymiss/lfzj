@@ -255,12 +255,13 @@ public class RetrofitHelper {
     public Observable<DataInfo> addNeighbour(RequestBody content, List<MultipartBody.Part> parts) {
         RequestBody mUserId = RequestBody.create(MediaType.parse("multipart/form-data"), getUserId());
         RequestBody token = RequestBody.create(MediaType.parse("multipart/form-data"), getToken());
-        return mApiService.addNeighbour(token, mUserId, content, parts);
+        RequestBody subid = RequestBody.create(MediaType.parse("multipart/form-data"), getSubId());
+        return mApiService.addNeighbour(token, mUserId, content, parts,subid);
 
     }
 
     public Observable<ListInfo<SquareListInfo>> getSquareList(int page, String id) {
-        return mApiService.getSquareList(getToken(), getUserId(), page, id);
+        return mApiService.getSquareList(getToken(), getUserId(), page, id,getSubId());
     }
 
     public Observable<DataInfo<SquareDetailInfo>> getSquareDetail(String id) {
@@ -268,7 +269,7 @@ public class RetrofitHelper {
     }
 
     public Observable<ListInfo<SquareListInfo>> getHomeSquareList(int page, String id) {
-        return mApiService.getHomeSquareList(getToken(), page, id);
+        return mApiService.getHomeSquareList(getToken(), page, id,getSubId());
     }
 
     public Observable<ListInfo<SquareListInfo>> getLog(int page) {
@@ -306,7 +307,7 @@ public class RetrofitHelper {
     }
 
     public Observable<DataInfo> transimSquare(String id, String content) {
-        return mApiService.transimSquare(getToken(), getUserId(), id, content);
+        return mApiService.transimSquare(getToken(), getUserId(), id, content,getSubId());
     }
 
     public Observable<ListInfo<SquareListInfo>> getUserSquareList(String userid, int page, String id) {

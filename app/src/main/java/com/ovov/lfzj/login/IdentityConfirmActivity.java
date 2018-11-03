@@ -11,18 +11,16 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ovov.lfzj.MainActivity;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
-import com.ovov.lfzj.base.bean.BuildingListResult;
 import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.LoginUserBean;
@@ -41,6 +39,9 @@ import com.ovov.lfzj.event.IdentityEvent;
 import com.ovov.lfzj.event.SubselectEvent;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,7 +91,6 @@ public class IdentityConfirmActivity extends BaseActivity {
 
     @Override
     public void init() {
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         /*ErrorIdentityDialog errorIdentityDialog = new ErrorIdentityDialog(mActivity);
         errorIdentityDialog.show();*/
         StatusBarUtils.setStatusBar(this, false, false);
@@ -125,9 +125,8 @@ public class IdentityConfirmActivity extends BaseActivity {
                 finish();
             }
         });
-
-
     }
+
     TextWatcher mTextWatcherbuilding = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -186,24 +185,24 @@ public class IdentityConfirmActivity extends BaseActivity {
                 public void run() {
                     getMobile();
                 }
-            },1000);
+            }, 1000);
         }
     };
 
     private void getMobile() {
-        house_path = sub_id+"-"+mEtBuildingNumber.getText().toString().trim()+"-"+mEtUnitNumber.getText().toString().trim()+"-"+mEtRoomNumber.getText().toString().trim();
+        house_path = sub_id + "-" + mEtBuildingNumber.getText().toString().trim() + "-" + mEtUnitNumber.getText().toString().trim() + "-" + mEtRoomNumber.getText().toString().trim();
         Subscription subscription = RetrofitHelper.getInstance().getMobile(house_path)
                 .compose(RxUtil.rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<MobileInfo>>() {
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof DataResultException){
+                        if (e instanceof DataResultException) {
                             DataResultException dataResultException = (DataResultException) e;
                             showToast(dataResultException.errorInfo);
                             mTvEndPhone.setVisibility(View.GONE);
                             mCodeEditView.setVisibility(View.GONE);
                             mTvStartPhone.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             doFailed();
                             showError(e.getMessage());
                             e.printStackTrace();
@@ -216,15 +215,15 @@ public class IdentityConfirmActivity extends BaseActivity {
                     @Override
                     public void onNext(DataInfo<MobileInfo> mobileInfoDataInfo) {
                         mobile = mobileInfoDataInfo.datas().mobile;
-                        if (RegexUtils.isMobile(mobile) != RegexUtils.VERIFY_SUCCESS){
+                        if (RegexUtils.isMobile(mobile) != RegexUtils.VERIFY_SUCCESS) {
                             showToast("手机号码有误，请去物业修正");
                             mTvEndPhone.setVisibility(View.GONE);
                             mCodeEditView.setVisibility(View.GONE);
                             mTvStartPhone.setVisibility(View.GONE);
-                        }else {
-                            String startMobile = mobile.substring(0,3);
-                            String endMobile = mobile.substring(mobile.length()-4);
-                            midMobile = mobile.substring(3,7);
+                        } else {
+                            String startMobile = mobile.substring(0, 3);
+                            String endMobile = mobile.substring(mobile.length() - 4);
+                            midMobile = mobile.substring(3, 7);
                             mTvStartPhone.setText(startMobile);
                             mTvEndPhone.setText(endMobile);
                             mTvEndPhone.setVisibility(View.VISIBLE);
@@ -264,18 +263,19 @@ public class IdentityConfirmActivity extends BaseActivity {
                 });
         addSubscrebe(subscription);
     }
-    private void authStep2(String house_path){
+
+    private void authStep2(String house_path) {
         showLoadingDialog();
-        Subscription subscription = RetrofitHelper.getInstance().authStep2(house_path,mEtVerfy.getText().toString().trim(),mobile)
+        Subscription subscription = RetrofitHelper.getInstance().authStep2(house_path, mEtVerfy.getText().toString().trim(), mobile)
                 .compose(RxUtil.<DataInfo>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {
                     @Override
                     public void onError(Throwable e) {
                         dismiss();
-                        if (e instanceof DataResultException){
+                        if (e instanceof DataResultException) {
                             DataResultException dataResultException = (DataResultException) e;
                             showToast(dataResultException.errorInfo);
-                        }else {
+                        } else {
                             doFailed();
                             showError(e.getMessage());
                         }
@@ -285,10 +285,11 @@ public class IdentityConfirmActivity extends BaseActivity {
                     public void onNext(DataInfo dataInfo) {
                         dismiss();
                         IdentitySuccessDialog identitySuccessDialog = new IdentitySuccessDialog(mActivity);
-                        identitySuccessDialog.setWidth((int) (UIUtils.getScreenWidth()*0.8));
+                        identitySuccessDialog.setWidth((int) (UIUtils.getScreenWidth() * 0.8));
                         identitySuccessDialog.show();
                         LoginUserBean.getInstance().setIs_auth(true);
                         LoginUserBean.getInstance().save();
+
                     }
                 });
         addSubscrebe(subscription);
@@ -339,7 +340,7 @@ public class IdentityConfirmActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_back, R.id.tv_right, R.id.tv_get_code, R.id.tv_commit,R.id.tv_select_sub})
+    @OnClick({R.id.iv_back, R.id.tv_right, R.id.tv_get_code, R.id.tv_commit, R.id.tv_select_sub})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -350,22 +351,22 @@ public class IdentityConfirmActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_get_code:
-                if (TextUtils.isEmpty(mCodeEditView.getText().toString().trim())){
+                if (TextUtils.isEmpty(mCodeEditView.getText().toString().trim())) {
                     showToast("请补全手机号");
                     return;
                 }
-                if (RegexUtils.isMobile(mobile) != RegexUtils.VERIFY_SUCCESS){
+                if (RegexUtils.isMobile(mobile) != RegexUtils.VERIFY_SUCCESS) {
                     showToast("请获取正确的手机号");
                     return;
                 }
-                if (!midMobile.equals(mCodeEditView.getText().toString().trim())){
+                if (!midMobile.equals(mCodeEditView.getText().toString().trim())) {
                     showToast("手机号码填写错误,请重新输入");
                     return;
                 }
                 sendSms();
                 break;
             case R.id.tv_commit:
-                if (TextUtils.isEmpty(mEtVerfy.getText().toString().trim())){
+                if (TextUtils.isEmpty(mEtVerfy.getText().toString().trim())) {
                     showToast("请输入验证码");
                     return;
                 }
@@ -385,10 +386,10 @@ public class IdentityConfirmActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
 
-                        if (e instanceof DataResultException){
+                        if (e instanceof DataResultException) {
                             DataResultException dataResultException = (DataResultException) e;
                             showToast(dataResultException.errorInfo);
-                        }else {
+                        } else {
                             doFailed();
                             showError(e.getMessage());
                             e.printStackTrace();
@@ -398,7 +399,7 @@ public class IdentityConfirmActivity extends BaseActivity {
                     @Override
                     public void onNext(ListInfo<SublistInfo> buildingListResult) {
                         dismiss();
-                        BuildingListDialog buildingListDialog = new BuildingListDialog(mActivity,buildingListResult.datas());
+                        BuildingListDialog buildingListDialog = new BuildingListDialog(mActivity, buildingListResult.datas());
                         buildingListDialog.setWidth((int) (UIUtils.getScreenWidth() * 0.5));
                         buildingListDialog.show();
                         buildingListDialog.setData(buildingListResult.datas());
@@ -407,4 +408,6 @@ public class IdentityConfirmActivity extends BaseActivity {
                 });
         addSubscrebe(subscription);
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.ovov.lfzj.home;
 
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -70,6 +71,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.squareup.picasso.Picasso;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,7 +160,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
             @Override
             public void call(HomeIdentityEvent homeIdentityEvent) {
                 IdentityConfirmActivity.toActivity(mActivity);
-                mActivity.finish();
             }
         });
     }
@@ -183,7 +184,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
                             DataResultException dataResultException = (DataResultException) e;
                             showToast(dataResultException.errorInfo);
                         } else {
-                         //   doFailed();
+                            //   doFailed();
                             e.printStackTrace();
                         }
 
@@ -366,8 +367,10 @@ public class HomeFragment extends BaseFragment implements HomeView {
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(getContext(), CaptureActivity.class);
                 startActivity(intent);
+
             }
         });
 
@@ -490,7 +493,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
                             mActivity.finish();
                         } else {
 
-                        //    doFailed();
+                            //    doFailed();
                         }
 
 

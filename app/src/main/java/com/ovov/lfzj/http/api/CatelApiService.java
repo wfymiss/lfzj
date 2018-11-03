@@ -90,20 +90,23 @@ public interface CatelApiService {
     Observable<DataInfo> addNeighbour(@Part("token") RequestBody token,
                                       @Part("userid") RequestBody userid,
                                       @Part("comment") RequestBody comment,
-                                      @Part() List<MultipartBody.Part> part);
+                                      @Part() List<MultipartBody.Part> part,
+                                      @Part("subdistrict_id") RequestBody subdistrict_id);
 
     @FormUrlEncoded
     @POST("v1/user/comment")
     Observable<ListInfo<SquareListInfo>> getSquareList(@Field("token") String token,
                                                        @Field("userid") String userid,
                                                        @Field("page") int page,
-                                                       @Field("id") String id);
+                                                       @Field("id") String id,
+                                                       @Field("subdistrict_id") String subdistrict_id);
 
     @FormUrlEncoded
     @POST("v1/user/recommend")
     Observable<ListInfo<SquareListInfo>> getHomeSquareList(@Field("token") String token,
                                                            @Field("page") int page,
-                                                           @Field("id") String id);
+                                                           @Field("id") String id,
+                                                           @Field("subdistrict_id") String subdistrict_id);
 
     @FormUrlEncoded
     @POST("v1/user/commentlist")
@@ -173,7 +176,8 @@ public interface CatelApiService {
     Observable<DataInfo> transimSquare(@Field("token") String token,
                                        @Field("userid") String userid,
                                        @Field("id") String id,
-                                       @Field("comment") String comment);
+                                       @Field("comment") String comment,
+                                       @Field("subdistrict_id") String subdistrict_id);
 
     // 上传开门日志
     @FormUrlEncoded

@@ -310,6 +310,9 @@ public class OpendoorActivity extends BaseActivity {
                 break;
             case R.id.but:
                 if (flag) {
+                    wave.stop();
+                    wave.clearAnimation();
+                    wave.setVisibility(View.GONE);
                     but.setText("切换至蓝牙开门");
                     if (keys.size() > 0) {
                         //生成二维码
@@ -321,8 +324,8 @@ public class OpendoorActivity extends BaseActivity {
                     refresh_tv.setVisibility(View.VISIBLE);
                     flag = false;
                 } else {
-                    wave.stop();
-                    wave.clearAnimation();
+
+
                     head1.setVisibility(View.GONE);
                     head.setVisibility(View.VISIBLE);
                     refresh_tv.setVisibility(View.INVISIBLE);

@@ -20,6 +20,9 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.youzan.androidsdk.YouzanSDK;
+import com.youzan.androidsdkx5.YouZanSDKX5Adapter;
+import com.youzan.androidsdkx5.YouzanPreloader;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.testin.analysis.data.TestinDataApi;
@@ -99,6 +102,9 @@ public class CatelApplication extends BaseApplication {
 
 //SDK初始化
         TestinDataApi.init(this, "e049a72ba5b487156d5bed6e03b95d24", testinDataConfig);
+
+        YouzanSDK.init(this, "7c217b0bff2a2cb3b3", new YouZanSDKX5Adapter());
+        YouzanPreloader.preloadHtml(this, "https://h5.youzan.com/wscshop/feature/FElLHR3x42");
 
     }
 

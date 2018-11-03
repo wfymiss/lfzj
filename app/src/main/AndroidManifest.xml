@@ -203,7 +203,7 @@
             android:name=".login.IdentityConfirmActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />
         <activity android:name=".login.IdentityErrorActivity" />
         <!--
             <activity
@@ -456,6 +456,7 @@
             android:name=".home.ui.MessageInfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
+        <activity android:name=".neighbour.square.GoodActivity"/>
     </application>
 
 </manifest>
