@@ -4,6 +4,7 @@ package com.ovov.lfzj.http.api;
 import com.ovov.lfzj.base.bean.ActivityUpImageInfo;
 import com.ovov.lfzj.base.bean.BuildingListResult;
 import com.ovov.lfzj.base.bean.DataInfo;
+import com.ovov.lfzj.base.bean.GoodListBean;
 import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.LoginBean;
 import com.ovov.lfzj.base.bean.MobileInfo;
@@ -28,6 +29,7 @@ import com.ovov.lfzj.base.bean.WorkDetailBean;
 import com.ovov.lfzj.base.bean.WorkOrderListInfo;
 import com.ovov.lfzj.base.bean.WorkOrderUpInfo;
 import com.ovov.lfzj.base.bean.WorkerListInfo;
+import com.ovov.lfzj.base.bean.YouzanLoginBean;
 import com.ovov.lfzj.home.bean.BannerBean;
 import com.ovov.lfzj.home.bean.HealthDetailBean;
 import com.ovov.lfzj.home.bean.NewsBean;
@@ -89,32 +91,38 @@ public interface CatelApiService {
     Observable<DataInfo> addNeighbour(@Part("token") RequestBody token,
                                       @Part("userid") RequestBody userid,
                                       @Part("comment") RequestBody comment,
-                                      @Part() List<MultipartBody.Part> part);
+                                      @Part() List<MultipartBody.Part> part,
+                                      @Part("subdistrict_id") RequestBody subdistrict_id);
 
     @FormUrlEncoded
     @POST("v1/user/comment")
     Observable<ListInfo<SquareListInfo>> getSquareList(@Field("token") String token,
                                                        @Field("userid") String userid,
                                                        @Field("page") int page,
-                                                       @Field("id") String id);
+                                                       @Field("id") String id,
+                                                       @Field("subdistrict_id") String subdistrict_id);
 
     @FormUrlEncoded
     @POST("v1/user/recommend")
     Observable<ListInfo<SquareListInfo>> getHomeSquareList(@Field("token") String token,
                                                            @Field("page") int page,
-                                                           @Field("id") String id);
+                                                           @Field("id") String id,
+                                                           @Field("subdistrict_id") String subdistrict_id);
 
     @FormUrlEncoded
     @POST("v1/user/commentlist")
     Observable<DataInfo<SquareDetailInfo>> getSquareDetail(@Field("token") String token,
-                                                           @Field("id") String id,
-                                                           @Field("userid") String userid);
+                                                           @Field("id") String id);
 
     @FormUrlEncoded
     @POST("v1/user/addreply")
     Observable<DataInfo> addSquareComment(@Field("token") String token,
                                           @Field("id") String id,
-                                          @Field("userid") String userid,
+                                          @Field("content") String content);
+    @FormUrlEncoded
+    @POST("v1/user/addreply")
+    Observable<DataInfo> addSquareReply(@Field("token") String token,
+                                          @Field("reply_id") String reply_id,
                                           @Field("content") String content);
 
     @FormUrlEncoded
@@ -169,7 +177,8 @@ public interface CatelApiService {
     Observable<DataInfo> transimSquare(@Field("token") String token,
                                        @Field("userid") String userid,
                                        @Field("id") String id,
-                                       @Field("comment") String comment);
+                                       @Field("comment") String comment,
+                                       @Field("subdistrict_id") String subdistrict_id);
 
     // 上传开门日志
     @FormUrlEncoded
@@ -581,6 +590,17 @@ public interface CatelApiService {
                                                 @Field("wid") String wid,
                                                 @Field("contents") String reason,
                                                 @Field("remarks") String remarks);
+    @FormUrlEncoded
+    @POST("v1/user/commentdel")
+    Observable<DataInfo> squareDelete(@Field("token") String token,
+                                      @Field("id") String id);
+    @FormUrlEncoded
+    @POST("v1/user/zanlist")
+    Observable<ListInfo<GoodListBean>> goodList(@Field("token") String token,
+                                                @Field("id") String id);
+    @FormUrlEncoded
+    @POST("v1/shop/yzLogin")
+    Observable<DataInfo<YouzanLoginBean>> youzanLogin(@Field("user_id") String user_id);
 
 
 }

@@ -6,6 +6,7 @@
     android:background="#FFFFFF"
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -30,6 +31,7 @@
             android:textSize="@dimen/sp_16" />
 
         <TextView
+            android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_nickname"
@@ -37,9 +39,18 @@
             android:layout_marginTop="@dimen/dp_10"
             android:layout_toRightOf="@+id/iv_head"
             android:text="2014-09-09"
-            android:id="@+id/tv_time"
             android:textColor="@color/color_999999"
             android:textSize="@dimen/sp_13" />
+
+        <ImageView
+            android:layout_width="@dimen/margin_20dp"
+            android:layout_height="@dimen/margin_10dp"
+            android:src="@mipmap/ic_square_delete"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="19dp"
+            android:layout_marginRight="19dp"
+            android:id="@+id/iv_delete"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
@@ -59,28 +70,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_10"
-        android:horizontalSpacing="@dimen/dp_10"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
-        android:numColumns="3"
         android:layout_marginTop="@dimen/dp_10"
+        android:horizontalSpacing="@dimen/dp_10"
+        android:numColumns="3"
         android:stretchMode="columnWidth"
         android:verticalSpacing="5dp" />
+
     <RelativeLayout
+        android:id="@+id/re_transmit_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/common_bg"
-        android:id="@+id/re_transmit_content">
+        android:background="@color/common_bg">
 
         <TextView
+            android:id="@+id/tv_transmit_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="名字:"
-            android:textSize="@dimen/sp_15"
-            android:id="@+id/tv_transmit_nickname"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
-            android:textColor="@color/colorPrimary"/>
+            android:text="名字:"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/sp_15"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/tv_transmit_content"
             android:layout_width="match_parent"
@@ -88,8 +102,8 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
-            android:text="zh"
             android:layout_toRightOf="@id/tv_transmit_nickname"
+            android:text="zh"
             android:textColor="@color/color_999999"
             android:textSize="@dimen/sp_15" />
 
@@ -97,30 +111,48 @@
             android:id="@+id/transmit_gridView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_transmit_content"
             android:layout_marginBottom="@dimen/dp_10"
-            android:horizontalSpacing="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
-            android:numColumns="3"
-            android:layout_below="@+id/tv_transmit_content"
             android:layout_marginTop="@dimen/dp_10"
+            android:horizontalSpacing="@dimen/dp_10"
+            android:numColumns="3"
             android:stretchMode="columnWidth"
             android:verticalSpacing="5dp" />
     </RelativeLayout>
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="在远方：好感人"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:padding="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/common_bg"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textColor="@color/color_3e3e3e"
+        android:id="@+id/tv_list_comment"/>
+
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
-        android:id="@+id/view"
-        android:background="@color/common_drivder_line" />
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@color/common_bg" />
 
     <LinearLayout
+        android:id="@+id/lin_foot"
         android:layout_width="match_parent"
         android:layout_height="90px"
         android:layout_marginBottom="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
-        android:id="@+id/lin_foot"
         android:orientation="horizontal">
+
         <RelativeLayout
             android:id="@+id/re_pl"
             android:layout_width="0dp"
@@ -142,7 +174,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:layout_toRightOf="@+id/activity_pl"
-                android:text="0"
+                android:text="评论"
                 android:textColor="#aca7a7"
                 android:textSize="@dimen/sp_13" />
         </RelativeLayout>
@@ -170,10 +202,11 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:layout_toRightOf="@+id/iv_good"
-                android:text="0"
+                android:text="点赞"
                 android:textColor="@color/color_999999"
                 android:textSize="@dimen/sp_13" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/re_trasmit"
             android:layout_width="0dp"
@@ -195,7 +228,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:layout_toRightOf="@+id/activity_share"
-                android:text="0"
+                android:text="转发"
                 android:textColor="@color/color_999999"
                 android:textSize="@dimen/sp_13" />
         </RelativeLayout>

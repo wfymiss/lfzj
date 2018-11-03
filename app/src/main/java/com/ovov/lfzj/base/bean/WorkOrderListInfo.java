@@ -51,6 +51,7 @@ public class WorkOrderListInfo {
     public int status_pd;
     public int status_jd;
     public WorkDetailBean.WorkEvaluateBean work_evaluate;
+    public String user_logo;
 
     public static class WorkEvaluateBean{
         public String evaluation_content;

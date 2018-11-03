@@ -4,13 +4,16 @@ package com.ovov.lfzj.neighbour.square;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,8 +30,11 @@ import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.ActivityUtils;
 import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.utils.UIUtils;
+import com.ovov.lfzj.base.widget.DeleteSquarepopupWindow;
 import com.ovov.lfzj.base.widget.EditDialog;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
+import com.ovov.lfzj.base.widget.TransmitpopupWindow;
+import com.ovov.lfzj.event.DeleteEvent;
 import com.ovov.lfzj.event.RefreshEvent;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
@@ -79,6 +85,8 @@ public class MySquareFragment extends BaseFragment {
     private int col;
     private String img;
     private String tranimg;
+    private String square_id;
+
     public MySquareFragment() {
     }
 
@@ -120,9 +128,9 @@ public class MySquareFragment extends BaseFragment {
             }
         });
         mActivityListSwf.autoRefresh();
-        if (userid.equals(LoginUserBean.getInstance().getUserId())){
+        if (userid.equals(LoginUserBean.getInstance().getUserId())) {
             mTvPut.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             mTvPut.setVisibility(View.GONE);
         }
         addRxBusSubscribe(RefreshEvent.class, new Action1<RefreshEvent>() {
@@ -131,7 +139,66 @@ public class MySquareFragment extends BaseFragment {
                 mActivityListSwf.autoRefresh();
             }
         });
+        addRxBusSubscribe(DeleteEvent.class, new Action1<DeleteEvent>() {
+            @Override
+            public void call(DeleteEvent deleteEvent) {
+                deleteSquare();
+            }
+        });
 
+    }
+
+    private void deleteSquare() {
+        showLoadingDialog();
+        Subscription subscription = RetrofitHelper.getInstance().deleteSquare(square_id)
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        if (e instanceof DataResultException) {
+                            DataResultException dataResultException = (DataResultException) e;
+                            showToast(dataResultException.errorInfo);
+                        } else {
+                            doFailed();
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        dismiss();
+                        showToast("删除成功");
+                        mActivityListSwf.autoRefresh();
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
+    //设置头像
+    private void showDelete() {
+        DeleteSquarepopupWindow pop = new DeleteSquarepopupWindow(mActivity);
+        // 开启 popup 时界面透明
+        WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+        lp.alpha = 0.7f;
+//                if (bgAlpha == 1) {
+//                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);//不移除该Flag的话,在有视频的页面上的视频会出现黑屏的bug
+//                } else {
+//                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);//此行代码主要是解决在华为手机上半透明效果无效的bug
+//                }
+        mActivity.getWindow().setAttributes(lp);
+        // popupwindow 第一个参数指定popup 显示页面
+        pop.showAtLocation(mActivity.findViewById(R.id.layout_square), Gravity.BOTTOM | Gravity.CENTER_VERTICAL, 0, 0);     // 第一个参数popup显示activity页面
+        // popup 退出时界面恢复
+        pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+                lp.alpha = 1f;
+                mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                mActivity.getWindow().setAttributes(lp);
+            }
+        });
     }
 
     private void initList() {
@@ -140,12 +207,28 @@ public class MySquareFragment extends BaseFragment {
         mAdapter = new CommonAdapter<SquareListInfo>(this.getActivity(), mData, R.layout.square_list_item) {
             @Override
             public void convert(ViewHolder viewHolder, final SquareListInfo squareListInfo, final int i) {
+
                 LinearLayout linFoot = viewHolder.getView(R.id.lin_foot);
                 View view = viewHolder.getView(R.id.view);
-                linFoot.setVisibility(View.GONE);
-                view.setVisibility(View.INVISIBLE);
+                linFoot.setVisibility(View.VISIBLE);
+                view.setVisibility(View.VISIBLE);
+                ImageView ivDelete = viewHolder.getView(R.id.iv_delete);
+                if (squareListInfo.user_id.equals(LoginUserBean.getInstance().getUserId())){
+                    ivDelete.setVisibility(View.VISIBLE);
+                    ivDelete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            square_id = squareListInfo.id;
+                            showDelete();
 
+                        }
+                    });
+                }else {
+                    ivDelete.setVisibility(View.GONE);
+                }
 
+                TextView tvListComment = viewHolder.getView(R.id.tv_list_comment);
+                tvListComment.setVisibility(View.GONE);
                 viewHolder.setText(R.id.tv_nickname, squareListInfo.userInfo.nickname);
                 viewHolder.setText(R.id.tv_content, squareListInfo.comment);
 
@@ -194,7 +277,7 @@ public class MySquareFragment extends BaseFragment {
                     mTransmitImage.setAdapter(mGridAdapter);
                     mTransmitImage.setVisibility(View.VISIBLE);
                     mImage.setVisibility(View.GONE);
-                }else {
+                } else {
                     reTransmit.setVisibility(View.GONE);
                     if (squareListInfo.imgUrl != null && squareListInfo.imgUrl.size() > 0)
                         mGridData.addAll(squareListInfo.imgUrl);
@@ -224,7 +307,7 @@ public class MySquareFragment extends BaseFragment {
                         } else {
                             img = squareListInfo.userInfo.user_logo;
                         }
-                        MyCommunityActivity.toUserActivity(getActivity(), squareListInfo.userInfo.nickname, img, "2", squareListInfo.user_id,squareListInfo.userInfo.signature);
+                        MyCommunityActivity.toUserActivity(getActivity(), squareListInfo.userInfo.nickname, img, "2", squareListInfo.user_id, squareListInfo.userInfo.signature);
                     }
                 });
                 TextView tvTransmitName = viewHolder.getView(R.id.tv_transmit_nickname);
@@ -236,19 +319,19 @@ public class MySquareFragment extends BaseFragment {
                         } else {
                             tranimg = squareListInfo.userInfo.user_logo;
                         }
-                        MyCommunityActivity.toUserActivity(mActivity,squareListInfo.transpondInfo.userInfo.nickname,tranimg,"2",squareListInfo.transpondInfo.user_id,squareListInfo.userInfo.signature);
+                        MyCommunityActivity.toUserActivity(mActivity, squareListInfo.transpondInfo.userInfo.nickname, tranimg, "2", squareListInfo.transpondInfo.user_id, squareListInfo.userInfo.signature);
                     }
                 });
                 mTransmitImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        SquareDetailActivity.toActivity(mActivity,squareListInfo.transpondInfo.id,i,1);
+                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
                     }
                 });
                 reTransmit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity,squareListInfo.transpondInfo.id,i,1);
+                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
                     }
                 });
 
@@ -256,14 +339,14 @@ public class MySquareFragment extends BaseFragment {
                 mImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        SquareDetailActivity.toActivity(getActivity(), squareListInfo.id,i,0);
+                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
                     }
                 });
                 LinearLayout mRecontainer = viewHolder.getView(R.id.container);
                 mRecontainer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(getActivity(), squareListInfo.id,i,0);
+                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
                     }
                 });
 
@@ -273,49 +356,49 @@ public class MySquareFragment extends BaseFragment {
         mActivityListRecycler.setAdapter(mAdapter);
     }
 
-    private void getMySquareList(final int type){
-        if (type == REFRESH){
+    private void getMySquareList(final int type) {
+        if (type == REFRESH) {
             page = 1;
             id = "";
-        }else {
+        } else {
             page = page + 1;
-            id = mData.get((page -1)*10-1).id;
+            id = mData.get((page - 1) * 10 - 1).id;
         }
-        Subscription subscription = RetrofitHelper.getInstance().getUserSquareList(userid,page,id)
+        Subscription subscription = RetrofitHelper.getInstance().getUserSquareList(userid, page, id)
                 .compose(RxUtil.<ListInfo<SquareListInfo>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<ListInfo<SquareListInfo>>() {
                     @Override
                     public void onError(Throwable e) {
                         mActivityListSwf.setEnableLoadmore(false);
-                        if (type == REFRESH){
+                        if (type == REFRESH) {
                             mActivityListSwf.finishRefresh(false);
 
-                        }else {
+                        } else {
                             mActivityListSwf.finishRefresh(false);
                         }
-                        if (e instanceof DataResultException){
+                        if (e instanceof DataResultException) {
                             DataResultException dataResultException = (DataResultException) e;
                             showToast(dataResultException.errorInfo);
-                        }else{
+                        } else {
 
                             doFailed();
                             //showError(e.getMessage());
-                            Log.e("show",e.getMessage());
+                            Log.e("show", e.getMessage());
                             e.printStackTrace();
                         }
                     }
 
                     @Override
                     public void onNext(ListInfo<SquareListInfo> dataInfo) {
-                        if (dataInfo.datas().size() < 10){
+                        if (dataInfo.datas().size() < 10) {
                             mActivityListSwf.setEnableLoadmore(false);
                         }
-                        if (type == REFRESH){
+                        if (type == REFRESH) {
                             mActivityListSwf.finishRefresh(true);
                             mData.clear();
                             mData.addAll(dataInfo.datas());
                             mAdapter.notifyDataSetChanged();
-                        }else {
+                        } else {
                             mActivityListSwf.finishRefresh(true);
                             mData.addAll(dataInfo.datas());
                             mAdapter.notifyDataSetChanged();
@@ -331,6 +414,7 @@ public class MySquareFragment extends BaseFragment {
     public void onViewClicked() {
         PutSquareActivity.toActivity(getActivity());
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -341,6 +425,6 @@ public class MySquareFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        userid = ((MyCommunityActivity)getActivity()).getUserid();
+        userid = ((MyCommunityActivity) getActivity()).getUserid();
     }
 }

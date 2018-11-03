@@ -41,10 +41,11 @@ public class SquareDetailInfo implements Serializable {
     public String forwardNum;
     public int isZan;
     public List<String> imgUrl;
-    public List<ReplyBean> reply;
+    public List<ReplyBean> replys;
     public List<FabulousBean> fabulous;
     public List<ForwardBean> forward;
     public TranspondInfo transpondInfo;
+    public String zanStr;
 
 
     public static class UserInfoBean implements Serializable{
@@ -127,6 +128,7 @@ public class SquareDetailInfo implements Serializable {
         public String content;
         public String time;
         public UserInfoBeanX userInfo;
+        public List<RevertBean> revert;
 
         public static class UserInfoBeanX implements Serializable{
             /**
@@ -137,6 +139,12 @@ public class SquareDetailInfo implements Serializable {
             public String nickname;
             public String user_logo;
             public String signature;
+
+        }
+        public static class RevertBean{
+            public String nickname;
+            public String mobile;
+            public String content;
 
         }
     }

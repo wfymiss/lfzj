@@ -5,12 +5,13 @@
     android:layout_height="match_parent"
     android:background="@color/background_color"
     android:orientation="vertical">
+
     <View
+        android:id="@+id/sitview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:id="@+id/sitview"
-        />
+        android:background="@color/white" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -20,12 +21,12 @@
             android:id="@+id/neigh_tablayout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
             android:layout_marginLeft="@dimen/dp_50"
             android:layout_marginRight="@dimen/dp_50"
-            android:layout_gravity="center"
             android:background="@color/white"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
             app:tabGravity="center"
             app:tabIndicatorColor="@color/transparent"
             app:tabMode="fixed"
@@ -47,8 +48,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.2dp"
-        android:background="@color/background_underline_color" />
+        android:layout_height="@dimen/margin_1dp"
+        android:background="@color/common_bg" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/neigh_viewpage"

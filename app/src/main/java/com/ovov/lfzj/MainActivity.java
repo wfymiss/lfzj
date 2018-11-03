@@ -226,7 +226,7 @@ public class MainActivity extends BaseMainActivity {
                     public void onError(Throwable e) {
                         if (e instanceof DataResultException) {
                             DataResultException dataResultException = (DataResultException) e;
-                            showToast(dataResultException.errorInfo);
+                            //showToast(dataResultException.errorInfo);
                         } else {
                             doFailed();
                             showError(e.getMessage());
@@ -515,8 +515,6 @@ public class MainActivity extends BaseMainActivity {
         protected void onPostExecute(String result) {
             mWakeLock.release();
             pBar.dismiss();
-
-
             intall();
 
         }

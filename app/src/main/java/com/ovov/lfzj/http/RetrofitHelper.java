@@ -11,6 +11,7 @@ import com.ovov.lfzj.base.BaseApplication;
 import com.ovov.lfzj.base.bean.ActivityUpImageInfo;
 import com.ovov.lfzj.base.bean.BuildingListResult;
 import com.ovov.lfzj.base.bean.DataInfo;
+import com.ovov.lfzj.base.bean.GoodListBean;
 import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.LoginBean;
 import com.ovov.lfzj.base.bean.LoginUserBean;
@@ -36,6 +37,7 @@ import com.ovov.lfzj.base.bean.WorkDetailBean;
 import com.ovov.lfzj.base.bean.WorkOrderListInfo;
 import com.ovov.lfzj.base.bean.WorkOrderUpInfo;
 import com.ovov.lfzj.base.bean.WorkerListInfo;
+import com.ovov.lfzj.base.bean.YouzanLoginBean;
 import com.ovov.lfzj.base.utils.NetWorkUtil;
 import com.ovov.lfzj.home.bean.BannerBean;
 import com.ovov.lfzj.home.bean.HealthDetailBean;
@@ -254,20 +256,21 @@ public class RetrofitHelper {
     public Observable<DataInfo> addNeighbour(RequestBody content, List<MultipartBody.Part> parts) {
         RequestBody mUserId = RequestBody.create(MediaType.parse("multipart/form-data"), getUserId());
         RequestBody token = RequestBody.create(MediaType.parse("multipart/form-data"), getToken());
-        return mApiService.addNeighbour(token, mUserId, content, parts);
+        RequestBody subid = RequestBody.create(MediaType.parse("multipart/form-data"), getSubId());
+        return mApiService.addNeighbour(token, mUserId, content, parts,subid);
 
     }
 
     public Observable<ListInfo<SquareListInfo>> getSquareList(int page, String id) {
-        return mApiService.getSquareList(getToken(), getUserId(), page, id);
+        return mApiService.getSquareList(getToken(), getUserId(), page, id,getSubId());
     }
 
     public Observable<DataInfo<SquareDetailInfo>> getSquareDetail(String id) {
-        return mApiService.getSquareDetail(getToken(), id, getUserId());
+        return mApiService.getSquareDetail(getToken(), id);
     }
 
     public Observable<ListInfo<SquareListInfo>> getHomeSquareList(int page, String id) {
-        return mApiService.getHomeSquareList(getToken(), page, id);
+        return mApiService.getHomeSquareList(getToken(), page, id,getSubId());
     }
 
     public Observable<ListInfo<SquareListInfo>> getLog(int page) {
@@ -286,7 +289,7 @@ public class RetrofitHelper {
 
 
     public Observable<DataInfo> addSquareComment(String id, String content) {
-        return mApiService.addSquareComment(getToken(), id, getUserId(), content);
+        return mApiService.addSquareComment(getToken(), id,content);
     }
 
     public Observable<DataInfo<String>> squareGood(String id) {
@@ -305,7 +308,7 @@ public class RetrofitHelper {
     }
 
     public Observable<DataInfo> transimSquare(String id, String content) {
-        return mApiService.transimSquare(getToken(), getUserId(), id, content);
+        return mApiService.transimSquare(getToken(), getUserId(), id, content,getSubId());
     }
 
     public Observable<ListInfo<SquareListInfo>> getUserSquareList(String userid, int page, String id) {
@@ -545,6 +548,22 @@ public class RetrofitHelper {
 
     public Observable<DataInfo> ownerCancelWorkerOrder(String wid,String reason,String remarks){
         return mApiService.ownerCancelWorkerOrder(getToken(),wid,reason,remarks);
+    }
+
+    public Observable<DataInfo> addSquareReply(String reply_id,String content){
+        return mApiService.addSquareReply(getToken(),reply_id,content);
+    }
+
+    public Observable<DataInfo> deleteSquare(String id){
+        return mApiService.squareDelete(getToken(),id);
+    }
+
+    public Observable<ListInfo<GoodListBean>> getGoodList(String id){
+        return mApiService.goodList(getToken(),id);
+    }
+
+    public Observable<DataInfo<YouzanLoginBean>> youzanLogin(){
+        return mApiService.youzanLogin(getUserId());
     }
 
 }

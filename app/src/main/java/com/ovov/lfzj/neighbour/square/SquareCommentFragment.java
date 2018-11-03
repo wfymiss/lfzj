@@ -128,7 +128,7 @@ public class SquareCommentFragment extends BaseFragment {
                     @Override
                     public void onNext(final DataInfo<SquareDetailInfo> squareDetailInfoDataInfo) {
                         mData.clear();
-                        mData.addAll(squareDetailInfoDataInfo.datas().reply);
+                        mData.addAll(squareDetailInfoDataInfo.datas().replys);
                         mAdapter.notifyDataSetChanged();
 
                     }

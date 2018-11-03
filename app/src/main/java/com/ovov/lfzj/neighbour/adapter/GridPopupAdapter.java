@@ -120,6 +120,12 @@ public class GridPopupAdapter extends BaseAdapter {
                     notifyDataSetChanged();
                 }
             });
+            vh.imageViews.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         } else {
             Picasso.with(context).load(R.mipmap.ac_paizhao).into(vh.imageViews);
             vh.ivClose.setVisibility(View.GONE);

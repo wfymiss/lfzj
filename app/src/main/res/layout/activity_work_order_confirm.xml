@@ -37,6 +37,7 @@
                 android:layout_marginLeft="17dp"
                 android:layout_marginRight="17dp"
                 android:layout_marginTop="@dimen/dp_14"
+                android:layout_marginBottom="@dimen/padding_15dp"
                 android:gravity="center"/>
         </LinearLayout>
     </ScrollView>

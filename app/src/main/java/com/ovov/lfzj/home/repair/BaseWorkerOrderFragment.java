@@ -1,6 +1,7 @@
 package com.ovov.lfzj.home.repair;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import de.hdodenhof.circleimageview.CircleImageView;
 import rx.Observable;
 import rx.Subscription;
 
@@ -96,6 +98,11 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
                 viewHolder.setText(R.id.tv_location, workOrderListInfo.address);
                 TextView tvDispatch = viewHolder.getView(R.id.tv_dispatch);
                 TextView tvCancel = viewHolder.getView(R.id.tv_cancel);
+                CircleImageView mIvHeader = viewHolder.getView(R.id.iv_header);
+                if (workOrderListInfo.user_logo != null && !TextUtils.isEmpty(workOrderListInfo.user_logo))
+                    Picasso.with(mActivity).load(workOrderListInfo.user_logo).placeholder(R.mipmap.ic_default_head).into(mIvHeader);
+                else
+                    Picasso.with(mActivity).load(R.mipmap.ic_default_head).into(mIvHeader);
                 switch (WorkerOrderTypeUtils.getStatus(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd)) {
                     case 1://未派单
                         viewHolder.setText(R.id.tv_status, WorkerOrderTypeUtils.getStatusName(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd));
@@ -108,7 +115,7 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
                         viewHolder.setText(R.id.tv_status, WorkerOrderTypeUtils.getStatusName(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd));
                         break;
                     case 4://已拒单
-                        viewHolder.setText(R.id.tv_status, WorkerOrderTypeUtils.getStatusName(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd));
+                        //viewHolder.setText(R.id.tv_status, WorkerOrderTypeUtils.getStatusName(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd));
                         break;
                     case 5://待验收
 
@@ -141,6 +148,7 @@ public abstract class BaseWorkerOrderFragment extends BaseFragment {
                         break;
                     case 7://已取消
                         viewHolder.setText(R.id.tv_status, WorkerOrderTypeUtils.getStatusName(workOrderListInfo.status, workOrderListInfo.status_wx, workOrderListInfo.status_jd, workOrderListInfo.status_pd));
+                        tvDispatch.setVisibility(View.GONE);
                         break;
                 }
                 NoScrollGridView mGridImage = viewHolder.getView(R.id.gridView);

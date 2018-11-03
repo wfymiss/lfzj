@@ -156,6 +156,7 @@ dependencies {
 //添加 Bugout NDK依赖
 
     compile 'cn.testin.analysis:bugout-ndk:1.0.0-beta'
+    compile 'com.youzanyun.open.mobile:x5sdk:6.4.12'
 
 
 }
