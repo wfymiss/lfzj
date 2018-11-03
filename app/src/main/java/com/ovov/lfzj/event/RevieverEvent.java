@@ -6,9 +6,21 @@ package com.ovov.lfzj.event;
 
 public class RevieverEvent {
     private String type;
+    private String id;
 
-    public RevieverEvent(String type) {
+    public RevieverEvent(String type, String id) {
+
+        this.id = id;
         this.type = type;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+
+        return id;
     }
 
     public String getType() {

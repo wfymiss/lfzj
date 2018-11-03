@@ -5,7 +5,7 @@ package com.ovov.lfzj.event;
  */
 
 public class Recievertype {
-    public static String CREATE_FEE = "1";//创建收费
+    public static String CREATE_FEE = "1";//新闻
     public static String OWNER_WORK_ORDER = "2";//业主工单
     public static String PROPERTY_WORK_ORDER = "3";//物业工单
     public static String PROPERTY_SCHDELUE = "4";//物业日程提醒
