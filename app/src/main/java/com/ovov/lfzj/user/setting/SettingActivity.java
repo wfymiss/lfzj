@@ -20,6 +20,7 @@ import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.login.FindPasswordActivity;
 import com.ovov.lfzj.login.LoginActivity;
+import com.youzan.androidsdk.YouzanSDK;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -88,7 +89,7 @@ public class SettingActivity extends BaseActivity {
                             LoginUserBean.getInstance().save();
                             JPushInterface.deleteAlias(mActivity,1);
                             LoginActivity.toActivity(mActivity);
-
+                            YouzanSDK.userLogout(mActivity);
                             for (int i = 0; i < mActivities.size(); i++) {
                                 if (mActivities.get(i) != null && !mActivities.get(i).isFinishing()) {
                                     mActivities.get(i).finish();

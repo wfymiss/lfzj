@@ -72,6 +72,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.squareup.picasso.Picasso;
 import com.tbruyelle.rxpermissions.RxPermissions;
+import com.youzan.androidsdk.YouzanSDK;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -490,6 +491,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
                             LoginUserBean.getInstance().reset();
                             LoginUserBean.getInstance().save();
                             LoginActivity.toActivity(mActivity);
+                            YouzanSDK.userLogout(mActivity);
                             mActivity.finish();
                         } else {
 

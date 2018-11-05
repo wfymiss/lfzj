@@ -32,6 +32,7 @@ import com.ovov.lfzj.property.activity.PaymentQueryActivity;
 import com.ovov.lfzj.property.home.adapter.HomeGridAdapter;
 import com.ovov.lfzj.property.home.repair.WorkerOrderActivity;
 import com.squareup.picasso.Picasso;
+import com.youzan.androidsdk.YouzanSDK;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -246,6 +247,7 @@ public class HomeFragment extends BaseFragment {
                             LoginUserBean.getInstance().reset();
                             LoginUserBean.getInstance().save();
                             LoginActivity.toActivity(mActivity);
+                            YouzanSDK.userLogout(mActivity);
                             mActivity.finish();
                         } else {
 
