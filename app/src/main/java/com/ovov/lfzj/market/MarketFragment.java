@@ -1,7 +1,9 @@
 package com.ovov.lfzj.market;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,6 +27,7 @@ import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.youzan.androidsdk.YouzanSDK;
 import com.youzan.androidsdk.YouzanToken;
+import com.youzan.androidsdk.event.AbsAuthEvent;
 import com.youzan.androidsdkx5.YouzanBrowser;
 
 import butterknife.BindView;
@@ -74,20 +77,43 @@ public class MarketFragment extends BaseFragment {
     @Override
     public void init() {
         super.init();
-        youzanLogin();
+        //youzanLogin();
+        mYouzanView.subscribe(new AbsAuthEvent() {
+            @Override
+            public void call(Context context, boolean b) {
+
+                if (b){
+                    youzanLogin();
+                }
+            }
+        });
+        mYouzanView.loadUrl("https://h5.youzan.com/wscshop/feature/FElLHR3x42");
         mYouzanView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, String s) {
                 if (s != null) {
                     if (s.contains("https://www.youzan.com/?from_source=support"))
                         return true;
-                    //Log.e("urllllll",s);
-                    MarketActivity.toActivity(mActivity, s);
+                    Log.e("urllllll",s);
+                    MarketActivity.toActivity(mActivity, s,0);
                     return true;
                 }
                 return false;
             }
+
+            @Override
+            public void onPageStarted(WebView webView, String s, Bitmap bitmap) {
+                super.onPageStarted(webView, s, bitmap);
+                showLoadingDialog();
+            }
+
+            @Override
+            public void onPageFinished(WebView webView, String s) {
+                super.onPageFinished(webView, s);
+                dismiss();
+            }
         });
+
     }
 
     private void youzanLogin() {
@@ -109,14 +135,14 @@ public class MarketFragment extends BaseFragment {
 
                     @Override
                     public void onNext(DataInfo<YouzanLoginBean> dataInfo) {
-                        dismiss();
+                        //dismiss();
                         YouzanToken youzanToken = new YouzanToken();
                         youzanToken.setAccessToken(dataInfo.datas().access_token);
                         youzanToken.setCookieKey(dataInfo.datas().cookie_key);
                         youzanToken.setCookieValue(dataInfo.datas().cookie_value);
                         YouzanSDK.sync(mActivity, youzanToken);
                         mYouzanView.sync(youzanToken);
-                        mYouzanView.loadUrl("https://h5.youzan.com/wscshop/feature/FElLHR3x42");
+
                     }
                 });
         addSubscrebe(subscription);

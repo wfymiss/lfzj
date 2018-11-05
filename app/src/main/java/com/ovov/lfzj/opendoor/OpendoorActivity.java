@@ -339,6 +339,7 @@ public class OpendoorActivity extends BaseActivity {
 
     private void initQrCode() {
         if (keys != null && keys.size() > 0) {
+            Log.e("keysssssss",keys.toString());
             QRUtils.loadConfig(this.getApplicationContext());
             String qrStr = null;
             qrStr = QRUtils.createDoorControlQR(this,

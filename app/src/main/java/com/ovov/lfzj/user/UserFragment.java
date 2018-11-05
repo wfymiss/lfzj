@@ -27,6 +27,7 @@ import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.login.IdentityConfirmActivity;
 import com.ovov.lfzj.login.MySubActivity;
+import com.ovov.lfzj.market.MarketActivity;
 import com.ovov.lfzj.market.order.OrderActivity;
 import com.ovov.lfzj.user.activity.FamilyActivity;
 import com.ovov.lfzj.user.activity.HealthSubscribeActivity;
@@ -134,19 +135,19 @@ public class UserFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.set_ly, R.id.tv_my, R.id.mine_family, R.id.tv_worker_order, R.id.mine_advice})
+    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.set_ly, R.id.tv_my, R.id.mine_family, R.id.tv_worker_order, R.id.mine_advice, R.id.tv_shop_order})
 
     public void onViewClicked(View view) {
         switch (view.getId()) {
 //            case R.id.tv_username_info:
 //                mUtils.startActivity(MessageActivity.class);
 //                break;
-//            case R.id.tv_order:
-//                mUtils.startActivity(EvaluateActivity.class);
-//                break;
-            //    case R.id.tv_shop_order:
-            //   mUtils.startActivity(OrderActivity.class);
-            //     break;
+           /*case R.id.tv_order:
+                mUtils.startActivity(EvaluateActivity.class);
+                break;*/
+            case R.id.tv_shop_order:
+                MarketActivity.toActivity(mActivity,"https://h5.youzan.com/v2/showcase/usercenter?kdt_id=41919992",1);
+                break;
             case R.id.mine_advice:
                 AdvicesActivity.toActivity(mActivity);
                 break;
@@ -183,6 +184,7 @@ public class UserFragment extends BaseFragment {
             case R.id.mine_family:
                 FamilyActivity.toActivity(mActivity);
                 break;
+
 
 //            case R.id.tv_myhealth:
 //                HealthSubscribeActivity.toActivity(mActivity);

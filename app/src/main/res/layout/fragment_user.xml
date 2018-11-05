@@ -239,16 +239,16 @@
         android:layout_height="@dimen/margin_1dp"
         android:background="@color/color_dcdcdc" />
 
-    <!--<TextView-->
-    <!--android:id="@+id/tv_shop_order"-->
-    <!--style="@style/text_mine_size"-->
-    <!--android:drawableLeft="@mipmap/shop"-->
-    <!--android:text="@string/mine_shop" />-->
+    <TextView
+    android:id="@+id/tv_shop_order"
+    style="@style/text_mine_size"
+    android:drawableLeft="@mipmap/ic_my_market"
+    android:text="@string/mine_shop" />
 
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/margin_1dp"-->
-    <!--android:background="@color/color_ffefefef" />-->
+    <View
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/margin_1dp"
+    android:background="@color/color_ffefefef" />
 
     <!--<TextView-->
     <!--android:id="@+id/tv_service_order"-->
