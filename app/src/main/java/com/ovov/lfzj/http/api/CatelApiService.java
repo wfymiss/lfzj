@@ -4,6 +4,7 @@ package com.ovov.lfzj.http.api;
 import com.ovov.lfzj.base.bean.ActivityUpImageInfo;
 import com.ovov.lfzj.base.bean.BuildingListResult;
 import com.ovov.lfzj.base.bean.DataInfo;
+import com.ovov.lfzj.base.bean.FamilyInfo;
 import com.ovov.lfzj.base.bean.GoodListBean;
 import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.LoginBean;
@@ -343,10 +344,26 @@ public interface CatelApiService {
                                                    @Field("id") String sub_id);
 
     @FormUrlEncoded
+    @POST("v1/personal/getfamilylist")
+    Observable<ListInfo<FamilyInfo>> getfamilylist(@Field("token") String token,
+                                                   @Field("subdistrictr_id") String sub_id,
+                                                   @Field("type") String type);
+    @FormUrlEncoded
+    @POST("v1/personal/actfamilydelete")
+    Observable<ListInfo<FamilyInfo>> getActfamilydelete(@Field("token") String token,
+                                                   @Field("subdistrictr_id") String sub_id,
+                                                   @Field("user_id") String user_id,
+                                                   @Field("relative_id") String relative_id);
+
+
+
+    @FormUrlEncoded
     @POST("v1/examination")
     Observable<ListInfo<HealthBean>> getHealthTime(@Field("token") String token,
                                                    @Field("subdistrictr_id") String sub_id,
                                                    @Field("time") String time);
+
+
 
     @FormUrlEncoded
     @POST("v1/examination/examinationlist")

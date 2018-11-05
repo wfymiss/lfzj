@@ -30,6 +30,7 @@ import com.ovov.lfzj.login.MySubActivity;
 import com.ovov.lfzj.market.MarketActivity;
 import com.ovov.lfzj.market.order.OrderActivity;
 import com.ovov.lfzj.user.activity.FamilyActivity;
+import com.ovov.lfzj.user.activity.FamilyListActivity;
 import com.ovov.lfzj.user.activity.HealthSubscribeActivity;
 import com.ovov.lfzj.user.setting.AdvicesActivity;
 import com.ovov.lfzj.user.setting.SettingActivity;
@@ -146,7 +147,7 @@ public class UserFragment extends BaseFragment {
                 mUtils.startActivity(EvaluateActivity.class);
                 break;*/
             case R.id.tv_shop_order:
-                MarketActivity.toActivity(mActivity,"https://h5.youzan.com/v2/showcase/usercenter?kdt_id=41919992",1);
+                MarketActivity.toActivity(mActivity, "https://h5.youzan.com/v2/showcase/usercenter?kdt_id=41919992", 1);
                 break;
             case R.id.mine_advice:
                 AdvicesActivity.toActivity(mActivity);
@@ -182,7 +183,7 @@ public class UserFragment extends BaseFragment {
                 break;
 
             case R.id.mine_family:
-                FamilyActivity.toActivity(mActivity);
+                FamilyListActivity.toActivity(mActivity);
                 break;
 
 
