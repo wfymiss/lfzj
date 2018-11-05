@@ -56,6 +56,7 @@ import com.ovov.lfzj.user.UserFragment;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.yanzhenjie.permission.AndPermission;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
@@ -82,8 +83,6 @@ public class MainActivity extends BaseMainActivity {
     private String path;
     private static String DOWNLOAD_NAME = "乐福院子";
     private RxPermissions rxPermission;
-    private MyReceiver receiver;
-
     private ActivityUtils activityUtils;
 
     TagAliasCallback tagAliasCallback = new TagAliasCallback() {
@@ -99,34 +98,35 @@ public class MainActivity extends BaseMainActivity {
     }
 
 
-    private void registerBroadcast() {
-        // 注册广播接收者
-        Log.i("hhhh", "rrrrrrrr");
-        receiver = new MyReceiver();
-        Log.i("hhhh", "yyyyyyyyyyyyyyyyy");
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("exit_app");
-        this.registerReceiver(receiver, filter);
-    }
-
-    class MyReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.i("hhhh", "dddddddd" + intent.getAction());
-            if (intent.getAction().equals("exit_app")) {
-                Log.i("hhhh", "ffffffffffff" + intent.getAction());
-                finish();
-            }
-        }
-    }
+//    private void registerBroadcast() {
+//        // 注册广播接收者
+//        Log.i("hhhh", "rrrrrrrr");
+//        receiver = new MyReceiver();
+//        Log.i("hhhh", "yyyyyyyyyyyyyyyyy");
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction("exit_app");
+//        this.registerReceiver(receiver, filter);
+//    }
+//
+//    class MyReceiver extends BroadcastReceiver {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            Log.i("hhhh", "dddddddd" + intent.getAction());
+//            if (intent.getAction().equals("exit_app")) {
+//                Log.i("hhhh", "ffffffffffff" + intent.getAction());
+//                finish();
+//            }
+//        }
+//    }
 
     @Override
     public void init() {
         super.init();
         //极光推送
-        registerBroadcast();
+   //     registerBroadcast();
         JPushInterface.setAlias(this, phone, tagAliasCallback);                                //  极光
         StatusBarUtils.setStatusBar(this, false, false);
+        EventBus.getDefault().register(this);
         FileUtils.createOrExistsDir(BASE_FILE);
         initFragment(0);
         switchContent(1, 0);
