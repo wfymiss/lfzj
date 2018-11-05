@@ -43,6 +43,7 @@ import com.ovov.lfzj.event.SquareDetailIdentityEvent;
 import com.ovov.lfzj.event.SwitchEvent;
 import com.ovov.lfzj.home.HomeFragment;
 import com.ovov.lfzj.home.payment.activity.PayMentRecordActivity;
+import com.ovov.lfzj.home.ui.NewsDetailActivity;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.login.IdentityConfirmActivity;
@@ -50,10 +51,12 @@ import com.ovov.lfzj.login.LoginActivity;
 import com.ovov.lfzj.market.MarketFragment;
 import com.ovov.lfzj.neighbour.NeighbourFragment;
 import com.ovov.lfzj.opendoor.OpendoorActivity;
+import com.ovov.lfzj.property.home.repair.WorkerOrderActivity;
 import com.ovov.lfzj.user.UserFragment;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.yanzhenjie.permission.AndPermission;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
@@ -80,8 +83,6 @@ public class MainActivity extends BaseMainActivity {
     private String path;
     private static String DOWNLOAD_NAME = "乐福院子";
     private RxPermissions rxPermission;
-    private MyReceiver receiver;
-
     private ActivityUtils activityUtils;
 
     TagAliasCallback tagAliasCallback = new TagAliasCallback() {
@@ -97,34 +98,35 @@ public class MainActivity extends BaseMainActivity {
     }
 
 
-    private void registerBroadcast() {
-        // 注册广播接收者
-        Log.i("hhhh", "rrrrrrrr");
-        receiver = new MyReceiver();
-        Log.i("hhhh", "yyyyyyyyyyyyyyyyy");
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("exit_app");
-        this.registerReceiver(receiver, filter);
-    }
-
-    class MyReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.i("hhhh", "dddddddd" + intent.getAction());
-            if (intent.getAction().equals("exit_app")) {
-                Log.i("hhhh", "ffffffffffff" + intent.getAction());
-                finish();
-            }
-        }
-    }
+//    private void registerBroadcast() {
+//        // 注册广播接收者
+//        Log.i("hhhh", "rrrrrrrr");
+//        receiver = new MyReceiver();
+//        Log.i("hhhh", "yyyyyyyyyyyyyyyyy");
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction("exit_app");
+//        this.registerReceiver(receiver, filter);
+//    }
+//
+//    class MyReceiver extends BroadcastReceiver {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            Log.i("hhhh", "dddddddd" + intent.getAction());
+//            if (intent.getAction().equals("exit_app")) {
+//                Log.i("hhhh", "ffffffffffff" + intent.getAction());
+//                finish();
+//            }
+//        }
+//    }
 
     @Override
     public void init() {
         super.init();
         //极光推送
-        registerBroadcast();
+   //     registerBroadcast();
         JPushInterface.setAlias(this, phone, tagAliasCallback);                                //  极光
         StatusBarUtils.setStatusBar(this, false, false);
+        EventBus.getDefault().register(this);
         FileUtils.createOrExistsDir(BASE_FILE);
         initFragment(0);
         switchContent(1, 0);
@@ -251,12 +253,15 @@ public class MainActivity extends BaseMainActivity {
         if (event.getType().equals(Recievertype.CREATE_FEE)) {
             if (activityUtils == null)
                 activityUtils = new ActivityUtils(this);
-//            activityUtils.startActivity(PayMentRecordActivity.class);
-        } else if (event.getType().equals(Recievertype.OWNER_WORK_ORDER)) {
-            if (activityUtils == null)
-                activityUtils = new ActivityUtils(this);
-//            activityUtils.startActivity(WorkerOrderActivity.class);
+            Intent intent = new Intent(MainActivity.this, NewsDetailActivity.class);
+            intent.putExtra("id", event.getId());
+            mActivity.startActivity(intent);
         }
+//        } else if (event.getType().equals(Recievertype.OWNER_WORK_ORDER)) {
+//            if (activityUtils == null)
+//                activityUtils = new ActivityUtils(this);
+//            activityUtils.startActivity(WorkerOrderActivity.class);
+//        }
     }
 
     @Override
