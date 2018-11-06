@@ -507,7 +507,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
                     }
                 });
         addSubscrebe(subscription);
-    }
+    } 
 
     @Override
     public void onDestroyView() {

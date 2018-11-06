@@ -30,6 +30,7 @@ import com.ovov.lfzj.base.utils.ActivityUtils;
 import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.utils.StatusBarUtils;
 import com.ovov.lfzj.base.utils.Tools;
+import com.ovov.lfzj.base.utils.UIUtils;
 import com.ovov.lfzj.base.widget.CommonProgressDialog;
 import com.ovov.lfzj.base.widget.IdentityDialog;
 import com.ovov.lfzj.base.widget.UpdateDialog;
@@ -75,13 +76,14 @@ import rx.Subscription;
 import rx.functions.Action1;
 
 import static com.ovov.lfzj.CatelApplication.MAIN_ACTIVITY_IDENTITY;
+import static com.ovov.lfzj.base.BaseApplication.getContext;
 
 public class MainActivity extends BaseMainActivity {
 
     private CommonProgressDialog pBar;
     public static final String BASE_FILE = Environment.getExternalStorageDirectory().getPath() + "/lfzj/";
     private String path;
-    private static String DOWNLOAD_NAME = "乐福院子";
+    private String DOWNLOAD_NAME = "乐福院子"+ Tools.getVersionName(MainActivity.this);;
     private RxPermissions rxPermission;
     private ActivityUtils activityUtils;
 
@@ -237,7 +239,7 @@ public class MainActivity extends BaseMainActivity {
                     @Override
                     public void onNext(DataInfo<UpdateBean> updateBeanDataInfo) {
                         if (updateBeanDataInfo.datas().needUpdate()) {
-                            UpdateDialog updateDialog = new UpdateDialog(mActivity, updateBeanDataInfo.datas().apk_url, updateBeanDataInfo.datas().upgrade_point);
+                            UpdateDialog updateDialog = new UpdateDialog(mActivity, "https://dab00d2bd1ae89e42d371afb9a80f416.dd.cdntips.com/imtt.dd.qq.com/16891/0289255B74F05EB51F36E1613FF3D619.apk?mkey=5be0c933da1a92b7&f=0c58&fsname=com.ovov.lfzj_3.2.9_51.apk&csr=1bbd&cip=218.26.180.66&proto=https", updateBeanDataInfo.datas().upgrade_point);
                             updateDialog.show();
                         }
                     }
