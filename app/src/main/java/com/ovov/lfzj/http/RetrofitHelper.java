@@ -11,6 +11,7 @@ import com.ovov.lfzj.base.BaseApplication;
 import com.ovov.lfzj.base.bean.ActivityUpImageInfo;
 import com.ovov.lfzj.base.bean.BuildingListResult;
 import com.ovov.lfzj.base.bean.DataInfo;
+import com.ovov.lfzj.base.bean.FamilyInfo;
 import com.ovov.lfzj.base.bean.GoodListBean;
 import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.LoginBean;
@@ -238,7 +239,7 @@ public class RetrofitHelper {
     }
 
     public Observable<RoomListResult> getRoomList(String building, String unit) {
-        return mApiService.getRoomList("1[[", building, unit);
+        return mApiService.getRoomList(LoginUserBean.getInstance().getSub_id(), building, unit);
     }
 
     public Observable<WorkOrderUpInfo> ownerCommitWorkeroeder(String category, String posistion, String did, String contact, String phone, String time, String addr, String content, String sub_id, String list_img) {
@@ -485,6 +486,13 @@ public class RetrofitHelper {
 
     public Observable<ListInfo<RoomListInfo>> getUserHouse() {
         return mApiService.getUserHouse(getToken(), getSubId());
+    }
+
+    public Observable<ListInfo<FamilyInfo>> getfamilylist() {
+        return mApiService.getfamilylist(getToken(), getSubId(),"1");
+    }
+ public Observable<ListInfo<FamilyInfo>> getActfamilydelete(String userid,String relative_id) {
+        return mApiService.getActfamilydelete(getToken(), getSubId(),userid,relative_id);
     }
 
     public Observable<ListInfo<WorkOrderListInfo>> getWorkList(int status, int page) {

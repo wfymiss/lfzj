@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="47dp"
+    android:orientation="horizontal">
+
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="63dp"
+        android:textSize="@dimen/textSize_15sp"
+        android:text="业主:" />
+
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="@dimen/textSize_15sp"
+        android:layout_marginLeft="@dimen/padding_10dp"
+        android:text="王杰" />
+
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textSize_15sp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/margin_20dp"
+        android:text="15234246763" />
+
+    <TextView
+        android:id="@+id/tv_delect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="@dimen/textSize_15sp"
+        android:layout_marginLeft="38dp"
+        android:background="@drawable/help_shape_item"
+        android:text="解除" />
+
+</LinearLayout>

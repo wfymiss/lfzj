@@ -44,7 +44,10 @@ import com.ovov.lfzj.event.SquareDetailIdentityEvent;
 import com.ovov.lfzj.event.SwitchEvent;
 import com.ovov.lfzj.home.HomeFragment;
 import com.ovov.lfzj.home.payment.activity.PayMentRecordActivity;
+import com.ovov.lfzj.home.repair.WorkOrderConfirmActivity;
+import com.ovov.lfzj.home.repair.WorkerOrderDetailActivity;
 import com.ovov.lfzj.home.ui.NewsDetailActivity;
+import com.ovov.lfzj.home.ui.NoticeDetailActivity;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.login.IdentityConfirmActivity;
@@ -125,7 +128,7 @@ public class MainActivity extends BaseMainActivity {
     public void init() {
         super.init();
         //极光推送
-   //     registerBroadcast();
+        //     registerBroadcast();
         JPushInterface.setAlias(this, phone, tagAliasCallback);                                //  极光
         StatusBarUtils.setStatusBar(this, false, false);
         EventBus.getDefault().register(this);
@@ -252,18 +255,26 @@ public class MainActivity extends BaseMainActivity {
     @Subscribe
     public void onEventMainThread(RevieverEvent event) {
 
+
         if (event.getType().equals(Recievertype.CREATE_FEE)) {
             if (activityUtils == null)
                 activityUtils = new ActivityUtils(this);
             Intent intent = new Intent(MainActivity.this, NewsDetailActivity.class);
             intent.putExtra("id", event.getId());
             mActivity.startActivity(intent);
+        } else if (event.getType().equals(Recievertype.OWNER_WORK_ORDER)) {
+            Intent intent = new Intent(MainActivity.this, NoticeDetailActivity.class);
+            intent.putExtra("id", event.getId());
+            mActivity.startActivity(intent);
+        } else if (event.getType().equals(Recievertype.PROPERTY_WORK_ORDER)) {
+            WorkerOrderDetailActivity.toActivity(mActivity,Integer.parseInt(event.getId()));
+        } else if (event.getType().equals(Recievertype.PROPERTY_SCHDELUE)) {
+            WorkerOrderDetailActivity.toActivity(mActivity,Integer.parseInt(event.getId()));
+        }else if (event.getType().equals(Recievertype.WORKERINFO)){
+
         }
-//        } else if (event.getType().equals(Recievertype.OWNER_WORK_ORDER)) {
-//            if (activityUtils == null)
-//                activityUtils = new ActivityUtils(this);
-//            activityUtils.startActivity(WorkerOrderActivity.class);
-//        }
+
+
     }
 
     @Override

@@ -149,6 +149,7 @@
                 <category android:name="com.ovov.lfzj" />
             </intent-filter>
         </service>
+
         <receiver
             android:name=".base.jpush.JpushReceiver"
             android:enabled="true"
@@ -520,7 +521,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity android:name=".neighbour.square.GoodActivity" />
-        <activity android:name=".market.MarketActivity"></activity>
+        <activity android:name=".market.MarketActivity" />
+        <activity android:name=".user.activity.FamilyListActivity"></activity>
     </application>
 
 </manifest>

@@ -400,6 +400,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
             public void onClick(View v) {
                 if (UIUtils.isFastClick()) {
                     if (LoginUserBean.getInstance().isIs_auth()) {
+
                         initpopuwindow(textView);
                     } else {
 
