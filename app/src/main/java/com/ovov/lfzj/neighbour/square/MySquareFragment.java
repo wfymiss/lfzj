@@ -209,9 +209,7 @@ public class MySquareFragment extends BaseFragment {
             public void convert(ViewHolder viewHolder, final SquareListInfo squareListInfo, final int i) {
 
                 LinearLayout linFoot = viewHolder.getView(R.id.lin_foot);
-                View view = viewHolder.getView(R.id.view);
                 linFoot.setVisibility(View.VISIBLE);
-                view.setVisibility(View.VISIBLE);
                 ImageView ivDelete = viewHolder.getView(R.id.iv_delete);
                 if (squareListInfo.user_id.equals(LoginUserBean.getInstance().getUserId())){
                     ivDelete.setVisibility(View.VISIBLE);

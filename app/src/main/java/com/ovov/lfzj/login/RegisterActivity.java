@@ -19,7 +19,6 @@ import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.RegisterBean;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.RegexUtils;
-import com.ovov.lfzj.base.utils.RxBus;
 import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
@@ -44,6 +43,8 @@ public class RegisterActivity extends BaseActivity {
     @BindView(R.id.tv_register)
     TextView mTvRegister;
     public static final int SMS_CODE_VALID_SECOND = 60;
+    @BindView(R.id.et_recommend)
+    EditText mEtRecommend;
     private ValueAnimator valueAnimator;
     private static int whiteColor;
     private static int grayColor;
@@ -113,6 +114,10 @@ public class RegisterActivity extends BaseActivity {
                     showToast(R.string.text_no_equals);
                     return;
                 }
+                if (!TextUtils.isEmpty(mEtRecommend.getText().toString()) && RegexUtils.isMobile(mEtRecommend.getText().toString()) != RegexUtils.VERIFY_SUCCESS){
+                    showToast("请输入正确的推荐人手机号");
+                    return;
+                }
                 toRegister();
                 break;
         }
@@ -146,7 +151,7 @@ public class RegisterActivity extends BaseActivity {
 
     private void toRegister() {
         showLoadingDialog();
-        Subscription subscription = RetrofitHelper.getInstance().register(phone, verify, password)
+        Subscription subscription = RetrofitHelper.getInstance().register(phone, verify, password,mEtRecommend.getText().toString())
                 .compose(RxUtil.<DataInfo<RegisterBean>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<RegisterBean>>() {
                     @Override
@@ -212,4 +217,5 @@ public class RegisterActivity extends BaseActivity {
         if (valueAnimator != null)
             valueAnimator.cancel();
     }
+
 }

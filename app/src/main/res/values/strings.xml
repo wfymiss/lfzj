@@ -123,6 +123,7 @@
     <string name="text_set">设置</string>
     <string name="text_account_safe">账户安全</string>
     <string name="text_about">关于我们</string>
+    <string name="text_recommend">我的推荐</string>
     <string name="text_loginout">退出登录</string>
     <string name="text_loginout_failer">退出失败</string>
     <string name="text_login_invaild">登录失效，请重新登录</string>
@@ -165,6 +166,9 @@
     <string name="text_identity_owner">业主身份认证</string>
     <string name="text_abandon">放弃认证</string>
     <string name="text_input_all_message">请输入完整信息</string>
+    <string name="text_register_time">注册时间：%s</string>
+    <string name="text_register_status">状态：%s</string>
+    <string name="text_phone_recommend">手机：%s</string>
 
     <!--管家版功能标题-->
     <string name="gd">维修工单</string>

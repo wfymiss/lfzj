@@ -3,6 +3,7 @@ package com.ovov.lfzj.home.repair;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,6 +16,7 @@ import com.mcxtzhang.commonadapter.lvgv.CommonAdapter;
 import com.mcxtzhang.commonadapter.lvgv.ViewHolder;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
+import com.ovov.lfzj.base.bean.CheckBean;
 import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.WorkDetailBean;
 import com.ovov.lfzj.base.net.DataResultException;
@@ -27,8 +29,11 @@ import com.ovov.lfzj.base.widget.OwnerCancelDialog;
 import com.ovov.lfzj.base.widget.RemindDialogUtil;
 import com.ovov.lfzj.event.OwnerCancelEvent;
 import com.ovov.lfzj.event.OwnerCancelSuccessEvent;
+import com.ovov.lfzj.event.PayResultEvent;
+import com.ovov.lfzj.event.PaymentEvent;
 import com.ovov.lfzj.event.RepairCommentSuccessEvent;
 import com.ovov.lfzj.event.WorkerOrderCheckSuccessEvent;
+import com.ovov.lfzj.home.payment.activity.H5PayActivityActivity;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.squareup.picasso.Picasso;
@@ -100,6 +105,8 @@ public class WorkerOrderDetailActivity extends BaseActivity {
     @BindView(R.id.lin_cancel_content)
     LinearLayout mLinCancelContent;
     private String id;
+    private String order_id;
+    private String type;
 
     public static void toActivity(Context context, int id) {
         Intent intent = new Intent(context, WorkerOrderDetailActivity.class);
@@ -127,6 +134,12 @@ public class WorkerOrderDetailActivity extends BaseActivity {
             @Override
             public void call(OwnerCancelEvent ownerCancelEvent) {
                 cancelWorkerOrder(ownerCancelEvent.reason, ownerCancelEvent.remarks);
+            }
+        });
+        addRxBusSubscribe(PayResultEvent.class, new Action1<PayResultEvent>() {
+            @Override
+            public void call(PayResultEvent payResultEvent) {
+                confirmPay(payResultEvent.type, payResultEvent.order_id, "");
             }
         });
     }
@@ -315,7 +328,7 @@ public class WorkerOrderDetailActivity extends BaseActivity {
         showLoadingDialog();
         Subscription subscription = RetrofitHelper.getInstance().workerOrderCheck(id)
                 .compose(RxUtil.rxSchedulerHelper())
-                .subscribe(new CommonSubscriber<DataInfo>() {
+                .subscribe(new CommonSubscriber<DataInfo<CheckBean>>() {
                     @Override
                     public void onError(Throwable e) {
                         dismiss();
@@ -330,9 +343,49 @@ public class WorkerOrderDetailActivity extends BaseActivity {
                     }
 
                     @Override
+                    public void onNext(DataInfo<CheckBean> dataInfo) {
+                        dismiss();
+                        if (dataInfo.datas().order_id == null) {
+                            showToast("验收成功");
+                            order_id = dataInfo.datas().order_id;
+                            type = dataInfo.datas().type;
+                            initData();
+                            RxBus.getDefault().post(new WorkerOrderCheckSuccessEvent());
+                            RepairCommentActivity.toActivity(mActivity, id);
+                        }else if (dataInfo.datas().order_id!= null){
+
+                            H5PayActivityActivity.toActivity(mActivity,dataInfo.datas().type,dataInfo.datas().order_id,"");
+                        }
+                    }
+                });
+        addSubscrebe(subscription);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+    private void confirmPay(String order_type, String order_id, String order_number) {
+        showLoadingDialog();
+        Subscription subscription = RetrofitHelper.getInstance().confirmPayResult(order_type, order_id, order_number)
+                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        if (e instanceof DataResultException) {
+                            DataResultException dataResultException = (DataResultException) e;
+                            showError(dataResultException.errorInfo);
+                            showToast(dataResultException.errorInfo);
+                        } else {
+                            doFailed();
+                            showError(e.getMessage());
+                        }
+                    }
+
+                    @Override
                     public void onNext(DataInfo dataInfo) {
                         dismiss();
-                        showToast("验收成功");
                         initData();
                         RxBus.getDefault().post(new WorkerOrderCheckSuccessEvent());
                         RepairCommentActivity.toActivity(mActivity, id);
@@ -340,5 +393,4 @@ public class WorkerOrderDetailActivity extends BaseActivity {
                 });
         addSubscrebe(subscription);
     }
-
 }

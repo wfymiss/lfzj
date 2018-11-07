@@ -1,6 +1,7 @@
 package com.ovov.lfzj.neighbour.square;
 
 
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -51,6 +52,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -210,10 +212,10 @@ public class SquareFragment extends BaseFragment {
                     @Override
                     public void onError(Throwable e) {
                         if (type == REFRESH) {
-                            mActivityListSwf.finishRefresh(false);
+                            mActivityListSwf.finishRefresh();
 
                         } else {
-                            mActivityListSwf.finishLoadmore(false);
+                            mActivityListSwf.finishLoadmore();
                         }
 
                         if (e instanceof DataResultException) {
@@ -238,24 +240,24 @@ public class SquareFragment extends BaseFragment {
                                 mActivityListSwf.setEnableLoadmore(true);
                             }
                             if (type == REFRESH) {
-                                mActivityListSwf.finishRefresh(true);
+                                mActivityListSwf.finishRefresh();
                                 mData.clear();
                                 mData.addAll(listInfoDataInfo.datas());
                                 mAdapter.notifyDataSetChanged();
 
 
                             } else {
-                                mActivityListSwf.finishLoadmore(true);
+                                mActivityListSwf.finishLoadmore();
                                 mData.addAll(listInfoDataInfo.datas());
                                 mAdapter.notifyDataSetChanged();
 
                             }
                         } else {
                             if (type == REFRESH) {
-                                mActivityListSwf.finishRefresh(false);
+                                mActivityListSwf.finishRefresh();
 
                             } else {
-                                mActivityListSwf.finishLoadmore(false);
+                                mActivityListSwf.finishLoadmore();
                             }
                         }
 
@@ -310,7 +312,7 @@ public class SquareFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         if (LoginUserBean.getInstance().isIs_auth()) {
-                            SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
+                            SquareDetailActivity.toActivity(mActivity, i, squareListInfo);
                         } else {
                             identityDialog.show();
                         }
@@ -321,7 +323,7 @@ public class SquareFragment extends BaseFragment {
                 reComment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
+                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo);
 
                     }
                 });
@@ -341,7 +343,11 @@ public class SquareFragment extends BaseFragment {
                 NoScrollGridView mTransmitImage = viewHolder.getView(R.id.transmit_gridView);
                 NoScrollGridView mImage = viewHolder.getView(R.id.gridView);
                 List<String> mGridData = new ArrayList<>();
-
+                if (squareListInfo.imgUrl.size() > 0) {
+                    mImage.setVisibility(View.VISIBLE);
+                } else {
+                    mImage.setVisibility(View.GONE);
+                }
                 CommonAdapter<String> mGridAdapter = new CommonAdapter<String>(getActivity(), mGridData, R.layout.user_img_item) {
                     @Override
                     public void convert(ViewHolder viewHolder, String s, int i) {
@@ -369,7 +375,6 @@ public class SquareFragment extends BaseFragment {
                         width = width / col;
                         int height = width;
                         ivGrid.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
-
                         Picasso.with(mActivity).load(s).transform(new CircleCornerForm()).into(ivGrid);
                         ivGrid.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -396,7 +401,10 @@ public class SquareFragment extends BaseFragment {
                         col = 3;
                     }
                     mTransmitImage.setAdapter(mTransmitGridAdapter);
-                    mTransmitImage.setVisibility(View.VISIBLE);
+                    if (squareListInfo.transpondInfo.imgUrl.size() > 0)
+                        mTransmitImage.setVisibility(View.VISIBLE);
+                    else
+                        mTransmitImage.setVisibility(View.GONE);
                     mImage.setVisibility(View.GONE);
                 } else {
                     reTransmit.setVisibility(View.GONE);
@@ -416,8 +424,8 @@ public class SquareFragment extends BaseFragment {
 
 
                 CircleImageView ivHeader = viewHolder.getView(R.id.iv_head);
-                if (squareListInfo.userInfo.user_logo != null && squareListInfo.userInfo.user_logo != "")
-                    Picasso.with(mActivity).load(squareListInfo.userInfo.user_logo).into(ivHeader);
+                if (squareListInfo.userInfo.user_logo != null && !squareListInfo.userInfo.user_logo.equals(""))
+                    Picasso.with(mActivity).load(squareListInfo.userInfo.user_logo).placeholder(R.mipmap.ic_default_head).into(ivHeader);
                 else
                     Picasso.with(mActivity).load(R.mipmap.ic_default_head).into(ivHeader);
                 ivHeader.setOnClickListener(new View.OnClickListener() {
@@ -446,13 +454,13 @@ public class SquareFragment extends BaseFragment {
                 mTransmitImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
+                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo);
                     }
                 });
                 reTransmit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
+                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo);
 
                     }
                 });
@@ -461,14 +469,14 @@ public class SquareFragment extends BaseFragment {
                 mImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
+                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo);
                     }
                 });
                 LinearLayout mRecontainer = viewHolder.getView(R.id.container);
                 mRecontainer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
+                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo);
                     }
                 });
 

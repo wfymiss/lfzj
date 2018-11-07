@@ -3,6 +3,7 @@ package com.ovov.lfzj.base;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -11,10 +12,13 @@ import android.view.View;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.utils.RxBus;
 import com.ovov.lfzj.base.utils.UIUtils;
+import com.zyao89.view.zloading.ZLoadingDialog;
 
 import rx.Subscription;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
+
+import static com.zyao89.view.zloading.Z_TYPE.LEAF_ROTATE;
 
 /**
  * Created by jzxiang on 4/3/17.
@@ -26,7 +30,7 @@ public class BaseFragment extends Fragment {
     protected View mRootView;
     protected Activity mActivity;
     protected CompositeSubscription mCompositeSubscription;
-    private ProgressDialog mProgressDialog;
+    private ZLoadingDialog mProgressDialog;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -87,13 +91,20 @@ public class BaseFragment extends Fragment {
 
     public void showLoadingDialog() {
         if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(getActivity());
-            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog = new ZLoadingDialog(mActivity);
+
+            mProgressDialog.setLoadingBuilder(LEAF_ROTATE)//设置类型
+                    .setLoadingColor(Color.GRAY)//颜色
+                    .setHintText("乐福院子")
+                    .setHintTextSize(16) // 设置字体大小 dp
+                    .setHintTextColor(Color.GRAY)  // 设置字体颜色
+                    .setDurationTime(0.5) // 设置动画时间百分比 - 0.5倍
+                    .show();
         }
         mProgressDialog.show();
     }
 
-    public void showLoadingDialog(String msg) {
+    /*public void showLoadingDialog(String msg) {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(getActivity());
             mProgressDialog.setMessage(getString(R.string.loading));
@@ -101,7 +112,7 @@ public class BaseFragment extends Fragment {
 
         mProgressDialog.setMessage(msg);
         mProgressDialog.show();
-    }
+    }*/
 
     public void dismiss() {
         if (mProgressDialog != null)

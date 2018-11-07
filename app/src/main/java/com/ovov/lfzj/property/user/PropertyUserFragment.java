@@ -48,8 +48,8 @@ public class PropertyUserFragment extends BaseFragment {
     @BindView(R.id.my_fragment)
     LinearLayout myFragment;
     Unbinder unbinder;
-    private int[] image = {R.mipmap.ic_lfgj_intro, R.mipmap.m_install};
-    private int[] title = {R.string.text_about, R.string.text_set};
+    private int[] image = {R.mipmap.ic_lfgj_intro, R.mipmap.m_install,R.mipmap.ic_recommend_property};
+    private int[] title = {R.string.text_about, R.string.text_set,R.string.text_recommend};
     private List<Map<String, Object>> data_list;
     private ActivityUtils activityUtils;
     private String token = null;
@@ -112,6 +112,9 @@ public class PropertyUserFragment extends BaseFragment {
                         break;
                     case 1:
                         SettingActivity.toActivity(mActivity);
+                        break;
+                    case 2:
+                        MyRecommendActivity.toActivity(mActivity);
                         break;
                     default:
                 }

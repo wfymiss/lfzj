@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import com.ovov.lfzj.base.BaseApplication;
 import com.ovov.lfzj.base.bean.ActivityUpImageInfo;
 import com.ovov.lfzj.base.bean.BuildingListResult;
+import com.ovov.lfzj.base.bean.CheckBean;
 import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.FamilyInfo;
 import com.ovov.lfzj.base.bean.GoodListBean;
@@ -208,8 +209,8 @@ public class RetrofitHelper {
         return mApiService.login(mobile, password);
     }
 
-    public Observable<DataInfo<RegisterBean>> register(String mobile, String verify, String password) {
-        return mApiService.register(mobile, verify, password);
+    public Observable<DataInfo<RegisterBean>> register(String mobile, String verify, String password,String recommend) {
+        return mApiService.register(mobile, verify, password,recommend);
     }
 
     public Observable<OpenLogUpInfo> openLogUp(  String sn_name, int open_type, int open_status) {
@@ -345,7 +346,7 @@ public class RetrofitHelper {
 
     public Observable<DataInfo> confirmPayResult(String type, String order_id, String
             order_number) {
-        return mApiService.confirmPayResult(getToken(), type, order_id, order_number, LoginUserBean.getInstance().getSub_id());
+        return mApiService.confirmPayResult(getToken(), type, order_id,  LoginUserBean.getInstance().getSub_id());
 
 
     }
@@ -546,7 +547,7 @@ public class RetrofitHelper {
         return mApiService.workerCommit(getToken(),wid,cost,trouble);
     }
 
-    public Observable<DataInfo> workerOrderCheck(String wid){
+    public Observable<DataInfo<CheckBean>> workerOrderCheck(String wid){
         return mApiService.workerOrderCheck(getToken(),wid);
     }
 

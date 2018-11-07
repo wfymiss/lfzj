@@ -3,6 +3,7 @@ package com.ovov.lfzj.http.api;
 
 import com.ovov.lfzj.base.bean.ActivityUpImageInfo;
 import com.ovov.lfzj.base.bean.BuildingListResult;
+import com.ovov.lfzj.base.bean.CheckBean;
 import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.FamilyInfo;
 import com.ovov.lfzj.base.bean.GoodListBean;
@@ -85,7 +86,8 @@ public interface CatelApiService {
     @POST("v1/user/register")
     Observable<DataInfo<RegisterBean>> register(@Field("mobile") String mobile,
                                                 @Field("captcha") String captcha,
-                                                @Field("password") String password);
+                                                @Field("password") String password,
+                                                @Field("inviter") String recommend);
 
     @Multipart
     @POST("v1/user/addcomment")
@@ -403,7 +405,6 @@ public interface CatelApiService {
     Observable<DataInfo> confirmPayResult(@Field("token") String token,
                                           @Field("type") String type,
                                           @Field("order_id") String order_id,
-                                          @Field("order_number") String ordernumber,
                                           @Field("subdistrict_id") String sub_id);
 
     @FormUrlEncoded
@@ -589,8 +590,8 @@ public interface CatelApiService {
 
     @FormUrlEncoded
     @POST("v1/work/workcheck")
-    Observable<DataInfo> workerOrderCheck(@Field("token") String token,
-                                          @Field("wid") String wid);
+    Observable<DataInfo<CheckBean>> workerOrderCheck(@Field("token") String token,
+                                                     @Field("wid") String wid);
 
     @FormUrlEncoded
     @POST("v1/work/ownerevaluate")

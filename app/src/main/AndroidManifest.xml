@@ -522,7 +522,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".neighbour.square.GoodActivity" />
         <activity android:name=".market.MarketActivity" />
-        <activity android:name=".user.activity.FamilyListActivity"></activity>
+        <activity android:name=".user.activity.FamilyListActivity" />
+        <activity android:name=".property.user.MyRecommendActivity"></activity>
     </application>
 
 </manifest>

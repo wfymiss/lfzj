@@ -150,6 +150,33 @@
             android:layout_marginLeft="@dimen/dp_18"/>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:orientation="horizontal"
+        android:background="@drawable/shape_login_edit"
+        android:layout_marginLeft="@dimen/dp_48"
+        android:layout_marginRight="@dimen/dp_48"
+        android:layout_marginTop="@dimen/dp_15">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_recommend_owner"
+            android:layout_marginLeft="8dp"
+            android:layout_gravity="center_vertical"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:hint="请输入推荐人手机号(选填)"
+            android:textColor="@color/color_444444"
+            android:background="#00000000"
+            android:textSize="@dimen/textSize_12sp"
+            android:id="@+id/et_recommend"
+            android:inputType="phone"
+            android:layout_marginLeft="@dimen/dp_18"/>
+
+    </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

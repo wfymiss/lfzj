@@ -5,4 +5,11 @@ package com.ovov.lfzj.event;
  */
 
 public class PayResultEvent {
+    public String order_id;
+    public String type;
+
+    public PayResultEvent(String order_id, String type) {
+        this.order_id = order_id;
+        this.type = type;
+    }
 }

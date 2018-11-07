@@ -20,6 +20,9 @@ import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.utils.AppManager;
 import com.ovov.lfzj.base.utils.RxBus;
 import com.ovov.lfzj.base.utils.UIUtils;
+import com.zyao89.view.zloading.ZLoadingDialog;
+import com.zyao89.view.zloading.Z_TYPE;
+import com.zyao89.view.zloading.text.TextBuilder;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -30,6 +33,10 @@ import cn.testin.analysis.bug.BugOutApi;
 import rx.Subscription;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
+
+import static com.zyao89.view.zloading.Z_TYPE.LEAF_ROTATE;
+import static com.zyao89.view.zloading.Z_TYPE.STAR_LOADING;
+import static com.zyao89.view.zloading.Z_TYPE.TEXT;
 
 /**
  * Created by jzxiang on 3/11/17.
@@ -49,7 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected CompositeSubscription mCompositeSubscription;
     private Unbinder mUnbinder;
 
-    private ProgressDialog mProgressDialog;
+    private ZLoadingDialog mProgressDialog;
 
     private TextView mTvTitle;
     private TextView mTvRight;
@@ -216,8 +223,15 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void showLoadingDialog() {
         if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog = new ZLoadingDialog(this);
+
+            mProgressDialog.setLoadingBuilder(LEAF_ROTATE)//设置类型
+                    .setLoadingColor(Color.GRAY)//颜色
+                    .setHintText("乐福院子")
+                    .setHintTextSize(16) // 设置字体大小 dp
+                    .setHintTextColor(Color.GRAY)  // 设置字体颜色
+                    .setDurationTime(0.5) // 设置动画时间百分比 - 0.5倍
+                    .show();
         }
         mProgressDialog.show();
     }

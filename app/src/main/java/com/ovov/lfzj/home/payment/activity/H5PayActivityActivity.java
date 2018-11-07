@@ -78,9 +78,10 @@ public class H5PayActivityActivity extends BaseActivity implements PaymentPayVie
         if (i == 0) {
 
         }
-        String url = "http://api_test.catel-link.com/v1/pay/index?type=" + type + "&order_id=" + order_id + "&subdistrict_id="+LoginUserBean.getInstance().getSub_id()+ "&order_number=" + order_number + "&version=2";
+        String url = "http://api_test.catel-link.com/v1/pay/index?type=" + type + "&order_id=" + order_id + "&subdistrict_id="+LoginUserBean.getInstance().getSub_id();
         Log.e("url", url);
         initWeb(url);
+
 
 
     }
@@ -129,7 +130,7 @@ public class H5PayActivityActivity extends BaseActivity implements PaymentPayVie
             activeXqToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    RxBus.getDefault().post(new PayResultEvent());
+                    RxBus.getDefault().post(new PayResultEvent(order_id,type));
                     finish();
                 }
             });
@@ -143,7 +144,7 @@ public class H5PayActivityActivity extends BaseActivity implements PaymentPayVie
             webview.goBack(); // goBack()表示返回webView的上一页面
             return true;
         } else {
-            RxBus.getDefault().post(new PayResultEvent());
+            RxBus.getDefault().post(new PayResultEvent(order_id,type));
             finish();
         }
         return super.onKeyDown(keyCode, event);

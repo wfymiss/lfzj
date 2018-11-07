@@ -71,7 +71,7 @@ public class OwnerFragment extends BaseFragment {
         addFamily();
     }
     private void addFamily(){
-        showLoadingDialog("正在添加");
+        showLoadingDialog();
         Subscription subscription = RetrofitHelper.getInstance().addFamily(mEtName.getText().toString().trim(),mEtPhone.getText().toString().trim())
                 .compose(RxUtil.rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {

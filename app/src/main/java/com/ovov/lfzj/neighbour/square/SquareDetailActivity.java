@@ -200,7 +200,7 @@ public class SquareDetailActivity extends BaseActivity {
         addRxBusSubscribe(ShareSquareEvent.class, new Action1<ShareSquareEvent>() {
             @Override
             public void call(ShareSquareEvent shareSquareEvent) {
-                String url = "http://life.catel-link.com/comment/share?id=" + squareDetailInfo.id;
+                String url = "http://app.catel-link.com/v1/user/share?id=" + squareDetailInfo.id;
                 showShareApp(url, "乐福院子", squareDetailInfo.comment, "");
             }
         });
