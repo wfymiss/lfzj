@@ -13,6 +13,7 @@ import com.ovov.lfzj.base.bean.MobileInfo;
 import com.ovov.lfzj.base.bean.OpenLogUpInfo;
 import com.ovov.lfzj.base.bean.PropertyCheckOrderInfo;
 import com.ovov.lfzj.base.bean.PropertyPaymentInfo;
+import com.ovov.lfzj.base.bean.RecommendListInfo;
 import com.ovov.lfzj.base.bean.RegisterBean;
 import com.ovov.lfzj.base.bean.RoomInfo;
 import com.ovov.lfzj.base.bean.RoomListInfo;
@@ -619,6 +620,9 @@ public interface CatelApiService {
     @FormUrlEncoded
     @POST("v1/shop/yzLogin")
     Observable<DataInfo<YouzanLoginBean>> youzanLogin(@Field("user_id") String user_id);
+    @FormUrlEncoded
+    @POST("v1/user/get_inviter_list")
+    Observable<ListInfo<RecommendListInfo>> getInviterList(@Field("token") String token);
 
 
 }

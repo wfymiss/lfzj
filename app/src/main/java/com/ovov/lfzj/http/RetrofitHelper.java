@@ -21,6 +21,7 @@ import com.ovov.lfzj.base.bean.MobileInfo;
 import com.ovov.lfzj.base.bean.OpenLogUpInfo;
 import com.ovov.lfzj.base.bean.PropertyCheckOrderInfo;
 import com.ovov.lfzj.base.bean.PropertyPaymentInfo;
+import com.ovov.lfzj.base.bean.RecommendListInfo;
 import com.ovov.lfzj.base.bean.RegisterBean;
 import com.ovov.lfzj.base.bean.RoomInfo;
 import com.ovov.lfzj.base.bean.RoomListInfo;
@@ -573,6 +574,9 @@ public class RetrofitHelper {
 
     public Observable<DataInfo<YouzanLoginBean>> youzanLogin(){
         return mApiService.youzanLogin(getUserId());
+    }
+    public Observable<ListInfo<RecommendListInfo>> getInviterList(){
+        return mApiService.getInviterList(getToken());
     }
 
 }
