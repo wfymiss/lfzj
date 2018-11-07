@@ -312,7 +312,7 @@ public class SquareFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         if (LoginUserBean.getInstance().isIs_auth()) {
-                            SquareDetailActivity.toActivity(mActivity, i, squareListInfo);
+                            SquareDetailActivity.toActivity(mActivity, i, squareListInfo,squareListInfo.transpondInfo.id);
                         } else {
                             identityDialog.show();
                         }
@@ -323,7 +323,7 @@ public class SquareFragment extends BaseFragment {
                 reComment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo);
+                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo,squareListInfo.id);
 
                     }
                 });
@@ -454,14 +454,21 @@ public class SquareFragment extends BaseFragment {
                 mTransmitImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo);
+                        //SquareDetailActivity.toActivity(mActivity, i, squareListInfo);
                     }
                 });
                 reTransmit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo);
+                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo,squareListInfo.transpondInfo.id);
 
+                    }
+                });
+                TextView tvTransmitContent = viewHolder.getView(R.id.tv_transmit_content);
+                tvTransmitContent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo,squareListInfo.transpondInfo.id);
                     }
                 });
 
@@ -469,14 +476,14 @@ public class SquareFragment extends BaseFragment {
                 mImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo);
+                        //SquareDetailActivity.toActivity(mActivity, i, squareListInfo);
                     }
                 });
                 LinearLayout mRecontainer = viewHolder.getView(R.id.container);
                 mRecontainer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo);
+                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo,squareListInfo.id);
                     }
                 });
 

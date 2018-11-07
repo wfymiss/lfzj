@@ -323,13 +323,13 @@ public class MySquareFragment extends BaseFragment {
                 mTransmitImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
+                        //SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
                     }
                 });
                 reTransmit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
+                        //SquareDetailActivity.toActivity(mActivity,  i, squareListInfo,squareListInfo.transpondInfo.id);
                     }
                 });
 
@@ -337,14 +337,14 @@ public class MySquareFragment extends BaseFragment {
                 mImage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
+                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo,squareListInfo.id);
                     }
                 });
                 LinearLayout mRecontainer = viewHolder.getView(R.id.container);
                 mRecontainer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo);
+                        SquareDetailActivity.toActivity(mActivity,  i, squareListInfo,squareListInfo.id);
                     }
                 });
 

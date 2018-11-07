@@ -127,14 +127,14 @@ public class HomeNeighAdapter extends BaseAdapter {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if (UIUtils.isFastClick()){
-                        SquareDetailActivity.toActivity(context,position,list.get(index));
+                        SquareDetailActivity.toActivity(context,position,list.get(index),list.get(index).id);
                     }
                 }
             });
             viewHolder.linContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SquareDetailActivity.toActivity(context,position,list.get(index));
+                    SquareDetailActivity.toActivity(context,position,list.get(index),list.get(index).id);
                 }
             });
 

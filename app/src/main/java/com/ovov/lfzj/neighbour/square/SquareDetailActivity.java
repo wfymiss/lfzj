@@ -108,11 +108,12 @@ public class SquareDetailActivity extends BaseActivity {
     private SquareDetailInfo squareDetailInfo;
     private SquareListInfo squareListInfo;
 
-    public static void toActivity(Context context, int posistion, SquareListInfo squareListInfo) {
+    public static void toActivity(Context context, int posistion, SquareListInfo squareListInfo, String id) {
         Intent intent = new Intent(context, SquareDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("posistion", posistion);
-        bundle.putSerializable("squarelist",squareListInfo);
+        bundle.putSerializable("squarelist", squareListInfo);
+        bundle.putString("id", id);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
@@ -131,7 +132,8 @@ public class SquareDetailActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         squareListInfo = (SquareListInfo) bundle.getSerializable("squarelist");
         posistion = bundle.getInt("posistion");
-        id = squareListInfo.id;
+        String type = bundle.getString("id");
+        id = String.valueOf(type);
         setTitleText(squareListInfo.userInfo.nickname);
         view = LayoutInflater.from(mActivity).inflate(R.layout.square_list_header, null, false);
         mGridAdapter = new CommonAdapter<String>(mActivity, mGridData, R.layout.user_img_item) {
@@ -280,38 +282,40 @@ public class SquareDetailActivity extends BaseActivity {
         mGridTransmit = view.findViewById(R.id.transmit_gridView);
         mTvGoods = view.findViewById(R.id.tv_goods);
         mLayoutsquare = view.findViewById(R.id.layout_square);
-        mLayoutsquare.setVisibility(View.VISIBLE);
+
         mTvGoods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoodActivity.toActivity(mActivity,squareDetailInfo.id);
+                GoodActivity.toActivity(mActivity, squareDetailInfo.id);
             }
         });
-        if (squareListInfo.userInfo.user_logo != null && !TextUtils.isEmpty(squareListInfo.userInfo.user_logo)) {
-            Picasso.with(mActivity).load(squareListInfo.userInfo.user_logo).into(mIvHeader);
-        }
-        mTvNickname.setText(squareListInfo.userInfo.nickname);
-        mTvTime.setText(squareListInfo.time);
-        mTvContent.setText(squareListInfo.comment);
-        if (squareListInfo.imgUrl.size() > 0) {
-            mGridData.clear();
-            mGridData.addAll(squareListInfo.imgUrl);
-            mGridSelf.setAdapter(mGridAdapter);
-        }
-
-
-        if (squareListInfo.transpondInfo != null) {
-            mReTransmit.setVisibility(View.VISIBLE);
-            mTvTransmitContent.setText(squareListInfo.transpondInfo.comment);
-            if (squareListInfo.transpondInfo.imgUrl.size() > 0) {
-                mGridData.clear();
-                mGridData.addAll(squareListInfo.transpondInfo.imgUrl);
-                mGridTransmit.setAdapter(mGridAdapter);
+        if (id.equals(squareListInfo.id)) {
+            mLayoutsquare.setVisibility(View.VISIBLE);
+            if (squareListInfo.userInfo.user_logo != null && !TextUtils.isEmpty(squareListInfo.userInfo.user_logo)) {
+                Picasso.with(mActivity).load(squareListInfo.userInfo.user_logo).into(mIvHeader);
             }
-        } else {
-            mReTransmit.setVisibility(View.GONE);
-        }
+            mTvNickname.setText(squareListInfo.userInfo.nickname);
+            mTvTime.setText(squareListInfo.time);
+            mTvContent.setText(squareListInfo.comment);
+            if (squareListInfo.imgUrl.size() > 0) {
+                mGridData.clear();
+                mGridData.addAll(squareListInfo.imgUrl);
+                mGridSelf.setAdapter(mGridAdapter);
+            }
 
+
+            if (squareListInfo.transpondInfo != null) {
+                mReTransmit.setVisibility(View.VISIBLE);
+                mTvTransmitContent.setText(squareListInfo.transpondInfo.comment);
+                if (squareListInfo.transpondInfo.imgUrl.size() > 0) {
+                    mGridData.clear();
+                    mGridData.addAll(squareListInfo.transpondInfo.imgUrl);
+                    mGridTransmit.setAdapter(mGridAdapter);
+                }
+            } else {
+                mReTransmit.setVisibility(View.GONE);
+            }
+        }
     }
 
 
@@ -468,6 +472,7 @@ public class SquareDetailActivity extends BaseActivity {
     }
 
     private void getSquareDetail() {
+        Log.e("id", id);
         Subscription subscription = RetrofitHelper.getInstance().getSquareDetail(id)
                 .compose(RxUtil.<DataInfo<SquareDetailInfo>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<SquareDetailInfo>>() {
@@ -532,6 +537,35 @@ public class SquareDetailActivity extends BaseActivity {
                                 }
                             }
                         });
+
+                        if (!squareDetailInfo.id.equals(squareListInfo.id)) {
+                            mLayoutsquare.setVisibility(View.VISIBLE);
+                            setTitleText(squareDetailInfo.userInfo.nickname);
+                            if (squareDetailInfo.userInfo.user_logo != null && !TextUtils.isEmpty(squareDetailInfo.userInfo.user_logo)) {
+                                Picasso.with(mActivity).load(squareDetailInfo.userInfo.user_logo).into(mIvHeader);
+                            }
+                            mTvNickname.setText(squareDetailInfo.userInfo.nickname);
+                            mTvTime.setText(squareDetailInfo.time);
+                            mTvContent.setText(squareDetailInfo.comment);
+                            if (squareDetailInfo.imgUrl.size() > 0) {
+                                mGridData.clear();
+                                mGridData.addAll(squareDetailInfo.imgUrl);
+                                mGridSelf.setAdapter(mGridAdapter);
+                            }
+
+
+                            if (squareDetailInfo.transpondInfo != null) {
+                                mReTransmit.setVisibility(View.VISIBLE);
+                                mTvTransmitContent.setText(squareDetailInfo.transpondInfo.comment);
+                                if (squareDetailInfo.transpondInfo.imgUrl.size() > 0) {
+                                    mGridData.clear();
+                                    mGridData.addAll(squareDetailInfo.transpondInfo.imgUrl);
+                                    mGridTransmit.setAdapter(mGridAdapter);
+                                }
+                            } else {
+                                mReTransmit.setVisibility(View.GONE);
+                            }
+                        }
 
 
                     }
