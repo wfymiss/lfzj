@@ -220,8 +220,8 @@ public class MainActivity extends BaseMainActivity {
             }
         });
 
-
     }
+
 
     private void checkVersion() {
         Subscription subscription = RetrofitHelper.getInstance().checkVersion(Tools.getVersion(mActivity))
@@ -242,7 +242,7 @@ public class MainActivity extends BaseMainActivity {
                     @Override
                     public void onNext(DataInfo<UpdateBean> updateBeanDataInfo) {
                         if (updateBeanDataInfo.datas().needUpdate()) {
-                            UpdateDialog updateDialog = new UpdateDialog(mActivity, "https://dab00d2bd1ae89e42d371afb9a80f416.dd.cdntips.com/imtt.dd.qq.com/16891/0289255B74F05EB51F36E1613FF3D619.apk?mkey=5be0c933da1a92b7&f=0c58&fsname=com.ovov.lfzj_3.2.9_51.apk&csr=1bbd&cip=218.26.180.66&proto=https", updateBeanDataInfo.datas().upgrade_point);
+                            UpdateDialog updateDialog = new UpdateDialog(mActivity, updateBeanDataInfo.datas().apk_url, updateBeanDataInfo.datas().upgrade_point);
                             updateDialog.show();
                         }
                     }

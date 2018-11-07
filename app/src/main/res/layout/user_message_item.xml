@@ -72,6 +72,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="13dp"
                     android:text="大同市凯德世家"
+                    android:visibility="gone"
                     android:layout_marginLeft="@dimen/padding_5dp"
                     android:textColor="#ffa1a1a1"
                     android:textSize="12sp" />
@@ -106,10 +107,11 @@
             android:id="@+id/rl_list_im"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="10dp"
-            android:columnWidth="120dp"
-            android:verticalSpacing="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:verticalSpacing="2dp"
+            android:stretchMode="columnWidth"
+            android:horizontalSpacing="@dimen/margin_2dp"
             android:numColumns="3"
             android:layout_marginTop="10dp">
 

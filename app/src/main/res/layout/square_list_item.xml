@@ -28,7 +28,7 @@
             android:layout_toRightOf="@+id/iv_head"
             android:text="昵称"
             android:textColor="@color/color_333333"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="@dimen/sp_13" />
 
         <TextView
             android:id="@+id/tv_time"
@@ -40,7 +40,7 @@
             android:layout_toRightOf="@+id/iv_head"
             android:text="2014-09-09"
             android:textColor="@color/color_999999"
-            android:textSize="@dimen/sp_13" />
+            android:textSize="12sp" />
 
         <ImageView
             android:layout_width="@dimen/margin_20dp"
@@ -62,21 +62,21 @@
         android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:text="zh"
-        android:textColor="@color/color_999999"
-        android:textSize="@dimen/sp_15" />
+        android:textColor="@color/color_444444"
+        android:textSize="@dimen/sp_13" />
 
     <com.ovov.lfzj.base.widget.NoScrollGridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_10"
-        android:horizontalSpacing="@dimen/dp_10"
+        android:horizontalSpacing="@dimen/margin_2dp"
         android:numColumns="3"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="5dp" />
+        android:verticalSpacing="2dp" />
 
     <RelativeLayout
         android:id="@+id/re_transmit_content"
@@ -92,7 +92,7 @@
             android:layout_marginTop="@dimen/dp_10"
             android:text="名字:"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/sp_15"
+            android:textSize="@dimen/sp_13"
             android:visibility="gone" />
 
         <TextView
@@ -105,7 +105,7 @@
             android:layout_toRightOf="@id/tv_transmit_nickname"
             android:text="zh"
             android:textColor="@color/color_999999"
-            android:textSize="@dimen/sp_15" />
+            android:textSize="@dimen/sp_13" />
 
         <com.ovov.lfzj.base.widget.NoScrollGridView
             android:id="@+id/transmit_gridView"
@@ -113,13 +113,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_transmit_content"
             android:layout_marginBottom="@dimen/dp_10"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginRight="@dimen/dp_30"
             android:layout_marginTop="@dimen/dp_10"
-            android:horizontalSpacing="@dimen/dp_10"
+            android:horizontalSpacing="@dimen/margin_2dp"
             android:numColumns="3"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="5dp" />
+            android:verticalSpacing="2dp" />
     </RelativeLayout>
 
 
@@ -130,6 +130,7 @@
         android:layout_marginRight="@dimen/dp_10"
         android:layout_marginLeft="@dimen/dp_10"
         android:padding="@dimen/dp_10"
+        android:textSize="@dimen/textSize_12sp"
         android:layout_marginTop="@dimen/dp_10"
         android:background="@color/common_bg"
         android:singleLine="true"
@@ -137,18 +138,10 @@
         android:textColor="@color/color_3e3e3e"
         android:id="@+id/tv_list_comment"/>
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:background="@color/common_bg" />
-
     <LinearLayout
         android:id="@+id/lin_foot"
         android:layout_width="match_parent"
-        android:layout_height="90px"
+        android:layout_height="35dp"
         android:layout_marginBottom="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:orientation="horizontal">

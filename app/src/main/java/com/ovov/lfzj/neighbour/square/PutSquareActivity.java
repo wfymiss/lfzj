@@ -39,6 +39,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -168,15 +169,19 @@ public class PutSquareActivity extends BaseActivity {
                 //File file = new File("/sdcard",mSelected.get(i).getPath() + ".png");
                 ContentResolver contentResolver = getContentResolver();
                 String path = Uri2Pathutil.getFromMediaUri(this, contentResolver, list.get(i));
-                //Log.e("yri", path);
-                File file = new File(path);
-                try {
-                    compressedImageFile = new Compressor(this).compressToFile(file);
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+                if (path != null && !path.equals("") && !getAutoFileOrFilesSize(path).equals("0B")) {
+                    File file = new File(path);
+                    try {
+                        compressedImageFile = new Compressor(this).compressToFile(file);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    showGridPhoto(compressedImageFile);
+                    listImg.add(compressedImageFile);
+                }else {
+                    showToast("您选择的图片包含已删除图片，请重新选择");
                 }
-                showGridPhoto(compressedImageFile);
-                listImg.add(compressedImageFile);
 
             }
             for (int i = 0; i < listImg.size(); i++) {
@@ -244,6 +249,65 @@ public class PutSquareActivity extends BaseActivity {
         addSubscrebe(subscription);
     }
 
+    public static String getAutoFileOrFilesSize(String filePath) {
+        File file = new File(filePath);
+        long blockSize = 0;
+        try {
+            if (file.isDirectory()) {
+                blockSize = getFileSizes(file);
+            } else {
+                blockSize = getFileSize(file);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("获取文件大小", "获取失败!");
+        }
+        return FormetFileSize(blockSize);
+    }
 
+    private static long getFileSize(File file) throws Exception {
+        long size = 0;
+        if (file.exists()) {
+            FileInputStream fis = null;
+            fis = new FileInputStream(file);
+            size = fis.available();
+        } else {
+            file.createNewFile();
+            Log.e("获取文件大小", "文件不存在!");
+        }
+        return size;
+    }
+
+    private static long getFileSizes(File f) throws Exception {
+        long size = 0;
+        File flist[] = f.listFiles();
+        for (int i = 0; i < flist.length; i++) {
+            if (flist[i].isDirectory()) {
+                size = size + getFileSizes(flist[i]);
+            } else {
+                size = size + getFileSize(flist[i]);
+            }
+        }
+        return size;
+    }
+
+    private static String FormetFileSize(long fileS) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        String fileSizeString = "";
+        String wrongSize = "0B";
+        if (fileS == 0) {
+            return wrongSize;
+        }
+        if (fileS < 1024) {
+            fileSizeString = df.format((double) fileS) + "B";
+        } else if (fileS < 1048576) {
+            fileSizeString = df.format((double) fileS / 1024) + "KB";
+        } else if (fileS < 1073741824) {
+            fileSizeString = df.format((double) fileS / 1048576) + "MB";
+        } else {
+            fileSizeString = df.format((double) fileS / 1073741824) + "GB";
+        }
+        return fileSizeString;
+    }
 
 }

@@ -27,6 +27,7 @@ import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.bean.SquareListInfo;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.ActivityUtils;
+import com.ovov.lfzj.base.utils.CircleCornerForm;
 import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.widget.IdentityDialog;
 import com.ovov.lfzj.base.widget.NewEditDialog;
@@ -349,7 +350,27 @@ public class SquareFragment extends BaseFragment {
                         width = width / col;
                         int height = width;
                         ivGrid.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
-                        Picasso.with(mActivity).load(s).into(ivGrid);
+                        Picasso.with(mActivity).load(s).transform(new CircleCornerForm()).into(ivGrid);
+                        ivGrid.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ScaleImageView scaleImageView = new ScaleImageView(mActivity);
+                                scaleImageView.setUrls(mGridData, i);
+                                scaleImageView.create();
+                            }
+                        });
+                    }
+                };
+                CommonAdapter<String> mTransmitGridAdapter = new CommonAdapter<String>(getActivity(), mGridData, R.layout.user_img_item) {
+                    @Override
+                    public void convert(ViewHolder viewHolder, String s, int i) {
+                        ImageView ivGrid = viewHolder.getView(R.id.iv_user_img);
+                        int width = ActivityUtils.getWidth(getActivity());
+                        width = width / col;
+                        int height = width;
+                        ivGrid.setLayoutParams(new RelativeLayout.LayoutParams(width, height));
+
+                        Picasso.with(mActivity).load(s).transform(new CircleCornerForm()).into(ivGrid);
                         ivGrid.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -374,7 +395,7 @@ public class SquareFragment extends BaseFragment {
                         mTransmitImage.setNumColumns(3);
                         col = 3;
                     }
-                    mTransmitImage.setAdapter(mGridAdapter);
+                    mTransmitImage.setAdapter(mTransmitGridAdapter);
                     mTransmitImage.setVisibility(View.VISIBLE);
                     mImage.setVisibility(View.GONE);
                 } else {

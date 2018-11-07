@@ -62,13 +62,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_10"
-        android:horizontalSpacing="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_marginTop="@dimen/margin_10dp"
+        android:horizontalSpacing="@dimen/margin_2dp"
         android:numColumns="3"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="5dp" />
+        android:verticalSpacing="2dp" />
 
     <RelativeLayout
         android:id="@+id/re_transmit_content"
@@ -105,13 +105,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_transmit_content"
             android:layout_marginBottom="@dimen/dp_10"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginRight="@dimen/dp_30"
             android:layout_marginTop="@dimen/dp_10"
-            android:horizontalSpacing="@dimen/dp_10"
+            android:horizontalSpacing="@dimen/margin_2dp"
             android:numColumns="3"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="5dp" />
+            android:verticalSpacing="2dp" />
     </RelativeLayout>
 
     <View

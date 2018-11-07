@@ -1,12 +1,13 @@
 package com.ovov.lfzj.base.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by kaite on 2018/9/19.
  */
 
-public class TranspondInfo {
+public class TranspondInfo implements Serializable {
 
     /**
      * id : 279
@@ -28,7 +29,7 @@ public class TranspondInfo {
     public UserInfoBean userInfo;
     public List<String> imgUrl;
 
-    public static class UserInfoBean {
+    public static class UserInfoBean implements Serializable {
         /**
          * name : 王力军
          * user_logo : http://catel-link.oss-cn-beijing.aliyuncs.com/comment/1_mq.jpg

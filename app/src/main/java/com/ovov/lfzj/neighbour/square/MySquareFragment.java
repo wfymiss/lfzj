@@ -378,6 +378,7 @@ public class MySquareFragment extends BaseFragment {
                         }
                         if (e instanceof DataResultException) {
                             DataResultException dataResultException = (DataResultException) e;
+                            mData.clear();
                             showToast(dataResultException.errorInfo);
                         } else {
 

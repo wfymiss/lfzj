@@ -43,7 +43,9 @@ import com.zhihu.matisse.engine.impl.PicassoEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,8 +131,8 @@ public class RepairActivity extends BaseActivity {
         addRxBusSubscribe(RoomSelectEvent.class, new Action1<RoomSelectEvent>() {
             @Override
             public void call(RoomSelectEvent roomSelectEvent) {
-                mTvLocation.setText(roomSelectEvent.building_name+"号楼"+roomSelectEvent.unit+"单元"+roomSelectEvent.name);
-                house_path = roomSelectEvent.building_name+"-"+roomSelectEvent.unit+"-"+roomSelectEvent.name;
+                mTvLocation.setText(roomSelectEvent.building_name + "号楼" + roomSelectEvent.unit + "单元" + roomSelectEvent.name);
+                house_path = roomSelectEvent.building_name + "-" + roomSelectEvent.unit + "-" + roomSelectEvent.name;
             }
         });
         addRxBusSubscribe(RepairSuccessEvent.class, new Action1<RepairSuccessEvent>() {
@@ -174,7 +176,7 @@ public class RepairActivity extends BaseActivity {
 
     private void setPhoto() {
 
-        int  size = mImage.size()>=9 ?9:9-mImage.size();
+        int size = mImage.size() >= 9 ? 9 : 9 - mImage.size();
         Matisse.from(this)
                 .choose(MimeType.allOf())
                 .capture(true)
@@ -227,19 +229,19 @@ public class RepairActivity extends BaseActivity {
                 getUserHouse();
                 break;
             case R.id.tv_commit:
-                if (TextUtils.isEmpty(mEtName.getText().toString()) && TextUtils.isEmpty(mEtPhone.getText().toString())  && TextUtils.isEmpty(mEtContent.getText().toString())){
+                if (TextUtils.isEmpty(mEtName.getText().toString()) && TextUtils.isEmpty(mEtPhone.getText().toString()) && TextUtils.isEmpty(mEtContent.getText().toString())) {
                     showToast(R.string.text_input_all_message);
                     return;
                 }
-                if (area == AREA_FAMILY && TextUtils.isEmpty(mTvLocation.getText())){
+                if (area == AREA_FAMILY && TextUtils.isEmpty(mTvLocation.getText())) {
                     showToast("请选择房间");
                     return;
                 }
-                if (area == AREA_COMMON && TextUtils.isEmpty(mEtLocation.getText().toString())){
+                if (area == AREA_COMMON && TextUtils.isEmpty(mEtLocation.getText().toString())) {
                     showToast("请填写位置");
                     return;
                 }
-                if (RegexUtils.isMobile(mEtPhone.getText().toString().trim()) != RegexUtils.VERIFY_SUCCESS ){
+                if (RegexUtils.isMobile(mEtPhone.getText().toString().trim()) != RegexUtils.VERIFY_SUCCESS) {
                     showToast("请输入正确的手机号码");
                     return;
                 }
@@ -248,19 +250,19 @@ public class RepairActivity extends BaseActivity {
                 repairContent.setmGrid(mImage);
                 repairContent.setMobile(mEtPhone.getText().toString());
                 repairContent.setName(mEtName.getText().toString());
-                if (area == AREA_FAMILY ){
+                if (area == AREA_FAMILY) {
                     repairContent.setRepairArea("家庭区域");
                     repairContent.setRepairLocation(mTvLocation.getText().toString());
                     repairContent.setRepairType(repairType);
                     repairContent.setAreaType(AREA_FAMILY);
                     repairContent.setHouse_path(house_path);
                 }
-                if (area == AREA_COMMON ){
+                if (area == AREA_COMMON) {
                     repairContent.setRepairArea("公共设施");
                     repairContent.setRepairLocation(mEtLocation.getText().toString());
                     repairContent.setAreaType(AREA_COMMON);
                 }
-                WorkOrderConfirmActivity.toActivity(mActivity,repairContent);
+                WorkOrderConfirmActivity.toActivity(mActivity, repairContent);
                 break;
             case R.id.repair_category_water:
                 mRepairCategoryWater.setSelected(true);
@@ -313,10 +315,10 @@ public class RepairActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         dismiss();
-                        if (e instanceof DataResultException){
+                        if (e instanceof DataResultException) {
                             DataResultException dataResultException = (DataResultException) e;
                             showToast(dataResultException.errorInfo);
-                        }else {
+                        } else {
                             doFailed();
                             showError(e.getMessage());
                             e.printStackTrace();
@@ -325,8 +327,8 @@ public class RepairActivity extends BaseActivity {
 
                     @Override
                     public void onNext(ListInfo<RoomListInfo> dataInfo) {
-                        RoomListDialog roomListDialog = new RoomListDialog(mActivity,dataInfo.datas());
-                        roomListDialog.setWidth((int) (UIUtils.getScreenWidth()*0.5));
+                        RoomListDialog roomListDialog = new RoomListDialog(mActivity, dataInfo.datas());
+                        roomListDialog.setWidth((int) (UIUtils.getScreenWidth() * 0.5));
                         roomListDialog.show();
                         roomListDialog.setData(dataInfo.datas());
                         dismiss();
@@ -354,14 +356,20 @@ public class RepairActivity extends BaseActivity {
                 //File file = new File("/sdcard",mSelected.get(i).getPath() + ".png");
                 ContentResolver contentResolver = getContentResolver();
                 String path = Uri2Pathutil.getFromMediaUri(this, contentResolver, list.get(i));
-                File file = new File(path);
-                try {
-                    compressedImageFile = new Compressor(this).compressToFile(file);
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+                if (path != null && !path.equals("") && !getAutoFileOrFilesSize(path).equals("0B")) {
+                    File file = new File(path);
+                    Log.e("sizeeee",getAutoFileOrFilesSize(path));
+                    try {
+                        compressedImageFile = new Compressor(this).compressToFile(file);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    showGridPhoto(compressedImageFile);
+                    listImg.add(compressedImageFile);
+                } else {
+                    showToast("您选择的图片包含已删除图片，请重新选择");
                 }
-                showGridPhoto(compressedImageFile);
-                listImg.add(compressedImageFile);
 
             }
             for (int i = 0; i < listImg.size(); i++) {
@@ -390,5 +398,67 @@ public class RepairActivity extends BaseActivity {
         //gridView.setAdapter(mGridAdapter);
         mGridAdapter.notifyDataSetChanged();
     }
+
+    public static String getAutoFileOrFilesSize(String filePath) {
+        File file = new File(filePath);
+        long blockSize = 0;
+        try {
+            if (file.isDirectory()) {
+                blockSize = getFileSizes(file);
+            } else {
+                blockSize = getFileSize(file);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("获取文件大小", "获取失败!");
+        }
+        return FormetFileSize(blockSize);
+    }
+
+    private static long getFileSize(File file) throws Exception {
+        long size = 0;
+        if (file.exists()) {
+            FileInputStream fis = null;
+            fis = new FileInputStream(file);
+            size = fis.available();
+        } else {
+            file.createNewFile();
+            Log.e("获取文件大小", "文件不存在!");
+        }
+        return size;
+    }
+
+    private static long getFileSizes(File f) throws Exception {
+        long size = 0;
+        File flist[] = f.listFiles();
+        for (int i = 0; i < flist.length; i++) {
+            if (flist[i].isDirectory()) {
+                size = size + getFileSizes(flist[i]);
+            } else {
+                size = size + getFileSize(flist[i]);
+            }
+        }
+        return size;
+    }
+
+    private static String FormetFileSize(long fileS) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        String fileSizeString = "";
+        String wrongSize = "0B";
+        if (fileS == 0) {
+            return wrongSize;
+        }
+        if (fileS < 1024) {
+            fileSizeString = df.format((double) fileS) + "B";
+        } else if (fileS < 1048576) {
+            fileSizeString = df.format((double) fileS / 1024) + "KB";
+        } else if (fileS < 1073741824) {
+            fileSizeString = df.format((double) fileS / 1048576) + "MB";
+        } else {
+            fileSizeString = df.format((double) fileS / 1073741824) + "GB";
+        }
+        return fileSizeString;
+    }
+
 
 }

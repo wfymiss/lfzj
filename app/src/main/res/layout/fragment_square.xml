@@ -15,8 +15,8 @@
             android:id="@+id/activity_list_recycler"
             android:divider="@color/common_bg"
             android:dividerHeight="@dimen/dp_10"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     <TextView
         android:layout_width="match_parent"
