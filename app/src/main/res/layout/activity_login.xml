@@ -45,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:hint="@string/edit_phone_hint"
+            android:maxLength="11"
             android:textColor="@color/color_444444"
             android:background="#00000000"
             android:id="@+id/et_phone"

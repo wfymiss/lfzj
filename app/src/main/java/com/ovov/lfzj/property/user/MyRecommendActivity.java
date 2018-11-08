@@ -89,10 +89,10 @@ public class MyRecommendActivity extends BaseActivity {
                 else {
                     viewHolder.setText(R.id.tv_nickname, s.mobile);
                 }
-                @SuppressLint("StringFormatMatches") String createAt = String.format(getString(R.string.text_register_time,s.created_at));
-                viewHolder.setText(R.id.tv_time,createAt);
-                String mobile = String.format(getString(R.string.text_phone_recommend),s.mobile);
-                viewHolder.setText(R.id.tv_phone,mobile);
+                @SuppressLint("StringFormatMatches") String createAt = String.format(getString(R.string.text_register_time, s.created_at));
+                viewHolder.setText(R.id.tv_time, createAt);
+                String mobile = String.format(getString(R.string.text_phone_recommend), s.mobile);
+                viewHolder.setText(R.id.tv_phone, mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
 
             }
         };
