@@ -192,16 +192,11 @@ public class OwnerFragment extends BaseFragment {
 
 
     }
-<<<<<<< Updated upstream
-    private void addFamily(){
-        showLoadingDialog();
-        Subscription subscription = RetrofitHelper.getInstance().addFamily(mEtName.getText().toString().trim(),mEtPhone.getText().toString().trim())
-=======
+
 
     private void addFamily() {
-        showLoadingDialog("正在添加");
+        showLoadingDialog();
         Subscription subscription = RetrofitHelper.getInstance().addFamily(mEtName.getText().toString().trim(), mEtPhone.getText().toString().trim())
->>>>>>> Stashed changes
                 .compose(RxUtil.rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo>() {
                     @Override

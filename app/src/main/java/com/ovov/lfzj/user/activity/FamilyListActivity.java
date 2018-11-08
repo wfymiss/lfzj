@@ -102,11 +102,13 @@ public class FamilyListActivity extends BaseActivity {
                     @Override
                     public void convert(ViewHolder viewHolder, FamilyInfo.FailyBean failyBean, final int pos) {
 
+                        TextView tvDelete = viewHolder.getView(R.id.tv_delect);
                         if (pos == 0) {
                             viewHolder.setText(R.id.name, "业主:");
-                            viewHolder.setVisible(R.id.tv_delect, false);
+                            tvDelete.setVisibility(View.INVISIBLE);
                         } else {
                             viewHolder.setText(R.id.name, "家人:");
+                            tvDelete.setVisibility(View.VISIBLE);
                         }
 
                         viewHolder.setText(R.id.tv_name, failyBean.getName());
