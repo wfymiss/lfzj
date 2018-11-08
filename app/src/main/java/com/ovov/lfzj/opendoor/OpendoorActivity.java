@@ -29,6 +29,7 @@ import android.view.animation.Animation;
 import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,6 +97,8 @@ public class OpendoorActivity extends BaseActivity {
     ImageView head;
     @BindView(R.id.head1)
     ImageView head1;
+    @BindView(R.id.lela)
+    RelativeLayout lela;
     @BindView(R.id.refresh_tv)
     TextView refresh_tv;
     private static int QRC_WIDTH = 600;    //定义二维码长度
@@ -313,11 +316,13 @@ public class OpendoorActivity extends BaseActivity {
                     wave.stop();
                     wave.clearAnimation();
                     wave.setVisibility(View.GONE);
-                    but.setText("切换至蓝牙开门");
+
                     if (keys.size() > 0) {
+                        but.setText("切换至蓝牙开门");
                         //生成二维码
                         initQrCode();
                     } else {
+
                         feedback("请在钥匙列表更新钥匙");
                     }
 
@@ -326,7 +331,7 @@ public class OpendoorActivity extends BaseActivity {
                 } else {
 
 
-                    head1.setVisibility(View.GONE);
+                    lela.setVisibility(View.GONE);
                     head.setVisibility(View.VISIBLE);
                     refresh_tv.setVisibility(View.INVISIBLE);
                     but.setText("切换至二维码开门");
@@ -347,7 +352,7 @@ public class OpendoorActivity extends BaseActivity {
             Bitmap contentbitmap = ceateBitmap(qrStr);
             if (contentbitmap != null) {
                 head.setVisibility(View.GONE);
-                head1.setVisibility(View.VISIBLE);
+                lela.setVisibility(View.VISIBLE);
                 head1.setImageBitmap(contentbitmap);
                 // 显示二维码
             }

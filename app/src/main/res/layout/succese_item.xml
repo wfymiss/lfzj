@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/shape_update"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@mipmap/oder_suc" />
+
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="23dp"
+        android:text="您已成功将其解除家人关系您可以从“个人中心-我的家人”中查看或邀请家人"
+        android:textColor="@color/color_444444" />
+
+
+        <TextView
+            android:id="@+id/tv_ok"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="17dp"
+            android:background="@drawable/shape_login_text"
+            android:gravity="center"
+            android:text="完成"
+            android:layout_marginBottom="23dp"
+            android:textColor="@color/white" />
+
+
+</LinearLayout>

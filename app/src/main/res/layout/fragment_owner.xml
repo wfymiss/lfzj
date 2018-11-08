@@ -6,57 +6,155 @@
     tools:context="com.ovov.lfzj.user.fragment.OwnerFragment">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="40dp"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="107dp"
-        android:layout_height="wrap_content">
+        android:layout_marginBottom="90dp"
+        android:layout_marginLeft="40dp"
+        android:orientation="vertical">
+
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:text="请填写居住房间号"
             android:textColor="@color/color_444444"
-            android:text="家人姓名" />
+            android:textSize="@dimen/textSize_12sp" />
+        <TextView
+            android:id="@+id/tv_select_sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_stroke_edit"
+            android:drawablePadding="17dp"
+            android:layout_marginTop="@dimen/margin_6dp"
+            android:drawableRight="@mipmap/nav_down"
+            android:hint="请选择小区"
+            android:maxLength="5"
+            android:padding="@dimen/padding_6dp"
+            android:textColor="@color/color_444444"
+            android:textSize="@dimen/textSize_12sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+
+
+            <EditText
+                android:id="@+id/et_building_number"
+                android:layout_width="31dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/shape_stroke_edit"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="3"
+                android:paddingBottom="@dimen/padding_6dp"
+                android:paddingTop="@dimen/padding_6dp"
+                android:textSize="@dimen/textSize_12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_5dp"
+                android:layout_marginRight="@dimen/padding_5dp"
+                android:text="栋"
+                android:textColor="@color/color_444444"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/et_unit_number"
+                android:layout_width="31dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/shape_stroke_edit"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="3"
+                android:paddingBottom="@dimen/padding_6dp"
+                android:paddingTop="@dimen/padding_6dp"
+                android:textSize="@dimen/textSize_12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_5dp"
+                android:layout_marginRight="@dimen/padding_5dp"
+                android:text="单元"
+                android:textColor="@color/color_444444"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/et_room_number"
+                android:layout_width="31dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/shape_stroke_edit"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="5"
+                android:paddingBottom="@dimen/padding_6dp"
+                android:paddingTop="@dimen/padding_6dp"
+                android:textSize="@dimen/textSize_12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_5dp"
+                android:layout_marginRight="@dimen/padding_5dp"
+                android:text="房"
+                android:textColor="@color/color_444444"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="家人姓名"
+            android:layout_marginTop="@dimen/margin_5dp"
+            android:textColor="@color/color_444444"
+            android:textSize="12sp" />
 
 
         <EditText
-            android:layout_width="165dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="2dp"
             android:id="@+id/et_name"
+            android:layout_width="165dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="2dp"
             android:background="@drawable/edittext_item" />
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:text="家人手机号"
             android:textColor="@color/color_444444"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:text="家人手机号" />
+            android:textSize="12sp" />
 
 
         <EditText
-            android:layout_width="165dp"
-            android:layout_marginTop="2dp"
-            android:layout_height="30dp"
             android:id="@+id/et_phone"
+            android:layout_width="165dp"
+            android:layout_height="22dp"
+            android:inputType="number"
+            android:layout_marginTop="2dp"
             android:background="@drawable/edittext_item" />
     </LinearLayout>
 
     <Button
+        android:id="@+id/btn_add"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
         android:layout_marginLeft="80dp"
         android:layout_marginRight="80dp"
-        android:layout_marginBottom="36dp"
-        android:textColor="@color/white"
-        android:id="@+id/btn_add"
-        android:textSize="17sp"
         android:background="@drawable/shape_offical"
-        android:text="添加成员" />
+        android:text="添加成员"
+        android:textColor="@color/white"
+        android:textSize="17sp" />
 </RelativeLayout>

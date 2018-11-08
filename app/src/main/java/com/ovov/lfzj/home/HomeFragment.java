@@ -146,6 +146,9 @@ public class HomeFragment extends BaseFragment implements HomeView {
             public void onRefresh(RefreshLayout refreshlayout) {
                 initData(REFRESH);
                 initBanner();
+                homePresenter.getNoticeList();
+                homePresenter.getNewsList();
+                homePresenter.gethomeList();
             }
         });
         mActivityListSwf.setOnLoadmoreListener(new OnLoadmoreListener() {
@@ -508,7 +511,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
                     }
                 });
         addSubscrebe(subscription);
-    } 
+    }
 
     @Override
     public void onDestroyView() {
@@ -586,6 +589,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
     @Override
     public void getsubList(List<SubdistrictsBean> listInfo) {
         listinfo1 = listInfo;
+        list.clear();
         if (LoginUserBean.getInstance().isIs_auth()) {
             if (LoginUserBean.getInstance().getSubname() == null || LoginUserBean.getInstance().getSubname().isEmpty()) {
                 LoginUserBean.getInstance().setSubname(listInfo.get(0).getSubdistrict_name());

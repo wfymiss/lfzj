@@ -99,6 +99,7 @@ public class AddadvicesActivity extends BaseActivity {
                     @Override
                     public void onNext(DataInfo<UrlBean> listInfoDataInfo) {
                         showToast(listInfoDataInfo.datas().getMsg());
+                        showToast("添加成功");
                         finish();
 
 

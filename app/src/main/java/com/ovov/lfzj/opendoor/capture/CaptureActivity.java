@@ -1,5 +1,6 @@
 package com.ovov.lfzj.opendoor.capture;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.zxing.Result;
 import com.google.zxing.ResultPoint;
+import com.ovov.lfzj.MainActivity;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.utils.DocumentUtil;
@@ -30,9 +32,11 @@ import com.ovov.lfzj.opendoor.decode.DecodeThread;
 import com.ovov.lfzj.opendoor.decode.LuminanceSource;
 import com.ovov.lfzj.opendoor.decode.PlanarYUVLuminanceSource;
 import com.ovov.lfzj.opendoor.decode.RGBLuminanceSource;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.functions.Action1;
 
 /**
  * 二维码扫描
@@ -55,7 +59,7 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
     private DecodeThread mDecodeThread;
     private Rect previewFrameRect = null;
     private boolean isDecoding = false;
-
+    private RxPermissions rxPermission;
     public void toActivity(Context context) {
         Intent intent = new Intent(context, CaptureActivity.class);
         context.startActivity(intent);
@@ -75,6 +79,17 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
         flashCb.setEnabled(false);
         albumBtn = (Button) findViewById(R.id.btn_album);
         albumBtn.setOnClickListener(this);
+        rxPermission = new RxPermissions(this);
+        rxPermission.request(
+                Manifest.permission.CAMERA
+        )
+                .subscribe(new Action1<Boolean>() {
+                    @Override
+                    public void call(Boolean aBoolean) {
+                        if (aBoolean) {
+                        }
+                    }
+                });
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             albumBtn.setVisibility(View.GONE);
         }
