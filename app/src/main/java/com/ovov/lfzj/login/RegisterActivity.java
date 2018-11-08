@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -114,7 +116,7 @@ public class RegisterActivity extends BaseActivity {
                     showToast(R.string.text_no_equals);
                     return;
                 }
-                if (!TextUtils.isEmpty(mEtRecommend.getText().toString()) && RegexUtils.isMobile(mEtRecommend.getText().toString()) != RegexUtils.VERIFY_SUCCESS){
+                if (!TextUtils.isEmpty(mEtRecommend.getText().toString()) && RegexUtils.isMobile(mEtRecommend.getText().toString()) != RegexUtils.VERIFY_SUCCESS) {
                     showToast("请输入正确的推荐人手机号");
                     return;
                 }
@@ -144,6 +146,13 @@ public class RegisterActivity extends BaseActivity {
                     public void onNext(DataInfo dataInfo) {
                         dismiss();
                         valueAnimator = countTimer(mTvGetCode);
+                        /*InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);*/
+                        mEtVerify.setFocusable(true);
+                        mEtVerify.setFocusableInTouchMode(true);
+                        mEtVerify.requestFocus();
+                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
                     }
                 });
         addSubscrebe(subscription);
@@ -151,7 +160,7 @@ public class RegisterActivity extends BaseActivity {
 
     private void toRegister() {
         showLoadingDialog();
-        Subscription subscription = RetrofitHelper.getInstance().register(phone, verify, password,mEtRecommend.getText().toString())
+        Subscription subscription = RetrofitHelper.getInstance().register(phone, verify, password, mEtRecommend.getText().toString())
                 .compose(RxUtil.<DataInfo<RegisterBean>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<RegisterBean>>() {
                     @Override

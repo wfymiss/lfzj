@@ -128,6 +128,8 @@ public class CodeEditView extends LinearLayout implements TextWatcher, View.OnCl
         mEditText = new EditText(context);
         mEditText.setBackgroundColor(Color.parseColor("#00000000"));
         mEditText.setMaxLines(1);
+        mEditText.setCursorVisible(true);
+        mEditText.setGravity(Gravity.CENTER_HORIZONTAL);
         mEditText.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(EditViewNum)});
         mEditText.addTextChangedListener(this);

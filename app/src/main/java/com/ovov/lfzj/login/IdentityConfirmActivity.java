@@ -180,6 +180,18 @@ public class IdentityConfirmActivity extends BaseActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
+            if (TextUtils.isEmpty(mTvSelectSub.getText().toString())){
+                showToast("请选择小区");
+                return;
+            }
+            if (TextUtils.isEmpty(mEtBuildingNumber.getText().toString())){
+                showToast("请选择楼号");
+                return;
+            }
+            if (TextUtils.isEmpty(mEtUnitNumber.getText().toString())){
+                showToast("请选择单元号");
+                return;
+            }
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

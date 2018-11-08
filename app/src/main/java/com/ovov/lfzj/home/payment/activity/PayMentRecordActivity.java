@@ -44,7 +44,7 @@ public class PayMentRecordActivity extends BaseActivity {
     @Override
     public void init() {
         tvTitle.setText("账单");
-        setRightText("编辑");
+        setRightText("多选");
         /*setTitleText(R.string.text_payment_record);
         setRightText(R.string.text_edit);*/
         initTab();
