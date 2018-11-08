@@ -5,4 +5,8 @@ package com.ovov.lfzj.event;
  */
 
 public class IdentityEvent {
+
+
+
+
 }

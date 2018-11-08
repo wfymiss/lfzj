@@ -48,12 +48,12 @@
             android:id="@+id/but"
             android:layout_width="178dp"
             android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_above="@+id/refresh_tv"
+            android:layout_marginBottom="@dimen/margin_10dp"
             android:layout_marginTop="@dimen/dp_100"
             android:background="@drawable/btn_shape_door"
             android:text="切换至二维码开门"
-            android:layout_marginBottom="@dimen/margin_10dp"
             android:textColor="@color/white"
             android:textSize="@dimen/textSize_15sp" />
 
@@ -70,34 +70,64 @@
 
         </com.ovov.lfzj.base.widget.WaveView>
 
-        <ImageView
-            android:id="@+id/head1"
-            android:layout_width="163dp"
-            android:layout_height="163dp"
+        <RelativeLayout
+            android:id="@+id/lela"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_centerInParent="true"
-            android:src="@mipmap/ic_oval"
-            android:visibility="gone" />
+            android:background="@mipmap/kuang"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/head1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_oval" />
+
+            <TextView
+                android:id="@+id/refresh1_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="45dp"
+                android:drawableLeft="@mipmap/shuaxin"
+                android:text="点击"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_15sp" />
+
+            <TextView
+                android:id="@+id/refresh_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/refresh1_tv"
+                android:text="刷新"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/textSize_15sp"
+                android:visibility="invisible" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/refresh_tv"
+                android:text="二维码"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_15sp"
+                />
+
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/head"
             android:layout_width="155dp"
             android:layout_height="155dp"
             android:layout_centerInParent="true"
-            android:src="@mipmap/lock_im"
-            android:visibility="visible" />
+            android:src="@mipmap/lock_im" />
 
-        <TextView
-            android:id="@+id/refresh_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-             android:layout_centerHorizontal="true"
-            android:textColor="@color/black"
-            android:layout_alignParentBottom="true"
-            android:textSize="@dimen/textSize_15sp"
-            android:visibility="invisible"
-            android:text="刷新二维码" />
+
     </RelativeLayout>
-
 
 
     <LinearLayout

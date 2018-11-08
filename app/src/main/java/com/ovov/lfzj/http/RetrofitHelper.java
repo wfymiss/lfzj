@@ -493,8 +493,8 @@ public class RetrofitHelper {
     public Observable<ListInfo<FamilyInfo>> getfamilylist() {
         return mApiService.getfamilylist(getToken(), getSubId(),"1");
     }
- public Observable<ListInfo<FamilyInfo>> getActfamilydelete(String userid,String relative_id) {
-        return mApiService.getActfamilydelete(getToken(), getSubId(),userid,relative_id);
+ public Observable<DataInfo> getActfamilydelete(String userid,String relative_id,String house) {
+        return mApiService.getActfamilydelete(getToken(), getSubId(),userid,relative_id,house);
     }
 
     public Observable<ListInfo<WorkOrderListInfo>> getWorkList(int status, int page) {

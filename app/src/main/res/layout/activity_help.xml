@@ -48,6 +48,7 @@
             android:layout_marginRight="@dimen/margin_10dp"
             android:drawableRight="@mipmap/arrows"
             android:gravity="center_vertical"
+            android:textColor="@color/black"
             android:text="常见问题解答" />
         <View
             android:layout_width="match_parent"
@@ -62,6 +63,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="@dimen/margin_10dp"
             android:drawableRight="@mipmap/arrows"
+            android:textColor="@color/black"
             android:gravity="center_vertical"
             android:text="意见反馈" />
 
@@ -79,6 +81,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="@dimen/margin_10dp"
             android:drawableRight="@mipmap/arrows"
+            android:textColor="@color/black"
             android:gravity="center_vertical"
             android:text="在线客服" />
     </LinearLayout>

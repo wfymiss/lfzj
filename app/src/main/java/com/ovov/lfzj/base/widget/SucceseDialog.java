@@ -1,19 +1,18 @@
-package com.ovov.lfzj.base;
+package com.ovov.lfzj.base.widget;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.ovov.lfzj.R;
+import com.ovov.lfzj.base.BaseDialog;
 
 /**
  * Created by kaite on 2018/10/9.
  */
 
-public class HealthDialog extends BaseDialog {
-    public HealthDialog(Context context) {
+public class SucceseDialog extends BaseDialog {
+    public SucceseDialog(Context context) {
         super(context);
     }
 
@@ -24,7 +23,7 @@ public class HealthDialog extends BaseDialog {
 
     @Override
     protected View getView() {
-        View view = LayoutInflater.from(context).inflate(R.layout.health_dialog, null, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.succese_item, null, false);
         view.findViewById(R.id.tv_ok).setOnClickListener(new View.OnClickListener() {
             @Override
 
@@ -33,13 +32,6 @@ public class HealthDialog extends BaseDialog {
 
             }
         });
-        view.findViewById(R.id.updata_time).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-        setCancelable(false);
         return view;
     }
 

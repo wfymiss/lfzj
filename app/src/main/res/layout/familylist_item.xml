@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="47dp"
+    android:gravity="center"
     android:orientation="horizontal">
 
 
@@ -10,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="63dp"
+        android:layout_marginLeft="53dp"
         android:textSize="@dimen/textSize_15sp"
         android:text="业主:" />
 
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="@dimen/textSize_15sp"
+        android:gravity="center"
         android:layout_marginLeft="@dimen/padding_10dp"
         android:text="王杰" />
 

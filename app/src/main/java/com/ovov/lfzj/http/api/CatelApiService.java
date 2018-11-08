@@ -349,14 +349,15 @@ public interface CatelApiService {
     @FormUrlEncoded
     @POST("v1/personal/getfamilylist")
     Observable<ListInfo<FamilyInfo>> getfamilylist(@Field("token") String token,
-                                                   @Field("subdistrictr_id") String sub_id,
+                                                   @Field("subdistrict_id") String sub_id,
                                                    @Field("type") String type);
     @FormUrlEncoded
     @POST("v1/personal/actfamilydelete")
-    Observable<ListInfo<FamilyInfo>> getActfamilydelete(@Field("token") String token,
-                                                   @Field("subdistrictr_id") String sub_id,
+    Observable<DataInfo> getActfamilydelete(@Field("token") String token,
+                                                   @Field("subdistrict_id") String sub_id,
                                                    @Field("user_id") String user_id,
-                                                   @Field("relative_id") String relative_id);
+                                                   @Field("relative_id") String relative_id,
+                                                   @Field("houses_id") String houses_id);
 
 
 

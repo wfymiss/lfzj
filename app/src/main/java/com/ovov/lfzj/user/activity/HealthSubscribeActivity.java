@@ -181,6 +181,7 @@ public class HealthSubscribeActivity extends BaseActivity implements OnDateSetLi
                         }
                         //上传网络数据
                         HealthDialog healthDialog = new HealthDialog(HealthSubscribeActivity.this);
+
                         healthDialog.show();
 
 

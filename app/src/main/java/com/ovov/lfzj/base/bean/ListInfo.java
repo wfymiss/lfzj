@@ -15,6 +15,12 @@ public class ListInfo<T> {
      */
     List<T> datas;
     int code;
+    String msg;
+
+
+    public String getMsg() {
+        return msg;
+    }
 
     public boolean success(){
         return code == 200;

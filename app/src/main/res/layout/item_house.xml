@@ -19,4 +19,10 @@
         android:layout_height="@dimen/margin_1dp"
         android:background="@color/common_drivder_line"
         android:layout_marginTop="@dimen/dp_20"/>
+
+    <com.ovov.lfzj.base.widget.NoScrollGridView
+        android:id="@+id/lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.ovov.lfzj.base.widget.NoScrollGridView>
+
 </LinearLayout>

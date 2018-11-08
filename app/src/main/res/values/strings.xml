@@ -55,7 +55,7 @@
     <string name="text_hint">这个小伙伴很懒，啥都没有留下！</string>
 
 
-    <string name="mine_message">我的信息</string>
+    <string name="mine_message">我的消息</string>
     <string name="mine_bbs">我的论坛</string>
     <string name="mine_activity">我的活动</string>
     <string name="mine_house">我的家人</string>
@@ -66,7 +66,7 @@
     <string name="mine_money">我的钱包</string>
     <string name="mine_centre">领券中心</string>
     <string name="mine_courier">我的快递</string>
-    <string name="mine_advice">帮助与意见</string>
+    <string name="mine_advice">帮助与反馈</string>
     <string name="mine_order">预约订单</string>
     <string name="mine_maintenance">维修工单</string>
     <string name="mine_shop">我的商城</string>
