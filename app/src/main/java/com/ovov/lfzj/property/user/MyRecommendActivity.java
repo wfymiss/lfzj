@@ -69,6 +69,7 @@ public class MyRecommendActivity extends BaseActivity {
                     @Override
                     public void onNext(ListInfo<RecommendListInfo> listInfo) {
                         dismiss();
+                        setRightText("合计人数:"+listInfo.datas().size());
                         mData.clear();
                         mData.addAll(listInfo.datas());
                         mAdapter.notifyDataSetChanged();
@@ -84,15 +85,19 @@ public class MyRecommendActivity extends BaseActivity {
         mAdapter = new CommonAdapter<RecommendListInfo>(mActivity, mData, R.layout.item_recommend) {
             @Override
             public void convert(ViewHolder viewHolder, RecommendListInfo s, int i) {
-                if (s.nickname != null && !s.nickname.equals(""))
-                    viewHolder.setText(R.id.tv_nickname, s.nickname);
-                else {
-                    viewHolder.setText(R.id.tv_nickname, s.mobile);
-                }
+
+
+                viewHolder.setText(R.id.tv_nickname, s.mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
+
                 @SuppressLint("StringFormatMatches") String createAt = String.format(getString(R.string.text_register_time, s.created_at));
-                viewHolder.setText(R.id.tv_time, createAt);
-                String mobile = String.format(getString(R.string.text_phone_recommend), s.mobile);
-                viewHolder.setText(R.id.tv_phone, mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
+                viewHolder.setText(R.id.tv_status, createAt);
+                //String mobile = String.format(getString(R.string.text_phone_recommend), s.mobile);
+                //viewHolder.setText(R.id.tv_phone, mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
+                if (s.is_user_auth == 1){
+                    viewHolder.setText(R.id.tv_phone,String.format(getString(R.string.text_register_status),"已认证"));
+                }else {
+                    viewHolder.setText(R.id.tv_phone,String.format(getString(R.string.text_register_status),"未认证"));
+                }
 
             }
         };
