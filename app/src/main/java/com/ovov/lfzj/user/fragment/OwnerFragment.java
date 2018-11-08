@@ -165,12 +165,15 @@ public class OwnerFragment extends BaseFragment {
                     showToast("请选择小区");
                     return;
                 }
-                if (TextUtils.isEmpty(mEtBuildingNumber.getText().toString()) && mEtBuildingNumber.getText().equals("") ) {
+                if (TextUtils.isEmpty(mEtBuildingNumber.getText().toString()) && !mEtBuildingNumber.getText().equals("") ) {
                     showToast("请填写房间信息");
                     return;
                 }
-                if (TextUtils.isEmpty(mEtUnitNumber.getText().toString()) && mEtUnitNumber.getText().equals("")) {
+                if (TextUtils.isEmpty(mEtUnitNumber.getText().toString()) && !mEtUnitNumber.getText().equals("")) {
                     showToast("请选择小区");
+                    return;
+                } if (TextUtils.isEmpty(mEtRoomNumber.getText().toString()) && !mEtRoomNumber.getText().equals("")) {
+                    showToast("请填写房间");
                     return;
                 }
                 if (TextUtils.isEmpty(mEtName.getText().toString()) && TextUtils.isEmpty(mEtPhone.getText().toString())) {
@@ -192,7 +195,6 @@ public class OwnerFragment extends BaseFragment {
 
 
     }
-
 
     private void addFamily() {
         showLoadingDialog();
