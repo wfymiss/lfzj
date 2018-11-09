@@ -160,10 +160,7 @@ public class FamilyListActivity extends BaseActivity {
                         if (listInfoDataInfo.code() == 200) {
                             SucceseDialog succeseDialog = new SucceseDialog(mActivity);
                             succeseDialog.show();
-                            newslist.remove(pos);
-                           familyAdapter.setDatas(newslist);
-                            lv.notifyAll();
-
+                            initdata();
                         }
 
                     }
@@ -186,14 +183,13 @@ public class FamilyListActivity extends BaseActivity {
                             //   doFailed();
                             e.printStackTrace();
                         }
-
                     }
 
                     @Override
                     public void onNext(ListInfo<FamilyInfo> listInfoDataInfo) {
-                        commonAdapter.setDatas(listInfoDataInfo.datas());
-
-
+                        familyInfo.clear();
+                        familyInfo.addAll(listInfoDataInfo.datas());
+                        commonAdapter.notifyDataSetChanged();
                     }
 
                 });
