@@ -134,7 +134,13 @@ public class OwnerFragment extends BaseFragment {
                 getBuildinglist();
                 break;
             case R.id.tv_select_room:
-                getUserHouse();
+                if (subid!=null){
+                    getUserHouse(subid);
+                }else {
+                    showToast("请选择小区");
+                    return;
+                }
+
                 break;
         }
 
@@ -204,9 +210,9 @@ public class OwnerFragment extends BaseFragment {
     }
 
 
-    private void getUserHouse() {
+    private void getUserHouse(String subid) {
         showLoadingDialog();
-        Subscription subscription = RetrofitHelper.getInstance().getUserHouse()
+        Subscription subscription = RetrofitHelper.getInstance().getUserHouse(subid)
                 .compose(RxUtil.rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<ListInfo<RoomListInfo>>() {
                     @Override

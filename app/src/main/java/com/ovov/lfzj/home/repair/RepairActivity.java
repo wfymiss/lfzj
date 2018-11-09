@@ -28,6 +28,7 @@ import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.ListInfo;
+import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.bean.RoomListInfo;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.RegexUtils;
@@ -364,7 +365,7 @@ public class RepairActivity extends BaseActivity {
 
     private void getUserHouse() {
         showLoadingDialog();
-        Subscription subscription = RetrofitHelper.getInstance().getUserHouse()
+        Subscription subscription = RetrofitHelper.getInstance().getUserHouse(LoginUserBean.getInstance().getSub_id())
                 .compose(RxUtil.rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<ListInfo<RoomListInfo>>() {
                     @Override

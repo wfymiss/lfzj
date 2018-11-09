@@ -502,8 +502,8 @@ public class RetrofitHelper {
         return mApiService.getMobile(getToken(), house_path);
     }
 
-    public Observable<ListInfo<RoomListInfo>> getUserHouse() {
-        return mApiService.getUserHouse(getToken(), getSubId());
+    public Observable<ListInfo<RoomListInfo>> getUserHouse(String sub) {
+        return mApiService.getUserHouse(getToken(), sub);
     }
 
     public Observable<ListInfo<FamilyInfo>> getfamilylist() {
