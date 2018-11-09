@@ -312,7 +312,7 @@ public class SquareFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         if (LoginUserBean.getInstance().isIs_auth()) {
-                            SquareDetailActivity.toActivity(mActivity, i, squareListInfo,squareListInfo.transpondInfo.id);
+                            SquareDetailActivity.toActivity(mActivity, i, squareListInfo,squareListInfo.id);
                         } else {
                             identityDialog.show();
                         }

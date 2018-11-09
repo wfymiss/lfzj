@@ -5,12 +5,22 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.LinearGradient;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -141,6 +151,51 @@ public class RepairActivity extends BaseActivity {
                 finish();
             }
         });
+        Bitmap bmp = ((BitmapDrawable) getResources().getDrawable(
+                R.mipmap.ic_repair_bg)).getBitmap();
+        ImageView ivImage = findViewById(R.id.image);
+        //ivImage.setImageBitmap(createReflectedImage(bmp));
+    }
+
+    public  Bitmap createReflectedImage(Bitmap originalImage) {
+
+        final int reflectionGap = 4;
+
+        int width = originalImage.getWidth();
+        int height = originalImage.getHeight();
+
+        Matrix matrix = new Matrix();
+        matrix.preScale(1, -1);
+
+        Bitmap reflectionImage = Bitmap.createBitmap(originalImage, 0,
+                height / 2, width, height / 2, matrix, false);
+
+        Bitmap bitmapWithReflection = Bitmap.createBitmap(width,
+                (height + height / 2), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bitmapWithReflection);
+
+        canvas.drawBitmap(originalImage, 0, 0, null);
+
+        Paint defaultPaint = new Paint();
+        canvas.drawRect(0, height, width, height + reflectionGap, defaultPaint);
+
+        canvas.drawBitmap(reflectionImage, 0, height + reflectionGap, null);
+
+        Paint paint = new Paint();
+        LinearGradient shader = new LinearGradient(0,
+                originalImage.getHeight(), 0, bitmapWithReflection.getHeight()
+                + reflectionGap, 0x70ffffff, 0x00ffffff,
+                Shader.TileMode.MIRROR);
+
+        paint.setShader(shader);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+
+        canvas.drawRect(0, height, width, bitmapWithReflection.getHeight()
+                + reflectionGap, paint);
+
+        return bitmapWithReflection;
     }
 
     private void initgrid() {
@@ -359,7 +414,7 @@ public class RepairActivity extends BaseActivity {
 
                 if (path != null && !path.equals("") && !getAutoFileOrFilesSize(path).equals("0B")) {
                     File file = new File(path);
-                    Log.e("sizeeee",getAutoFileOrFilesSize(path));
+                    Log.e("sizeeee", getAutoFileOrFilesSize(path));
                     try {
                         compressedImageFile = new Compressor(this).compressToFile(file);
                     } catch (IOException e) {

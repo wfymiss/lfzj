@@ -549,6 +549,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".home.ui.NewsListctivity" />
+        <activity android:name=".user.setting.IntroduceActivity"></activity>
     </application>
 
 </manifest>

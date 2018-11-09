@@ -13,13 +13,18 @@ import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.ErrorInfo;
 import com.ovov.lfzj.base.bean.LoginUserBean;
+import com.ovov.lfzj.base.bean.UpdateBean;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.RxUtil;
+import com.ovov.lfzj.base.utils.Tools;
 import com.ovov.lfzj.base.widget.RemindDialogUtil;
+import com.ovov.lfzj.base.widget.UpdateDialog;
+import com.ovov.lfzj.guide.GuideActivity;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.login.FindPasswordActivity;
 import com.ovov.lfzj.login.LoginActivity;
+import com.ovov.lfzj.login.ServiceActivity;
 import com.youzan.androidsdk.YouzanSDK;
 
 import butterknife.ButterKnife;
@@ -44,7 +49,7 @@ public class SettingActivity extends BaseActivity {
         setTitleText(R.string.text_set);
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_account_safe, R.id.tv_about, R.id.btn_loginout})
+    @OnClick({R.id.iv_back, R.id.tv_account_safe, R.id.tv_about, R.id.btn_loginout,R.id.tv_intro,R.id.tv_service,R.id.tv_check})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -59,7 +64,45 @@ public class SettingActivity extends BaseActivity {
             case R.id.btn_loginout:
                 frameRemind();
                 break;
+            case R.id.tv_service:
+                ServiceActivity.toActivity(mActivity);
+                break;
+            case R.id.tv_intro:
+                IntroduceActivity.toActivity(mActivity);
+                break;
+            case R.id.tv_check:
+                checkVersion();
+                break;
         }
+    }
+    private void checkVersion() {
+        showLoadingDialog();
+        Subscription subscription = RetrofitHelper.getInstance().checkVersion(Tools.getVersion(mActivity))
+                .compose(RxUtil.<DataInfo<UpdateBean>>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo<UpdateBean>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        if (e instanceof DataResultException) {
+                            DataResultException dataResultException = (DataResultException) e;
+                            showToast(dataResultException.errorInfo);
+                        } else {
+                            doFailed();
+                            showError(e.getMessage());
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(DataInfo<UpdateBean> updateBeanDataInfo) {
+                        dismiss();
+                        /*if (updateBeanDataInfo.datas().needUpdate()) {
+                            UpdateDialog updateDialog = new UpdateDialog(mActivity, updateBeanDataInfo.datas().apk_url, updateBeanDataInfo.datas().upgrade_point);
+                            updateDialog.show();
+                        }*/
+                    }
+                });
+        addSubscrebe(subscription);
     }
 
     private void loginout() {

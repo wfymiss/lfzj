@@ -16,8 +16,14 @@ import android.widget.Toast;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseFragment;
 
+import com.ovov.lfzj.base.bean.LoginUserBean;
+import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.ActivityUtils;
+import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
+import com.ovov.lfzj.home.bean.SubListBean;
+import com.ovov.lfzj.http.RetrofitHelper;
+import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.user.setting.AboutActivity;
 import com.ovov.lfzj.user.setting.SettingActivity;
 import com.squareup.picasso.Picasso;
@@ -31,6 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
+import rx.Subscription;
 
 /**
  * Created by Administrator on 2017/10/23.
@@ -80,16 +87,10 @@ public class PropertyUserFragment extends BaseFragment {
 
     @Override
     public void init() {
-        storageTokenRead();
+        getUserInfo();
         initGrid();
         initData();
 
-    }
-
-    // 获取token
-    private void storageTokenRead() {
-        SharedPreferences spf = getContext().getSharedPreferences("indenti", Context.MODE_PRIVATE);
-        token = spf.getString("token", "");
     }
 
     private void initData() {
@@ -131,7 +132,33 @@ public class PropertyUserFragment extends BaseFragment {
         }
         return data_list;
     }
+    private void getUserInfo() {
+        showLoadingDialog();
+        Subscription subscription = RetrofitHelper.getInstance().gethomeList()
+                .compose(RxUtil.rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<SubListBean>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        if (e instanceof DataResultException){
+                            DataResultException dataResultException = (DataResultException) e;
+                            showToast(dataResultException.errorInfo);
+                        }else {
+                            doFailed();
+                            e.printStackTrace();
+                        }
+                    }
 
+                    @Override
+                    public void onNext(SubListBean subListBean) {
+                        dismiss();
+                        myNickname.setText(subListBean.getDatas().admin_roles.name);
+                        mySign.setText(subListBean.getDatas().admin_roles.description);
+
+                    }
+                });
+        addSubscrebe(subscription);
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

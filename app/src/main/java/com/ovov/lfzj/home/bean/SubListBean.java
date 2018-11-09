@@ -33,6 +33,11 @@ public class SubListBean {
         private UserInfoBean user;
         private List<SubdistrictsBean> subdistricts;
         private AppPermission app_permission;
+        public AdminRolesBean admin_roles;
+
+        public AdminRolesBean getAdmin_roles() {
+            return admin_roles;
+        }
 
         public AppPermission getApp_permission() {
             return app_permission;
@@ -74,6 +79,18 @@ public class SubListBean {
             public boolean gongdan_quxiaopaidan;
             public boolean gongdan_gaipai;
             public boolean jiaofei_chaxun;
+        }
+        public class AdminRolesBean implements Serializable{
+            public String id;
+            public String name;
+            public String display_name;
+            public String description;
+            public String created_at;
+            public String updated_at;
+            public String type;
+            public String pivot_user_id;
+            public String pivot_role_id;
+            public String subdistrict_id;
         }
     }
 

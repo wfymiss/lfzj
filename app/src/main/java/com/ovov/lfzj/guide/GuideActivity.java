@@ -1,5 +1,6 @@
 package com.ovov.lfzj.guide;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -31,6 +32,10 @@ public class GuideActivity extends BaseActivity {
     private int flaggingWidth;// 滑动关闭引导页所需滚动的长度
     private int currentItem = 0; // 当前图片的位置
 
+    public static void toActivity(Context context){
+        Intent intent = new Intent(context,GuideActivity.class);
+        context.startActivity(intent);
+    }
     @Override
     public int getLayoutId() {
         return R.layout.activity_guide;
