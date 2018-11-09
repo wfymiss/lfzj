@@ -19,5 +19,6 @@ public class RecommendListInfo {
     public String nickname;
     public String mobile;
     public String created_at;
+    public int is_user_auth;
 
 }

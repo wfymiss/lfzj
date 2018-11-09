@@ -47,6 +47,7 @@
             android:id="@+id/et_phone"
             android:textSize="@dimen/textSize_12sp"
             android:inputType="phone"
+            android:maxLength="11"
             android:layout_marginLeft="@dimen/dp_18"/>
 
     </LinearLayout>

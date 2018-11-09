@@ -19,6 +19,7 @@
         android:layout_below="@+id/tv_nickname"
         android:id="@+id/tv_time"
         android:textSize="@dimen/textSize_12sp"
+        android:visibility="gone"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_10"
         android:textColor="@color/color_444444"/>
