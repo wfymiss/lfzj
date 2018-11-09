@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:background="#ffffff"
-    android:id="@+id/container"
     android:orientation="vertical">
+
+<include layout="@layout/base_view_title"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -135,10 +137,10 @@
             android:id="@+id/delect_im"
             android:layout_width="9dp"
             android:layout_height="9dp"
-            android:visibility="gone"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/townoff" />
+            android:background="@drawable/townoff"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <View

@@ -23,16 +23,16 @@
         <item>@drawable/repair</item>
         <item>@drawable/incarh</item>
         <item>@drawable/shop</item>
-        <item>@drawable/flower</item>
+        <item>@drawable/flawor</item>
 
     </integer-array>
     <!--发现页图片对应的位子-->
     <string-array name="find_gv_title">
-        <item>缴费</item>
-        <item>花圃</item>
+        <item>代缴费</item>
         <item>报修</item>
-        <item>开门</item>
         <item>访客通行</item>
+        <item>花圃</item>
+        <item>缴费</item>
 
     </string-array>
 
@@ -61,7 +61,7 @@
         <item>@drawable/shoptree</item>
         <item>@drawable/friend</item>
         <item>@drawable/activity</item>
-        <item>@drawable/flower</item>
+        <item>@drawable/flawor</item>
         <item>@drawable/pays</item>
         <item>@drawable/incarh</item>
         <item>@drawable/mymoney</item>

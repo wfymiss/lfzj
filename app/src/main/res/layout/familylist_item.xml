@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="53dp"
-        android:textSize="@dimen/textSize_15sp"
-        android:text="业主:" />
+        android:text="业主:"
+        android:textSize="@dimen/textSize_15sp" />
 
 
     <TextView
@@ -21,33 +21,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="@dimen/textSize_15sp"
-        android:gravity="center"
         android:layout_marginLeft="@dimen/padding_10dp"
-        android:text="王杰" />
+        android:gravity="center"
+        android:text="王杰"
+        android:textSize="@dimen/textSize_15sp" />
 
     <View
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
+
     <TextView
         android:id="@+id/tv_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/textSize_15sp"
         android:layout_gravity="center"
-        android:layout_marginRight="@dimen/margin_20dp"
-        android:text="15234246763" />
+        android:layout_marginLeft="@dimen/margin_20dp"
+        android:text="15234246763"
+        android:textSize="@dimen/textSize_15sp" />
+
     <TextView
         android:id="@+id/tv_delect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="@color/white"
-        android:gravity="center"
-        android:textSize="@dimen/textSize_15sp"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="38dp"
         android:background="@drawable/help_shape_item"
-        android:text="解除" />
+        android:gravity="center"
+        android:text="解除"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textSize_15sp" />
 
 </LinearLayout>

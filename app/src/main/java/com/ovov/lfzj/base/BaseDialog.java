@@ -74,7 +74,9 @@ public abstract class BaseDialog {
         layoutParams.width = width;
     }
 
-
+    public void setHeight(int width){
+        layoutParams.height = width;
+    }
     /**
      * 管理各组件之间的通信
      *

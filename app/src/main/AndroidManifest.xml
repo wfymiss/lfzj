@@ -520,10 +520,27 @@
             android:name=".home.ui.MessageInfoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <activity android:name=".neighbour.square.GoodActivity" />
-        <activity android:name=".market.MarketActivity" />
-        <activity android:name=".user.activity.FamilyListActivity" />
-        <activity android:name=".property.user.MyRecommendActivity"></activity>
+        <activity
+            android:name=".neighbour.square.GoodActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".market.MarketActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".user.activity.FamilyListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".property.user.MyRecommendActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.ui.PaymentOtherActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity android:name=".home.ui.NewsListctivity"></activity>
     </application>
 
 </manifest>

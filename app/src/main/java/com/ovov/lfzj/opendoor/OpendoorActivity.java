@@ -101,8 +101,8 @@ public class OpendoorActivity extends BaseActivity {
     RelativeLayout lela;
     @BindView(R.id.refresh_tv)
     TextView refresh_tv;
-    private static int QRC_WIDTH = 600;    //定义二维码长度
-    private static int QRC_HEIGHT = 600;   //定义二维码宽度
+    private static int QRC_WIDTH = 800;    //定义二维码长度
+    private static int QRC_HEIGHT = 700;   //定义二维码宽度
     @BindView(R.id.but)
     Button but;
     private ActivityUtils activityUtils;

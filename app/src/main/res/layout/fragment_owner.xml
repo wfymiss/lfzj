@@ -14,20 +14,21 @@
         android:orientation="vertical">
 
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="请填写居住房间号"
             android:textColor="@color/color_444444"
             android:textSize="@dimen/textSize_12sp" />
+
+
         <TextView
             android:id="@+id/tv_select_sub"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_6dp"
             android:background="@drawable/shape_stroke_edit"
             android:drawablePadding="17dp"
-            android:layout_marginTop="@dimen/margin_6dp"
             android:drawableRight="@mipmap/nav_down"
             android:hint="请选择小区"
             android:maxLength="5"
@@ -35,85 +36,34 @@
             android:textColor="@color/color_444444"
             android:textSize="@dimen/textSize_12sp" />
 
-        <LinearLayout
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal">
+            android:text="请选择楼房号"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:textColor="@color/color_444444"
+            android:textSize="@dimen/textSize_12sp" />
 
+        <TextView
+            android:id="@+id/tv_select_room"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_6dp"
+            android:background="@drawable/shape_stroke_edit"
+            android:drawablePadding="17dp"
+            android:drawableRight="@mipmap/nav_down"
+            android:hint="请选择楼房号"
+            android:maxLength="10"
+            android:padding="@dimen/padding_6dp"
+            android:textColor="@color/color_444444"
+            android:textSize="@dimen/textSize_12sp" />
 
-            <EditText
-                android:id="@+id/et_building_number"
-                android:layout_width="31dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/shape_stroke_edit"
-                android:gravity="center"
-                android:inputType="number"
-                android:maxLength="3"
-                android:paddingBottom="@dimen/padding_6dp"
-                android:paddingTop="@dimen/padding_6dp"
-                android:textSize="@dimen/textSize_12sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/padding_5dp"
-                android:layout_marginRight="@dimen/padding_5dp"
-                android:text="栋"
-                android:textColor="@color/color_444444"
-                android:textSize="15sp" />
-
-            <EditText
-                android:id="@+id/et_unit_number"
-                android:layout_width="31dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/shape_stroke_edit"
-                android:gravity="center"
-                android:inputType="number"
-                android:maxLength="3"
-                android:paddingBottom="@dimen/padding_6dp"
-                android:paddingTop="@dimen/padding_6dp"
-                android:textSize="@dimen/textSize_12sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/padding_5dp"
-                android:layout_marginRight="@dimen/padding_5dp"
-                android:text="单元"
-                android:textColor="@color/color_444444"
-                android:textSize="15sp" />
-
-            <EditText
-                android:id="@+id/et_room_number"
-                android:layout_width="31dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/shape_stroke_edit"
-                android:gravity="center"
-                android:inputType="number"
-                android:maxLength="5"
-                android:paddingBottom="@dimen/padding_6dp"
-                android:paddingTop="@dimen/padding_6dp"
-                android:textSize="@dimen/textSize_12sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/padding_5dp"
-                android:layout_marginRight="@dimen/padding_5dp"
-                android:text="房"
-                android:textColor="@color/color_444444"
-                android:textSize="15sp" />
-        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="家人姓名"
             android:layout_marginTop="@dimen/margin_5dp"
+            android:text="家人姓名"
             android:textColor="@color/color_444444"
             android:textSize="12sp" />
 
@@ -139,9 +89,9 @@
             android:id="@+id/et_phone"
             android:layout_width="165dp"
             android:layout_height="22dp"
-            android:inputType="number"
             android:layout_marginTop="2dp"
-            android:background="@drawable/edittext_item" />
+            android:background="@drawable/edittext_item"
+            android:inputType="number" />
     </LinearLayout>
 
     <Button
