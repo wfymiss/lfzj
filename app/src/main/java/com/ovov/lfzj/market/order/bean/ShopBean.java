@@ -20,8 +20,33 @@ public class ShopBean {
      * goods_name : 建业足球POLO衫
      * goods_num : 1
      */
-
+    private String id;
+    private String name;
+    private String price;
+    private String img;
+    private String url;
     private int orderid;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
     private String orderno;
     private String servicestation;
     private int orderstatus;

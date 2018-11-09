@@ -1,28 +1,24 @@
 package com.ovov.lfzj.home;
 
 
-import android.Manifest;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mcxtzhang.commonadapter.lvgv.CommonAdapter;
 import com.mcxtzhang.commonadapter.lvgv.ViewHolder;
@@ -49,9 +45,10 @@ import com.ovov.lfzj.home.bean.SubdistrictsBean;
 import com.ovov.lfzj.home.payment.activity.PayMentRecordActivity;
 import com.ovov.lfzj.home.presenter.HomePresenter;
 import com.ovov.lfzj.home.repair.RepairActivity;
-import com.ovov.lfzj.home.repair.RepairCommentActivity;
+import com.ovov.lfzj.home.ui.HomeNoticeActivity;
 import com.ovov.lfzj.home.ui.MessageListActivity;
 import com.ovov.lfzj.home.ui.NewsDetailActivity;
+import com.ovov.lfzj.home.ui.NewsListctivity;
 import com.ovov.lfzj.home.ui.NoticeDetailActivity;
 import com.ovov.lfzj.home.ui.PaymentOtherActivity;
 import com.ovov.lfzj.home.view.HomeView;
@@ -59,20 +56,16 @@ import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.login.IdentityConfirmActivity;
 import com.ovov.lfzj.login.LoginActivity;
-import com.ovov.lfzj.login.MySubActivity;
-import com.ovov.lfzj.neighbour.MyCommunityActivity;
-import com.ovov.lfzj.neighbour.square.SquareDetailActivity;
+import com.ovov.lfzj.market.MarketActivity;
+import com.ovov.lfzj.market.order.bean.ShopBean;
 import com.ovov.lfzj.opendoor.ApplyVisitorActivity;
-import com.ovov.lfzj.opendoor.OpendoorActivity;
 import com.ovov.lfzj.opendoor.adapter.HouseListAdapter;
 import com.ovov.lfzj.opendoor.capture.CaptureActivity;
-import com.ovov.lfzj.user.SearchActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.squareup.picasso.Picasso;
-import com.tbruyelle.rxpermissions.RxPermissions;
 import com.youzan.androidsdk.YouzanSDK;
 
 import java.util.ArrayList;
@@ -118,6 +111,9 @@ public class HomeFragment extends BaseFragment implements HomeView {
     private CardAdapter shopAdapter1;
     private CommonAdapter<NewsBean> newsAdapter;
     private List<SubdistrictsBean> listinfo1 = new ArrayList<>();
+    private List<ShopBean> ima = new ArrayList();
+    private LinearLayout basetitle;
+    private TextView more;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -175,6 +171,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
         initList();
         homePresenter.getNoticeList();
         homePresenter.getNewsList();
+        homePresenter.getShopList();
         initBanner();
 
     }
@@ -209,15 +206,12 @@ public class HomeFragment extends BaseFragment implements HomeView {
     }
 
     private void initList() {
-        final List<Integer> ima = new ArrayList();
-        ima.add(R.mipmap.shop1);
-        ima.add(R.mipmap.top2);
-        ima.add(R.mipmap.top3);
-        ima.add(R.mipmap.top4);
         newslist = new ArrayList<>();
         View addheadlayout = View.inflate(getContext(), R.layout.banner_item, null);
         textView = addheadlayout.findViewById(R.id.im_home);
         ImageView imageView = addheadlayout.findViewById(R.id.im_list);
+        basetitle = addheadlayout.findViewById(R.id.relativeLayout);
+        more = addheadlayout.findViewById(R.id.tv_more);
         GridView gridView = addheadlayout.findViewById(R.id.gridview);
         RecyclerView gridView1 = addheadlayout.findViewById(R.id.gridview1);
         NoScrollGridView newListView = addheadlayout.findViewById(R.id.new_list);
@@ -238,21 +232,31 @@ public class HomeFragment extends BaseFragment implements HomeView {
             }
         });
 
-//        RelativeLayout reSearch = addheadlayout.findViewById(R.id.pro_searchView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         gridView1.setLayoutManager(linearLayoutManager);
         shopAdapter1 = new CardAdapter(ima, getContext());
-//        reSearch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                SearchActivity.toActivity(mActivity);
-//            }
-//        });
+
+
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MarketActivity.toActivity(mActivity,"https://h5.youzan.com/v2/showcase/tag?alias=fruuoqig&reft=1541730182062&spm=f76060277",1);
+            }
+        });
+
+
         bannerAdapter = new BannerAdapter<BannerBean>() {
             @Override
             protected void bind(ViewHolder holder, BannerBean data) {
-                Picasso.with(getContext()).load(data.getImg()).into(holder.mImageView);
+                if (!data.getImg().equals("") && data.getImg() != null) {
+                    Picasso.with(getContext()).load(data.getImg()).into(holder.mImageView);
+                } else {
+
+                    holder.mImageView.setImageResource(R.drawable.banner_default);
+                }
+
+
             }
         };
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -334,6 +338,14 @@ public class HomeFragment extends BaseFragment implements HomeView {
                     }
                 });
 
+                viewHolder.setOnClickListener(R.id.tv_more, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        HomeNoticeActivity.toActivity(mActivity);
+
+                    }
+                });
+
 
             }
         };
@@ -375,6 +387,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
                 viewHolder.setOnClickListener(R.id.tv_more, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        NewsListctivity.toActivity(mActivity);
+
                     }
                 });
                 ImageView view = viewHolder.getView(R.id.iv_image);
@@ -392,7 +406,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getContext(), CaptureActivity.class);
                 startActivity(intent);
 
@@ -626,6 +639,16 @@ public class HomeFragment extends BaseFragment implements HomeView {
         for (SubdistrictsBean s : listInfo) {
             list.add(s.getSubdistrict_name());
 
+        }
+
+    }
+
+    @Override
+    public void getShopList(List<ShopBean> listInfo) {
+        if (listInfo.size() > 0) {
+            shopAdapter1.setmData(listInfo);
+        } else {
+            bannerLayout.setVisibility(View.GONE);
         }
 
     }

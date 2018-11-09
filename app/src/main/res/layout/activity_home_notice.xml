@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.ovov.lfzj.home.ui.NewsListctivity">
+    tools:context="com.ovov.lfzj.home.ui.HomeNoticeActivity">
+
 
     <include layout="@layout/include_title_text" />
 
@@ -19,5 +20,4 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"></ListView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
 </LinearLayout>

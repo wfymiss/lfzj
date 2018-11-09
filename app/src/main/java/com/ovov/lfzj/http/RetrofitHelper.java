@@ -210,12 +210,12 @@ public class RetrofitHelper {
         return mApiService.login(mobile, password);
     }
 
-    public Observable<DataInfo<RegisterBean>> register(String mobile, String verify, String password,String recommend) {
-        return mApiService.register(mobile, verify, password,recommend);
+    public Observable<DataInfo<RegisterBean>> register(String mobile, String verify, String password, String recommend) {
+        return mApiService.register(mobile, verify, password, recommend);
     }
 
-    public Observable<OpenLogUpInfo> openLogUp(  String sn_name, int open_type, int open_status) {
-        return mApiService.getUpOpenLog(getToken(), LoginUserBean.getInstance().getSub_id(),LoginUserBean.getInstance().getPhone(), sn_name, open_type, open_status);
+    public Observable<OpenLogUpInfo> openLogUp(String sn_name, int open_type, int open_status) {
+        return mApiService.getUpOpenLog(getToken(), LoginUserBean.getInstance().getSub_id(), LoginUserBean.getInstance().getPhone(), sn_name, open_type, open_status);
 
     }
 
@@ -237,7 +237,7 @@ public class RetrofitHelper {
 
 
     public Observable<DataInfo<UrlBean>> Upload(String building) {
-        return mApiService.Upload(getToken(),building);
+        return mApiService.Upload(getToken(), building);
     }
 
     public Observable<RoomListResult> getRoomList(String building, String unit) {
@@ -260,12 +260,12 @@ public class RetrofitHelper {
         RequestBody mUserId = RequestBody.create(MediaType.parse("multipart/form-data"), getUserId());
         RequestBody token = RequestBody.create(MediaType.parse("multipart/form-data"), getToken());
         RequestBody subid = RequestBody.create(MediaType.parse("multipart/form-data"), getSubId());
-        return mApiService.addNeighbour(token, mUserId, content, parts,subid);
+        return mApiService.addNeighbour(token, mUserId, content, parts, subid);
 
     }
 
     public Observable<ListInfo<SquareListInfo>> getSquareList(int page, String id) {
-        return mApiService.getSquareList(getToken(), getUserId(), page, id,getSubId());
+        return mApiService.getSquareList(getToken(), getUserId(), page, id, getSubId());
     }
 
     public Observable<DataInfo<SquareDetailInfo>> getSquareDetail(String id) {
@@ -273,7 +273,7 @@ public class RetrofitHelper {
     }
 
     public Observable<ListInfo<SquareListInfo>> getHomeSquareList(int page, String id) {
-        return mApiService.getHomeSquareList(getToken(), page, id,getSubId());
+        return mApiService.getHomeSquareList(getToken(), page, id, getSubId());
     }
 
     public Observable<ListInfo<SquareListInfo>> getLog(int page) {
@@ -283,23 +283,26 @@ public class RetrofitHelper {
     public Observable<ListInfo<SquareListInfo>> getFeedBackLists(int page) {
         return mApiService.getFeedBackLists(getToken(), page);
     }
+
     public Observable<DataInfo<SquareListInfo>> getFeedBackInfo(String page) {
         return mApiService.getFeedBackInfo(page);
     }
+
     public Observable<ListInfo<SquareListInfo>> questionLists(int page) {
-        return mApiService.questionLists( page);
+        return mApiService.questionLists(page);
     }
 
 
     public Observable<DataInfo> addSquareComment(String id, String content) {
-        return mApiService.addSquareComment(getToken(), id,content);
+        return mApiService.addSquareComment(getToken(), id, content);
     }
 
     public Observable<DataInfo<String>> squareGood(String id) {
         return mApiService.squareGood(getToken(), id, getUserId());
     }
-  public Observable<DataInfo<SquareListInfo>> questionInfo(String id) {
-        return mApiService.questionInfo( id);
+
+    public Observable<DataInfo<SquareListInfo>> questionInfo(String id) {
+        return mApiService.questionInfo(id);
     }
 
     public Observable<DataInfo> loginout() {
@@ -311,7 +314,7 @@ public class RetrofitHelper {
     }
 
     public Observable<DataInfo> transimSquare(String id, String content) {
-        return mApiService.transimSquare(getToken(), getUserId(), id, content,getSubId());
+        return mApiService.transimSquare(getToken(), getUserId(), id, content, getSubId());
     }
 
     public Observable<ListInfo<SquareListInfo>> getUserSquareList(String userid, int page, String id) {
@@ -347,7 +350,7 @@ public class RetrofitHelper {
 
     public Observable<DataInfo> confirmPayResult(String type, String order_id, String
             order_number) {
-        return mApiService.confirmPayResult(getToken(), type, order_id,  LoginUserBean.getInstance().getSub_id());
+        return mApiService.confirmPayResult(getToken(), type, order_id, LoginUserBean.getInstance().getSub_id());
 
 
     }
@@ -389,7 +392,7 @@ public class RetrofitHelper {
     }
 
     public Observable<ListInfo<BannerBean>> getBanner() {
-        return mApiService.getBanner(getToken());
+        return mApiService.getBanner(getToken(),LoginUserBean.getInstance().getSub_id());
     }
 
     public Observable<ListInfo<HealthBean>> getHealthTime(String time) {
@@ -419,6 +422,7 @@ public class RetrofitHelper {
     public Observable<ListInfo<BannerBean>> getInfomation(String id) {
         return mApiService.getInfomation(getToken(), id);
     }
+
     public Observable<DataInfo<BannerBean>> getInfomationdetail(String id) {
         return mApiService.getInfomationdetail(getToken(), id);
     }
@@ -427,12 +431,24 @@ public class RetrofitHelper {
         return mApiService.getNoticeList(LoginUserBean.getInstance().getSub_id());
     }
 
+    public Observable<ListInfo<NewsBean>> getHomeNewsList(int page) {
+        return mApiService.getHomeNewsList(LoginUserBean.getInstance().getSub_id(), page);
+    }
+
+    public Observable<ListInfo<NewsBean>> getHomeNoticeList(int page) {
+        return mApiService.getHomeNoticeList(LoginUserBean.getInstance().getSub_id(), page);
+    }
+
     public Observable<ListInfo<NewsBean>> getNewsList() {
         return mApiService.getNewsList(LoginUserBean.getInstance().getSub_id());
     }
 
     public Observable<NewsDetailBean> getNewsDetailList(String id) {
         return mApiService.getNewsDetailList(id);
+    }
+
+    public Observable<ListInfo<ShopBean>> getShoplist() {
+        return mApiService.getShoplist();
     }
 
     public Observable<NewsDetailBean> getNoticeDetailList(String id) {
@@ -470,8 +486,8 @@ public class RetrofitHelper {
         return mApiService.getOwnerPayment(is_shop, status, year, "1", houseid);
     }
 
-    public Observable<DataInfo> addFamily(String name, String mobile,String house_path) {
-        return mApiService.addFamily(getToken(), name, mobile,house_path);
+    public Observable<DataInfo> addFamily(String name, String mobile, String house_path) {
+        return mApiService.addFamily(getToken(), name, mobile, house_path);
     }
 
     public Observable<DataInfo<PaymentDetailBean>> getShopPayment(String is_shop, int status, String year, String houseid) {
@@ -491,10 +507,11 @@ public class RetrofitHelper {
     }
 
     public Observable<ListInfo<FamilyInfo>> getfamilylist() {
-        return mApiService.getfamilylist(getToken(), getSubId(),"1");
+        return mApiService.getfamilylist(getToken(), getSubId(), "1");
     }
- public Observable<DataInfo> getActfamilydelete(String userid,String relative_id,String house) {
-        return mApiService.getActfamilydelete(getToken(), getSubId(),userid,relative_id,house);
+
+    public Observable<DataInfo> getActfamilydelete(String userid, String relative_id, String house) {
+        return mApiService.getActfamilydelete(getToken(), getSubId(), userid, relative_id, house);
     }
 
     public Observable<ListInfo<WorkOrderListInfo>> getWorkList(int status, int page) {
@@ -533,49 +550,52 @@ public class RetrofitHelper {
     public Observable<DataInfo> changeRole(int login_type) {
         return mApiService.changeRole(getToken(), login_type);
     }
-    public Observable<DataInfo> workReciept(String wid){
-        return mApiService.workReceipt(getToken(),wid);
-    }
-    public Observable<DataInfo> workerCancels(String wid,String time,String reason,String remark){
-        return mApiService.workCancel(getToken(),wid,reason,remark);
+
+    public Observable<DataInfo> workReciept(String wid) {
+        return mApiService.workReceipt(getToken(), wid);
     }
 
-    public Observable<DataInfo> cancelWorkOrder(String wid,String remarks){
-        return mApiService.cancelWorkOrder(getToken(),wid,remarks);
+    public Observable<DataInfo> workerCancels(String wid, String time, String reason, String remark) {
+        return mApiService.workCancel(getToken(), wid, reason, remark);
     }
 
-    public Observable<DataInfo> workerConfirm(String wid,String cost,String trouble){
-        return mApiService.workerCommit(getToken(),wid,cost,trouble);
+    public Observable<DataInfo> cancelWorkOrder(String wid, String remarks) {
+        return mApiService.cancelWorkOrder(getToken(), wid, remarks);
     }
 
-    public Observable<DataInfo<CheckBean>> workerOrderCheck(String wid){
-        return mApiService.workerOrderCheck(getToken(),wid);
+    public Observable<DataInfo> workerConfirm(String wid, String cost, String trouble) {
+        return mApiService.workerCommit(getToken(), wid, cost, trouble);
     }
 
-    public Observable<DataInfo> repairComment(String wid,String content,String ratingSpeed,String ratingAttitude,String ratingTec){
-        return mApiService.repairComment(getToken(),wid,content,ratingSpeed,ratingAttitude,ratingTec);
+    public Observable<DataInfo<CheckBean>> workerOrderCheck(String wid) {
+        return mApiService.workerOrderCheck(getToken(), wid);
     }
 
-    public Observable<DataInfo> ownerCancelWorkerOrder(String wid,String reason,String remarks){
-        return mApiService.ownerCancelWorkerOrder(getToken(),wid,reason,remarks);
+    public Observable<DataInfo> repairComment(String wid, String content, String ratingSpeed, String ratingAttitude, String ratingTec) {
+        return mApiService.repairComment(getToken(), wid, content, ratingSpeed, ratingAttitude, ratingTec);
     }
 
-    public Observable<DataInfo> addSquareReply(String reply_id,String content){
-        return mApiService.addSquareReply(getToken(),reply_id,content);
+    public Observable<DataInfo> ownerCancelWorkerOrder(String wid, String reason, String remarks) {
+        return mApiService.ownerCancelWorkerOrder(getToken(), wid, reason, remarks);
     }
 
-    public Observable<DataInfo> deleteSquare(String id){
-        return mApiService.squareDelete(getToken(),id);
+    public Observable<DataInfo> addSquareReply(String reply_id, String content) {
+        return mApiService.addSquareReply(getToken(), reply_id, content);
     }
 
-    public Observable<ListInfo<GoodListBean>> getGoodList(String id){
-        return mApiService.goodList(getToken(),id);
+    public Observable<DataInfo> deleteSquare(String id) {
+        return mApiService.squareDelete(getToken(), id);
     }
 
-    public Observable<DataInfo<YouzanLoginBean>> youzanLogin(){
+    public Observable<ListInfo<GoodListBean>> getGoodList(String id) {
+        return mApiService.goodList(getToken(), id);
+    }
+
+    public Observable<DataInfo<YouzanLoginBean>> youzanLogin() {
         return mApiService.youzanLogin(getUserId());
     }
-    public Observable<ListInfo<RecommendListInfo>> getInviterList(){
+
+    public Observable<ListInfo<RecommendListInfo>> getInviterList() {
         return mApiService.getInviterList(getToken());
     }
 

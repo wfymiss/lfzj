@@ -4,6 +4,7 @@ import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.home.bean.NewsBean;
 import com.ovov.lfzj.home.bean.NotifiBean;
 import com.ovov.lfzj.home.bean.SubdistrictsBean;
+import com.ovov.lfzj.market.order.bean.ShopBean;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public interface HomeView {
 
     void NewsData(List<NewsBean> listInfo);
     void getsubList( List<SubdistrictsBean> listInfo);
+    void getShopList( List<ShopBean> listInfo);
 
     void showMsg(String dataResult);
 

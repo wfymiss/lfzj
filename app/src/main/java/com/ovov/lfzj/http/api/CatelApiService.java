@@ -123,11 +123,12 @@ public interface CatelApiService {
     Observable<DataInfo> addSquareComment(@Field("token") String token,
                                           @Field("id") String id,
                                           @Field("content") String content);
+
     @FormUrlEncoded
     @POST("v1/user/addreply")
     Observable<DataInfo> addSquareReply(@Field("token") String token,
-                                          @Field("reply_id") String reply_id,
-                                          @Field("content") String content);
+                                        @Field("reply_id") String reply_id,
+                                        @Field("content") String content);
 
     @FormUrlEncoded
     @POST("v1/user/mycomment")
@@ -323,7 +324,8 @@ public interface CatelApiService {
 
     @FormUrlEncoded
     @POST("v1/recommend/index")
-    Observable<ListInfo<BannerBean>> getBanner(@Field("token") String token);
+    Observable<ListInfo<BannerBean>> getBanner(@Field("token") String token,
+                                               @Field("subdistrict_id") String sub_id);
 
     @FormUrlEncoded
     @POST("v1/recommend/index")
@@ -341,24 +343,25 @@ public interface CatelApiService {
     @POST("v1/recommend/infomation")
     Observable<ListInfo<BannerBean>> getInfomation(@Field("token") String token,
                                                    @Field("type_id") String sub_id);
+
     @FormUrlEncoded
     @POST("v1/recommend/infomationdetail")
     Observable<DataInfo<BannerBean>> getInfomationdetail(@Field("token") String token,
-                                                   @Field("id") String sub_id);
+                                                         @Field("id") String sub_id);
 
     @FormUrlEncoded
     @POST("v1/personal/getfamilylist")
     Observable<ListInfo<FamilyInfo>> getfamilylist(@Field("token") String token,
                                                    @Field("subdistrict_id") String sub_id,
                                                    @Field("type") String type);
+
     @FormUrlEncoded
     @POST("v1/personal/actfamilydelete")
     Observable<DataInfo> getActfamilydelete(@Field("token") String token,
-                                                   @Field("subdistrict_id") String sub_id,
-                                                   @Field("user_id") String user_id,
-                                                   @Field("relative_id") String relative_id,
-                                                   @Field("houses_id") String houses_id);
-
+                                            @Field("subdistrict_id") String sub_id,
+                                            @Field("user_id") String user_id,
+                                            @Field("relative_id") String relative_id,
+                                            @Field("houses_id") String houses_id);
 
 
     @FormUrlEncoded
@@ -366,7 +369,6 @@ public interface CatelApiService {
     Observable<ListInfo<HealthBean>> getHealthTime(@Field("token") String token,
                                                    @Field("subdistrictr_id") String sub_id,
                                                    @Field("time") String time);
-
 
 
     @FormUrlEncoded
@@ -461,8 +463,18 @@ public interface CatelApiService {
     Observable<ListInfo<NewsBean>> getNoticeList(@Field("subdistrict_id") String sub_id);
 
     @FormUrlEncoded
+    @POST("v1/notice/noticeList")
+    Observable<ListInfo<NewsBean>> getHomeNoticeList(@Field("subdistrict_id") String sub_id,
+                                                     @Field("page") int page);
+
+    @FormUrlEncoded
     @POST("v1/news/newsRecommend")
     Observable<ListInfo<NewsBean>> getNewsList(@Field("subdistrict_id") String subdistrict_id);
+
+    @FormUrlEncoded
+    @POST("/v1/news/newsList")
+    Observable<ListInfo<NewsBean>> getHomeNewsList(@Field("subdistrict_id") String subdistrict_id,
+                                                   @Field("page") int page);
 
 
     @FormUrlEncoded
@@ -510,6 +522,9 @@ public interface CatelApiService {
 
     @GET("v1/shop/index")
     Observable<DataInfo<UrlBean>> getMarketUrl(@Query("token") String token);
+
+    @POST("v1/recommend/commodityRecommend")
+    Observable<ListInfo<ShopBean>> getShoplist();
 
     @FormUrlEncoded
     @POST("v1/personal/owneraddfamily")
@@ -610,17 +625,21 @@ public interface CatelApiService {
                                                 @Field("wid") String wid,
                                                 @Field("contents") String reason,
                                                 @Field("remarks") String remarks);
+
     @FormUrlEncoded
     @POST("v1/user/commentdel")
     Observable<DataInfo> squareDelete(@Field("token") String token,
                                       @Field("id") String id);
+
     @FormUrlEncoded
     @POST("v1/user/zanlist")
     Observable<ListInfo<GoodListBean>> goodList(@Field("token") String token,
                                                 @Field("id") String id);
+
     @FormUrlEncoded
     @POST("v1/shop/yzLogin")
     Observable<DataInfo<YouzanLoginBean>> youzanLogin(@Field("user_id") String user_id);
+
     @FormUrlEncoded
     @POST("v1/user/get_inviter_list")
     Observable<ListInfo<RecommendListInfo>> getInviterList(@Field("token") String token);

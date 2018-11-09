@@ -2,6 +2,7 @@ package com.ovov.lfzj.home.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -35,7 +36,7 @@ import rx.Subscription;
 import static com.ovov.lfzj.CatelApplication.LOADMORE;
 import static com.ovov.lfzj.CatelApplication.REFRESH;
 
-public class NewsListctivity extends BaseActivity {
+public class HomeNoticeActivity extends BaseActivity {
 
     @BindView(R.id.lv)
     ListView lv;
@@ -51,18 +52,17 @@ public class NewsListctivity extends BaseActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_news_listctivity;
+        return R.layout.activity_home_notice;
     }
 
-
     public static void toActivity(Context context) {
-        Intent intent = new Intent(context, NewsListctivity.class);
+        Intent intent = new Intent(context, HomeNoticeActivity.class);
         context.startActivity(intent);
     }
 
     @Override
     public void init() {
-        tvTitle.setText("新闻列表");
+        tvTitle.setText("公告列表");
         initView();
         mActivityListSwf.setEnableLoadmore(false);
         mActivityListSwf.setOnRefreshListener(new OnRefreshListener() {
@@ -89,8 +89,8 @@ public class NewsListctivity extends BaseActivity {
 
             @Override
             public void convert(ViewHolder viewHolder, NewsBean noticeBean, final int i) {
-                viewHolder.setVisible(R.id.tv_notifi_type, false);
                 viewHolder.setVisible(R.id.relativeLayout, false);
+                viewHolder.setVisible(R.id.tv_notifi_type, false);
                 viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
                 viewHolder.setText(R.id.tv_comment, noticeBean.getSummary());
                 viewHolder.setText(R.id.tv_time, noticeBean.getCreated_at());
@@ -103,24 +103,20 @@ public class NewsListctivity extends BaseActivity {
                     view.setVisibility(View.GONE);
                 }
 
-
             }
 
 
         };
-        lv.setAdapter(newsAdapter);
 
+        lv.setAdapter(newsAdapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (UIUtils.isFastClick()) {
-                    Intent intent = new Intent(mActivity, NewsDetailActivity.class);
-                    intent.putExtra("id", newslist.get(position).getId());
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(mActivity, NoticeDetailActivity.class);
+                intent.putExtra("id", newslist.get(position).getId());
+                startActivity(intent);
             }
         });
-
 
     }
 
@@ -131,7 +127,7 @@ public class NewsListctivity extends BaseActivity {
         } else if (type == LOADMORE) {
             page = page + 1;
         }
-        Subscription subscription = RetrofitHelper.getInstance().getHomeNewsList(page)
+        Subscription subscription = RetrofitHelper.getInstance().getHomeNoticeList(page)
                 .compose(RxUtil.<ListInfo<NewsBean>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<ListInfo<NewsBean>>() {
                     @Override
@@ -162,6 +158,8 @@ public class NewsListctivity extends BaseActivity {
                                 mActivityListSwf.setEnableLoadmore(false);
                             }
                             if (type == REFRESH) {
+                                newslist.clear();
+                                newslist.addAll(listInfoDataInfo.datas());
                                 mActivityListSwf.finishRefresh(true);
                                 newsAdapter.setDatas(listInfoDataInfo.datas());
 

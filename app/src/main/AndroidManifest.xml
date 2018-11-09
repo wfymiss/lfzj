@@ -540,7 +540,15 @@
             android:name=".home.ui.PaymentOtherActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <activity android:name=".home.ui.NewsListctivity"></activity>
+        <activity
+            android:name=".home.ui.NewsListctivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".home.ui.HomeNoticeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

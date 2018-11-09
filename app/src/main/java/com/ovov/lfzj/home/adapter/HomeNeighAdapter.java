@@ -76,6 +76,7 @@ public class HomeNeighAdapter extends BaseAdapter {
             viewHolder.relativeLayout = (LinearLayout) convertView.findViewById(R.id.relativeLayout);
             viewHolder.tv_name = (TextView) convertView.findViewById(R.id.name_tv);
             viewHolder.tv_item_title = (TextView) convertView.findViewById(R.id.tv_item_title);
+            viewHolder.tv_more = (TextView) convertView.findViewById(R.id.tv_more);
             viewHolder.item_im = (ImageView) convertView.findViewById(R.id.item_im);
             viewHolder.tv_loacation = (TextView) convertView.findViewById(R.id.location);
             viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_item_tilte);
@@ -94,6 +95,7 @@ public class HomeNeighAdapter extends BaseAdapter {
         if (position == 0) {
             viewHolder.relativeLayout.setVisibility(View.VISIBLE);
             viewHolder.tv_item_title.setText("邻里圈");
+            viewHolder.tv_more.setVisibility(View.GONE);
             viewHolder.item_im.setImageResource(R.mipmap.nerhood);
         } else {
             viewHolder.relativeLayout.setVisibility(View.GONE);
@@ -172,7 +174,7 @@ public class HomeNeighAdapter extends BaseAdapter {
 
     private static class MyGridViewHolder {
         ImageView imageView, delect, item_im;
-        TextView tv_title, tv_content, tvTime, tv_name, tv_loacation, tv_item_content, tv_coment, tv_look, tv_item_title;
+        TextView tv_title, tv_content, tvTime, tv_name, tv_loacation, tv_item_content, tv_coment, tv_look, tv_item_title, tv_more;
         NoScrollGridView rl_list_im;
         LinearLayout linContainer;
         LinearLayout relativeLayout;

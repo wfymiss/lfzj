@@ -16,6 +16,7 @@ import com.ovov.lfzj.home.bean.SubListBean;
 import com.ovov.lfzj.home.view.HomeView;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
+import com.ovov.lfzj.market.order.bean.ShopBean;
 
 import cn.jpush.android.api.JPushInterface;
 import rx.Subscription;
@@ -118,6 +119,33 @@ public class HomePresenter {
         homeView.addSubscrebe(subscription);
 
     }
+    public void getShopList() {
+        Subscription subscription = RetrofitHelper.getInstance().getShoplist()
+                .compose(RxUtil.<ListInfo<ShopBean>>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<ListInfo<ShopBean>>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof DataResultException) {
+                            DataResultException dataResultException = (DataResultException) e;
+                            homeView.showMsg(dataResultException.errorInfo);
+                        } else {
 
+                            //    homeView.doFailed();
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onNext(ListInfo<ShopBean> listInfoDataInfo) {
+
+                        if (listInfoDataInfo.success()) {
+                            homeView.getShopList(listInfoDataInfo.datas());
+                        }
+                    }
+                });
+        homeView.addSubscrebe(subscription);
+
+    }
 
 }
