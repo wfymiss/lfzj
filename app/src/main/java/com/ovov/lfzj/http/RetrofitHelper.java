@@ -470,8 +470,8 @@ public class RetrofitHelper {
         return mApiService.getOwnerPayment(is_shop, status, year, "1", houseid);
     }
 
-    public Observable<DataInfo> addFamily(String name, String mobile) {
-        return mApiService.addFamily(getToken(), getSubId(), name, mobile);
+    public Observable<DataInfo> addFamily(String name, String mobile,String house_path) {
+        return mApiService.addFamily(getToken(), name, mobile,house_path);
     }
 
     public Observable<DataInfo<PaymentDetailBean>> getShopPayment(String is_shop, int status, String year, String houseid) {

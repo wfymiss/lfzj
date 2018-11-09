@@ -26,9 +26,12 @@
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp_5"
+        android:background="@color/white"
         android:numColumns="5"></GridView>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:background="@mipmap/line" />
     <include layout="@layout/base_view_title"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/gridview1"
@@ -48,6 +51,10 @@
         android:layout_height="match_parent"
         android:divider="@null"
         android:numColumns="1"></com.ovov.lfzj.base.widget.NoScrollGridView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:background="@mipmap/line" />
 
     <com.ovov.lfzj.base.widget.NoScrollGridView
         android:id="@+id/notice_list"

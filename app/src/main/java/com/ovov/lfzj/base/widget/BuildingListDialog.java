@@ -57,7 +57,7 @@ public class BuildingListDialog extends BaseDialog {
         mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                RxBus.getDefault().post(new SubselectEvent(mData.get((int) id).id,mData.get((int) id).subdistrict_name));
+                RxBus.getDefault().post(new SubselectEvent(mData.get((int) id).str_id,mData.get((int) id).subdistrict_name));
                 dismiss();
             }
         });

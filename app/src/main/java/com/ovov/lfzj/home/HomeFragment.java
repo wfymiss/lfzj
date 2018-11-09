@@ -53,6 +53,7 @@ import com.ovov.lfzj.home.repair.RepairCommentActivity;
 import com.ovov.lfzj.home.ui.MessageListActivity;
 import com.ovov.lfzj.home.ui.NewsDetailActivity;
 import com.ovov.lfzj.home.ui.NoticeDetailActivity;
+import com.ovov.lfzj.home.ui.PaymentOtherActivity;
 import com.ovov.lfzj.home.view.HomeView;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
@@ -223,7 +224,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
         NoScrollGridView notice_list = addheadlayout.findViewById(R.id.notice_list);
         ImageView scan = addheadlayout.findViewById(R.id.im_scan);
         bannerLayout = addheadlayout.findViewById(R.id.banner);
-
         if (LoginUserBean.getInstance().getSubname() != null && !LoginUserBean.getInstance().getSubname().isEmpty()) {
             textView.setText(LoginUserBean.getInstance().getSubname());
         } else {
@@ -262,21 +262,22 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
                     if (LoginUserBean.getInstance().isIs_auth()) {
                         if (position == 0) {
-                            PayMentRecordActivity.toActivity(mActivity);
+                            PaymentOtherActivity.toActivity(mActivity);
                         }
                         if (position == 1) {
-                            GameActivity.toActivity(mActivity);
+                            RepairActivity.toActivity(mActivity);
+
                         }
                         if (position == 2) {
                             //RepairCommentActivity.toActivity(mActivity);
-                            RepairActivity.toActivity(mActivity);
+                            ApplyVisitorActivity.toActivity(mActivity);
                         }
 
                         if (position == 3) {
-                            OpendoorActivity.toActivity(mActivity);
+                            GameActivity.toActivity(mActivity);
                         }
                         if (position == 4) {
-                            ApplyVisitorActivity.toActivity(mActivity);
+                            PayMentRecordActivity.toActivity(mActivity);
                         }
                     } else {
                         IdentityDialog identityDialog = new IdentityDialog(mActivity, HOME_FRAGMENT_IDENTITY);
@@ -291,6 +292,13 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
             @Override
             public void convert(ViewHolder viewHolder, NewsBean noticeBean, final int i) {
+                if (i == 0) {
+                    viewHolder.setVisible(R.id.relativeLayout, true);
+                    viewHolder.setText(R.id.tv_item_title, "社区公告");
+                    viewHolder.setImageResource(R.id.item_im, R.mipmap.item_noti);
+                } else {
+                    viewHolder.setVisible(R.id.relativeLayout, false);
+                }
                 viewHolder.setText(R.id.tv_notifi_type, "公告");
                 viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
                 viewHolder.setText(R.id.tv_comment, noticeBean.getSummary());
@@ -334,6 +342,13 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
             @Override
             public void convert(ViewHolder viewHolder, NewsBean noticeBean, final int i) {
+                if (i == 0) {
+                    viewHolder.setVisible(R.id.relativeLayout, true);
+                    viewHolder.setText(R.id.tv_item_title, "新闻");
+                    viewHolder.setImageResource(R.id.item_im, R.mipmap.item_news);
+                } else {
+                    viewHolder.setVisible(R.id.relativeLayout, false);
+                }
                 viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
                 viewHolder.setText(R.id.tv_comment, noticeBean.getSummary());
                 viewHolder.setText(R.id.tv_time, noticeBean.getCreated_at());
@@ -356,8 +371,14 @@ public class HomeFragment extends BaseFragment implements HomeView {
                         }
                     }
                 });
+
+                viewHolder.setOnClickListener(R.id.tv_more, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                });
                 ImageView view = viewHolder.getView(R.id.iv_image);
-                if (!noticeBean.getImages().get(0).isEmpty()) {
+                if (noticeBean.getImages().size() > 0) {
                     Picasso.with(getContext()).load(noticeBean.getImages().get(0)).into(view);
                 } else {
                     view.setVisibility(View.GONE);
@@ -523,7 +544,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
     private void initpopuwindow(final TextView textView) {
         View view = View.inflate(getContext(), R.layout.popup_activity_title1, null);
         ListView lv_appointment = (ListView) view.findViewById(R.id.activity_title_recy);
-
         final PopupWindow popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         HouseListAdapter adapter = new HouseListAdapter(list, getContext());
         // 产生背景变暗效果

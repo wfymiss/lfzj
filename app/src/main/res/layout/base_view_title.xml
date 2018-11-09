@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="40dp"
     android:background="#ffffff"
+    android:id="@+id/relativeLayout"
     android:gravity="center_vertical"
   >
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_10"
-        android:background="@mipmap/line"/>
-    <TextView
-        android:id="@+id/tv_title"
+
+    <ImageView
+        android:id="@+id/item_im"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawablePadding="10dp"
-        android:padding="10dp"
-        android:drawableLeft="@mipmap/recommend"
-        android:layout_marginTop="16dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/margin_10dp"
+        android:layout_marginRight="@dimen/margin_10dp"
+        android:src="@mipmap/recommend"/>
+
+
+
+    <TextView
+        android:id="@+id/tv_item_title"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:text="推荐商品"
+        android:layout_marginLeft="@dimen/margin_10dp"
+        android:layout_centerVertical="true"
         android:textColor="#ff444444"
         android:textSize="16sp" />
 
@@ -25,20 +33,13 @@
         android:id="@+id/tv_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tv_title"
-        android:layout_alignBottom="@+id/tv_title"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="13dp"
         android:layout_marginRight="13dp"
         android:drawablePadding="3dp"
         android:drawableRight="@mipmap/arrow"
         android:text="更多"
+        android:layout_centerVertical="true"
         android:textColor="#ff6f6f6f"
         android:textSize="12sp" />
 
-    <View
-        style="@style/DeepUnderLine"
-        android:layout_below="@id/tv_title" />
 
-</RelativeLayout>
+</LinearLayout>

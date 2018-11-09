@@ -514,9 +514,9 @@ public interface CatelApiService {
     @FormUrlEncoded
     @POST("v1/personal/owneraddfamily")
     Observable<DataInfo> addFamily(@Field("token") String token,
-                                   @Field("subdistrict_id") String sub_id,
                                    @Field("name") String name,
-                                   @Field("mobile") String mobile);
+                                   @Field("mobile") String mobile,
+                                   @Field("house_path") String house_path);
 
     @FormUrlEncoded
     @POST("v1/house/get_user_info")

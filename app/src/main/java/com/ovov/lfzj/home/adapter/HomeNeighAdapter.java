@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mcxtzhang.commonadapter.lvgv.CommonAdapter;
@@ -72,7 +73,10 @@ public class HomeNeighAdapter extends BaseAdapter {
             viewHolder = new MyGridViewHolder();
             convertView = mLayoutInflater.inflate(R.layout.user_message_item, parent, false);
             viewHolder.tvTime = (TextView) convertView.findViewById(R.id.time);
+            viewHolder.relativeLayout = (LinearLayout) convertView.findViewById(R.id.relativeLayout);
             viewHolder.tv_name = (TextView) convertView.findViewById(R.id.name_tv);
+            viewHolder.tv_item_title = (TextView) convertView.findViewById(R.id.tv_item_title);
+            viewHolder.item_im = (ImageView) convertView.findViewById(R.id.item_im);
             viewHolder.tv_loacation = (TextView) convertView.findViewById(R.id.location);
             viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_item_tilte);
             viewHolder.tv_look = (TextView) convertView.findViewById(R.id.tv_look);
@@ -80,12 +84,19 @@ public class HomeNeighAdapter extends BaseAdapter {
             viewHolder.tv_coment = (TextView) convertView.findViewById(R.id.tv_coment);
             viewHolder.tv_title = (TextView) convertView.findViewById(R.id.tv_item_tilte);
             viewHolder.rl_list_im = (NoScrollGridView) convertView.findViewById(R.id.rl_list_im);
-            viewHolder.delect=(ImageView)convertView.findViewById(R.id.delect_im);
+            viewHolder.delect = (ImageView) convertView.findViewById(R.id.delect_im);
             viewHolder.linContainer = convertView.findViewById(R.id.container);
             viewHolder.ivHead = convertView.findViewById(R.id.my_circle_images);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (MyGridViewHolder) convertView.getTag();
+        }
+        if (position == 0) {
+            viewHolder.relativeLayout.setVisibility(View.VISIBLE);
+            viewHolder.tv_item_title.setText("邻里圈");
+            viewHolder.item_im.setImageResource(R.mipmap.nerhood);
+        } else {
+            viewHolder.relativeLayout.setVisibility(View.GONE);
         }
         if (list != null && list.size() > 0 && list.size() > position) {
             viewHolder.tv_title.setText(list.get(position).user_id);
@@ -94,16 +105,16 @@ public class HomeNeighAdapter extends BaseAdapter {
             viewHolder.tv_name.setText(list.get(position).userInfo.nickname);
             viewHolder.tv_look.setText(list.get(position).replyNum);
             // TODO: 2018/10/12
-        //    viewHolder.tv_loacation.setText(list.get();
-                viewHolder.delect.setOnClickListener( new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        list.remove(position);
-                        notifyDataSetChanged();
-                    }
-                });
+            //    viewHolder.tv_loacation.setText(list.get();
+            viewHolder.delect.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    list.remove(position);
+                    notifyDataSetChanged();
+                }
+            });
             viewHolder.tv_coment.setText(String.valueOf(list.get(position).zanNum));
-            CommonAdapter adapter =new CommonAdapter<String>(context, list.get(position).imgUrl, R.layout.user_img_item) {
+            CommonAdapter adapter = new CommonAdapter<String>(context, list.get(position).imgUrl, R.layout.user_img_item) {
 
                 @Override
                 public void convert(com.mcxtzhang.commonadapter.lvgv.ViewHolder viewHolder, String s, int i) {
@@ -114,9 +125,9 @@ public class HomeNeighAdapter extends BaseAdapter {
                 }
 
             };
-            if (!TextUtils.isEmpty(list.get(position).userInfo.user_logo)){
+            if (!TextUtils.isEmpty(list.get(position).userInfo.user_logo)) {
                 Picasso.with(context).load(list.get(position).userInfo.user_logo).placeholder(R.mipmap.ic_default_head).into(viewHolder.ivHead);
-            }else {
+            } else {
                 Picasso.with(context).load(R.mipmap.ic_default_head).placeholder(R.mipmap.ic_default_head).into(viewHolder.ivHead);
 
             }
@@ -126,15 +137,15 @@ public class HomeNeighAdapter extends BaseAdapter {
             viewHolder.rl_list_im.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (UIUtils.isFastClick()){
-                        SquareDetailActivity.toActivity(context,position,list.get(index),list.get(index).id);
+                    if (UIUtils.isFastClick()) {
+                        SquareDetailActivity.toActivity(context, position, list.get(index), list.get(index).id);
                     }
                 }
             });
             viewHolder.linContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SquareDetailActivity.toActivity(context,position,list.get(index),list.get(index).id);
+                    SquareDetailActivity.toActivity(context, position, list.get(index), list.get(index).id);
                 }
             });
 
@@ -160,10 +171,11 @@ public class HomeNeighAdapter extends BaseAdapter {
     }
 
     private static class MyGridViewHolder {
-        ImageView imageView,delect;
-        TextView tv_title, tv_content, tvTime, tv_name, tv_loacation, tv_item_content,tv_coment,tv_look;
+        ImageView imageView, delect, item_im;
+        TextView tv_title, tv_content, tvTime, tv_name, tv_loacation, tv_item_content, tv_coment, tv_look, tv_item_title;
         NoScrollGridView rl_list_im;
         LinearLayout linContainer;
+        LinearLayout relativeLayout;
         CircleImageView ivHead;
     }
 
