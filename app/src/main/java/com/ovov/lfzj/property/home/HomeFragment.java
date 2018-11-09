@@ -119,6 +119,7 @@ public class HomeFragment extends BaseFragment {
                         dismiss();
                         LoginUserBean.getInstance().setUserInfoBean(subListBean.getDatas().getUser());
                         LoginUserBean.getInstance().setAppPermission(subListBean.getDatas().getApp_permission());
+                        LoginUserBean.getInstance().setSub_id(subListBean.getDatas().admin_roles.subdistrict_id);
                         LoginUserBean.getInstance().save();
 
                     }

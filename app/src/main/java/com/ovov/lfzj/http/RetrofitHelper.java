@@ -220,7 +220,7 @@ public class RetrofitHelper {
     }
 
     public Observable<BuildingListResult> getBuildingList() {
-        return mApiService.getBuildingList("2");
+        return mApiService.getBuildingList(getSubId());
     }
 
     public Observable<ServerFeedBackInfo> setOrderConfirm(String orderId, String subId) {
@@ -232,7 +232,7 @@ public class RetrofitHelper {
     }
 
     public Observable<UnitListResult> getUnitList(String building) {
-        return mApiService.getUnitList(building, "2");
+        return mApiService.getUnitList(building, getSubId());
     }
 
 
@@ -393,15 +393,15 @@ public class RetrofitHelper {
     }
 
     public Observable<ListInfo<HealthBean>> getHealthTime(String time) {
-        return mApiService.getHealthTime(getToken(), "1", time);
+        return mApiService.getHealthTime(getToken(), getSubId(), time);
     }
 
     public Observable<HealthDetailBean> getHealthDetail() {
-        return mApiService.getHealthDetail(getToken(), "1");
+        return mApiService.getHealthDetail(getToken(), getSubId());
     }
 
     public Observable<BannerBean> getHealthOrder(String Time_id, String time) {
-        return mApiService.getHealthOrder(getToken(), "1", Time_id, time);
+        return mApiService.getHealthOrder(getToken(), getSubId(), Time_id, time);
     }
 
     public Observable<SubListBean> gethomeList() {
@@ -463,11 +463,11 @@ public class RetrofitHelper {
 
 
     public Observable<ShopListResult> getDJShopList() {
-        return mApiService.getDJShopList("1");
+        return mApiService.getDJShopList(getSubId());
     }
 
     public Observable<DataInfo<PaymentDetailBean>> getOwnerPayment(String is_shop, int status, String year, String houseid) {
-        return mApiService.getOwnerPayment(is_shop, status, year, "1", houseid);
+        return mApiService.getOwnerPayment(is_shop, status, year, getSubId(), houseid);
     }
 
     public Observable<DataInfo> addFamily(String name, String mobile,String house_path) {
@@ -475,7 +475,7 @@ public class RetrofitHelper {
     }
 
     public Observable<DataInfo<PaymentDetailBean>> getShopPayment(String is_shop, int status, String year, String houseid) {
-        return mApiService.getShopPayment("1", is_shop, status, year, houseid);
+        return mApiService.getShopPayment(getSubId(), is_shop, status, year, houseid);
     }
 
     public Observable<InformMeterResult> getinformationMeter(String building_id, String unit, String number, String gid) {
@@ -498,7 +498,7 @@ public class RetrofitHelper {
     }
 
     public Observable<ListInfo<WorkOrderListInfo>> getWorkList(int status, int page) {
-        return mApiService.getWorkList(getToken(), page, status);
+        return mApiService.getWorkList(getToken(), page, status,getSubId());
     }
 
 
@@ -519,9 +519,7 @@ public class RetrofitHelper {
         RequestBody mContent = RequestBody.create(MediaType.parse("multipart/form-data"), content);
         RequestBody mPhone = RequestBody.create(MediaType.parse("multipart/form-data"), phone);
         RequestBody mSubId = RequestBody.create(MediaType.parse("multipart/form-data"), getSubId());
-
-        Log.e("accesstoken", getSubId());
-        return mApiService.workAdd(token, mPhone, mAddress, mPosistion, mCategory, mContent, mName, mSubId, parts);
+        return mApiService.workAdd(token, mPhone, mAddress, mPosistion, mCategory, mContent, mName, mSubId,mSubId, parts);
 
     }
 

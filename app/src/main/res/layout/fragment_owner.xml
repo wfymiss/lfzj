@@ -73,6 +73,7 @@
             android:layout_width="165dp"
             android:layout_height="22dp"
             android:layout_marginTop="2dp"
+            android:inputType="text"
             android:background="@drawable/edittext_item" />
 
 
@@ -90,8 +91,9 @@
             android:layout_width="165dp"
             android:layout_height="22dp"
             android:layout_marginTop="2dp"
+            android:maxLength="11"
             android:background="@drawable/edittext_item"
-            android:inputType="number" />
+            android:inputType="phone" />
     </LinearLayout>
 
     <Button

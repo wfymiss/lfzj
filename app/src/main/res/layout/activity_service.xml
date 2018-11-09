@@ -159,7 +159,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="      3.5如果发现任何非法使用等可能危及您的账户安全的情形时，您应当立即以有效方式通知“乐福院子”要求暂停相关服务，并向公安机关报案。您理解“乐福院子”对您的请求采取行动需要合理时间，“乐福院子”对在采取行动前已经产生的后果（包括但不限于您的任何损失）不承担任何责任。"
+                android:text="      3.5 “乐福院子”旨在为业主和家人提供便利，在帮助认证及邀请认证时请谨慎处理，为确保您和您家人的住房安全，严禁邀请无关人员成为家人。“乐福院子”对主观意愿的家人邀请不承担任何责任。
+"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/sp_15"
+                android:layout_marginRight="@dimen/dp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      3.6如果发现任何非法使用等可能危及您的账户安全的情形时，您应当立即以有效方式通知“乐福院子”要求暂停相关服务，并向公安机关报案。您理解“乐福院子”对您的请求采取行动需要合理时间，“乐福院子”对在采取行动前已经产生的后果（包括但不限于您的任何损失）不承担任何责任。"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginLeft="@dimen/dp_20"
                 android:textColor="@color/color_333333"

@@ -26,6 +26,7 @@ import com.ovov.lfzj.base.utils.UIUtils;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
 import com.ovov.lfzj.base.widget.RemindDialogUtil;
 import com.ovov.lfzj.base.widget.SucceseDialog;
+import com.ovov.lfzj.event.AddFamilySuccessEvent;
 import com.ovov.lfzj.event.DeleteFamilyEvent;
 import com.ovov.lfzj.event.HouseEvent;
 import com.ovov.lfzj.event.IdentityEvent;
@@ -85,6 +86,12 @@ public class FamilyListActivity extends BaseActivity {
             public void call(DeleteFamilyEvent identityEvent) {
                 delectData(identityEvent.user, identityEvent.relative_id, identityEvent.house);
                 pos = identityEvent.pos;
+            }
+        });
+        addRxBusSubscribe(AddFamilySuccessEvent.class, new Action1<AddFamilySuccessEvent>() {
+            @Override
+            public void call(AddFamilySuccessEvent addFamilySuccessEvent) {
+                initdata();
             }
         });
     }

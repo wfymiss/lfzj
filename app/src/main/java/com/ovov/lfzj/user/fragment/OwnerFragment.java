@@ -25,10 +25,12 @@ import com.ovov.lfzj.base.bean.RoomListInfo;
 import com.ovov.lfzj.base.bean.SublistInfo;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.RegexUtils;
+import com.ovov.lfzj.base.utils.RxBus;
 import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.utils.UIUtils;
 import com.ovov.lfzj.base.widget.BuildingListDialog;
 import com.ovov.lfzj.base.widget.RoomListDialog;
+import com.ovov.lfzj.event.AddFamilySuccessEvent;
 import com.ovov.lfzj.event.IdentityEvent;
 import com.ovov.lfzj.event.RoomSelectEvent;
 import com.ovov.lfzj.event.SubselectEvent;
@@ -130,7 +132,6 @@ public class OwnerFragment extends BaseFragment {
 
             case R.id.tv_select_sub:
                 getBuildinglist();
-
                 break;
             case R.id.tv_select_room:
                 getUserHouse();
@@ -160,9 +161,12 @@ public class OwnerFragment extends BaseFragment {
 
                     @Override
                     public void onNext(DataInfo dataInfo) {
-
                         dismiss();
                         showToast("添加成功");
+                        RxBus.getDefault().post(new AddFamilySuccessEvent());
+                        mActivity.finish();
+
+
                     }
                 });
         addSubscrebe(subscription);

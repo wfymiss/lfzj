@@ -260,7 +260,7 @@ public interface CatelApiService {
 
     //获取房间
     @FormUrlEncoded
-    @POST("v1/user/unit_list")
+    @POST("v1/user/unit_list1")
     Observable<RoomListResult> getRoomList(@Field("subdistrict_id") String subdistrict_id,
                                            @Field("building") String building_id,
                                            @Field("unit_id") String unit_id);
@@ -533,6 +533,7 @@ public interface CatelApiService {
                                  @Part("contents") RequestBody content,
                                  @Part("username") RequestBody username,
                                  @Part("subdistrictId") RequestBody subdistrict_id,
+                                 @Part("subdistrictId") RequestBody subdistrictId,
                                  @Part() List<MultipartBody.Part> part);
 
     @FormUrlEncoded
@@ -544,7 +545,8 @@ public interface CatelApiService {
     @POST("v1/work/worklist")
     Observable<ListInfo<WorkOrderListInfo>> getWorkList(@Field("token") String token,
                                                         @Field("page") int page,
-                                                        @Field("status") int status);
+                                                        @Field("status") int status,
+                                                        @Field("subdistrictId") String subdistrictId);
 
     @FormUrlEncoded
     @POST("v1/work/workstaff")
