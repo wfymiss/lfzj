@@ -1,26 +1,26 @@
 package com.ovov.lfzj.property;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 
 import com.blankj.utilcode.util.FileUtils;
+import com.ovov.lfzj.MainActivity;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseMainActivity;
-import com.ovov.lfzj.base.bean.LoginUserBean;
-import com.ovov.lfzj.market.MarketFragment;
-import com.ovov.lfzj.neighbour.NeighbourFragment;
+import com.ovov.lfzj.base.utils.ActivityUtils;
+import com.ovov.lfzj.event.Recievertype;
+import com.ovov.lfzj.event.RevieverEvent;
+import com.ovov.lfzj.home.repair.WorkerOrderDetailActivity;
+import com.ovov.lfzj.home.ui.NewsDetailActivity;
 import com.ovov.lfzj.opendoor.OpendoorActivity;
 import com.ovov.lfzj.property.home.HomeFragment;
 import com.ovov.lfzj.property.user.PropertyUserFragment;
-import com.ovov.lfzj.property.user.UserFragment;
-import com.tbruyelle.rxpermissions.RxPermissions;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.OnClick;
-import rx.functions.Action1;
 
 import static com.ovov.lfzj.MainActivity.BASE_FILE;
 
@@ -35,6 +35,7 @@ public class PropertyMainActivity extends BaseMainActivity {
     @Override
     public void init() {
         super.init();
+        EventBus.getDefault().register(this);
         FileUtils.createOrExistsDir(BASE_FILE);
         initFragment(0);
         switchContent(1, 0);
@@ -90,6 +91,17 @@ public class PropertyMainActivity extends BaseMainActivity {
         };
     }
 
+
+    //收到推送以后点击事件的处理
+    @Subscribe
+    public void onEventMainThread(RevieverEvent event) {
+        if (event.getType().equals(Recievertype.OWNERDISS)) {
+            WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+        }else if (event.getType().equals(Recievertype.sellerorderlist)) {
+            WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+        }
+
+    }
     @Override
     public boolean menuClicked(int index) {
         return false;

@@ -88,7 +88,8 @@ public class MainActivity extends BaseMainActivity {
     private CommonProgressDialog pBar;
     public static final String BASE_FILE = Environment.getExternalStorageDirectory().getPath() + "/lfzj/";
     private String path;
-    private String DOWNLOAD_NAME = "乐福院子"+ Tools.getVersionName(MainActivity.this);;
+    private String DOWNLOAD_NAME = "乐福院子" + Tools.getVersionName(MainActivity.this);
+    ;
     private RxPermissions rxPermission;
     private ActivityUtils activityUtils;
 
@@ -284,14 +285,16 @@ public class MainActivity extends BaseMainActivity {
             intent.putExtra("id", event.getId());
             mActivity.startActivity(intent);
         } else if (event.getType().equals(Recievertype.PROPERTY_WORK_ORDER)) {
-            WorkerOrderDetailActivity.toActivity(mActivity,Integer.parseInt(event.getId()));
+            WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
         } else if (event.getType().equals(Recievertype.PROPERTY_SCHDELUE)) {
-            WorkerOrderDetailActivity.toActivity(mActivity,Integer.parseInt(event.getId()));
-        }else if (event.getType().equals(Recievertype.WORKERINFO)){
-
+            WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+        } else if (event.getType().equals(Recievertype.WORKERINFO)) {
+            WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+        } else if (event.getType().equals(Recievertype.DELECTORDER)) {
+            WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+        } else if (event.getType().equals(Recievertype.CARPTERDISS)) {
+            WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
         }
-
-
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ovov.lfzj.R;
+import com.ovov.lfzj.base.AdviceDialog;
 import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.ListInfo;
@@ -32,7 +33,7 @@ public class AddadvicesActivity extends BaseActivity {
     TextView tvTitle;
     @BindView(R.id.iv_back)
     ImageView ivBack;
-    @BindView(R.id.tv_right)
+    @BindView(R.id.tv_right_but)
     TextView tvRight;
     @BindView(R.id.edit)
     EditText edit;
@@ -54,13 +55,13 @@ public class AddadvicesActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.iv_back, R.id.tv_right})
+    @OnClick({R.id.iv_back, R.id.tv_right_but})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
-            case R.id.tv_right:
+            case R.id.tv_right_but:
 
                 if (!TextUtils.isEmpty(edit.getText().toString()) && !edit.getText().toString().equals("")) {
                     if (edit.getText().toString().trim().length() < 50) {
@@ -99,8 +100,8 @@ public class AddadvicesActivity extends BaseActivity {
                     @Override
                     public void onNext(DataInfo<UrlBean> listInfoDataInfo) {
                         showToast(listInfoDataInfo.datas().getMsg());
-                        showToast("添加成功");
-                        finish();
+                        AdviceDialog adviceDialog =new AdviceDialog(mActivity);
+                        adviceDialog.show();
 
 
                     }

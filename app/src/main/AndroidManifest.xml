@@ -517,6 +517,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".user.setting.AddadvicesActivity"
+
+            android:windowSoftInputMode="stateVisible|adjustResize"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
@@ -557,6 +559,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".neighbour.square.SquareMsgctivity"></activity>
         <activity android:name=".neighbour.square.SquareMsgDetailActivity"/>
+
+        <activity android:name=".user.setting.IntroduceActivity"></activity>
     </application>
 
 </manifest>

@@ -12,7 +12,6 @@
             android:id="@+id/banner"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"></com.ovov.lfzj.base.banner.BannerLayout>
 
         <include
@@ -28,11 +27,14 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:numColumns="5"></GridView>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_10"
         android:background="@mipmap/line" />
-    <include layout="@layout/base_view_title"/>
+
+    <include layout="@layout/base_view_title" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/gridview1"
         android:layout_width="match_parent"
@@ -44,24 +46,29 @@
         android:layout_height="@dimen/dp_10"
         android:background="@mipmap/line" />
 
-    <com.ovov.lfzj.base.widget.NoScrollGridView
+    <com.ovov.lfzj.base.widget.NoScrollListView
         android:id="@+id/new_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:numColumns="1"></com.ovov.lfzj.base.widget.NoScrollGridView>
+        android:layout_height="wrap_content"
+        android:verticalSpacing="@dimen/margin_1dp"
+        android:horizontalSpacing="@dimen/dp_1"
+        android:numColumns="1"></com.ovov.lfzj.base.widget.NoScrollListView>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_10"
         android:background="@mipmap/line" />
 
-    <com.ovov.lfzj.base.widget.NoScrollGridView
+    <com.ovov.lfzj.base.widget.NoScrollListView
         android:id="@+id/notice_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
-        android:numColumns="1"></com.ovov.lfzj.base.widget.NoScrollGridView>
-
-
+        android:layout_height="wrap_content"
+        android:verticalSpacing="@dimen/margin_1dp"
+        android:horizontalSpacing="@dimen/dp_1"
+        android:numColumns="1"></com.ovov.lfzj.base.widget.NoScrollListView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:background="@mipmap/line" />
 
 </LinearLayout>

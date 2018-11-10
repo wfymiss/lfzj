@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="请填写居住房间号"
+            android:text="请选择小区"
             android:textColor="@color/color_444444"
             android:textSize="@dimen/textSize_12sp" />
 
@@ -53,6 +53,7 @@
             android:drawablePadding="17dp"
             android:drawableRight="@mipmap/nav_down"
             android:hint="请选择楼房号"
+            android:singleLine="true"
             android:maxLength="10"
             android:padding="@dimen/padding_6dp"
             android:textColor="@color/color_444444"

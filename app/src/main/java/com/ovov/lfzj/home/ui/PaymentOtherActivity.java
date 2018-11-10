@@ -43,7 +43,7 @@ public class PaymentOtherActivity extends BaseActivity {
     public void init() {
         tvTitle.setText("代缴费");
 
-        web.loadUrl("http://api_test.catel-link.com/v1/payment/select?user_id=" + LoginUserBean.getInstance().getUserId());
+        web.loadUrl("http://api_test.catel-link.com/v1/payment/select?user_id=" + LoginUserBean.getInstance().getUserId()+"&type=1");
 
         web.getSettings().setJavaScriptEnabled(true);  //加上这一行网页为响应式的
         web.getSettings().setUseWideViewPort(true);

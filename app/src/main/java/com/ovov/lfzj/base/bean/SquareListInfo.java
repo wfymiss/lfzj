@@ -27,6 +27,21 @@ public class SquareListInfo implements Serializable {
      */
     public String location_id;
     public String created_at;
+    private String uid;
+    private String nickname;
+    private String user_logo;
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public String getUser_logo() {
+        return user_logo;
+    }
+
+    public String getUid() {
+        return uid;
+    }
 
     public String getLocation_id() {
         return location_id;

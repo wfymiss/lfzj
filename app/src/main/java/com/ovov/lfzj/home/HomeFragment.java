@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mcxtzhang.commonadapter.lvgv.CommonAdapter;
@@ -35,6 +36,7 @@ import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.utils.UIUtils;
 import com.ovov.lfzj.base.widget.IdentityDialog;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
+import com.ovov.lfzj.base.widget.NoScrollListView;
 import com.ovov.lfzj.event.HomeIdentityEvent;
 import com.ovov.lfzj.home.adapter.CardAdapter;
 import com.ovov.lfzj.home.adapter.GirdAdapter;
@@ -214,8 +216,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
         more = addheadlayout.findViewById(R.id.tv_more);
         GridView gridView = addheadlayout.findViewById(R.id.gridview);
         RecyclerView gridView1 = addheadlayout.findViewById(R.id.gridview1);
-        NoScrollGridView newListView = addheadlayout.findViewById(R.id.new_list);
-        NoScrollGridView notice_list = addheadlayout.findViewById(R.id.notice_list);
+        NoScrollListView newListView = addheadlayout.findViewById(R.id.new_list);
+        NoScrollListView notice_list = addheadlayout.findViewById(R.id.notice_list);
         ImageView scan = addheadlayout.findViewById(R.id.im_scan);
         bannerLayout = addheadlayout.findViewById(R.id.banner);
         if (LoginUserBean.getInstance().getSubname() != null && !LoginUserBean.getInstance().getSubname().isEmpty()) {
@@ -296,12 +298,13 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
             @Override
             public void convert(ViewHolder viewHolder, NewsBean noticeBean, final int i) {
+                LinearLayout reHeader = viewHolder.getView(R.id.relativeLayout);
                 if (i == 0) {
-                    viewHolder.setVisible(R.id.relativeLayout, true);
+                    reHeader.setVisibility(View.VISIBLE);
                     viewHolder.setText(R.id.tv_item_title, "社区公告");
                     viewHolder.setImageResource(R.id.item_im, R.mipmap.item_noti);
                 } else {
-                    viewHolder.setVisible(R.id.relativeLayout, false);
+                    reHeader.setVisibility(View.GONE);
                 }
                 viewHolder.setText(R.id.tv_notifi_type, "公告");
                 viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
