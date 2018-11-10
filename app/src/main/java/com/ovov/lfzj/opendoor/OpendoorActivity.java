@@ -126,6 +126,7 @@ public class OpendoorActivity extends BaseActivity {
     private FeedbackDialog.BuilderLog backLog;       // 展示开门反馈信息
     private Animation operatingAnim;
     private boolean flag = true;
+    String open;
 
     /**
      * 蓝牙开门动作执行
@@ -180,11 +181,12 @@ public class OpendoorActivity extends BaseActivity {
 
                     open_status = 0;
                     postOpenData(open_status);                 // 开门结果上传数据
-                    Log.e("dadadadada",sn_name);// 上传开门日志
+                    Log.e("dadadadada", sn_name);// 上传开门日志
                     break;
             }
         }
     };
+
 
     public static void toActivity(Context context) {
         Intent intent = new Intent(context, OpendoorActivity.class);
@@ -198,12 +200,19 @@ public class OpendoorActivity extends BaseActivity {
 
     @Override
     public void init() {
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         StatusBarUtils.setStatusBar(mActivity, false, false);
 //        EventBus.getDefault().register(this);                                            //   钥匙生成二维码监听事件
 
         postKeyList();          //  进入开门页面解析本地钥匙解析本地钥匙
         storageTokenRead();     //  获取token
+
+        SharedPreferences   spf = this.getSharedPreferences("opendoor", Context.MODE_PRIVATE);
+        open = spf.getString("type", "2");
+        if (open.equals("1")){
+            type();
+        }
 //        initShake();            // 初始化摇动传感器
 //        soundLoading();         // 初始化声音设置
 //        operatingAnim = AnimationUtils.loadAnimation(this, R.anim.opendoor_rotate);    // 定义开门动画
@@ -225,7 +234,7 @@ public class OpendoorActivity extends BaseActivity {
         SharedPreferences spf = this.getSharedPreferences("key_list", Context.MODE_PRIVATE);
         String keyjson = spf.getString("keyjson", "");
         retrieve_key = keyjson;
-        Log.e("dada",retrieve_key);
+        Log.e("dada", retrieve_key);
         if (keyjson != null && !keyjson.trim().equals("")) {
             Json(keyjson);     // 解析钥匙
         }
@@ -276,6 +285,7 @@ public class OpendoorActivity extends BaseActivity {
 
     @OnClick({R.id.re_scan, R.id.re_code, R.id.re_apply_key, R.id.icon_setting, R.id.head, R.id.but, R.id.refresh_tv})
     public void onViewClicked(View view) {
+
         switch (view.getId()) {
             case R.id.re_scan:         //  钥匙列表
                 Intent intent = new Intent(OpendoorActivity.this, KeyListingActivity.class);             // 扫描二维码界面
@@ -316,35 +326,47 @@ public class OpendoorActivity extends BaseActivity {
                     wave.stop();
                     wave.clearAnimation();
                     wave.setVisibility(View.GONE);
+                   type();
 
-                    if (keys.size() > 0) {
-                        but.setText("切换至蓝牙开门");
-                        //生成二维码
-                        initQrCode();
-                    } else {
-
-                        feedback("请在钥匙列表更新钥匙");
-                    }
-
-                    refresh_tv.setVisibility(View.VISIBLE);
-                    flag = false;
                 } else {
-
-
-                    lela.setVisibility(View.GONE);
-                    head.setVisibility(View.VISIBLE);
-                    refresh_tv.setVisibility(View.INVISIBLE);
-                    but.setText("切换至二维码开门");
-                    head.setImageResource(R.mipmap.lock_im);
-                    flag = true;
+                  blutoos();
                 }
                 break;
         }
     }
 
+    private void blutoos() {
+        SharedPreferences spf = this.getSharedPreferences("opendoor", Context.MODE_PRIVATE);
+        SharedPreferences.Editor  editor = spf.edit();
+        editor.putString("type", "2");
+        editor.commit();
+        lela.setVisibility(View.GONE);
+        head.setVisibility(View.VISIBLE);
+        refresh_tv.setVisibility(View.INVISIBLE);
+        but.setText("切换至二维码开门");
+        head.setImageResource(R.mipmap.lock_im);
+        flag = true;
+    }
+
+    private void type() {
+        SharedPreferences spf = this.getSharedPreferences("opendoor", Context.MODE_PRIVATE);
+        SharedPreferences.Editor  editor = spf.edit();
+        editor.putString("type", "1");
+        editor.commit();
+        if (keys.size() > 0) {
+            but.setText("切换至蓝牙开门");
+            //生成二维码
+            initQrCode();
+        } else {
+            feedback("请在钥匙列表更新钥匙");
+        }
+        refresh_tv.setVisibility(View.VISIBLE);
+        flag = false;
+    }
+
     private void initQrCode() {
         if (keys != null && keys.size() > 0) {
-            Log.e("keysssssss",keys.toString());
+            Log.e("keysssssss", keys.toString());
             QRUtils.loadConfig(this.getApplicationContext());
             String qrStr = null;
             qrStr = QRUtils.createDoorControlQR(this,
@@ -602,6 +624,7 @@ public class OpendoorActivity extends BaseActivity {
 //        openBottom.startAnimation(bottomAnim);
 //    }
 
+
     /**
      * 执行蓝牙开门
      */
@@ -823,9 +846,18 @@ public class OpendoorActivity extends BaseActivity {
 //                    SensorManager.SENSOR_DELAY_NORMAL);
 //        }
         postKeyList();                     //  进入开门页面解析本地钥匙解析本地钥匙
-        SharedPreferences spf = this.getSharedPreferences("indenti", Context.MODE_PRIVATE);
+        SharedPreferences spf = this.getSharedPreferences("opendoor", Context.MODE_PRIVATE);
         sound_con = spf.getBoolean("soundControl", true);     // 声音设置
         shake_con = spf.getBoolean("shakeControl", true);     // 震动设置
+
+        if (open.equals("2")) {
+            lela.setVisibility(View.GONE);
+            head.setVisibility(View.VISIBLE);
+            refresh_tv.setVisibility(View.INVISIBLE);
+            but.setText("切换至二维码开门");
+            head.setImageResource(R.mipmap.lock_im);
+            flag = true;
+        }
         //     soundLoading();
     }
 

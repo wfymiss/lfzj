@@ -514,6 +514,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".user.setting.AddadvicesActivity"
+
+            android:windowSoftInputMode="stateVisible|adjustResize"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
