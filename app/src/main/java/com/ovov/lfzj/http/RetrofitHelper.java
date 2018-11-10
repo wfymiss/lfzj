@@ -30,6 +30,7 @@ import com.ovov.lfzj.base.bean.ServerFeedBackInfo;
 import com.ovov.lfzj.base.bean.ShopListBean;
 import com.ovov.lfzj.base.bean.SquareDetailInfo;
 import com.ovov.lfzj.base.bean.SquareListInfo;
+import com.ovov.lfzj.base.bean.SquareMsgBean;
 import com.ovov.lfzj.base.bean.SublistInfo;
 import com.ovov.lfzj.base.bean.UnitInfo;
 import com.ovov.lfzj.base.bean.UnitListResult;
@@ -595,6 +596,10 @@ public class RetrofitHelper {
 
     public Observable<ListInfo<RecommendListInfo>> getInviterList() {
         return mApiService.getInviterList(getToken());
+    }
+
+    public Observable<ListInfo<SquareMsgBean>> getMessagelist(){
+        return mApiService.getSquareMsgList(getToken());
     }
 
 }

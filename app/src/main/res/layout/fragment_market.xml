@@ -19,7 +19,7 @@
             style="@style/common_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="商城"
+            android:text="乐福铺子"
             />
 
         <ImageView

@@ -35,9 +35,11 @@ import com.ovov.lfzj.base.widget.CommonProgressDialog;
 import com.ovov.lfzj.base.widget.IdentityDialog;
 import com.ovov.lfzj.base.widget.UpdateDialog;
 import com.ovov.lfzj.event.DownloadEvent;
+import com.ovov.lfzj.event.HasReadEvent;
 import com.ovov.lfzj.event.IdentityEvent;
 import com.ovov.lfzj.event.LoginOutEvent;
 import com.ovov.lfzj.event.MainIdentityEvent;
+import com.ovov.lfzj.event.NewMsgEvent;
 import com.ovov.lfzj.event.Recievertype;
 import com.ovov.lfzj.event.RevieverEvent;
 import com.ovov.lfzj.event.SquareDetailIdentityEvent;
@@ -96,6 +98,7 @@ public class MainActivity extends BaseMainActivity {
         }
     };
     private String phone;
+    private int i = 0;
 
     public static void toActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -217,6 +220,20 @@ public class MainActivity extends BaseMainActivity {
                         mActivities.get(i).finish();
                     }
                 }
+            }
+        });
+        addRxBusSubscribe(NewMsgEvent.class, new Action1<NewMsgEvent>() {
+            @Override
+            public void call(NewMsgEvent newMsgEvent) {
+                i = i + 1;
+                LoginUserBean.getInstance().setNewMsg(i);
+                LoginUserBean.getInstance().save();
+            }
+        });
+        addRxBusSubscribe(HasReadEvent.class, new Action1<HasReadEvent>() {
+            @Override
+            public void call(HasReadEvent hasReadEvent) {
+                i = 0;
             }
         });
 

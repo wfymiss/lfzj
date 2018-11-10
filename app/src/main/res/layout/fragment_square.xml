@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/common_bg"
     xmlns:ptr="http://schemas.android.com/apk/res-auto">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +32,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1条新消息"
+        android:textSize="@dimen/textSize_12sp"
+        android:textColor="@color/color_ffffff"
+        android:paddingLeft="@dimen/margin_10dp"
+        android:paddingRight="@dimen/margin_10dp"
+        android:paddingBottom="@dimen/padding_5dp"
+        android:paddingTop="@dimen/padding_5dp"
+        android:background="@drawable/shape_black"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.8"
+        android:visibility="gone"
+        android:id="@+id/tv_new"
+        android:layout_marginTop="@dimen/margin_10dp"/>
     <TextView
         android:layout_width="@dimen/margin_50dp"
         android:layout_height="@dimen/margin_50dp"

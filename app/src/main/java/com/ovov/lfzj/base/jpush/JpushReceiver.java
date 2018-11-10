@@ -9,6 +9,7 @@ import android.util.Log;
 import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.utils.RxBus;
 import com.ovov.lfzj.event.LoginOutEvent;
+import com.ovov.lfzj.event.NewMsgEvent;
 import com.ovov.lfzj.event.Recievertype;
 import com.ovov.lfzj.event.RevieverEvent;
 import com.ovov.lfzj.login.LoginActivity;
@@ -37,6 +38,7 @@ public class JpushReceiver extends BroadcastReceiver {
             //Log.d(TAG, "收到了自定义消息。消息内容是：" + bundle.getString(JPushInterface.EXTRA_MESSAGE));
             // 自定义消息不会展示在通知栏，完全要开发者写代码去处理
             // RxBus.getDefault().post(new LoginOutEvent());
+            RxBus.getDefault().post(new NewMsgEvent());
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
             // Log.d(TAG, "收到了通知");
             // 在这里可以做些统计，或者做些其他工作

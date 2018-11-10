@@ -50,6 +50,15 @@ public class LoginUserBean implements Serializable, Cloneable {
     private boolean isLogin;
     private String access_token;
     private String subname;
+    private int newMsg = 0;
+
+    public int getNewMsg() {
+        return newMsg;
+    }
+
+    public void setNewMsg(int newMsg) {
+        this.newMsg = newMsg;
+    }
 
     private List<SquareDetailInfo.ForwardBean> forwardBean;
     private SubListBean.SubdataBean.AppPermission appPermission;
@@ -176,6 +185,7 @@ public class LoginUserBean implements Serializable, Cloneable {
         forwardBean = null;
         loginType = "";
         appPermission = null;
+        newMsg = 0;
     }
 
     public void save() {

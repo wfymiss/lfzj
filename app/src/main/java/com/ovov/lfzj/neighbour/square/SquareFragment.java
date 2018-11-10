@@ -1,11 +1,9 @@
 package com.ovov.lfzj.neighbour.square;
 
 
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -29,6 +27,7 @@ import com.ovov.lfzj.base.bean.SquareListInfo;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.ActivityUtils;
 import com.ovov.lfzj.base.utils.CircleCornerForm;
+import com.ovov.lfzj.base.utils.RxBus;
 import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.widget.IdentityDialog;
 import com.ovov.lfzj.base.widget.NewEditDialog;
@@ -36,23 +35,22 @@ import com.ovov.lfzj.base.widget.NoScrollGridView;
 import com.ovov.lfzj.base.widget.ScaleImageView;
 import com.ovov.lfzj.event.AddCommentEvent;
 import com.ovov.lfzj.event.GoodEvent;
+import com.ovov.lfzj.event.HasReadEvent;
 import com.ovov.lfzj.event.LstSendEvent;
+import com.ovov.lfzj.event.NewMsgEvent;
 import com.ovov.lfzj.event.RefreshEvent;
 import com.ovov.lfzj.event.SendEvent;
 import com.ovov.lfzj.event.ToIdentityEvent;
 import com.ovov.lfzj.event.TransmitEvent;
-import com.ovov.lfzj.home.GameActivity;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.login.IdentityConfirmActivity;
 import com.ovov.lfzj.neighbour.MyCommunityActivity;
-import com.ovov.lfzj.neighbour.TransmitActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -86,6 +84,8 @@ public class SquareFragment extends BaseFragment {
     SmartRefreshLayout mActivityListSwf;
     @BindView(R.id.tv_put_image)
     TextView mTvPutImage;
+    @BindView(R.id.tv_new)
+    TextView mTvNew;
     private int col;
     Unbinder unbinder;
     private List<SquareListInfo> mData;
@@ -97,6 +97,7 @@ public class SquareFragment extends BaseFragment {
     private String tranimg;
     private String mImg;
     IdentityDialog identityDialog;
+    private int i;
 
     public static SquareFragment newInstance() {
 
@@ -192,6 +193,29 @@ public class SquareFragment extends BaseFragment {
             @Override
             public void call(ToIdentityEvent toIdentityEvent) {
                 IdentityConfirmActivity.toActivity(mActivity);
+            }
+        });
+        addRxBusSubscribe(NewMsgEvent.class, new Action1<NewMsgEvent>() {
+            @Override
+            public void call(NewMsgEvent newMsgEvent) {
+                i = i +1;
+                mTvNew.setText(i+"条新消息");
+                mTvNew.setVisibility(View.VISIBLE);
+            }
+        });
+        if (LoginUserBean.getInstance().getNewMsg() != 0){
+            mTvNew.setText(LoginUserBean.getInstance().getNewMsg()+"条新消息");
+            mTvNew.setVisibility(View.VISIBLE);
+        }
+        mTvNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                i = 0;
+                LoginUserBean.getInstance().setNewMsg(0);
+                LoginUserBean.getInstance().save();
+                mTvNew.setVisibility(View.GONE);
+                RxBus.getDefault().post(new HasReadEvent());
+                SquareMsgctivity.toActivity(mActivity);
             }
         });
 
@@ -312,7 +336,7 @@ public class SquareFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         if (LoginUserBean.getInstance().isIs_auth()) {
-                            SquareDetailActivity.toActivity(mActivity, i, squareListInfo,squareListInfo.id);
+                            SquareDetailActivity.toActivity(mActivity, i, squareListInfo, squareListInfo.id);
                         } else {
                             identityDialog.show();
                         }
@@ -323,7 +347,7 @@ public class SquareFragment extends BaseFragment {
                 reComment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo,squareListInfo.id);
+                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo, squareListInfo.id);
 
                     }
                 });
@@ -460,7 +484,7 @@ public class SquareFragment extends BaseFragment {
                 reTransmit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo,squareListInfo.transpondInfo.id);
+                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo, squareListInfo.transpondInfo.id);
 
                     }
                 });
@@ -468,7 +492,7 @@ public class SquareFragment extends BaseFragment {
                 tvTransmitContent.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo,squareListInfo.transpondInfo.id);
+                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo, squareListInfo.transpondInfo.id);
                     }
                 });
 
@@ -483,7 +507,7 @@ public class SquareFragment extends BaseFragment {
                 mRecontainer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo,squareListInfo.id);
+                        SquareDetailActivity.toActivity(mActivity, i, squareListInfo, squareListInfo.id);
                     }
                 });
 

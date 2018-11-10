@@ -22,6 +22,7 @@ import com.ovov.lfzj.base.bean.ServerFeedBackInfo;
 import com.ovov.lfzj.base.bean.ShopListBean;
 import com.ovov.lfzj.base.bean.SquareDetailInfo;
 import com.ovov.lfzj.base.bean.SquareListInfo;
+import com.ovov.lfzj.base.bean.SquareMsgBean;
 import com.ovov.lfzj.base.bean.SublistInfo;
 import com.ovov.lfzj.base.bean.UnitInfo;
 import com.ovov.lfzj.base.bean.UnitListResult;
@@ -645,6 +646,9 @@ public interface CatelApiService {
     @FormUrlEncoded
     @POST("v1/user/get_inviter_list")
     Observable<ListInfo<RecommendListInfo>> getInviterList(@Field("token") String token);
+    @FormUrlEncoded
+    @POST("v1/user/messagelist")
+    Observable<ListInfo<SquareMsgBean>> getSquareMsgList(@Field("token") String token);
 
 
 }
