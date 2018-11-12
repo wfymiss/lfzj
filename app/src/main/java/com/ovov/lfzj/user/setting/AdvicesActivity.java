@@ -27,8 +27,8 @@ public class AdvicesActivity extends BaseActivity {
     TextView question;
     @BindView(R.id.suggestion)
     TextView suggestion;
-    @BindView(R.id.service)
-    TextView service;
+//    @BindView(R.id.service)
+//    TextView service;
 
     public static void toActivity(Context context) {
         Intent intent = new Intent(context, AdvicesActivity.class);
@@ -47,7 +47,7 @@ public class AdvicesActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.iv_back, R.id.question, R.id.suggestion, R.id.service})
+    @OnClick({R.id.iv_back, R.id.question, R.id.suggestion,})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -59,8 +59,8 @@ public class AdvicesActivity extends BaseActivity {
             case R.id.suggestion:
                 HelpActivity.toActivity(mActivity);
                 break;
-            case R.id.service:
-                break;
+//            case R.id.service:
+//                break;
         }
     }
 

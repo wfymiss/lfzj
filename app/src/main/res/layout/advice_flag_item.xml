@@ -24,17 +24,17 @@
         android:text="感谢您对乐福院子的关注与支持，我们会认真处理您的反馈，尽快修复和完善相关功能。"
         android:textColor="@color/color_444444" />
 
-        <TextView
-            android:id="@+id/tv_ok"
-            android:layout_width="200dp"
-           android:layout_gravity="center"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:layout_marginTop="22dp"
-            android:background="@drawable/shape_login_text"
-
-            android:text="确定"
-            android:textColor="@color/white" />
+    <TextView
+        android:id="@+id/tv_ok"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="28dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/shape_login_text"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/white" />
 
 
 </LinearLayout>

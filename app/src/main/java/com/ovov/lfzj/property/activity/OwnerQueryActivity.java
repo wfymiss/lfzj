@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.bean.BuildingListResult;
+import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.bean.RoomListResult;
 import com.ovov.lfzj.base.bean.UnitListResult;
 import com.ovov.lfzj.base.widget.BuildingListPopup;
@@ -50,13 +51,16 @@ public class OwnerQueryActivity extends BaseActivity implements ReadingView {
     TextView tvSelectUnit;
     @BindView(R.id.tv_select_room)
     TextView tvSelectRoom;
-   private  String houseid;
+    private String houseid;
     private String unit;
     private String room;
     private String room_id;
     private String type;
+    private String id_building;
     private String building;
     private ReadingPresenter readingPresenter;
+    String  buildingid;
+
     @Override
     public void init() {
         storageTokenRead();
@@ -66,15 +70,17 @@ public class OwnerQueryActivity extends BaseActivity implements ReadingView {
             @Override
             public void call(BuildingListEvent event) {
                 if (event.getIndex().equals("1")) {
+                    buildingid  =event.getId();
+                    Log.e("dadadada",buildingid);
                     tvSelectBuilding.setText(event.getBuilding());
-                    readingPresenter.getUnitList( event.getBuilding());
+                    readingPresenter.getUnitList(event.getBuilding());
                 }
                 if (event.getIndex().equals("2")) {
                     tvSelectUnit.setText(event.getBuilding());
-                    readingPresenter.getRoomList( tvSelectBuilding.getText().toString(), event.getBuilding());
+                    readingPresenter.getRoomList(buildingid,tvSelectUnit.getText().toString());
                 }
                 if (event.getIndex().equals("3")) {
-                     houseid=event.getId();
+                    houseid = event.getId();
                     tvSelectRoom.setText(event.getBuilding());
                 }
             }
@@ -88,7 +94,6 @@ public class OwnerQueryActivity extends BaseActivity implements ReadingView {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
 
 
             }
@@ -108,7 +113,6 @@ public class OwnerQueryActivity extends BaseActivity implements ReadingView {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
 
 
             }
@@ -160,7 +164,7 @@ public class OwnerQueryActivity extends BaseActivity implements ReadingView {
             case R.id.brn_confirm:
                 if (tvSelectBuilding.getText().length() > 0 && tvSelectUnit.getText().length() > 0 && tvSelectRoom.getText().length() > 0)
 
-                    PaymentDetailActivity.toOwnerActivity(this, 1, tvSelectBuilding.getText().toString(), tvSelectUnit.getText().toString(), tvSelectRoom.getText().toString(),houseid);
+                    PaymentDetailActivity.toOwnerActivity(this, 1, tvSelectBuilding.getText().toString(), tvSelectUnit.getText().toString(), tvSelectRoom.getText().toString(), houseid);
 
                 else
                     Toast.makeText(this, "请选择房间信息", Toast.LENGTH_SHORT).show();
@@ -274,15 +278,19 @@ public class OwnerQueryActivity extends BaseActivity implements ReadingView {
         if (result.getData() != null && result.getData().size() > 0) {
             for (int i = 0; i < result.getData().size(); i++) {
                 String building_id = result.getData().get(i).getBuilding();
+                String idbuilding = result.getData().get(i).getBuilding_id();
                 if (i == 0) {
                     building = result.getData().get(i).getBuilding();
+                    id_building = result.getData().get(i).getBuilding_id();
                 }
                 if (i > 0) {
                     building = building + "," + building_id;
+                    id_building = id_building + "," + idbuilding;
                 }
             }
             SharedPreferences spf = this.getSharedPreferences("building", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = spf.edit();
+            editor.putString("idbuilding", id_building);
             editor.putString("building_id", building);
             editor.commit();
         }
@@ -293,26 +301,26 @@ public class OwnerQueryActivity extends BaseActivity implements ReadingView {
         if (result.getDatas().getHouses_list() != null && result.getDatas().getHouses_list().size() > 0) {
             for (int i = 0; i < result.getDatas().getHouses_list().size(); i++) {
                 String room_numb = result.getDatas().getHouses_list().get(i).getHouse_number();
-                String room_getid= result.getDatas().getHouses_list().get(i).getId();
+                String room_getid = result.getDatas().getHouses_list().get(i).getId();
 
                 if (i == 0) {
                     room = result.getDatas().getHouses_list().get(i).getHouse_number();
-                    room_id= result.getDatas().getHouses_list().get(i).getId();
+                    room_id = result.getDatas().getHouses_list().get(i).getId();
                 }
                 if (i > 0) {
                     room = room + "," + room_numb;
-                    room_id=room_id + "," + room_getid;
+                    room_id = room_id + "," + room_getid;
                 }
             }
             SharedPreferences spf = this.getSharedPreferences("room", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = spf.edit();
-            editor.putString("room_id",room);
+            editor.putString("room_id", room);
             editor.putString("room_number", room_id);
             editor.commit();
-        }else {
+        } else {
             SharedPreferences spf = this.getSharedPreferences("room", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = spf.edit();
-            editor.putString("room_id","");
+            editor.putString("room_id", "");
             editor.putString("room_number", "");
             editor.commit();
 
@@ -360,7 +368,7 @@ public class OwnerQueryActivity extends BaseActivity implements ReadingView {
 
     @Override
     public void showMsg(String msg) {
-        Toast.makeText(this,msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     // 获取token

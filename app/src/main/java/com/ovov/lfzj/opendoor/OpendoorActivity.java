@@ -209,7 +209,7 @@ public class OpendoorActivity extends BaseActivity {
         storageTokenRead();     //  获取token
 
         SharedPreferences   spf = this.getSharedPreferences("opendoor", Context.MODE_PRIVATE);
-        open = spf.getString("type", "2");
+        open = spf.getString("type", "1");
         if (open.equals("1")){
             type();
         }

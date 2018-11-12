@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -44,6 +45,7 @@ public class BuildingListPopup extends PopupWindow {
     }
 
     private void init(Context ncontext) {
+
         adapter=new BuildingListTitleAdapter(ncontext);    // 初始化认证的小区适配器
         activityCategory();  // 获取活动标题
         LayoutInflater infalter = LayoutInflater.from(ncontext);
@@ -55,8 +57,8 @@ public class BuildingListPopup extends PopupWindow {
         adapter.setTitleItemListener(new BuildingListTitleAdapter.TitleItemListener() {
             @Override
             public void titleItemClick(int position, String building, String type_id) {
-                EventBus.getDefault().post(new BuildingListEvent(building,"0","1"));
-                RxBus.getDefault().post(new BuildingListEvent(building,"0","1"));
+                EventBus.getDefault().post(new BuildingListEvent(building,type_id,"1"));
+                RxBus.getDefault().post(new BuildingListEvent(building,type_id,"1"));
                 dismiss();
             }
         });
@@ -82,12 +84,18 @@ public class BuildingListPopup extends PopupWindow {
     private void activityCategory() {
         SharedPreferences spf=context.getSharedPreferences("building", Context.MODE_PRIVATE);
         String category=spf.getString("building_id","");
+        String idbuilding=spf.getString("idbuilding","");
         activity_category=category.split(",");   //转换成数组
+        category_id=idbuilding.split(",");   //转换成数组
+
+
         for (int i=0;i<activity_category.length;i++){
             info=new ActivityTitleInfo();
             info.setTitle(activity_category[i]);
+            info.setTitle_id(category_id[i]);
             list.add(info);
         }
+
         adapter.setTitleData(list);    // 活动标题集合
     }
 }

@@ -51,6 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:verticalSpacing="@dimen/margin_1dp"
+        android:divider="@null"
         android:horizontalSpacing="@dimen/dp_1"
         android:numColumns="1"></com.ovov.lfzj.base.widget.NoScrollListView>
 
@@ -64,6 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:verticalSpacing="@dimen/margin_1dp"
+        android:divider="@null"
         android:horizontalSpacing="@dimen/dp_1"
         android:numColumns="1"></com.ovov.lfzj.base.widget.NoScrollListView>
     <View
