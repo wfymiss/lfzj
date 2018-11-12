@@ -133,7 +133,7 @@ public class MainActivity extends BaseMainActivity {
         super.init();
         //极光推送
         //     registerBroadcast();
-        JPushInterface.setAlias(this, phone, tagAliasCallback);                                //  极光
+        JPushInterface.setAlias(this, LoginUserBean.getInstance().getPhone(), tagAliasCallback);                                //  极光
         StatusBarUtils.setStatusBar(this, false, false);
         EventBus.getDefault().register(this);
         FileUtils.createOrExistsDir(BASE_FILE);

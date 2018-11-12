@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.FileUtils;
 import com.ovov.lfzj.MainActivity;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseMainActivity;
+import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.utils.ActivityUtils;
 import com.ovov.lfzj.event.Recievertype;
 import com.ovov.lfzj.event.RevieverEvent;
@@ -20,12 +21,23 @@ import com.ovov.lfzj.property.user.PropertyUserFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.Set;
+
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 
 import static com.ovov.lfzj.MainActivity.BASE_FILE;
 
 public class PropertyMainActivity extends BaseMainActivity {
 
+
+    TagAliasCallback tagAliasCallback = new TagAliasCallback() {
+        @Override
+        public void gotResult(int i, String s, Set<String> set) {
+        }
+    };
+    private String phone;
     public static void toActivity(Context context){
         Intent intent = new Intent(context,PropertyMainActivity.class);
         context.startActivity(intent);
@@ -36,6 +48,7 @@ public class PropertyMainActivity extends BaseMainActivity {
     public void init() {
         super.init();
         EventBus.getDefault().register(this);
+        JPushInterface.setAlias(this, LoginUserBean.getInstance().getPhone(), tagAliasCallback);                                //  极光
         FileUtils.createOrExistsDir(BASE_FILE);
         initFragment(0);
         switchContent(1, 0);
