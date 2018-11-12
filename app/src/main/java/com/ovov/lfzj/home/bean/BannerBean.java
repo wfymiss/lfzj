@@ -10,9 +10,14 @@ public class BannerBean {
     private String code;
     private String datas;
     private String logo_url;
+    private String url;
 
     public String getReply() {
         return reply;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public String getLogo_url() {

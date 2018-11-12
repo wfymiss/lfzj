@@ -43,6 +43,7 @@ import com.ovov.lfzj.event.DeleteImageEvent;
 import com.ovov.lfzj.event.RefreshEvent;
 import com.ovov.lfzj.event.RepairSuccessEvent;
 import com.ovov.lfzj.event.RoomSelectEvent;
+import com.ovov.lfzj.home.ui.ImageDetailActivity;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.neighbour.adapter.GridPopupAdapter;
@@ -158,7 +159,7 @@ public class RepairActivity extends BaseActivity {
         //ivImage.setImageBitmap(createReflectedImage(bmp));
     }
 
-    public  Bitmap createReflectedImage(Bitmap originalImage) {
+    public Bitmap createReflectedImage(Bitmap originalImage) {
 
         final int reflectionGap = 4;
 
@@ -269,7 +270,7 @@ public class RepairActivity extends BaseActivity {
         area = AREA_COMMON;
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_family, R.id.tv_common, R.id.tv_location, R.id.tv_commit, R.id.repair_category_water, R.id.repair_category_electric, R.id.repair_category_gas, R.id.repair_category_hot, R.id.repair_category_other})
+    @OnClick({R.id.iv_back, R.id.tv_family, R.id.tv_common, R.id.tv_location, R.id.tv_price, R.id.tv_commit, R.id.repair_category_water, R.id.repair_category_electric, R.id.repair_category_gas, R.id.repair_category_hot, R.id.repair_category_other})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -359,6 +360,12 @@ public class RepairActivity extends BaseActivity {
                 mRepairCategoryHot.setSelected(false);
                 mRepairCategoryOther.setSelected(true);
                 repairType = TYPE_OTHER;
+                break;
+
+
+            case R.id.tv_price:
+                ImageDetailActivity.toActivity(mActivity);
+
                 break;
         }
     }

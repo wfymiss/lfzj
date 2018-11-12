@@ -243,7 +243,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
         more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MarketActivity.toActivity(mActivity,"https://h5.youzan.com/v2/showcase/tag?alias=fruuoqig&reft=1541730182062&spm=f76060277",1);
+                MarketActivity.toActivity(mActivity, "https://h5.youzan.com/v2/showcase/tag?alias=fruuoqig&reft=1541730182062&spm=f76060277", 1);
             }
         });
 
@@ -254,13 +254,18 @@ public class HomeFragment extends BaseFragment implements HomeView {
                 if (!data.getImg().equals("") && data.getImg() != null) {
                     Picasso.with(getContext()).load(data.getImg()).into(holder.mImageView);
                 } else {
-
-                    holder.mImageView.setImageResource(R.drawable.banner_default);
+                    Picasso.with(getContext()).load(R.mipmap.error_banner).into(holder.mImageView);
                 }
 
-
+                holder.mImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MarketActivity.toActivity(mActivity, data.getUrl(), 1);
+                    }
+                });
             }
         };
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
