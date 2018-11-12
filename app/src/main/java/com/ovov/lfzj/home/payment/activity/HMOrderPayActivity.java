@@ -17,6 +17,14 @@ import android.widget.Toast;
 import com.alipay.sdk.app.PayTask;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
+import com.ovov.lfzj.base.bean.DataInfo;
+import com.ovov.lfzj.base.net.DataResultException;
+import com.ovov.lfzj.base.utils.RxBus;
+import com.ovov.lfzj.base.utils.RxUtil;
+import com.ovov.lfzj.event.PayResultEvent;
+import com.ovov.lfzj.event.PaymentEvent;
+import com.ovov.lfzj.http.RetrofitHelper;
+import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -27,6 +35,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  *  家政订单支付页、用户缴费、 用户缴费合并支付
@@ -66,6 +76,12 @@ public class HMOrderPayActivity extends BaseActivity {
     public void init() {
         setTitleText("在线支付");
         initData();              // 参数获取
+        addRxBusSubscribe(PayResultEvent.class, new Action1<PayResultEvent>() {
+            @Override
+            public void call(PayResultEvent payResultEvent) {
+                confirmPay(order_type, order_id, "");
+            }
+        });
     }
 
 
@@ -85,7 +101,32 @@ public class HMOrderPayActivity extends BaseActivity {
             pay_cost.setText("￥ "+cost);
         }
     }
+    private void confirmPay(String order_type, String order_id, String order_number) {
+        showLoadingDialog();
+        Subscription subscription = RetrofitHelper.getInstance().confirmPayResult(order_type, order_id, order_number)
+                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        if (e instanceof DataResultException) {
+                            DataResultException dataResultException = (DataResultException) e;
+                            showError(dataResultException.errorInfo);
+                            showToast(dataResultException.errorInfo);
+                        } else {
+                            doFailed();
+                            showError(e.getMessage());
+                        }
+                    }
 
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        dismiss();
+                        RxBus.getDefault().post(new PaymentEvent());
+                    }
+                });
+        addSubscrebe(subscription);
+    }
     @OnClick({R.id.hm_pay_commit,R.id.iv_back})
     public void onClickListener(View view){
         switch (view.getId()){

@@ -22,6 +22,7 @@ import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.PropertyPaymentInfo;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.RxUtil;
+import com.ovov.lfzj.event.PaymentEvent;
 import com.ovov.lfzj.home.event.PassValueEvent;
 import com.ovov.lfzj.home.payment.activity.PayMentPayActivity;
 import com.ovov.lfzj.home.payment.activity.PropertyBillAffirmActivity;
@@ -119,6 +120,12 @@ public class PaymentNoneFragment extends BaseFragment {
                         list.get(i).setSelect(false);
                     }
                 }
+            }
+        });
+        addRxBusSubscribe(PaymentEvent.class, new Action1<PaymentEvent>() {
+            @Override
+            public void call(PaymentEvent paymentEvent) {
+                refreshLayout.autoRefresh();
             }
         });
     }

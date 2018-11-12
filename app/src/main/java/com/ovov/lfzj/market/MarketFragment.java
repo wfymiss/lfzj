@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.baidu.mobstat.StatService;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseFragment;
 import com.ovov.lfzj.base.bean.DataInfo;

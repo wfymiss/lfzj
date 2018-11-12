@@ -91,7 +91,7 @@ public class RegisterActivity extends BaseActivity {
                 phone = mEtPhone.getText().toString();
                 password = mEtPwd.getText().toString();
                 verify = mEtVerify.getText().toString();
-                confirm = mEtPwd.getText().toString();
+                confirm = mEtConfirm.getText().toString();
                 if (TextUtils.isEmpty(phone)) {
                     showToast(R.string.text_phone_empty);
                     return;

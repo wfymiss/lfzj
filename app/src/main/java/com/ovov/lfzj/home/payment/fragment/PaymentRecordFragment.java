@@ -24,6 +24,7 @@ import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.PropertyPaymentInfo;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.RxUtil;
+import com.ovov.lfzj.event.PaymentEvent;
 import com.ovov.lfzj.home.HomeFragment;
 import com.ovov.lfzj.home.payment.activity.PayMentPayActivity;
 import com.ovov.lfzj.home.payment.adapter.PaymentRecordListAdapter;
@@ -45,6 +46,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import rx.Subscription;
+import rx.functions.Action1;
 
 import static com.ovov.lfzj.CatelApplication.LOADMORE;
 import static com.ovov.lfzj.CatelApplication.REFRESH;
@@ -103,6 +105,12 @@ public class PaymentRecordFragment extends BaseFragment {
         super.init();
         initList();
         initRefresh();
+        addRxBusSubscribe(PaymentEvent.class, new Action1<PaymentEvent>() {
+            @Override
+            public void call(PaymentEvent paymentEvent) {
+                refreshLayout.autoRefresh();
+            }
+        });
     }
     private void initList() {
         mAdapter = new CommonAdapter<PropertyPaymentInfo>(mActivity, list, R.layout.layout_paymentrecord_list_item) {

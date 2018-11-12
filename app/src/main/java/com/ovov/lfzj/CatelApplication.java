@@ -10,6 +10,7 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 
+import com.baidu.mobstat.StatService;
 import com.mob.MobSDK;
 import com.ovov.lfzj.base.BaseApplication;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -27,6 +28,8 @@ import com.youzan.androidsdkx5.YouzanPreloader;
 import cn.jpush.android.api.JPushInterface;
 import cn.testin.analysis.data.TestinDataApi;
 import cn.testin.analysis.data.TestinDataConfig;
+
+import static cn.testin.analysis.data.common.statics.Constants.context;
 
 
 /**
@@ -105,6 +108,7 @@ public class CatelApplication extends BaseApplication {
 
         YouzanSDK.init(this, "7c217b0bff2a2cb3b3", new YouZanSDKX5Adapter());
         YouzanPreloader.preloadHtml(this, "https://h5.youzan.com/wscshop/feature/FElLHR3x42");
+        StatService.autoTrace(this);
 
     }
 
