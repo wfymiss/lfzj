@@ -74,16 +74,16 @@
             android:layout_marginRight="@dimen/margin_10dp"
             android:background="@color/color_ffefefef" />
 
-        <TextView
-            android:id="@+id/service"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="@dimen/margin_10dp"
-            android:drawableRight="@mipmap/arrows"
-            android:textColor="@color/black"
-            android:gravity="center_vertical"
-            android:text="在线客服" />
+        <!--<TextView-->
+            <!--android:id="@+id/service"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="48dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="@dimen/margin_10dp"-->
+            <!--android:drawableRight="@mipmap/arrows"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:text="在线客服" />-->
     </LinearLayout>
 
 

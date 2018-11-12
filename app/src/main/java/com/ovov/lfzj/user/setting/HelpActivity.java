@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -69,7 +70,6 @@ public class HelpActivity extends BaseActivity {
 
         tvTitle.setText("意见反馈");
         initList();
-        smartrefresh.setEnableLoadmore(false);
         smartrefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -99,9 +99,11 @@ public class HelpActivity extends BaseActivity {
             page = 1;
         } else if (type == LOADMORE) {
             page = page + 1;
-        }
 
+        }
+        Log.e("page",page+"");
         Subscription subscription = RetrofitHelper.getInstance().getFeedBackLists(page)
+
                 .compose(RxUtil.<ListInfo<SquareListInfo>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<ListInfo<SquareListInfo>>() {
                     @Override

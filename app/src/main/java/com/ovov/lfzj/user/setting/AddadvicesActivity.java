@@ -18,6 +18,7 @@ import com.ovov.lfzj.base.bean.UnitListResult;
 import com.ovov.lfzj.base.bean.UrlBean;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.RxUtil;
+import com.ovov.lfzj.event.IdentityEvent;
 import com.ovov.lfzj.home.bean.BannerBean;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
@@ -26,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscription;
+import rx.functions.Action1;
 
 public class AddadvicesActivity extends BaseActivity {
 
@@ -52,6 +54,13 @@ public class AddadvicesActivity extends BaseActivity {
     public void init() {
 
         tvTitle.setText("意见反馈");
+        addRxBusSubscribe(IdentityEvent.class, new Action1<IdentityEvent>() {
+            @Override
+            public void call(IdentityEvent identityEvent) {
+                finish();
+            }
+        });
+
     }
 
 
@@ -99,8 +108,7 @@ public class AddadvicesActivity extends BaseActivity {
 
                     @Override
                     public void onNext(DataInfo<UrlBean> listInfoDataInfo) {
-                        showToast(listInfoDataInfo.datas().getMsg());
-                        AdviceDialog adviceDialog =new AdviceDialog(mActivity);
+                        AdviceDialog adviceDialog = new AdviceDialog(mActivity);
                         adviceDialog.show();
 
 
