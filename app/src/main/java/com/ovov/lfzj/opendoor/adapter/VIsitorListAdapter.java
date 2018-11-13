@@ -73,7 +73,7 @@ public class VIsitorListAdapter extends BaseAdapter {
         viewHolder.tvName.setText(listben.get(i).getVisitor());
         viewHolder.tvOpenTime.setText(listben.get(i).getCreated_time());
         viewHolder.tvOpenNumber.setText(listben.get(i).getValid_num());
-        viewHolder.tvVaildTime.setText(listben.get(i).getActive_time()+"min");
+        viewHolder.tvVaildTime.setText(listben.get(i).getActive_time()+"分钟");
         return view;
     }
 

@@ -61,7 +61,7 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_toRightOf="@id/vaild_time_title"
-            android:text="3min"
+            android:text="3分钟"
             android:textSize="@dimen/sp_15" />
 
         <TextView
