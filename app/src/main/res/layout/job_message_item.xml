@@ -58,6 +58,7 @@
             android:layout_marginLeft="@dimen/padding_5dp"
             android:textSize="@dimen/padding_12dp"
             android:layout_marginTop="@dimen/margin_10dp"
+            android:layout_toLeftOf="@+id/im_arrow"
             android:layout_toRightOf="@+id/job_name"
             android:text="" />
 
@@ -86,6 +87,7 @@
 
 
         <ImageView
+            android:id="@+id/im_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

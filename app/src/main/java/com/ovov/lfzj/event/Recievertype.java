@@ -14,4 +14,5 @@ public class Recievertype {
     public static String DELECTORDER = "7";//  工单详情 7维修工取消工单
     public static String CARPTERDISS = "8";// 工单详情  物业查看投诉建议
     public static String OWNERDISS = "9";//9维修主管 业主取消
+    public static String ORDER_WORK = "10";//9维修主管 业主取消
 }

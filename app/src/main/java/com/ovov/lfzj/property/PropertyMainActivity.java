@@ -5,17 +5,15 @@ import android.content.Intent;
 import android.view.View;
 
 import com.blankj.utilcode.util.FileUtils;
-import com.ovov.lfzj.MainActivity;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseMainActivity;
 import com.ovov.lfzj.base.bean.LoginUserBean;
-import com.ovov.lfzj.base.utils.ActivityUtils;
 import com.ovov.lfzj.event.Recievertype;
 import com.ovov.lfzj.event.RevieverEvent;
 import com.ovov.lfzj.home.repair.WorkerOrderDetailActivity;
-import com.ovov.lfzj.home.ui.NewsDetailActivity;
 import com.ovov.lfzj.opendoor.OpendoorActivity;
 import com.ovov.lfzj.property.home.HomeFragment;
+import com.ovov.lfzj.property.home.repair.PropertyWorkerOrderDetailActivity;
 import com.ovov.lfzj.property.user.PropertyUserFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -38,8 +36,9 @@ public class PropertyMainActivity extends BaseMainActivity {
         }
     };
     private String phone;
-    public static void toActivity(Context context){
-        Intent intent = new Intent(context,PropertyMainActivity.class);
+
+    public static void toActivity(Context context) {
+        Intent intent = new Intent(context, PropertyMainActivity.class);
         context.startActivity(intent);
     }
 
@@ -110,11 +109,14 @@ public class PropertyMainActivity extends BaseMainActivity {
     public void onEventMainThread(RevieverEvent event) {
         if (event.getType().equals(Recievertype.OWNERDISS)) {
             WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
-        }else if (event.getType().equals(Recievertype.sellerorderlist)) {
+        } else if (event.getType().equals(Recievertype.sellerorderlist)) {
             WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+        } else if (event.getType().equals(Recievertype.ORDER_WORK)) {
+            PropertyWorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
         }
 
     }
+
     @Override
     public boolean menuClicked(int index) {
         return false;
@@ -123,7 +125,6 @@ public class PropertyMainActivity extends BaseMainActivity {
     @OnClick(R.id.iv_open)
     public void onViewClicked() {
         OpendoorActivity.toActivity(mActivity);
-
 
 
     }

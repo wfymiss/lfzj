@@ -6,13 +6,19 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.widget.Toolbar;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +35,16 @@ import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.bean.ServerFeedBackInfo;
+import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.ActivityUtils;
 import com.ovov.lfzj.base.utils.RegexUtils;
+import com.ovov.lfzj.base.utils.RxUtil;
+import com.ovov.lfzj.home.bean.SubListBean;
+import com.ovov.lfzj.home.bean.SubdistrictsBean;
+import com.ovov.lfzj.http.RetrofitHelper;
+import com.ovov.lfzj.http.api.CatelApiService;
+import com.ovov.lfzj.http.subscriber.CommonSubscriber;
+import com.ovov.lfzj.opendoor.adapter.HouseListAdapter;
 import com.ovov.lfzj.opendoor.lockutil.CrashHandler;
 import com.ovov.lfzj.opendoor.present.ApplyVisitorPresent;
 import com.ovov.lfzj.opendoor.view.ApplyVisitorView;
@@ -43,6 +57,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,6 +69,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import rx.Subscription;
 
 /**
  * 生成访客通行二维码页面
@@ -85,6 +107,8 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
     TextView tvTitle;
     @BindView(R.id.tv_right)
     TextView tvRight;
+    @BindView(R.id.user_relative)
+    RelativeLayout userRelative;
 
     private TimePickerDialog mDialogAll;
     private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd   HH:mm");      // 设置时间格式
@@ -101,13 +125,26 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
     private GregorianCalendar cal1 = new GregorianCalendar();    // 进入页面日历转化
     private GregorianCalendar cal2 = new GregorianCalendar();    // 选择开始日历毫秒
     private long days_num = 0;                                    // 选择开始日期与当前时间间隔
-
+    private OkHttpClient okHttpClient;
+    private Request request;
+    private Call call;
     private Bitmap bitmap;
+    private String keyPath = CatelApiService.HOST + "v1/entrance/applyKey";       // 更新钥匙列表
+    private List<String> list = new ArrayList();
 
     public static void toActivity(Context context) {
         Intent intent = new Intent(context, ApplyVisitorActivity.class);
         context.startActivity(intent);
     }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String result = (String) msg.obj;
+            Json(result);        //  解析钥匙列表
+        }
+    };
 
     @Override
     public void init() {
@@ -116,11 +153,12 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
         present = new ApplyVisitorPresent(this);       // 初始化访客信息提交方法
         Date curDate = new Date(System.currentTimeMillis());     // 获取当前时间
         String str = formatter.format(curDate);
+        gethomeList();
         tvTitle.setText("访客通行");
         tvRight.setText("访客记录");
-        if (!TextUtils.isEmpty(LoginUserBean.getInstance().getUserInfoBean().user_logo)){
+        if (!TextUtils.isEmpty(LoginUserBean.getInstance().getUserInfoBean().user_logo)) {
             Picasso.with(this).load(LoginUserBean.getInstance().getUserInfoBean().user_logo).into(ivHousePhoto);
-        }else {
+        } else {
             Picasso.with(this).load(R.mipmap.ic_default_head).into(ivHousePhoto);
         }
 
@@ -167,7 +205,7 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
         }
     }
 
-    @OnClick({R.id.tv_right, R.id.lock_invite_button, R.id.lock_invite_startTime, R.id.iv_back})
+    @OnClick({R.id.tv_right, R.id.lock_invite_button, R.id.lock_invite_startTime, R.id.iv_back, R.id.user_relative})
     public void onViewClick(View view) {
         switch (view.getId()) {
             case R.id.tv_right:         // 访客通行记录
@@ -179,10 +217,9 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
                 boolean tf = decideFormate();      //判断输入信息的格式
                 if (tf) {
                     if (keys != null && keys.size() > 0) {
-
                         present.setVisitorUpInfo(sub_id, inviteName, invitePhone, useCount, vaildTime);
                     } else {
-                        Toast.makeText(this, "您还没有钥匙，请在钥匙列表更新获取钥匙", Toast.LENGTH_SHORT).show();
+                        upDataKeyList();
                     }
                 } else {
                     return;
@@ -194,7 +231,64 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
             case R.id.iv_back:
                 finish();
                 break;
+//            case R.id.user_relative:
+//                initpopuwindow(tvAdressHouse);
+//                break;
         }
+    }
+
+
+    private void initpopuwindow(final TextView textView) {
+        View view = View.inflate(this, R.layout.popup_activity_title1, null);
+        ListView lv_appointment = (ListView) view.findViewById(R.id.activity_title_recy);
+        final PopupWindow popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        HouseListAdapter adapter = new HouseListAdapter(list, this);
+        // 产生背景变暗效果
+        WindowManager.LayoutParams lp = this.getWindow()
+                .getAttributes();
+        lp.alpha = 0.4f;
+        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        this.getWindow().setAttributes(lp);
+        lv_appointment.setAdapter(adapter);
+        lv_appointment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                textView.setText(list.get(position));
+                popupWindow.dismiss();
+
+            }
+        });
+    }
+
+    //  更新钥匙钥匙列表———保存在本地
+    private void upDataKeyList() {
+        okHttpClient = new OkHttpClient();
+        FormBody.Builder builder = new FormBody.Builder();
+        builder.add("token", LoginUserBean.getInstance().getAccess_token());
+        FormBody formBody = builder.build();
+        request = new Request.Builder().url(keyPath).post(formBody).build();
+        call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String keyResult = response.body().string();
+
+                //  用户钥匙 保存在本地
+                if (keyResult != null) {
+                    SharedPreferences spf = ApplyVisitorActivity.this.getSharedPreferences("key_list", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = spf.edit();
+                    editor.putString("keyjson", keyResult);    // 保存更新的钥匙字符串
+                    editor.commit();      // 保存用户信息到本地
+                    Message msg = new Message();
+                    msg.obj = keyResult;
+                    handler.sendMessage(msg);
+                }
+            }
+        });
     }
 
     //展示时间选择器
@@ -433,6 +527,35 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
             sdcardDir = Environment.getExternalStorageDirectory();
         }
         return sdcardDir.toString();
+    }
+    public void gethomeList() {
+        Subscription subscription = RetrofitHelper.getInstance().gethomeList()
+                .compose(RxUtil.<SubListBean>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<SubListBean>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof DataResultException) {
+                            DataResultException dataResultException = (DataResultException) e;
+                            showMsg(dataResultException.errorInfo);
+                        } else {
+
+                            //     homeView.doFailed();
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(SubListBean listInfoDataInfo) {
+                        if (listInfoDataInfo.getCode().equals("200")) {
+                            list.clear();
+                            for (SubdistrictsBean s : listInfoDataInfo.getDatas().getSubdistricts()) {
+                                list.add(s.getSubdistrict_name());
+                            }
+
+                        }
+                    }
+                });
+
     }
 
     @Override

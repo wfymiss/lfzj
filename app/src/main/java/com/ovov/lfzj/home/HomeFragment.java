@@ -32,6 +32,7 @@ import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.bean.SquareListInfo;
 import com.ovov.lfzj.base.net.DataResultException;
+import com.ovov.lfzj.base.utils.DateUtils;
 import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.utils.UIUtils;
 import com.ovov.lfzj.base.widget.IdentityDialog;
@@ -69,8 +70,14 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.squareup.picasso.Picasso;
 import com.youzan.androidsdk.YouzanSDK;
+import com.youzan.mobile.zanim.util.DateUtil;
 
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -273,7 +280,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
                     if (LoginUserBean.getInstance().isIs_auth()) {
                         if (position == 0) {
-                            PaymentOtherActivity.toActivity(mActivity);
+                            PayMentRecordActivity.toActivity(mActivity);
+
                         }
                         if (position == 1) {
                             RepairActivity.toActivity(mActivity);
@@ -285,10 +293,11 @@ public class HomeFragment extends BaseFragment implements HomeView {
                         }
 
                         if (position == 3) {
-                            GameActivity.toActivity(mActivity);
+                            PaymentOtherActivity.toActivity(mActivity);
                         }
                         if (position == 4) {
-                            PayMentRecordActivity.toActivity(mActivity);
+                            GameActivity.toActivity(mActivity);
+
                         }
                     } else {
                         IdentityDialog identityDialog = new IdentityDialog(mActivity, HOME_FRAGMENT_IDENTITY);
@@ -305,6 +314,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
             public void convert(ViewHolder viewHolder, NewsBean noticeBean, final int i) {
                 LinearLayout reHeader = viewHolder.getView(R.id.relativeLayout);
                 if (i == 0) {
+
                     reHeader.setVisibility(View.VISIBLE);
                     viewHolder.setText(R.id.tv_item_title, "社区公告");
                     viewHolder.setImageResource(R.id.item_im, R.mipmap.item_noti);
@@ -314,50 +324,67 @@ public class HomeFragment extends BaseFragment implements HomeView {
                 viewHolder.setText(R.id.tv_notifi_type, "公告");
                 viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
                 viewHolder.setText(R.id.tv_comment, noticeBean.getSummary());
-                viewHolder.setText(R.id.tv_time, noticeBean.getCreated_at());
 
-                ImageView view = viewHolder.getView(R.id.iv_image);
-                if (noticeBean.getImages().size() > 0) {
-                    if (!noticeBean.getImages().get(0).isEmpty()) {
-                        Picasso.with(getContext()).load(noticeBean.getImages().get(0)).error(R.drawable.meinv).into(view);
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date strtodate;
+                String datas = "";
+                try {
+                    strtodate = formatter.parse(noticeBean.getCreated_at());
+                    datas = formatter.format(strtodate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+
+                    viewHolder.setText(R.id.tv_time, datas);
+
+                    ImageView view = viewHolder.getView(R.id.iv_image);
+
+                    if (noticeBean.getImages().size() > 0) {
+                        if (!noticeBean.getImages().get(0).isEmpty()) {
+                            Picasso.with(getContext()).load(noticeBean.getImages().get(0)).error(R.drawable.meinv).into(view);
+                        }
+                    } else {
+                        view.setVisibility(View.GONE);
                     }
-                } else {
-                    view.setVisibility(View.GONE);
+
+                    viewHolder.setOnClickListener(R.id.ly_item, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (UIUtils.isFastClick()) {
+                                Intent intent = new Intent(getContext(), NoticeDetailActivity.class);
+                                intent.putExtra("id", newslist.get(i).getId());
+                                startActivity(intent);
+                            }
+
+                        }
+                    });
+                    viewHolder.setOnClickListener(R.id.delect_im, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (UIUtils.isFastClick()) {
+                                newslist.remove(i);
+                                notifyDataSetChanged();
+                            }
+                        }
+                    });
+
+                    viewHolder.setOnClickListener(R.id.tv_more, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            HomeNoticeActivity.toActivity(mActivity);
+
+                        }
+                    });
+
+
                 }
-
-                viewHolder.setOnClickListener(R.id.ly_item, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (UIUtils.isFastClick()) {
-                            Intent intent = new Intent(getContext(), NoticeDetailActivity.class);
-                            intent.putExtra("id", newslist.get(i).getId());
-                            startActivity(intent);
-                        }
-
-                    }
-                });
-                viewHolder.setOnClickListener(R.id.delect_im, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (UIUtils.isFastClick()) {
-                            newslist.remove(i);
-                            notifyDataSetChanged();
-                        }
-                    }
-                });
-
-                viewHolder.setOnClickListener(R.id.tv_more, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        HomeNoticeActivity.toActivity(mActivity);
-
-                    }
-                });
-
-
             }
-        };
-        newsAdapter = new CommonAdapter<NewsBean>(getContext(), noticeList, R.layout.news_item) {
+        }
+        ;
+        newsAdapter = new CommonAdapter<NewsBean>(
+
+                getContext(), noticeList, R.layout.news_item)
+
+        {
 
 
             @Override
@@ -371,7 +398,18 @@ public class HomeFragment extends BaseFragment implements HomeView {
                 }
                 viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
                 viewHolder.setText(R.id.tv_comment, noticeBean.getSummary());
-                viewHolder.setText(R.id.tv_time, noticeBean.getCreated_at());
+
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date strtodate;
+                String datas = "";
+                try {
+                    strtodate = formatter.parse(noticeBean.getCreated_at());
+                    datas = formatter.format(strtodate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+
+                }
+                viewHolder.setText(R.id.tv_time,datas);
                 viewHolder.setOnClickListener(R.id.ly_item, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -407,11 +445,15 @@ public class HomeFragment extends BaseFragment implements HomeView {
                 }
 
             }
-        };
+        }
+
+        ;
 
         newListView.setAdapter(commonAdapter);
         notice_list.setAdapter(newsAdapter);
-        scan.setOnClickListener(new View.OnClickListener() {
+        scan.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), CaptureActivity.class);
@@ -426,7 +468,9 @@ public class HomeFragment extends BaseFragment implements HomeView {
         GirdAdapter adapter = new GirdAdapter(getContext());
         gridView.setAdapter(adapter);
         mRecyclerView.addHeaderView(addheadlayout);
-        mAdapter = new HomeNeighAdapter(getContext());
+        mAdapter = new
+
+                HomeNeighAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
 
         /*mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
