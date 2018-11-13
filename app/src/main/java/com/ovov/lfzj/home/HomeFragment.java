@@ -328,103 +328,43 @@ public class HomeFragment extends BaseFragment implements HomeView {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 Date strtodate;
                 String datas = "";
+
                 try {
                     strtodate = formatter.parse(noticeBean.getCreated_at());
                     datas = formatter.format(strtodate);
                 } catch (ParseException e) {
                     e.printStackTrace();
+                }
 
-                    viewHolder.setText(R.id.tv_time, datas);
 
-                    ImageView view = viewHolder.getView(R.id.iv_image);
+                viewHolder.setText(R.id.tv_time, datas);
 
-                    if (noticeBean.getImages().size() > 0) {
-                        if (!noticeBean.getImages().get(0).isEmpty()) {
-                            Picasso.with(getContext()).load(noticeBean.getImages().get(0)).error(R.drawable.meinv).into(view);
-                        }
-                    } else {
-                        view.setVisibility(View.GONE);
+                ImageView view = viewHolder.getView(R.id.iv_image);
+
+                if (noticeBean.getImages().size() > 0) {
+                    if (!noticeBean.getImages().get(0).isEmpty()) {
+                        Picasso.with(getContext()).load(noticeBean.getImages().get(0)).error(R.drawable.meinv).into(view);
                     }
-
-                    viewHolder.setOnClickListener(R.id.ly_item, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (UIUtils.isFastClick()) {
-                                Intent intent = new Intent(getContext(), NoticeDetailActivity.class);
-                                intent.putExtra("id", newslist.get(i).getId());
-                                startActivity(intent);
-                            }
-
-                        }
-                    });
-                    viewHolder.setOnClickListener(R.id.delect_im, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (UIUtils.isFastClick()) {
-                                newslist.remove(i);
-                                notifyDataSetChanged();
-                            }
-                        }
-                    });
-
-                    viewHolder.setOnClickListener(R.id.tv_more, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            HomeNoticeActivity.toActivity(mActivity);
-
-                        }
-                    });
-
-
-                }
-            }
-        }
-        ;
-        newsAdapter = new CommonAdapter<NewsBean>(
-
-                getContext(), noticeList, R.layout.news_item)
-
-        {
-
-
-            @Override
-            public void convert(ViewHolder viewHolder, NewsBean noticeBean, final int i) {
-                if (i == 0) {
-                    viewHolder.setVisible(R.id.relativeLayout, true);
-                    viewHolder.setText(R.id.tv_item_title, "新闻");
-                    viewHolder.setImageResource(R.id.item_im, R.mipmap.item_news);
                 } else {
-                    viewHolder.setVisible(R.id.relativeLayout, false);
+                    view.setVisibility(View.GONE);
                 }
-                viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
-                viewHolder.setText(R.id.tv_comment, noticeBean.getSummary());
 
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                Date strtodate;
-                String datas = "";
-                try {
-                    strtodate = formatter.parse(noticeBean.getCreated_at());
-                    datas = formatter.format(strtodate);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-
-                }
-                viewHolder.setText(R.id.tv_time,datas);
                 viewHolder.setOnClickListener(R.id.ly_item, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (UIUtils.isFastClick()) {
-                            Intent intent = new Intent(getContext(), NewsDetailActivity.class);
-                            intent.putExtra("id", noticeList.get(i).getId());
+                            Intent intent = new Intent(getContext(), NoticeDetailActivity.class);
+                            intent.putExtra("id", newslist.get(i).getId());
                             startActivity(intent);
                         }
+
                     }
                 });
                 viewHolder.setOnClickListener(R.id.delect_im, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if (UIUtils.isFastClick()) {
-                            noticeList.remove(i);
+                            newslist.remove(i);
                             notifyDataSetChanged();
                         }
                     }
@@ -433,44 +373,99 @@ public class HomeFragment extends BaseFragment implements HomeView {
                 viewHolder.setOnClickListener(R.id.tv_more, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        NewsListctivity.toActivity(mActivity);
+                        HomeNoticeActivity.toActivity(mActivity);
 
                     }
                 });
-                ImageView view = viewHolder.getView(R.id.iv_image);
-                if (noticeBean.getImages().size() > 0) {
-                    Picasso.with(getContext()).load(noticeBean.getImages().get(0)).into(view);
-                } else {
-                    view.setVisibility(View.GONE);
-                }
+
 
             }
+        };
+    newsAdapter =new CommonAdapter<NewsBean>(getContext(),noticeList,R.layout.news_item) {
+        @Override
+        public void convert (ViewHolder viewHolder, NewsBean noticeBean,final int i){
+        if (i == 0) {
+            viewHolder.setVisible(R.id.relativeLayout, true);
+            viewHolder.setText(R.id.tv_item_title, "新闻");
+            viewHolder.setImageResource(R.id.item_im, R.mipmap.item_news);
+        } else {
+            viewHolder.setVisible(R.id.relativeLayout, false);
+        }
+        viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
+        viewHolder.setText(R.id.tv_comment, noticeBean.getSummary());
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date strtodate;
+        String datas = "";
+        try {
+            strtodate = formatter.parse(noticeBean.getCreated_at());
+            datas = formatter.format(strtodate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+
+        }
+        viewHolder.setText(R.id.tv_time, datas);
+        viewHolder.setOnClickListener(R.id.ly_item, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UIUtils.isFastClick()) {
+                    Intent intent = new Intent(getContext(), NewsDetailActivity.class);
+                    intent.putExtra("id", noticeList.get(i).getId());
+                    startActivity(intent);
+                }
+            }
+        });
+        viewHolder.setOnClickListener(R.id.delect_im, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UIUtils.isFastClick()) {
+                    noticeList.remove(i);
+                    notifyDataSetChanged();
+                }
+            }
+        });
+
+        viewHolder.setOnClickListener(R.id.tv_more, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewsListctivity.toActivity(mActivity);
+
+            }
+        });
+        ImageView view = viewHolder.getView(R.id.iv_image);
+        if (noticeBean.getImages().size() > 0) {
+            Picasso.with(getContext()).load(noticeBean.getImages().get(0)).into(view);
+        } else {
+            view.setVisibility(View.GONE);
         }
 
-        ;
+    }
+    }
+
+    ;
 
         newListView.setAdapter(commonAdapter);
         notice_list.setAdapter(newsAdapter);
         scan.setOnClickListener(new View.OnClickListener()
 
-        {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), CaptureActivity.class);
-                startActivity(intent);
+    {
+        @Override
+        public void onClick (View v){
+        Intent intent = new Intent(getContext(), CaptureActivity.class);
+        startActivity(intent);
 
-            }
-        });
+    }
+    });
 
 
         gridView1.setAdapter(shopAdapter1);
         bannerLayout.setAdapter(bannerAdapter);
-        GirdAdapter adapter = new GirdAdapter(getContext());
+    GirdAdapter adapter = new GirdAdapter(getContext());
         gridView.setAdapter(adapter);
         mRecyclerView.addHeaderView(addheadlayout);
-        mAdapter = new
+    mAdapter =new
 
-                HomeNeighAdapter(getContext());
+    HomeNeighAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
 
         /*mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -484,24 +479,24 @@ public class HomeFragment extends BaseFragment implements HomeView {
         });*/
         textView.setOnClickListener(new View.OnClickListener()
 
-        {
-            @Override
-            public void onClick(View v) {
-                if (UIUtils.isFastClick()) {
-                    if (LoginUserBean.getInstance().isIs_auth()) {
+    {
+        @Override
+        public void onClick (View v){
+        if (UIUtils.isFastClick()) {
+            if (LoginUserBean.getInstance().isIs_auth()) {
 
-                        initpopuwindow(textView);
-                    } else {
+                initpopuwindow(textView);
+            } else {
 
-                        IdentityDialog identityDialog = new IdentityDialog(mActivity, HOME_FRAGMENT_IDENTITY);
-                        identityDialog.show();
-                    }
-                }
-
+                IdentityDialog identityDialog = new IdentityDialog(mActivity, HOME_FRAGMENT_IDENTITY);
+                identityDialog.show();
             }
-        });
+        }
 
     }
+    });
+
+}
 
     private void initData(final int type) {
         if (type == REFRESH) {

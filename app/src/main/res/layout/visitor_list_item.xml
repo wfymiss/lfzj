@@ -18,7 +18,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_pwd" />
+            android:src="@mipmap/ic_pwd_v" />
 
         <TextView
             android:id="@+id/open_time_title"
@@ -124,9 +124,9 @@
             android:id="@+id/success_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_5"
             android:layout_toLeftOf="@+id/tv_success"
-            android:text="状态："
+            android:text="手机号:"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/sp_15" />
 
@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_15"
-            android:text="成功"
+            android:text=""
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/sp_15" />
     </RelativeLayout>
