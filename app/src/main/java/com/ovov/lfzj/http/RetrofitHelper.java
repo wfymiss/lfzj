@@ -521,7 +521,7 @@ public class RetrofitHelper {
 
 
     public Observable<ListInfo<WorkerListInfo>> getWorks() {
-        return mApiService.getWorks();
+        return mApiService.getWorks(getSubId());
     }
 
     public Observable<DataInfo> workerDispath(String wid, String worker_id) {
@@ -537,7 +537,7 @@ public class RetrofitHelper {
         RequestBody mContent = RequestBody.create(MediaType.parse("multipart/form-data"), content);
         RequestBody mPhone = RequestBody.create(MediaType.parse("multipart/form-data"), phone);
         RequestBody mSubId = RequestBody.create(MediaType.parse("multipart/form-data"), getSubId());
-        return mApiService.workAdd(token, mPhone, mAddress, mPosistion, mCategory, mContent, mName, mSubId,mSubId, parts);
+        return mApiService.workAdd(token, mPhone, mAddress, mPosistion, mCategory, mContent, mName, mSubId, parts);
 
     }
 

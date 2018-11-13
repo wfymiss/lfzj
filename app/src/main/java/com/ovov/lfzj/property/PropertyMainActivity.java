@@ -113,7 +113,6 @@ public class PropertyMainActivity extends BaseMainActivity {
         }else if (event.getType().equals(Recievertype.sellerorderlist)) {
             WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
         }
-
     }
     @Override
     public boolean menuClicked(int index) {

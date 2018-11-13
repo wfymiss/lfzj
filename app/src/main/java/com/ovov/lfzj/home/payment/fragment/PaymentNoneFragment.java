@@ -54,6 +54,8 @@ import static com.ovov.lfzj.CatelApplication.REFRESH;
  */
 
 public class PaymentNoneFragment extends BaseFragment {
+    @BindView(R.id.lin_null)
+    LinearLayout mLinNull;
     private Unbinder unbinder;
     @BindView(R.id.pm_none_swf)
     SmartRefreshLayout refreshLayout;
@@ -156,7 +158,7 @@ public class PaymentNoneFragment extends BaseFragment {
                             propertyPaymentInfo.setSelect(false);
                             lisCheck.remove(propertyPaymentInfo);
                             totalMoney = totalMoney - propertyPaymentInfo.money;
-                            bill_amount.setText("￥"+df.format(totalMoney));
+                            bill_amount.setText("￥" + df.format(totalMoney));
                             if (lisCheck.size() != list.size())
                                 check_all.setSelected(false);
                         } else {
@@ -164,7 +166,7 @@ public class PaymentNoneFragment extends BaseFragment {
                             propertyPaymentInfo.setSelect(true);
                             lisCheck.add(propertyPaymentInfo);
                             totalMoney = totalMoney + propertyPaymentInfo.money;
-                            bill_amount.setText("￥"+df.format(totalMoney));
+                            bill_amount.setText("￥" + df.format(totalMoney));
                             if (lisCheck.size() == list.size())
                                 check_all.setSelected(true);
                         }
@@ -222,6 +224,11 @@ public class PaymentNoneFragment extends BaseFragment {
                             list.clear();
                             list.addAll(propertyPaymentInfoListInfo.datas());
                             mAdapter.notifyDataSetChanged();
+                            if (propertyPaymentInfoListInfo.datas().size() == 0){
+                                mLinNull.setVisibility(View.VISIBLE);
+                            }else {
+                                mLinNull.setVisibility(View.GONE);
+                            }
 
                         } else {
                             refreshLayout.finishLoadmore(true);
@@ -231,6 +238,7 @@ public class PaymentNoneFragment extends BaseFragment {
                         if (propertyPaymentInfoListInfo.datas().size() < 10) {
                             refreshLayout.setEnableLoadmore(false);
                         }
+
                     }
                 });
         addSubscrebe(subscription);

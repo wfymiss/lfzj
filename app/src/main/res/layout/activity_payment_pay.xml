@@ -10,6 +10,7 @@
 
     <include layout="@layout/include_title_text"
         android:id="@+id/title"/>
+
     <ScrollView
         android:layout_below="@+id/title"
         android:layout_above="@+id/order_under_menu"
