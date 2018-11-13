@@ -108,9 +108,9 @@ public class PropertyMainActivity extends BaseMainActivity {
     @Subscribe
     public void onEventMainThread(RevieverEvent event) {
         if (event.getType().equals(Recievertype.OWNERDISS)) {
-            WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+            PropertyWorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
         } else if (event.getType().equals(Recievertype.sellerorderlist)) {
-            WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+            PropertyWorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
         } else if (event.getType().equals(Recievertype.ORDER_WORK)) {
             PropertyWorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
         }

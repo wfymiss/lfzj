@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.WorkOrderListInfo;
 import com.ovov.lfzj.base.widget.CancelWorkerOrderEvent;
+import com.ovov.lfzj.event.CancelEvent;
 import com.ovov.lfzj.http.RetrofitHelper;
 
 import rx.Observable;
@@ -34,6 +35,12 @@ public class HasCompleteFragment extends BaseWorkerOrderFragment {
         addRxBusSubscribe(CancelWorkerOrderEvent.class, new Action1<CancelWorkerOrderEvent>() {
             @Override
             public void call(CancelWorkerOrderEvent cancelWorkerOrderEvent) {
+                mRefresh.autoRefresh();
+            }
+        });
+        addRxBusSubscribe(CancelEvent.class, new Action1<CancelEvent>() {
+            @Override
+            public void call(CancelEvent cancelEvent) {
                 mRefresh.autoRefresh();
             }
         });
