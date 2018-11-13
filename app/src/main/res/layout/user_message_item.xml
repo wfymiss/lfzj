@@ -7,7 +7,7 @@
     android:layout_marginTop="@dimen/dp_10"
     android:orientation="vertical">
 
-    <include layout="@layout/base_view_title"/>
+    <include layout="@layout/base_view_title" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,26 +23,26 @@
             android:layout_marginTop="12dp"
             android:orientation="horizontal">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/my_circle_images"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:layout_alignParentTop="true"
-                android:layout_gravity="center"
-                android:background="@mipmap/ic_default_head"
-                android:clickable="true"
-                android:scaleType="centerCrop" />
-
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp">
+                android:layout_height="match_parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/my_circle_images"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/ic_default_head"
+                    android:clickable="true"
+                    android:scaleType="centerCrop" />
+
 
                 <TextView
                     android:id="@+id/name_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@+id/my_circle_images"
                     android:text="用户昵称"
                     android:textColor="#ff444444"
                     android:textSize="16sp" />
@@ -55,14 +55,17 @@
                     android:background="@drawable/townoff"
                     android:textColor="#ff444444"
                     android:textSize="16sp"
+
                     android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/name_tv"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginTop="13dp"
+                    android:layout_toRightOf="@+id/my_circle_images"
                     android:text="10分钟前 "
                     android:textColor="#ffa1a1a1"
                     android:textSize="12sp" />
@@ -102,7 +105,6 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="7dp"
-            android:text="选择一个好社区，选择一份安逸时光——绿化篇"
             android:textColor="#ff6f6f6f"
             android:textSize="15sp" />
 

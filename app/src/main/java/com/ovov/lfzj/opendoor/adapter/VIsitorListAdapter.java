@@ -72,8 +72,9 @@ public class VIsitorListAdapter extends BaseAdapter {
 //        Picasso.with(context).load(listben.get(i).getPic()).into(viewHolder.ivPhoto);
         viewHolder.tvName.setText(listben.get(i).getVisitor());
         viewHolder.tvOpenTime.setText(listben.get(i).getCreated_time());
-        viewHolder.tvOpenNumber.setText(listben.get(i).getValid_num());
-        viewHolder.tvVaildTime.setText(listben.get(i).getActive_time()+"min");
+        viewHolder.tvOpenNumber.setText(listben.get(i).getValid_num()+"次");
+        viewHolder.tvVaildTime.setText(listben.get(i).getActive_time()+"分钟");
+        viewHolder.tvSuccess.setText(listben.get(i).getVisitor_tel());
         return view;
     }
 

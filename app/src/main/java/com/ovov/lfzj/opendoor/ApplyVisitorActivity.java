@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -130,7 +132,8 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
     private Call call;
     private Bitmap bitmap;
     private String keyPath = CatelApiService.HOST + "v1/entrance/applyKey";       // 更新钥匙列表
-    private List<String> list = new ArrayList();
+
+    private List<String> list;
 
     public static void toActivity(Context context) {
         Intent intent = new Intent(context, ApplyVisitorActivity.class);
@@ -148,12 +151,14 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
 
     @Override
     public void init() {
+        list = new ArrayList();
+        gethomeList();
         initUserInfo();           // 用户信息标签
         postKeyList();           //  解析本地钥匙
         present = new ApplyVisitorPresent(this);       // 初始化访客信息提交方法
         Date curDate = new Date(System.currentTimeMillis());     // 获取当前时间
         String str = formatter.format(curDate);
-        gethomeList();
+
         tvTitle.setText("访客通行");
         tvRight.setText("访客记录");
         if (!TextUtils.isEmpty(LoginUserBean.getInstance().getUserInfoBean().user_logo)) {
@@ -231,9 +236,9 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
             case R.id.iv_back:
                 finish();
                 break;
-//            case R.id.user_relative:
-//                initpopuwindow(tvAdressHouse);
-//                break;
+            case R.id.user_relative:
+                initpopuwindow(tvAdressHouse);
+                break;
         }
     }
 
@@ -244,12 +249,13 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
         final PopupWindow popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         HouseListAdapter adapter = new HouseListAdapter(list, this);
         // 产生背景变暗效果
-        WindowManager.LayoutParams lp = this.getWindow()
+        WindowManager.LayoutParams lp = getWindow()
                 .getAttributes();
         lp.alpha = 0.4f;
-        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        this.getWindow().setAttributes(lp);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        getWindow().setAttributes(lp);
         lv_appointment.setAdapter(adapter);
+
         lv_appointment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -258,6 +264,29 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
 
             }
         });
+
+
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+            // 在dismiss中恢复透明度
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = getWindow()
+                        .getAttributes();
+                lp.alpha = 1f;
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                getWindow().setAttributes(lp);
+            }
+        });
+
+
+        // 使其聚集,可点击
+        popupWindow.setFocusable(true);
+        // 设置允许在外点击消失
+        //  popupWindow.setOutsideTouchable(true);
+
+        // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.showAtLocation(this.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
     }
 
     //  更新钥匙钥匙列表———保存在本地
@@ -528,13 +557,16 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
         }
         return sdcardDir.toString();
     }
+
     public void gethomeList() {
+        showLoadingDialog();
         Subscription subscription = RetrofitHelper.getInstance().gethomeList()
                 .compose(RxUtil.<SubListBean>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<SubListBean>() {
                     @Override
                     public void onError(Throwable e) {
                         if (e instanceof DataResultException) {
+                            dismiss();
                             DataResultException dataResultException = (DataResultException) e;
                             showMsg(dataResultException.errorInfo);
                         } else {
@@ -546,8 +578,9 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
 
                     @Override
                     public void onNext(SubListBean listInfoDataInfo) {
+                        list.clear();
+                        dismiss();
                         if (listInfoDataInfo.getCode().equals("200")) {
-                            list.clear();
                             for (SubdistrictsBean s : listInfoDataInfo.getDatas().getSubdistricts()) {
                                 list.add(s.getSubdistrict_name());
                             }
@@ -555,7 +588,7 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
                         }
                     }
                 });
-
+        addSubscrebe(subscription);
     }
 
     @Override
