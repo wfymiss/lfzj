@@ -294,6 +294,10 @@ public class MainActivity extends BaseMainActivity {
             WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
         } else if (event.getType().equals(Recievertype.CARPTERDISS)) {
             WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+        } else if (event.getType().equals(Recievertype.sellerorderlist)) {
+            WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+        } else if (event.getType().equals(Recievertype.OWNERDISS)) {
+            WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
         }
     }
 

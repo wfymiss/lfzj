@@ -103,15 +103,23 @@ public class PropertyMainActivity extends BaseMainActivity {
         };
     }
 
-
     //收到推送以后点击事件的处理
     @Subscribe
     public void onEventMainThread(RevieverEvent event) {
+
         if (event.getType().equals(Recievertype.OWNERDISS)) {
             PropertyWorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
         } else if (event.getType().equals(Recievertype.sellerorderlist)) {
             PropertyWorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
         } else if (event.getType().equals(Recievertype.ORDER_WORK)) {
+            PropertyWorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+        } else if (event.getType().equals(Recievertype.WORKERINFO)) {
+            PropertyWorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+        }else if (event.getType().equals(Recievertype.PROPERTY_WORK_ORDER)) {
+            PropertyWorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+        }else if (event.getType().equals(Recievertype.PROPERTY_SCHDELUE)) {
+            PropertyWorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+        }else if (event.getType().equals(Recievertype.CARPTERDISS)) {
             PropertyWorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
         }
 

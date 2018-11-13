@@ -104,13 +104,8 @@ public class MessageDetailActivity extends BaseActivity {
                     }
                 });
         addSubscrebe(subscription);
-
-
     }
-
     private void initList() {
-
-
         newsAdapter = new CommonAdapter<BannerBean>(this, noticeList, R.layout.job_message_item) {
 
             @Override
