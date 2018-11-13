@@ -259,7 +259,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
             @Override
             protected void bind(ViewHolder holder, BannerBean data) {
                 if (!data.getImg().equals("") && data.getImg() != null) {
-                    Picasso.with(getContext()).load(data.getImg()).into(holder.mImageView);
+                    Picasso.with(getContext()).load(data.getImg()).placeholder(R.mipmap.error_banner).error(R.mipmap.error_banner).into(holder.mImageView);
                 } else {
                     Picasso.with(getContext()).load(R.mipmap.error_banner).into(holder.mImageView);
                 }

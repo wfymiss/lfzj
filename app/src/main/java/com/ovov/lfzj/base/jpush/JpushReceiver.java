@@ -50,6 +50,7 @@ public class JpushReceiver extends BroadcastReceiver {
                 JSONObject jsonExtra = new JSONObject(extar);
                 String type=jsonExtra.getString("content_type");
                 String id = jsonExtra.getString("id");
+                Log.d("dadada", ""+type);
                 if (type.equals(Recievertype.CREATE_FEE)){
                    /* Intent i = new Intent(context, MainActivity.class);  //自定义打开的界面
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--已缴费——历史账单——view-->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/pm_record_swf"
         android:layout_width="match_parent"
@@ -13,4 +12,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:id="@+id/lin_null"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="136dp"
+            android:layout_height="96dp"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp_100"
+            android:src="@mipmap/ic_null_order"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无账单"
+            android:textSize="@dimen/textSize_15sp"
+            android:textColor="@color/color_444444"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp_10"/>
+    </LinearLayout>
+</RelativeLayout>

@@ -122,7 +122,6 @@ public class PropertyMainActivity extends BaseMainActivity {
         }else if (event.getType().equals(Recievertype.CARPTERDISS)) {
             PropertyWorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
         }
-
     }
 
     @Override

@@ -29,6 +29,7 @@ import com.ovov.lfzj.base.widget.CancelDispathDialog;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
 import com.ovov.lfzj.base.widget.RemindDialogUtil;
 import com.ovov.lfzj.base.widget.WorkerCancelDialog;
+import com.ovov.lfzj.event.CancelEvent;
 import com.ovov.lfzj.event.DetailCancelDispathEvent;
 import com.ovov.lfzj.event.DetailWorkerCancelEvent;
 import com.ovov.lfzj.event.DispathEvent;
@@ -190,6 +191,8 @@ public class PropertyWorkerOrderDetailActivity extends BaseActivity {
                         dismiss();
                         showToast("取消成功");
                         initData();
+                        RxBus.getDefault().post(new CancelEvent());
+                        finish();
                     }
                 });
         addSubscrebe(subscription);
@@ -220,6 +223,7 @@ public class PropertyWorkerOrderDetailActivity extends BaseActivity {
                         showToast("派单成功");
                         initData();
                         RxBus.getDefault().post(new DispathSuccessEvent());
+                        finish();
                     }
                 });
         addSubscrebe(subscription);
@@ -290,7 +294,7 @@ public class PropertyWorkerOrderDetailActivity extends BaseActivity {
                                     mTvDispatch.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            if (TextUtils.isEmpty(mTvSelectWorker.getText().toString())){
+                                            if (TextUtils.isEmpty(mTvSelectWorker.getText().toString())) {
                                                 showToast("请选择维修工");
                                                 return;
                                             }
@@ -367,7 +371,10 @@ public class PropertyWorkerOrderDetailActivity extends BaseActivity {
                                 mLinRepairWorkerSelect.setVisibility(View.GONE);
                                 if (LoginUserBean.getInstance().getAppPermission().gongdan_jiedan) {
 
-                                    mLinRepairQuote.setVisibility(View.VISIBLE);
+                                    if (dataInfo.datas().position.equals("0"))
+                                        mLinRepairQuote.setVisibility(View.VISIBLE);
+                                    else
+                                        mLinRepairQuote.setVisibility(View.GONE);
                                     mEtTrouble.setVisibility(View.VISIBLE);
                                     mTvCheck.setVisibility(View.VISIBLE);
                                     mTvCheck.setText("提交");
@@ -505,6 +512,7 @@ public class PropertyWorkerOrderDetailActivity extends BaseActivity {
                         showToast("提交成功");
                         initData();
                         RxBus.getDefault().post(new WorkerConfirmSuccessEvent());
+                        finish();
                     }
                 });
         addSubscrebe(subscription);
@@ -586,6 +594,7 @@ public class PropertyWorkerOrderDetailActivity extends BaseActivity {
                         showToast("接单成功");
                         RxBus.getDefault().post(new RecieptSuccessEvent());
                         initData();
+                        finish();
 
                     }
                 });

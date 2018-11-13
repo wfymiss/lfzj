@@ -549,7 +549,6 @@ public interface CatelApiService {
                                  @Part("contents") RequestBody content,
                                  @Part("username") RequestBody username,
                                  @Part("subdistrictId") RequestBody subdistrict_id,
-                                 @Part("subdistrictId") RequestBody subdistrictId,
                                  @Part() List<MultipartBody.Part> part);
 
     @FormUrlEncoded
@@ -574,8 +573,9 @@ public interface CatelApiService {
     Observable<DataInfo> changeRole(@Field("token") String token,
                                     @Field("login_type") int login_type);
 
+    @FormUrlEncoded
     @POST("v1/work/get_works")
-    Observable<ListInfo<WorkerListInfo>> getWorks();
+    Observable<ListInfo<WorkerListInfo>> getWorks(@Field("subdistrictId") String subdistrictId);
 
     @FormUrlEncoded
     @POST("v1/work/workdispatch")
