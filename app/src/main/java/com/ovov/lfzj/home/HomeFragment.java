@@ -622,11 +622,15 @@ public class HomeFragment extends BaseFragment implements HomeView {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 textView.setText(list.get(position));
-                homePresenter.getNoticeList();
                 popupWindow.dismiss();
                 LoginUserBean.getInstance().setSub_id(listinfo1.get(position).getSubdistrict_id());
                 LoginUserBean.getInstance().setSubname(listinfo1.get(position).getSubdistrict_name());
                 LoginUserBean.getInstance().save();
+                initData(REFRESH);
+                initBanner();
+                homePresenter.getNoticeList();
+                homePresenter.getNewsList();
+                homePresenter.gethomeList();
 
             }
         });
