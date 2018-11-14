@@ -10,7 +10,6 @@ import com.ovov.lfzj.base.BaseMainActivity;
 import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.event.Recievertype;
 import com.ovov.lfzj.event.RevieverEvent;
-import com.ovov.lfzj.home.repair.WorkerOrderDetailActivity;
 import com.ovov.lfzj.opendoor.OpendoorActivity;
 import com.ovov.lfzj.property.home.HomeFragment;
 import com.ovov.lfzj.property.home.repair.PropertyWorkerOrderDetailActivity;
@@ -46,6 +45,7 @@ public class PropertyMainActivity extends BaseMainActivity {
     @Override
     public void init() {
         super.init();
+
         EventBus.getDefault().register(this);
         JPushInterface.setAlias(this, LoginUserBean.getInstance().getPhone(), tagAliasCallback);                                //  极光
         FileUtils.createOrExistsDir(BASE_FILE);
@@ -106,7 +106,6 @@ public class PropertyMainActivity extends BaseMainActivity {
     //收到推送以后点击事件的处理
     @Subscribe
     public void onEventMainThread(RevieverEvent event) {
-
         if (event.getType().equals(Recievertype.OWNERDISS)) {
             PropertyWorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
         } else if (event.getType().equals(Recievertype.sellerorderlist)) {
