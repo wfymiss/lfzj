@@ -30,7 +30,7 @@ public class JpushReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
-        Log.d("dadada", ""+bundle.get(JPushInterface.EXTRA_EXTRA));
+        Log.d("dadada", "" + bundle.get(JPushInterface.EXTRA_EXTRA));
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
             String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
 
@@ -45,39 +45,69 @@ public class JpushReceiver extends BroadcastReceiver {
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             // Log.d(TAG, "用户点击打开了通知");
             // 在这里可以自己写代码去定义用户点击后的行为
-            String  extar =bundle.getString(JPushInterface.EXTRA_EXTRA);
+            String extar = bundle.getString(JPushInterface.EXTRA_EXTRA);
             try {
                 JSONObject jsonExtra = new JSONObject(extar);
-                String type=jsonExtra.getString("content_type");
+                String type = jsonExtra.getString("content_type");
                 String id = jsonExtra.getString("id");
-                Log.d("dadada", ""+type);
-                if (type.equals(Recievertype.CREATE_FEE)){
+                Log.d("dadada", "" + type);
+                if (type.equals(Recievertype.CREATE_FEE)) {
                    /* Intent i = new Intent(context, MainActivity.class);  //自定义打开的界面
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                     context.startActivity(i);*/
-                    EventBus.getDefault().post(new RevieverEvent(Recievertype.CREATE_FEE,id));
+                    EventBus.getDefault().post(new RevieverEvent(Recievertype.CREATE_FEE, id));
 
-                }else if (type.equals(Recievertype.OWNER_WORK_ORDER)){
+                } else if (type.equals(Recievertype.OWNER_WORK_ORDER)) {
                     /*Intent i = new Intent(context, MainActivity.class);  //自定义打开的界面
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(i);*/
-                    EventBus.getDefault().post(new RevieverEvent(Recievertype.OWNER_WORK_ORDER,id));
-                }else if (type.equals(Recievertype.PROPERTY_WORK_ORDER)){
+                    EventBus.getDefault().post(new RevieverEvent(Recievertype.OWNER_WORK_ORDER, id));
+                } else if (type.equals(Recievertype.PROPERTY_WORK_ORDER)) {
                    /* Intent i = new Intent(context, LFGJMainActivity.class);  //自定义打开的界面
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(i);*/
-                    EventBus.getDefault().post(new RevieverEvent(Recievertype.PROPERTY_WORK_ORDER,id));
-                }else if (type.equals(Recievertype.PROPERTY_SCHDELUE)){
+                    EventBus.getDefault().post(new RevieverEvent(Recievertype.PROPERTY_WORK_ORDER, id));
+                } else if (type.equals(Recievertype.PROPERTY_SCHDELUE)) {
                     /*Intent i = new Intent(context, LFGJMainActivity.class);  //自定义打开的界面
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(i);*/
-                    EventBus.getDefault().post(new RevieverEvent(Recievertype.PROPERTY_SCHDELUE,id));
+                    EventBus.getDefault().post(new RevieverEvent(Recievertype.PROPERTY_SCHDELUE, id));
+                } else if (type.equals(Recievertype.WORKERINFO)) {
+                    /*Intent i = new Intent(context, LFGJMainActivity.class);  //自定义打开的界面
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(i);*/
+                    EventBus.getDefault().post(new RevieverEvent(Recievertype.WORKERINFO, id));
+                } else if (type.equals(Recievertype.sellerorderlist)) {
+                    /*Intent i = new Intent(context, LFGJMainActivity.class);  //自定义打开的界面
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(i);*/
+                    EventBus.getDefault().post(new RevieverEvent(Recievertype.sellerorderlist, id));
+                }  else if (type.equals(Recievertype.DELECTORDER)) {
+                    /*Intent i = new Intent(context, LFGJMainActivity.class);  //自定义打开的界面
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(i);*/
+                    EventBus.getDefault().post(new RevieverEvent(Recievertype.DELECTORDER, id));
+                } else if (type.equals(Recievertype.CARPTERDISS)) {
+                    /*Intent i = new Intent(context, LFGJMainActivity.class);  //自定义打开的界面
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(i);*/
+                    EventBus.getDefault().post(new RevieverEvent(Recievertype.CARPTERDISS, id));
+                } else if (type.equals(Recievertype.OWNERDISS)) {
+                    /*Intent i = new Intent(context, LFGJMainActivity.class);  //自定义打开的界面
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(i);*/
+                    EventBus.getDefault().post(new RevieverEvent(Recievertype.OWNERDISS, id));
+                }else if (type.equals(Recievertype.ORDER_WORK)) {
+                    /*Intent i = new Intent(context, LFGJMainActivity.class);  //自定义打开的界面
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(i);*/
+                    EventBus.getDefault().post(new RevieverEvent(Recievertype.ORDER_WORK, id));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-         //   Log.e("nActionExtra", nActionExtra);
+            //   Log.e("nActionExtra", nActionExtra);
         } else {
             // Log.d(TAG, "Unhandled intent - " + intent.getAction());
         }
