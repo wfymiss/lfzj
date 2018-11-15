@@ -603,8 +603,18 @@
             android:name=".user.setting.IntroduceActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <activity android:name=".neighbour.square.SquareMsgctivity"></activity>
-        <activity android:name=".neighbour.square.SquareMsgDetailActivity" />
+        <activity
+            android:name=".neighbour.square.SquareMsgctivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".neighbour.square.SquareMsgDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".user.setting.PasswordReviseActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
 
     </application>
 

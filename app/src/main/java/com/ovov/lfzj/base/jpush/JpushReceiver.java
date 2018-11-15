@@ -30,10 +30,8 @@ public class JpushReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
-        Log.d("dadada", ""+bundle.get(JPushInterface.EXTRA_EXTRA));
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
             String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
-
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
             //Log.d(TAG, "收到了自定义消息。消息内容是：" + bundle.getString(JPushInterface.EXTRA_MESSAGE));
             // 自定义消息不会展示在通知栏，完全要开发者写代码去处理
@@ -50,7 +48,7 @@ public class JpushReceiver extends BroadcastReceiver {
                 JSONObject jsonExtra = new JSONObject(extar);
                 String type=jsonExtra.getString("content_type");
                 String id = jsonExtra.getString("id");
-                Log.d("dadada", ""+type);
+
                 if (type.equals(Recievertype.CREATE_FEE)){
                    /* Intent i = new Intent(context, MainActivity.class);  //自定义打开的界面
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -77,7 +75,7 @@ public class JpushReceiver extends BroadcastReceiver {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-         //   Log.e("nActionExtra", nActionExtra);
+         //   Log.e("nActionExtra", nActionEx       tra);
         } else {
             // Log.d(TAG, "Unhandled intent - " + intent.getAction());
         }

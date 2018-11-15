@@ -49,14 +49,14 @@ public class SettingActivity extends BaseActivity {
         setTitleText(R.string.text_set);
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_account_safe, R.id.tv_about, R.id.btn_loginout,R.id.tv_intro,R.id.tv_service,R.id.tv_check})
+    @OnClick({R.id.iv_back, R.id.tv_account_safe, R.id.tv_about, R.id.btn_loginout, R.id.tv_intro, R.id.tv_service, R.id.tv_check})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.tv_account_safe:
-                FindPasswordActivity.toActivity(mActivity);
+                PasswordReviseActivity.toActivity(mActivity);
                 break;
             case R.id.tv_about:
                 AboutActivity.toActivity(mActivity);
@@ -75,6 +75,7 @@ public class SettingActivity extends BaseActivity {
                 break;
         }
     }
+
     private void checkVersion() {
         showLoadingDialog();
         Subscription subscription = RetrofitHelper.getInstance().checkVersion(Tools.getVersion(mActivity))
@@ -113,10 +114,10 @@ public class SettingActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         dismiss();
-                        if (e instanceof DataResultException){
+                        if (e instanceof DataResultException) {
                             DataResultException dataResultException = (DataResultException) e;
                             showToast(dataResultException.errorInfo);
-                        }else{
+                        } else {
 
                             doFailed();
                             showError(e.getMessage());
@@ -127,10 +128,10 @@ public class SettingActivity extends BaseActivity {
                     @Override
                     public void onNext(DataInfo errorInfoDataInfo) {
                         dismiss();
-                        if (errorInfoDataInfo.success()){
+                        if (errorInfoDataInfo.success()) {
                             LoginUserBean.getInstance().reset();
                             LoginUserBean.getInstance().save();
-                            JPushInterface.deleteAlias(mActivity,1);
+                            JPushInterface.deleteAlias(mActivity, 1);
                             LoginActivity.toActivity(mActivity);
                             YouzanSDK.userLogout(mActivity);
                             for (int i = 0; i < mActivities.size(); i++) {
@@ -143,11 +144,12 @@ public class SettingActivity extends BaseActivity {
                 });
         addSubscrebe(subscription);
     }
+
     // 提醒
     private void frameRemind() {
         final RemindDialogUtil.Builder dialogBuilder = new RemindDialogUtil.Builder(this);
         dialogBuilder.setContent("确认退出登录吗？");
-        final RemindDialogUtil dialog=dialogBuilder.Create();
+        final RemindDialogUtil dialog = dialogBuilder.Create();
         dialog.setCanceledOnTouchOutside(false);
         dialogBuilder.setConfirmListener(new RemindDialogUtil.Builder.ConfirmClickListener() {
             @Override
@@ -158,11 +160,11 @@ public class SettingActivity extends BaseActivity {
         });
         dialog.show();
 
-        WindowManager windowManager=this.getWindowManager();
-        Display display=windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp=dialog.getWindow().getAttributes();
-        lp.width= (int) (display.getWidth()*0.68);
-        lp.alpha=0.96f;
+        WindowManager windowManager = this.getWindowManager();
+        Display display = windowManager.getDefaultDisplay();
+        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+        lp.width = (int) (display.getWidth() * 0.68);
+        lp.alpha = 0.96f;
         dialog.getWindow().setAttributes(lp);
     }
 
