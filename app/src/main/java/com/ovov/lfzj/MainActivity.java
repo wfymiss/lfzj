@@ -279,6 +279,7 @@ public class MainActivity extends BaseMainActivity {
                 activityUtils = new ActivityUtils(this);
             Intent intent = new Intent(MainActivity.this, NewsDetailActivity.class);
             intent.putExtra("id", event.getId());
+
             mActivity.startActivity(intent);
         } else if (event.getType().equals(Recievertype.OWNER_WORK_ORDER)) {
             Intent intent = new Intent(MainActivity.this, NoticeDetailActivity.class);
@@ -286,18 +287,25 @@ public class MainActivity extends BaseMainActivity {
             mActivity.startActivity(intent);
         } else if (event.getType().equals(Recievertype.PROPERTY_WORK_ORDER)) {
             WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+            return;
         } else if (event.getType().equals(Recievertype.PROPERTY_SCHDELUE)) {
             WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+            return;
         } else if (event.getType().equals(Recievertype.WORKERINFO)) {
             WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+            return;
         } else if (event.getType().equals(Recievertype.DELECTORDER)) {
             WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+            return;
         } else if (event.getType().equals(Recievertype.CARPTERDISS)) {
             WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+            return;
         } else if (event.getType().equals(Recievertype.sellerorderlist)) {
             WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+            return;
         } else if (event.getType().equals(Recievertype.OWNERDISS)) {
             WorkerOrderDetailActivity.toActivity(mActivity, Integer.parseInt(event.getId()));
+            return;
         }
     }
 
