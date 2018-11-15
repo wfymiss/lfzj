@@ -21,7 +21,9 @@ import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.ActivityUtils;
 import com.ovov.lfzj.base.utils.RxUtil;
+import com.ovov.lfzj.base.widget.LoginoutDialog;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
+import com.ovov.lfzj.event.ReLoginEvent;
 import com.ovov.lfzj.home.bean.BannerBean;
 import com.ovov.lfzj.home.bean.SubListBean;
 import com.ovov.lfzj.home.repair.RepairActivity;
@@ -38,11 +40,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,7 +61,11 @@ public class HomeFragment extends BaseFragment {
     BannerLayout lfgjBanner;
     @BindView(R.id.home_lfgj_grid)
     NoScrollGridView homeLfgjGrid;
-
+    TagAliasCallback tagAliasCallback = new TagAliasCallback() {
+        @Override
+        public void gotResult(int i, String s, Set<String> set) {
+        }
+    };
     /*private int[] image = {R.mipmap.lfgj_gd, R.mipmap.lfgj_cb, R.mipmap.lfgj_payfee, R.mipmap.lfgj_jy, R.mipmap.lfgj_db, R.mipmap.lfgj_gg, R.mipmap.lfgj_information, R.mipmap.lfgj_phone, R.mipmap.lfgj_db, R.mipmap.icon_service_dispath, R.mipmap.icon_dispatch,R.mipmap.icon_property_commit_workorder,R.mipmap.icon_service_dispath};
     private int[] title = {R.string.gd, R.string.cb, R.string.payfee, R.string.jy, R.string.schema, R.string.sqgg, R.string.nbtz, R.string.phone, R.string.workflow, R.string.dispatch,R.string.zg_dispatch,R.string.property_commit,R.string.text_express};
 */
@@ -94,6 +104,17 @@ public class HomeFragment extends BaseFragment {
         initBanner();
         getUserInfo();
         initBannerData();
+        addRxBusSubscribe(ReLoginEvent.class, new Action1<ReLoginEvent>() {
+            @Override
+            public void call(ReLoginEvent reLoginEvent) {
+                LoginUserBean.getInstance().reset();
+                LoginUserBean.getInstance().save();
+                LoginActivity.toActivity(mActivity);
+                JPushInterface.setAlias(mActivity, "", tagAliasCallback);                                //  极光
+                YouzanSDK.userLogout(mActivity);
+                mActivity.finish();
+            }
+        });
 
     }
 
@@ -244,12 +265,8 @@ public class HomeFragment extends BaseFragment {
                         dismiss();
                         if (e instanceof DataResultException) {
                             DataResultException dataResultException = (DataResultException) e;
-                            showToast(R.string.text_login_invaild);
-                            LoginUserBean.getInstance().reset();
-                            LoginUserBean.getInstance().save();
-                            LoginActivity.toActivity(mActivity);
-                            YouzanSDK.userLogout(mActivity);
-                            mActivity.finish();
+                            LoginoutDialog loginoutDialog = new LoginoutDialog(mActivity);
+                            loginoutDialog.show();
                         } else {
 
                             doFailed();

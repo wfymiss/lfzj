@@ -36,9 +36,11 @@ import com.ovov.lfzj.base.utils.DateUtils;
 import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.utils.UIUtils;
 import com.ovov.lfzj.base.widget.IdentityDialog;
+import com.ovov.lfzj.base.widget.LoginoutDialog;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
 import com.ovov.lfzj.base.widget.NoScrollListView;
 import com.ovov.lfzj.event.HomeIdentityEvent;
+import com.ovov.lfzj.event.ReLoginEvent;
 import com.ovov.lfzj.home.adapter.CardAdapter;
 import com.ovov.lfzj.home.adapter.GirdAdapter;
 import com.ovov.lfzj.home.adapter.HomeNeighAdapter;
@@ -79,11 +81,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import rx.Subscription;
 import rx.functions.Action1;
 
@@ -102,7 +106,11 @@ public class HomeFragment extends BaseFragment implements HomeView {
     ListView mRecyclerView;
     @BindView(R.id.srly)
     SmartRefreshLayout mActivityListSwf;
-
+    TagAliasCallback tagAliasCallback = new TagAliasCallback() {
+        @Override
+        public void gotResult(int i, String s, Set<String> set) {
+        }
+    };
     private TextView textView;
     private int page;
     private String id;
@@ -170,6 +178,17 @@ public class HomeFragment extends BaseFragment implements HomeView {
             @Override
             public void call(HomeIdentityEvent homeIdentityEvent) {
                 IdentityConfirmActivity.toActivity(mActivity);
+            }
+        });
+        addRxBusSubscribe(ReLoginEvent.class, new Action1<ReLoginEvent>() {
+            @Override
+            public void call(ReLoginEvent reLoginEvent) {
+                LoginUserBean.getInstance().reset();
+                LoginUserBean.getInstance().save();
+                LoginActivity.toActivity(mActivity);
+                JPushInterface.setAlias(mActivity, "", tagAliasCallback);                                //  极光
+                YouzanSDK.userLogout(mActivity);
+                mActivity.finish();
             }
         });
     }
@@ -572,12 +591,9 @@ public class HomeFragment extends BaseFragment implements HomeView {
                         dismiss();
                         if (e instanceof DataResultException) {
                             DataResultException dataResultException = (DataResultException) e;
-                            showToast(R.string.text_login_invaild);
-                            LoginUserBean.getInstance().reset();
-                            LoginUserBean.getInstance().save();
-                            LoginActivity.toActivity(mActivity);
-                            YouzanSDK.userLogout(mActivity);
-                            mActivity.finish();
+                            LoginoutDialog loginoutDialog = new LoginoutDialog(mActivity);
+                            loginoutDialog.show();
+
                         } else {
 
                             //    doFailed();

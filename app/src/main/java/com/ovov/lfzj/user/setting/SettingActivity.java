@@ -27,9 +27,12 @@ import com.ovov.lfzj.login.LoginActivity;
 import com.ovov.lfzj.login.ServiceActivity;
 import com.youzan.androidsdk.YouzanSDK;
 
+import java.util.Set;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
 import rx.Subscription;
 
 public class SettingActivity extends BaseActivity {
@@ -38,7 +41,11 @@ public class SettingActivity extends BaseActivity {
         Intent intent = new Intent(context, SettingActivity.class);
         context.startActivity(intent);
     }
-
+    TagAliasCallback tagAliasCallback = new TagAliasCallback() {
+        @Override
+        public void gotResult(int i, String s, Set<String> set) {
+        }
+    };
     @Override
     public int getLayoutId() {
         return R.layout.activity_setting;
@@ -125,13 +132,14 @@ public class SettingActivity extends BaseActivity {
 
                     }
 
+
                     @Override
                     public void onNext(DataInfo errorInfoDataInfo) {
                         dismiss();
                         if (errorInfoDataInfo.success()) {
                             LoginUserBean.getInstance().reset();
                             LoginUserBean.getInstance().save();
-                            JPushInterface.deleteAlias(mActivity, 1);
+                            JPushInterface.setAlias(mActivity, "", tagAliasCallback);                                //  极光
                             LoginActivity.toActivity(mActivity);
                             YouzanSDK.userLogout(mActivity);
                             for (int i = 0; i < mActivities.size(); i++) {

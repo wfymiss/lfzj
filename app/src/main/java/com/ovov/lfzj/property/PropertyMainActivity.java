@@ -47,7 +47,7 @@ public class PropertyMainActivity extends BaseMainActivity {
         super.init();
 
         EventBus.getDefault().register(this);
-        JPushInterface.setAlias(this, LoginUserBean.getInstance().getPhone(), tagAliasCallback);                                //  极光
+        JPushInterface.setAlias(this, LoginUserBean.getInstance().getPhone()+"1", tagAliasCallback);                                //  极光
         FileUtils.createOrExistsDir(BASE_FILE);
         initFragment(0);
         switchContent(1, 0);
