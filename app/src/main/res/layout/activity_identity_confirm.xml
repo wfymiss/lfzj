@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:id="@+id/sitview"
+        android:visibility="visible"
         />
     <FrameLayout
         android:id="@+id/lin_title"
