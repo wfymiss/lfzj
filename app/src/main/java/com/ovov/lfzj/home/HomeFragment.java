@@ -21,6 +21,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baidu.mobstat.StatService;
 import com.mcxtzhang.commonadapter.lvgv.CommonAdapter;
 import com.mcxtzhang.commonadapter.lvgv.ViewHolder;
 import com.ovov.lfzj.R;
@@ -637,6 +638,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
                 LoginUserBean.getInstance().setSub_id(listinfo1.get(position).getSubdistrict_id());
                 LoginUserBean.getInstance().setSubname(listinfo1.get(position).getSubdistrict_name());
                 LoginUserBean.getInstance().save();
+                StatService.setAppChannel(mActivity, LoginUserBean.getInstance().getSub_id(), true);
+
                 initData(REFRESH);
                 initBanner();
                 homePresenter.getNoticeList();
@@ -700,6 +703,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
             if (LoginUserBean.getInstance().getSub_id() == null || LoginUserBean.getInstance().getSub_id().isEmpty()) {
                 LoginUserBean.getInstance().setSub_id(listInfo.get(0).getSubdistrict_id());
                 LoginUserBean.getInstance().save();
+                StatService.setAppChannel(mActivity, LoginUserBean.getInstance().getSub_id(), true);
             }
         }
 
