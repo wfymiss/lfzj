@@ -38,6 +38,8 @@ public class NewsDetailActivity extends BaseActivity {
         tvTitle.setText("新闻详情");
         String id = getIntent().getStringExtra("id");
         web.setWebViewClient(new WebViewClient());
+        /*web.getSettings().setUseWideViewPort(true);
+        web.getSettings().setLoadWithOverviewMode(true);*/
         web.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);//滚动条风格，为0指滚动条不占用空间，直接覆盖在网页上
         //加载数据
         initData(id);

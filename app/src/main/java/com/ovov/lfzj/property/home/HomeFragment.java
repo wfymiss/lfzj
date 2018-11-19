@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import com.baidu.mobstat.StatService;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseFragment;
 import com.ovov.lfzj.base.banner.BannerAdapter;
@@ -142,6 +143,7 @@ public class HomeFragment extends BaseFragment {
                         LoginUserBean.getInstance().setAppPermission(subListBean.getDatas().getApp_permission());
                         LoginUserBean.getInstance().setSub_id(subListBean.getDatas().admin_roles.subdistrict_id);
                         LoginUserBean.getInstance().save();
+                        StatService.setAppChannel(mActivity, LoginUserBean.getInstance().getSub_id(), true);
 
                     }
                 });
