@@ -119,8 +119,7 @@ public class OpendoorActivity extends BaseActivity {
     private int open_type = 1;                 // 开门方式
     private int open_status;               // 开门结果
     private int open_num = 0;                        // 用户开门失败次数
-
-    private Message msg = new Message();              // 开门反馈结果
+    Message msg;
     private boolean sound_con, shake_con;
     private FeedbackDialog dialog;                   // 开门反馈信息弹出框
     private FeedbackDialog.BuilderLog backLog;       // 展示开门反馈信息
@@ -151,6 +150,7 @@ public class OpendoorActivity extends BaseActivity {
 
                     break;
                 case OPEN_DOOR_BACK:                // 开门成功返回信息结果
+                    Log.e("eeeeeeeee", "111111111");
                     head.setImageResource(R.mipmap.lock_success);
                     open_status = 1;
                     postOpenData(open_status);
@@ -200,6 +200,7 @@ public class OpendoorActivity extends BaseActivity {
 
     @Override
     public void init() {
+        msg = new Message();              // 开门反馈结果
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         StatusBarUtils.setStatusBar(mActivity, false, false);
@@ -208,9 +209,9 @@ public class OpendoorActivity extends BaseActivity {
         postKeyList();          //  进入开门页面解析本地钥匙解析本地钥匙
         storageTokenRead();     //  获取token
 
-        SharedPreferences   spf = this.getSharedPreferences("opendoor", Context.MODE_PRIVATE);
+        SharedPreferences spf = this.getSharedPreferences("opendoor", Context.MODE_PRIVATE);
         open = spf.getString("type", "1");
-        if (open.equals("1")){
+        if (open.equals("1")) {
             type();
         }
 //        initShake();            // 初始化摇动传感器
@@ -325,10 +326,10 @@ public class OpendoorActivity extends BaseActivity {
                     wave.stop();
                     wave.clearAnimation();
                     wave.setVisibility(View.GONE);
-                   type();
+                    type();
 
                 } else {
-                  blutoos();
+                    blutoos();
                 }
                 break;
         }
@@ -336,7 +337,7 @@ public class OpendoorActivity extends BaseActivity {
 
     private void blutoos() {
         SharedPreferences spf = this.getSharedPreferences("opendoor", Context.MODE_PRIVATE);
-        SharedPreferences.Editor  editor = spf.edit();
+        SharedPreferences.Editor editor = spf.edit();
         editor.putString("type", "2");
         editor.commit();
         lela.setVisibility(View.GONE);
@@ -349,7 +350,7 @@ public class OpendoorActivity extends BaseActivity {
 
     private void type() {
         SharedPreferences spf = this.getSharedPreferences("opendoor", Context.MODE_PRIVATE);
-        SharedPreferences.Editor  editor = spf.edit();
+        SharedPreferences.Editor editor = spf.edit();
         editor.putString("type", "1");
         editor.commit();
         if (keys.size() > 0) {
@@ -649,6 +650,14 @@ public class OpendoorActivity extends BaseActivity {
         // 开门成功
         public void onOpenSuccess(String deviceKey, String sn, int openType) {
 //            deviceKey——本次开门使用的钥匙 sn——设备SN码 openKey——开门方式
+
+            msg.what = OPEN_DOOR_BACK;   // 开门反馈结果
+            msg.obj = "开门成功";
+            Log.e("eeeeeeee", msg.what + "");
+            handler.sendMessage(msg);
+
+           /* Log.e("eeeeeeee",sn);
+           */
             try {
                 JSONObject object = new JSONObject(retrieve_key);
                 JSONArray array = object.getJSONArray("datas");
@@ -664,23 +673,24 @@ public class OpendoorActivity extends BaseActivity {
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
+            }/*
 //            open_status = "成功";      // 提交开门成功参数值
             open_num = 0;    // 开门成功时，开门失败次数归零
             soundPool.play(2, 1, 1, 0, 0, 1);      // 摇一摇开门成功声音
             initMsg();        // 初始化message
             msg.what = OPEN_DOOR_BACK;   // 开门反馈结果
             msg.obj = "开门成功";
+            Log.e("eeeeeeee",msg.what+"");
             handler.sendMessage(msg);
 
-            handler.postDelayed(new Runnable() {
+            *//*handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
 
                     wave.stop();
 //                    iconResult.setVisibility(View.GONE);    // 开门动画结束后，隐藏开门结果图片
                 }
-            }, 3000);
+            }, 3000);*/
         }
 
         // 开门失败
@@ -689,7 +699,7 @@ public class OpendoorActivity extends BaseActivity {
 //           sn——设备SN码 openKey——开门方式 desc——开门结果信息反馈
             switch (errCode) {
                 case RS_CONN_ERROR:
-                    Log.e("msgcode",errCode+""+desc);
+                    Log.e("msgcode", errCode + "" + desc);
                     initMsg();        // 初始化message
                     msg.what = OPEN_DOOR_fail;    // 开门反馈结果
                     msg.obj = "设备连接失败";
