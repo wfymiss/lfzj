@@ -103,6 +103,7 @@ public class PayMentPayActivity extends BaseActivity {
         intent.putExtras(bundle);
         context.startActivity(intent);
 
+
     }
 
     @Override
@@ -154,6 +155,12 @@ public class PayMentPayActivity extends BaseActivity {
             @Override
             public void call(PayResultEvent payResultEvent) {
                 confirmPay(order_type, order_id, order_number);
+            }
+        });
+        addRxBusSubscribe(PaymentEvent.class, new Action1<PaymentEvent>() {
+            @Override
+            public void call(PaymentEvent paymentEvent) {
+                finish();
             }
         });
     }

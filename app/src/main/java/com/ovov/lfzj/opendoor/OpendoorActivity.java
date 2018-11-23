@@ -697,6 +697,7 @@ public class OpendoorActivity extends BaseActivity {
         public void onOpenFaild(int errCode, int openType, String deviceKey, String sn, String desc) {
 //           errCode——开门失败结果码 deviceKey——本次开门使用的钥匙
 //           sn——设备SN码 openKey——开门方式 desc——开门结果信息反馈
+            Log.e("msgcode", errCode + "" + desc);
             switch (errCode) {
                 case RS_CONN_ERROR:
                     Log.e("msgcode", errCode + "" + desc);

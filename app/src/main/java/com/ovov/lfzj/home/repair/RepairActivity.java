@@ -290,6 +290,10 @@ public class RepairActivity extends BaseActivity {
                     showToast(R.string.text_input_all_message);
                     return;
                 }
+                if (TextUtils.isEmpty(mEtName.getText().toString().trim())){
+                    showToast("请输入报修人姓名");
+                    return;
+                }
                 if (area == AREA_FAMILY && TextUtils.isEmpty(mTvLocation.getText())) {
                     showToast("请选择房间");
                     return;

@@ -22,10 +22,13 @@ import android.widget.Toast;
 
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
+import com.ovov.lfzj.base.bean.DataInfo;
 import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.net.DataResultException;
 import com.ovov.lfzj.base.utils.RxBus;
+import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.event.PayResultEvent;
+import com.ovov.lfzj.event.PaymentEvent;
 import com.ovov.lfzj.home.bean.PayInfo;
 import com.ovov.lfzj.home.bean.PayResult;
 import com.ovov.lfzj.home.bean.PaymentPayView;
@@ -33,6 +36,8 @@ import com.ovov.lfzj.home.bean.WXPayInfo;
 import com.ovov.lfzj.home.bean.WxPaySuccessResult;
 import com.ovov.lfzj.home.event.RefreshEvent;
 import com.ovov.lfzj.home.payment.presenter.PaymentPayPresenter;
+import com.ovov.lfzj.http.RetrofitHelper;
+import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -40,6 +45,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import rx.Subscription;
 
 public class H5PayActivityActivity extends BaseActivity implements PaymentPayView {
 
@@ -204,11 +210,39 @@ public class H5PayActivityActivity extends BaseActivity implements PaymentPayVie
     @Override
     public void onResume() {
         super.onResume();
-        /*i = i + 1;
+        i = i + 1;
         if (i > 1)
-            presenter.getWXPaResult(token, order_id, order_number, type, sub_id);*/
+            confirmPay(type,order_id,order_number);
         Log.e("onresume","onresume");
 
+    }
+    private void confirmPay(String order_type, String order_id, String order_number) {
+        showLoadingDialog();
+        Subscription subscription = RetrofitHelper.getInstance().confirmPayResult(order_type, order_id, order_number)
+                .compose(RxUtil.<DataInfo>rxSchedulerHelper())
+                .subscribe(new CommonSubscriber<DataInfo>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        dismiss();
+                        if (e instanceof DataResultException) {
+                            DataResultException dataResultException = (DataResultException) e;
+                            showError(dataResultException.errorInfo);
+                            showToast(dataResultException.errorInfo);
+                        } else {
+                            doFailed();
+                            showError(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onNext(DataInfo dataInfo) {
+                        dismiss();
+                        RxBus.getDefault().post(new PaymentEvent());
+                        showToast("支付成功");
+                        finish();
+                    }
+                });
+        addSubscrebe(subscription);
     }
 
     @Override

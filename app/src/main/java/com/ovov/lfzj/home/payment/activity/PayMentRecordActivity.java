@@ -13,6 +13,7 @@ import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.adapter.FragmentBaseAdapter;
 import com.ovov.lfzj.base.utils.RxBus;
+import com.ovov.lfzj.event.PaymentEvent;
 import com.ovov.lfzj.home.event.PassValueEvent;
 import com.ovov.lfzj.home.payment.fragment.PaymentNoneFragment;
 import com.ovov.lfzj.home.payment.fragment.PaymentRecordFragment;
@@ -22,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.functions.Action1;
 
 /**
  * 缴费界面
@@ -48,6 +50,12 @@ public class PayMentRecordActivity extends BaseActivity {
         /*setTitleText(R.string.text_payment_record);
         setRightText(R.string.text_edit);*/
         initTab();
+        addRxBusSubscribe(PaymentEvent.class, new Action1<PaymentEvent>() {
+            @Override
+            public void call(PaymentEvent paymentEvent) {
+                tabPaymentRecord.getTabAt(1).select();
+            }
+        });
     }
     public static void toActivity(Context context) {
         Intent intent = new Intent(context, PayMentRecordActivity.class);

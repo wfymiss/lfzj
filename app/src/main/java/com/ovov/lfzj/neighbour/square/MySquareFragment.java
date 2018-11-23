@@ -3,6 +3,7 @@ package com.ovov.lfzj.neighbour.square;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -293,7 +294,7 @@ public class MySquareFragment extends BaseFragment {
 
 
                 CircleImageView ivHeader = viewHolder.getView(R.id.iv_head);
-                if (squareListInfo.userInfo.user_logo != null && squareListInfo.userInfo.user_logo != "")
+                if (squareListInfo.userInfo.user_logo != null && squareListInfo.userInfo.user_logo != "" && !TextUtils.isEmpty(squareListInfo.userInfo.user_logo))
                     Picasso.with(mActivity).load(squareListInfo.userInfo.user_logo).into(ivHeader);
                 else
                     Picasso.with(mActivity).load(R.mipmap.ic_default_head).into(ivHeader);

@@ -85,7 +85,7 @@ import rx.Subscription;
  */
 public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListener, ApplyVisitorView {
     @BindView(R.id.lock_invite_name)
-    TextView invite_name;                       // 被邀请人姓名
+    EditText invite_name;                       // 被邀请人姓名
     @BindView(R.id.lock_invite_phone)
     TextView phone_number;                     // 被邀请人电话
     @BindView(R.id.lock_invite_validConunt)
@@ -219,6 +219,14 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
                 activityUtil.startActivity(VistitorActivity.class);
                 break;
             case R.id.lock_invite_button:
+                if (invite_name.getText().toString().isEmpty()){
+                    showToast("请输入姓名");
+                    return;
+                }
+                if (!RegexUtils.isNoText(invite_name.getText().toString())){
+                    showToast("请输入正确的姓名");
+                    return ;
+                }
                 boolean tf = decideFormate();      //判断输入信息的格式
                 if (tf) {
                     if (keys != null && keys.size() > 0) {
@@ -392,6 +400,7 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
                     Toast.makeText(this, "请输入正确的使用次数", Toast.LENGTH_SHORT).show();
                     return false;
                 }
+
                 if (RegexUtils.isNumeric(vaildTime)) {
                     int vaildTimeInt = Integer.parseInt(vaildTime);
                     if (vaildTimeInt < 1) {
