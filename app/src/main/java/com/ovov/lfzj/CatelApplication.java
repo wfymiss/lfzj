@@ -13,6 +13,7 @@ import android.util.Log;
 import com.baidu.mobstat.StatService;
 import com.mob.MobSDK;
 import com.ovov.lfzj.base.BaseApplication;
+import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreater;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
@@ -108,6 +109,7 @@ public class CatelApplication extends BaseApplication {
 
         YouzanSDK.init(this, "7c217b0bff2a2cb3b3", new YouZanSDKX5Adapter());
         YouzanPreloader.preloadHtml(this, "https://h5.youzan.com/wscshop/feature/FElLHR3x42");
+        StatService.setAppChannel(getContext(), LoginUserBean.getInstance().getSub_id(), true);
         StatService.autoTrace(this);
 
     }

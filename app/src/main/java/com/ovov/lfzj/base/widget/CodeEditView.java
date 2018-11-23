@@ -106,9 +106,9 @@ public class CodeEditView extends LinearLayout implements TextWatcher, View.OnCl
         new android.os.Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                /*InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                mEditText.setHintTextColor(Color.parseColor("#ff0000"));
+                mEditText.setHintTextColor(Color.parseColor("#ff0000"));*/
             }
         }, 500);
         //监听删除键
@@ -162,6 +162,7 @@ public class CodeEditView extends LinearLayout implements TextWatcher, View.OnCl
     public void onClick(View v) { //TextView点击时获取焦点弹出输入法
         mEditText.setFocusable(true);
         mEditText.setFocusableInTouchMode(true);
+        mEditText.setCursorVisible(true);
         mEditText.requestFocus();
         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
