@@ -305,7 +305,6 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String keyResult = response.body().string();
-
                 //  用户钥匙 保存在本地
                 if (keyResult != null) {
                     SharedPreferences spf = ApplyVisitorActivity.this.getSharedPreferences("key_list", Context.MODE_PRIVATE);
@@ -350,8 +349,8 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
     @Override
     public void onDateSet(TimePickerDialog timePickerView, long millseconds) {
         String text = getDateToString(millseconds);
-        if (days_num > 3) {
-            Toast.makeText(this, "只限定3天时间", Toast.LENGTH_SHORT).show();
+        if (days_num > 4) {
+            Toast.makeText(this, "只限定4天时间", Toast.LENGTH_SHORT).show();
             showDatePicker();                   // 时间选择器
         } else {
             createTime = text;                     // 选择的时间
@@ -359,6 +358,7 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
         }
     }
 
+    //时间转换
     public String getDateToString(long time) {
         Date d = new Date(time);
         cal2.setTime(d);             //  选择时间转化为毫秒

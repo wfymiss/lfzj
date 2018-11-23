@@ -286,7 +286,7 @@ public class RepairActivity extends BaseActivity {
                 getUserHouse();
                 break;
             case R.id.tv_commit:
-                if (TextUtils.isEmpty(mEtName.getText().toString()) && TextUtils.isEmpty(mEtPhone.getText().toString()) && TextUtils.isEmpty(mEtContent.getText().toString())) {
+                if (TextUtils.isEmpty(mEtName.getText().toString())&&(mEtName.getText().toString().equals("")) && TextUtils.isEmpty(mEtPhone.getText().toString()) && TextUtils.isEmpty(mEtContent.getText().toString())) {
                     showToast(R.string.text_input_all_message);
                     return;
                 }

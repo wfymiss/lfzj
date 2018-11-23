@@ -24,7 +24,7 @@
             android:maxLines="1"
             android:text=""
             android:textColor="#ff444444"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_time"

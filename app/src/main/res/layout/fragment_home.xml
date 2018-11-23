@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/color_ffffff">
+    <View
+        android:id="@+id/sitview"
+        android:layout_width="match_parent"
+        android:layout_height="22dp"
+        android:background="@color/colorPrimary" />
 
+    <include
+        layout="@layout/layout_serche"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/srly"
@@ -13,18 +23,18 @@
         <ListView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
-            android:divider="@null"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:divider="@null">
 
         </ListView>
-  </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="right"-->
-        <!--android:background="@mipmap/sign"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--android:layout_marginTop="136dp" />-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="right"-->
+    <!--android:background="@mipmap/sign"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:layout_marginTop="136dp" />-->
 
-</FrameLayout>
+</LinearLayout>

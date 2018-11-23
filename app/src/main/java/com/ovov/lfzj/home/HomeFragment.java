@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mcxtzhang.commonadapter.lvgv.CommonAdapter;
@@ -32,12 +31,11 @@ import com.ovov.lfzj.base.bean.ListInfo;
 import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.bean.SquareListInfo;
 import com.ovov.lfzj.base.net.DataResultException;
-import com.ovov.lfzj.base.utils.DateUtils;
 import com.ovov.lfzj.base.utils.RxUtil;
+import com.ovov.lfzj.base.utils.StatusBarUtils;
 import com.ovov.lfzj.base.utils.UIUtils;
 import com.ovov.lfzj.base.widget.IdentityDialog;
 import com.ovov.lfzj.base.widget.LoginoutDialog;
-import com.ovov.lfzj.base.widget.NoScrollGridView;
 import com.ovov.lfzj.base.widget.NoScrollListView;
 import com.ovov.lfzj.event.HomeIdentityEvent;
 import com.ovov.lfzj.event.ReLoginEvent;
@@ -72,12 +70,9 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.squareup.picasso.Picasso;
 import com.youzan.androidsdk.YouzanSDK;
-import com.youzan.mobile.zanim.util.DateUtil;
 
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -111,6 +106,14 @@ public class HomeFragment extends BaseFragment implements HomeView {
         public void gotResult(int i, String s, Set<String> set) {
         }
     };
+    @BindView(R.id.im_home)
+    TextView imHome;
+    @BindView(R.id.im_scan)
+    ImageView imScan;
+    @BindView(R.id.im_list)
+    ImageView imList;
+    @BindView(R.id.sitview)
+    View sitview;
     private TextView textView;
     private int page;
     private String id;
@@ -131,6 +134,9 @@ public class HomeFragment extends BaseFragment implements HomeView {
     private List<ShopBean> ima = new ArrayList();
     private LinearLayout basetitle;
     private TextView more;
+    private int oldIndex;
+    private int newIndex;
+    private boolean isFirstScroll;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -151,6 +157,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
     @Override
     public void init() {
+        initSitView();   // 获取占位视图高度
         isLogin();
         initView();
         JPushInterface.setAlias(mActivity, 1, LoginUserBean.getInstance().getPhone());
@@ -186,11 +193,18 @@ public class HomeFragment extends BaseFragment implements HomeView {
                 LoginUserBean.getInstance().reset();
                 LoginUserBean.getInstance().save();
                 LoginActivity.toActivity(mActivity);
-                JPushInterface.setAlias(mActivity, "", tagAliasCallback);                                //  极光
+                JPushInterface.setAlias(mActivity, "", tagAliasCallback);//  极光
                 YouzanSDK.userLogout(mActivity);
                 mActivity.finish();
             }
         });
+    }
+
+    // 获取占位视图高度
+    private void initSitView() {
+        // 获取占位视图高度
+        ViewGroup.LayoutParams sitParams = sitview.getLayoutParams();
+        sitParams.height = StatusBarUtils.getStatusBarHeight(mActivity);
     }
 
     private void initView() {
@@ -236,8 +250,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
     private void initList() {
         newslist = new ArrayList<>();
         View addheadlayout = View.inflate(getContext(), R.layout.banner_item, null);
-        textView = addheadlayout.findViewById(R.id.im_home);
-        ImageView imageView = addheadlayout.findViewById(R.id.im_list);
         basetitle = addheadlayout.findViewById(R.id.relativeLayout);
         more = addheadlayout.findViewById(R.id.tv_more);
         GridView gridView = addheadlayout.findViewById(R.id.gridview);
@@ -247,11 +259,11 @@ public class HomeFragment extends BaseFragment implements HomeView {
         ImageView scan = addheadlayout.findViewById(R.id.im_scan);
         bannerLayout = addheadlayout.findViewById(R.id.banner);
         if (LoginUserBean.getInstance().getSubname() != null && !LoginUserBean.getInstance().getSubname().isEmpty()) {
-            textView.setText(LoginUserBean.getInstance().getSubname());
+            imHome.setText(LoginUserBean.getInstance().getSubname());
         } else {
-            textView.setText("请选择");
+            imHome.setText("请选择");
         }
-        imageView.setOnClickListener(new View.OnClickListener() {
+        imList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (UIUtils.isFastClick()) {
@@ -400,91 +412,91 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
             }
         };
-    newsAdapter =new CommonAdapter<NewsBean>(getContext(),noticeList,R.layout.news_item) {
-        @Override
-        public void convert (ViewHolder viewHolder, NewsBean noticeBean,final int i){
-        if (i == 0) {
-            viewHolder.setVisible(R.id.relativeLayout, true);
-            viewHolder.setText(R.id.tv_item_title, "新闻");
-            viewHolder.setImageResource(R.id.item_im, R.mipmap.item_news);
-        } else {
-            viewHolder.setVisible(R.id.relativeLayout, false);
-        }
-        viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
-        viewHolder.setText(R.id.tv_comment, noticeBean.getSummary());
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date strtodate;
-        String datas = "";
-        try {
-            strtodate = formatter.parse(noticeBean.getCreated_at());
-            datas = formatter.format(strtodate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-
-        }
-        viewHolder.setText(R.id.tv_time, datas);
-        viewHolder.setOnClickListener(R.id.ly_item, new View.OnClickListener() {
+        newsAdapter = new CommonAdapter<NewsBean>(getContext(), noticeList, R.layout.news_item) {
             @Override
-            public void onClick(View v) {
-                if (UIUtils.isFastClick()) {
-                    Intent intent = new Intent(getContext(), NewsDetailActivity.class);
-                    intent.putExtra("id", noticeList.get(i).getId());
-                    startActivity(intent);
+            public void convert(ViewHolder viewHolder, NewsBean noticeBean, final int i) {
+                if (i == 0) {
+                    viewHolder.setVisible(R.id.relativeLayout, true);
+                    viewHolder.setText(R.id.tv_item_title, "新闻");
+                    viewHolder.setImageResource(R.id.item_im, R.mipmap.item_news);
+                } else {
+                    viewHolder.setVisible(R.id.relativeLayout, false);
                 }
-            }
-        });
-        viewHolder.setOnClickListener(R.id.delect_im, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (UIUtils.isFastClick()) {
-                    noticeList.remove(i);
-                    notifyDataSetChanged();
+                viewHolder.setText(R.id.tv_title, noticeBean.getTitle());
+                viewHolder.setText(R.id.tv_comment, noticeBean.getSummary());
+
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                Date strtodate;
+                String datas = "";
+                try {
+                    strtodate = formatter.parse(noticeBean.getCreated_at());
+                    datas = formatter.format(strtodate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+
                 }
-            }
-        });
+                viewHolder.setText(R.id.tv_time, datas);
+                viewHolder.setOnClickListener(R.id.ly_item, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (UIUtils.isFastClick()) {
+                            Intent intent = new Intent(getContext(), NewsDetailActivity.class);
+                            intent.putExtra("id", noticeList.get(i).getId());
+                            startActivity(intent);
+                        }
+                    }
+                });
+                viewHolder.setOnClickListener(R.id.delect_im, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (UIUtils.isFastClick()) {
+                            noticeList.remove(i);
+                            notifyDataSetChanged();
+                        }
+                    }
+                });
 
-        viewHolder.setOnClickListener(R.id.tv_more, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NewsListctivity.toActivity(mActivity);
+                viewHolder.setOnClickListener(R.id.tv_more, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        NewsListctivity.toActivity(mActivity);
+
+                    }
+                });
+                ImageView view = viewHolder.getView(R.id.iv_image);
+                if (noticeBean.getImages().size() > 0) {
+                    Picasso.with(getContext()).load(noticeBean.getImages().get(0)).into(view);
+                } else {
+                    view.setVisibility(View.GONE);
+                }
 
             }
-        });
-        ImageView view = viewHolder.getView(R.id.iv_image);
-        if (noticeBean.getImages().size() > 0) {
-            Picasso.with(getContext()).load(noticeBean.getImages().get(0)).into(view);
-        } else {
-            view.setVisibility(View.GONE);
         }
 
-    }
-    }
-
-    ;
+        ;
 
         newListView.setAdapter(commonAdapter);
         notice_list.setAdapter(newsAdapter);
-        scan.setOnClickListener(new View.OnClickListener()
+        imScan.setOnClickListener(new View.OnClickListener()
 
-    {
-        @Override
-        public void onClick (View v){
-        Intent intent = new Intent(getContext(), CaptureActivity.class);
-        startActivity(intent);
+        {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CaptureActivity.class);
+                startActivity(intent);
 
-    }
-    });
+            }
+        });
 
 
         gridView1.setAdapter(shopAdapter1);
         bannerLayout.setAdapter(bannerAdapter);
-    GirdAdapter adapter = new GirdAdapter(getContext());
+        GirdAdapter adapter = new GirdAdapter(getContext());
         gridView.setAdapter(adapter);
         mRecyclerView.addHeaderView(addheadlayout);
-    mAdapter =new
+        mAdapter = new
 
-    HomeNeighAdapter(getContext());
+                HomeNeighAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
 
         /*mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -496,26 +508,26 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
             }
         });*/
-        textView.setOnClickListener(new View.OnClickListener()
+        imHome.setOnClickListener(new View.OnClickListener()
 
-    {
-        @Override
-        public void onClick (View v){
-        if (UIUtils.isFastClick()) {
-            if (LoginUserBean.getInstance().isIs_auth()) {
+        {
+            @Override
+            public void onClick(View v) {
+                if (UIUtils.isFastClick()) {
+                    if (LoginUserBean.getInstance().isIs_auth()) {
 
-                initpopuwindow(textView);
-            } else {
+                        initpopuwindow(textView);
+                    } else {
 
-                IdentityDialog identityDialog = new IdentityDialog(mActivity, HOME_FRAGMENT_IDENTITY);
-                identityDialog.show();
+                        IdentityDialog identityDialog = new IdentityDialog(mActivity, HOME_FRAGMENT_IDENTITY);
+                        identityDialog.show();
+                    }
+                }
+
             }
-        }
+        });
 
     }
-    });
-
-}
 
     private void initData(final int type) {
         if (type == REFRESH) {
@@ -632,7 +644,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
         lv_appointment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                textView.setText(list.get(position));
+                imHome.setText(list.get(position));
                 popupWindow.dismiss();
                 LoginUserBean.getInstance().setSub_id(listinfo1.get(position).getSubdistrict_id());
                 LoginUserBean.getInstance().setSubname(listinfo1.get(position).getSubdistrict_name());

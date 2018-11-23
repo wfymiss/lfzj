@@ -35,6 +35,9 @@
             style="@style/bbs_item_text"
             android:layout_below="@+id/tv_title"
             android:layout_marginLeft="9dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxEms="12"
             android:layout_marginTop="@dimen/margin_10dp"
             android:layout_toRightOf="@+id/tv_reciver_time"
             android:text="人间处处有有真情，人人有真爱" />
