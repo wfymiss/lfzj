@@ -690,6 +690,7 @@ public class OpendoorActivity extends BaseActivity {
 //           sn——设备SN码 openKey——开门方式 desc——开门结果信息反馈
             switch (errCode) {
                 case RS_CONN_ERROR:
+                    Log.e("msgcode",errCode+""+desc);
                     initMsg();        // 初始化message
                     msg.what = OPEN_DOOR_fail;    // 开门反馈结果
                     msg.obj = "设备连接失败";
