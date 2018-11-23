@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -78,7 +79,7 @@ public class H5PayActivityActivity extends BaseActivity implements PaymentPayVie
         if (i == 0) {
 
         }
-        String url = "http://api_test.catel-link.com/v1/pay/index?type=" + type + "&order_id=" + order_id + "&subdistrict_id="+LoginUserBean.getInstance().getSub_id();
+        String url = "http://api_test.catel-link.com/v1/pay/index?type=" + type + "&order_id=" + order_id + "&subdistrict_id="+LoginUserBean.getInstance().getSub_id()+"&token"+LoginUserBean.getInstance().getAccess_token();
         Log.e("url", url);
         initWeb(url);
 
@@ -110,6 +111,7 @@ public class H5PayActivityActivity extends BaseActivity implements PaymentPayVie
                 return true;
             }
         });*/
+       webview.setWebChromeClient(new WebChromeClient());
         webview.loadUrl(url);
         webview.setWebViewClient(webViewClient);
     }
@@ -202,10 +204,17 @@ public class H5PayActivityActivity extends BaseActivity implements PaymentPayVie
     @Override
     public void onResume() {
         super.onResume();
-        i = i + 1;
+        /*i = i + 1;
         if (i > 1)
-            presenter.getWXPaResult(token, order_id, order_number, type, sub_id);
+            presenter.getWXPaResult(token, order_id, order_number, type, sub_id);*/
+        Log.e("onresume","onresume");
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("onresume","onpause");
     }
 
     @Override

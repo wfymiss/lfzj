@@ -4,7 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
@@ -19,7 +20,6 @@ import com.tencent.smtt.sdk.WebViewClient;
 import com.youzan.androidsdk.YouzanSDK;
 import com.youzan.androidsdk.YouzanToken;
 import com.youzan.androidsdk.event.AbsAuthEvent;
-import com.youzan.androidsdk.event.Event;
 import com.youzan.androidsdkx5.YouzanBrowser;
 
 import butterknife.BindView;
@@ -32,6 +32,8 @@ public class MarketActivity extends BaseActivity {
 
     @BindView(R.id.youzan_view)
     YouzanBrowser mYouzanView;
+    @BindView(R.id.iv_close)
+    ImageView ivClose;
     private String url;
     private int type;
 
@@ -57,7 +59,7 @@ public class MarketActivity extends BaseActivity {
             @Override
             public void call(Context context, boolean b) {
 
-                if (b){
+                if (b) {
                     youzanLogin();
                 }
             }
@@ -84,6 +86,12 @@ public class MarketActivity extends BaseActivity {
                 super.onPageFinished(webView, s);
                 dismiss();
                 setTitleText(mYouzanView.getTitle());
+            }
+        });
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -139,4 +147,5 @@ public class MarketActivity extends BaseActivity {
             finish();
         }
     }
+
 }

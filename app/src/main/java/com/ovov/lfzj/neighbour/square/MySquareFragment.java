@@ -300,12 +300,12 @@ public class MySquareFragment extends BaseFragment {
                 ivHeader.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (squareListInfo.userInfo.user_logo == null || squareListInfo.userInfo.user_logo.equals("")) {
+                        /*if (squareListInfo.userInfo.user_logo == null || squareListInfo.userInfo.user_logo.equals("")) {
                             img = "";
                         } else {
                             img = squareListInfo.userInfo.user_logo;
                         }
-                        MyCommunityActivity.toUserActivity(getActivity(), squareListInfo.userInfo.nickname, img, "2", squareListInfo.user_id, squareListInfo.userInfo.signature);
+                        MyCommunityActivity.toUserActivity(getActivity(), squareListInfo.userInfo.nickname, img, "2", squareListInfo.user_id, squareListInfo.userInfo.signature);*/
                     }
                 });
                 TextView tvTransmitName = viewHolder.getView(R.id.tv_transmit_nickname);
