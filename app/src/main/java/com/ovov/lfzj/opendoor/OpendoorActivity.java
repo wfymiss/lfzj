@@ -119,7 +119,6 @@ public class OpendoorActivity extends BaseActivity {
     private int open_type = 1;                 // 开门方式
     private int open_status;               // 开门结果
     private int open_num = 0;                        // 用户开门失败次数
-    Message msg;
     private boolean sound_con, shake_con;
     private FeedbackDialog dialog;                   // 开门反馈信息弹出框
     private FeedbackDialog.BuilderLog backLog;       // 展示开门反馈信息
@@ -189,7 +188,7 @@ public class OpendoorActivity extends BaseActivity {
 
     @Override
     public void init() {
-        msg = new Message();              // 开门反馈结果
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         StatusBarUtils.setStatusBar(mActivity, false, false);
 //        EventBus.getDefault().register(this);                                            //   钥匙生成二维码监听事件
@@ -517,6 +516,7 @@ public class OpendoorActivity extends BaseActivity {
         // 开门成功
         public void onOpenSuccess(String deviceKey, String sn, int openType) {
 //            deviceKey——本次开门使用的钥匙 sn——设备SN码 openKey——开门方式
+           Message msg = new Message();              // 开门反馈结果
             msg.what = OPEN_DOOR_BACK;   // 开门反馈结果
             msg.obj = "开门成功";
             handler.sendMessage(msg);
@@ -543,10 +543,7 @@ public class OpendoorActivity extends BaseActivity {
         public void onOpenFaild(int errCode, int openType, String deviceKey, String sn, String desc) {
 //           errCode——开门失败结果码 deviceKey——本次开门使用的钥匙
 //           sn——设备SN码 openKey——开门方式 desc——开门结果信息反馈
-            if (msg != null) {
-                msg = null;
-                msg = new Message();
-            }
+                Message  msg = new Message();
 
             switch (errCode) {
                 case RS_CONN_ERROR:
