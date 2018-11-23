@@ -116,7 +116,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
     ImageView imList;
     @BindView(R.id.sitview)
     View sitview;
-    private TextView textView;
     private int page;
     private String id;
     //初始化数据
@@ -519,7 +518,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
                 if (UIUtils.isFastClick()) {
                     if (LoginUserBean.getInstance().isIs_auth()) {
 
-                        initpopuwindow(textView);
+                        initpopuwindow(imHome);
                     } else {
 
                         IdentityDialog identityDialog = new IdentityDialog(mActivity, HOME_FRAGMENT_IDENTITY);
@@ -713,7 +712,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
             if (LoginUserBean.getInstance().getSubname() == null || LoginUserBean.getInstance().getSubname().isEmpty()) {
                 LoginUserBean.getInstance().setSubname(listInfo.get(0).getSubdistrict_name());
                 LoginUserBean.getInstance().save();
-                textView.setText(listinfo1.get(0).getSubdistrict_name());
+                imHome.setText(listinfo1.get(0).getSubdistrict_name());
             }
 
             if (LoginUserBean.getInstance().getSub_id() == null || LoginUserBean.getInstance().getSub_id().isEmpty()) {

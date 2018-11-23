@@ -137,12 +137,10 @@ public class OpendoorActivity extends BaseActivity {
             switch (open_msg.what) {
                 case SENSOR_SHAKE:
                     if (arrayKey != null && arrayKey.length > 0) {
-
                         //wave.start();
                         checkBluetoothPermission();       // 蓝牙开门
 
                     } else {
-
                         feedback("请在钥匙列表更新钥匙");
                         wave.stop();
                         wave.clearAnimation();
@@ -150,38 +148,29 @@ public class OpendoorActivity extends BaseActivity {
 
                     break;
                 case OPEN_DOOR_BACK:                // 开门成功返回信息结果
-                    Log.e("eeeeeeeee", "111111111");
+                    Log.e("aaaaaaaaa", "111111111");
                     head.setImageResource(R.mipmap.lock_success);
-                    open_status = 1;
-                    postOpenData(open_status);
-
+                    wave.stop();
+                    wave.clearAnimation();
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             head.setImageResource(R.mipmap.lock_im);
-                            wave.stop();
-                            wave.clearAnimation();
-
                         }
-                    }, 3000);
+                    }, 2000);
+                    open_status = 1;
+                    postOpenData(open_status);
                     // 开门结果上传数据
 //                    String back = (String) open_msg.obj;
 //                    feedback(back);                     // 开门返回信息结果 ——二维码 ？
                     break;
                 case OPEN_DOOR_fail:
+                    Log.e("dadadadada", OPEN_DOOR_fail + "");// 上传开门日
+                    wave.stop();
                     String back_fail = (String) open_msg.obj;
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            wave.stop();
-                            wave.clearAnimation();
-                            feedback(back_fail);                  // 开门失败返回信息结果
-                        }
-                    }, 3000);
-
+                    feedback(back_fail);                  // 开门失败返回信息
                     open_status = 0;
                     postOpenData(open_status);                 // 开门结果上传数据
-                    Log.e("dadadadada", sn_name);// 上传开门日志
                     break;
             }
         }
@@ -201,7 +190,6 @@ public class OpendoorActivity extends BaseActivity {
     @Override
     public void init() {
         msg = new Message();              // 开门反馈结果
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         StatusBarUtils.setStatusBar(mActivity, false, false);
 //        EventBus.getDefault().register(this);                                            //   钥匙生成二维码监听事件
@@ -269,20 +257,6 @@ public class OpendoorActivity extends BaseActivity {
         sub_title.setText(sub_name);   // 显示开门页面名称
     }
 
-//    // 初始化传感器
-//    private void initShake() {
-//        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);          //传感器管理服务
-//        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);                //震动服务
-//    }
-//
-//    // 初始化声音设置
-//    private void soundLoading() {
-//        soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);     // 初始化soundpool
-//        if (sound_con) {
-//            soundPool.load(this, R.raw.kaka, 1);                                   // 加载声音
-//            soundPool.load(this, R.raw.open_success, 1);                          // 加载声音
-//        }
-//    }
 
     @OnClick({R.id.re_scan, R.id.re_code, R.id.re_apply_key, R.id.icon_setting, R.id.head, R.id.but, R.id.refresh_tv})
     public void onViewClicked(View view) {
@@ -316,7 +290,7 @@ public class OpendoorActivity extends BaseActivity {
                         wave.start();
                         Message msg_open = new Message();
                         msg_open.what = SENSOR_SHAKE;
-                        handler.sendMessageAtTime(msg_open, 6000);// 开门
+                        handler.sendMessage(msg_open);// 开门
                     }
                 }
 
@@ -442,26 +416,7 @@ public class OpendoorActivity extends BaseActivity {
         canvas.restore();  // 调用canvas的restore方法将画布恢复为原来的状态
         return blankBitmap;
     }
-//
-//    /**
-//     * 判断是否开启权限
-//     */
-//    private void requestPermission() {
-//        if (Build.VERSION.SDK_INT >= 23) {
-//            if ((ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) &&
-//                    (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)) {
-//                //请求获取录音权限
-//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, PHOTO_REQUEST_CODE);
-//            } else {
-//                Intent intent = new Intent(OpendoorActivity.this, CaptureActivity.class);             // 扫描二维码界面
-//                startActivity(intent);
-//            }
-//        } else {
-//            //系统不高于6.0直接执行
-//            Intent intent = new Intent(OpendoorActivity.this, CaptureActivity.class);                 // 扫描二维码界面
-//            startActivity(intent);
-//        }
-//    }
+
 
     @Override     // 蓝牙，相机开启权限判断回调
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -506,39 +461,7 @@ public class OpendoorActivity extends BaseActivity {
         }
     }
 
-//    // 重力感应监听 传感器改变判断——————————————————去调用蓝牙开门
-//    private SensorEventListener sensorEventListener = new SensorEventListener() {
-//        @Override
-//        public void onSensorChanged(SensorEvent event) {
-//            if (System.currentTimeMillis() - lastUpdateTime > 1000) {
-//                lastUpdateTime = System.currentTimeMillis();
-//                // 传感器信息改变时执行该方法
-//                float[] values = event.values;
-//                float x = values[0]; // x轴方向的重力加速度，向右为正 float[] values = event.values; float x = values[0]; // x轴方向的重力加速度，向右为正
-//                float y = values[1]; // y轴方向的重力加速度，向前为正
-//                float z = values[2]; // z轴方向的重力加速度，向上为正
-//                // 一般在这三个方向的重力加速度达到40就达到了摇晃手机的状态。
-//                int medumValue = 13; // 三星 i9250怎么晃都不会超过20，
-//                int sensorType = event.sensor.getType();
-//                if (sensorType == Sensor.TYPE_ACCELEROMETER) {     // 如果摇动
-//                    if (Math.abs(x) > medumValue || Math.abs(y) > medumValue || Math.abs(z) > medumValue) {
-//
-//                        //设置震动时长
-//                        if (shake_con) {
-//                            vibrator.vibrate(500);
-//                        }
-//
-//                        //设置震动时长
-//                    }
-//                }
-//            }
-//        }
-//
-//        // 当传感器精度的改变时  进行的操作
-//        @Override
-//        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-//        }
-//    };
+
 
     /**
      * 开门蓝牙判断权限
@@ -568,68 +491,12 @@ public class OpendoorActivity extends BaseActivity {
         }
     }
 
-//    private void initOpendoorAnimation() {
-////动画坐标移动的位置的类型是相对自己的
-//        int type = Animation.RELATIVE_TO_SELF;
-//        boolean isBack = true;
-//        float topFromY;
-//        float topToY;
-//        float bottomFromY;
-//        float bottomToY;
-//        if (isBack) {
-//            topFromY = -1f;
-//            topToY = 0;
-//            bottomFromY = 1f;
-//            bottomToY = 0;
-//        } else {
-//            topFromY = 0;
-//            topToY = -1f;
-//            bottomFromY = 0;
-//            bottomToY = 1f;
-//        }
-//        //上面图片的动画效果
-//        TranslateAnimation topAnim = new TranslateAnimation(
-//                type, 0, type, 0, type, topFromY, type, topToY
-//        );
-//        topAnim.setDuration(1000);
-//        //动画终止时停留在最后一帧~不然会回到没有执行之前的状态
-//        topAnim.setFillAfter(true);
-//        //底部的动画效果
-//        TranslateAnimation bottomAnim = new TranslateAnimation(
-//                type, 0, type, 0, type, bottomFromY, type, bottomToY
-//        );
-//        bottomAnim.setDuration(1000);
-//        bottomAnim.setFillAfter(true);
-//        //大家一定不要忘记, 当要回来时, 我们中间的两根线需要GONE掉
-//        if (isBack) {
-//            bottomAnim.setAnimationListener(new Animation.AnimationListener() {
-//                @Override
-//                public void onAnimationStart(Animation animation) {
-//                }
-//
-//                @Override
-//                public void onAnimationRepeat(Animation animation) {
-//                }
-//
-//                @Override
-//                public void onAnimationEnd(Animation animation) {
-//                    //当动画结束后 , 将中间两条线GONE掉, 不让其占位
-//                    opendoorAnim.setVisibility(View.VISIBLE);
-//                    opendoorAnim.setAnimation(operatingAnim);
-//                }
-//            });
-//        }
-//        //设置动画
-//        openTop.startAnimation(topAnim);
-//        openBottom.startAnimation(bottomAnim);
-//    }
-
-
     /**
      * 执行蓝牙开门
      */
     private void connectBluetooth() {
         if (arrayKey != null && arrayKey.length > 0) {                     // 钥匙存在时，开门
+            Log.e("arrayKey",arrayKey+"");
             LLingOpenDoorConfig config = new LLingOpenDoorConfig(1, arrayKey);          // 钥匙以数组形式调用令令SDK 开门
             LLingOpenDoorHandler open_handler = LLingOpenDoorHandler
                     .getSingle(OpendoorActivity.this);
@@ -650,14 +517,10 @@ public class OpendoorActivity extends BaseActivity {
         // 开门成功
         public void onOpenSuccess(String deviceKey, String sn, int openType) {
 //            deviceKey——本次开门使用的钥匙 sn——设备SN码 openKey——开门方式
-
             msg.what = OPEN_DOOR_BACK;   // 开门反馈结果
             msg.obj = "开门成功";
-            Log.e("eeeeeeee", msg.what + "");
             handler.sendMessage(msg);
-
-           /* Log.e("eeeeeeee",sn);
-           */
+           Log.e("eeeeeeee","开门成功");
             try {
                 JSONObject object = new JSONObject(retrieve_key);
                 JSONArray array = object.getJSONArray("datas");
@@ -673,53 +536,36 @@ public class OpendoorActivity extends BaseActivity {
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-            }/*
-//            open_status = "成功";      // 提交开门成功参数值
-            open_num = 0;    // 开门成功时，开门失败次数归零
-            soundPool.play(2, 1, 1, 0, 0, 1);      // 摇一摇开门成功声音
-            initMsg();        // 初始化message
-            msg.what = OPEN_DOOR_BACK;   // 开门反馈结果
-            msg.obj = "开门成功";
-            Log.e("eeeeeeee",msg.what+"");
-            handler.sendMessage(msg);
-
-            *//*handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-
-                    wave.stop();
-//                    iconResult.setVisibility(View.GONE);    // 开门动画结束后，隐藏开门结果图片
-                }
-            }, 3000);*/
+            }
         }
 
         // 开门失败
         public void onOpenFaild(int errCode, int openType, String deviceKey, String sn, String desc) {
 //           errCode——开门失败结果码 deviceKey——本次开门使用的钥匙
 //           sn——设备SN码 openKey——开门方式 desc——开门结果信息反馈
+            if (msg != null) {
+                msg = null;
+                msg = new Message();
+            }
+
             switch (errCode) {
                 case RS_CONN_ERROR:
-                    Log.e("msgcode", errCode + "" + desc);
-                    initMsg();        // 初始化message
                     msg.what = OPEN_DOOR_fail;    // 开门反馈结果
                     msg.obj = "设备连接失败";
-                    handler.sendMessageAtTime(msg, 3000);
+                    handler.sendMessage(msg);
                     break;
                 case RS_CONN_NOFOUND:
-                    initMsg();        // 初始化message
                     msg.what = OPEN_DOOR_fail;    // 开门反馈结果
                     msg.obj = "设备未找到";
-                    handler.sendMessageAtTime(msg, 3000);
+                    handler.sendMessage(msg);
                     break;
                 case RS_OD_ERROR:
-                    initMsg();        // 初始化message
                     msg.what = OPEN_DOOR_fail;    // 开门反馈结果
                     msg.obj = "开门异常";
-                    handler.sendMessageAtTime(msg, 3000);
+                    handler.sendMessage(msg);
                     break;
                 case RS_OD_FAILD:
 
-                    initMsg();        // 初始化message
                     msg.what = OPEN_DOOR_fail;    // 开门反馈结果
                     open_num++;     // 开门失败次数，超过两次提醒用户更新钥匙
                     if (open_num > 2) {
@@ -727,12 +573,12 @@ public class OpendoorActivity extends BaseActivity {
                     } else {
                         msg.obj = "开门失败";
                     }
-                    handler.sendMessageAtTime(msg, 3000);
+                    handler.sendMessage(msg);
                     break;
                 default:
                     break;
             }
-            //open_status = "失败";
+//            //open_status = "失败";
             if (deviceKey != null) {            // 开门使用钥匙不为空时上传数据
                 try {
                     JSONObject object = new JSONObject(retrieve_key);
@@ -752,14 +598,6 @@ public class OpendoorActivity extends BaseActivity {
                 }
             }
 
-//            soundPool.play(1, 1, 1, 0, 0, 1);      // 摇一摇开门声音——开门失败
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    wave.stop();
-//                    iconResult.setVisibility(View.GONE);    // 开门动画结束后，隐藏开门结果图片
-                }
-            }, 3000);
         }
 
         public void onConnectting(String deviceKey, String sn, int openType) {
@@ -775,13 +613,6 @@ public class OpendoorActivity extends BaseActivity {
         }
     };
 
-    // 初始化message
-    private void initMsg() {
-        if (msg != null) {
-            msg = null;
-            msg = new Message();
-        }
-    }
 
     // 开门结果信息弹出
     public void feedback(String msg) {
@@ -850,11 +681,6 @@ public class OpendoorActivity extends BaseActivity {
     @Override     // 页面重新开始时监听
     protected void onResume() {
         super.onResume();
-//        if (sensorManager != null) {     // 注册传感监听器
-//            // 第一个参数是Listener，第二个参数是所得传感器类型，第三个参数值获取传感器信息的频率
-//            sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-//                    SensorManager.SENSOR_DELAY_NORMAL);
-//        }
         postKeyList();                     //  进入开门页面解析本地钥匙解析本地钥匙
         SharedPreferences spf = this.getSharedPreferences("opendoor", Context.MODE_PRIVATE);
         sound_con = spf.getBoolean("soundControl", true);     // 声音设置
