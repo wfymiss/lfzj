@@ -202,13 +202,14 @@
 
         <TextView
             android:id="@+id/lock_invite_startTime"
+            style="@style/AppTheme.EditText.Big"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="50px"
             android:layout_marginRight="50px"
             android:layout_toRightOf="@id/tv_start_time_title"
-            android:text="2017-07-20  10:35 (最多4天)" />
+            android:hint="开始选择时间(最多4天)" />
     </RelativeLayout>
 
     <View

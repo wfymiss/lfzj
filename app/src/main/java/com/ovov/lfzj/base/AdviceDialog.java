@@ -8,6 +8,7 @@ import android.view.View;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.utils.RxBus;
 import com.ovov.lfzj.event.DeleteFamilyEvent;
+import com.ovov.lfzj.event.FeedBackEvent;
 import com.ovov.lfzj.event.IdentityEvent;
 
 /**
@@ -33,8 +34,10 @@ public class AdviceDialog extends BaseDialog {
             @Override
 
             public void onClick(View v) {
-                RxBus.getDefault().post(new IdentityEvent());
                 dismiss();
+
+                RxBus.getDefault().post(new FeedBackEvent());
+
 
             }
         });

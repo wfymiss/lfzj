@@ -338,7 +338,8 @@ public interface CatelApiService {
 
     @FormUrlEncoded
     @POST("v1/recommend/infomationlist")
-    Observable<ListInfo<BannerBean>> getinfomationlist(@Field("token") String token);
+    Observable<ListInfo<BannerBean>> getinfomationlist(@Field("token") String token,
+                                                       @Field("subdistrictid") String sub_id);
 
     @FormUrlEncoded
     @POST("v1/recommend/infomation")

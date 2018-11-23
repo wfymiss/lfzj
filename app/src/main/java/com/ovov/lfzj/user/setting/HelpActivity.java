@@ -89,8 +89,8 @@ public class HelpActivity extends BaseActivity {
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
+    protected void onResume() {
+        super.onResume();
         smartrefresh.autoRefresh();
     }
 

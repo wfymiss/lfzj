@@ -60,7 +60,7 @@
         <item name="android:paddingLeft">@dimen/margin_6dp</item>
         <item name="android:paddingRight">@dimen/margin_6dp</item>
         <item name="android:textSize">15dp</item>
-        <item name="android:textColorHint">#bb9a82</item>
+        <item name="android:textColorHint">#999999</item>
         <item name="android:singleLine">true</item>
         <item name="android:background">#ffffff</item>
     </style>

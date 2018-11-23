@@ -169,8 +169,8 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
 
         tvHouseTitle.setText(LoginUserBean.getInstance().getUserInfoBean().nickname);
         tvAdressHouse.setText(LoginUserBean.getInstance().getSubname());
-        createTime = str;                                      //  当前时间
-        invite_startTime.setText(createTime);                        //  显示当前的时间
+//        createTime = str;                                      //  当前时间
+//        invite_startTime.setText(createTime);                        //  显示当前的时间
         cal1.setTime(curDate);                                  //  当前时间转化为毫秒
     }
 

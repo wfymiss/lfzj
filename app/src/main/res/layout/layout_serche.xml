@@ -1,89 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lin_title"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:background="@color/colorPrimary">
-
-    <!--<ImageView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_marginLeft="10dp"-->
-    <!--android:background="@mipmap/map" />-->
-
+    android:layout_height="@dimen/common_title_height"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/im_home"
+        style="@style/common_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="2dp"
-        android:drawablePadding="@dimen/margin_4dp"
         android:drawableRight="@mipmap/ic_xia"
-        android:text="请选择"
-        android:textColor="@color/color_ffffff"
-        android:layout_marginBottom="20dp"
-        android:textSize="@dimen/textSize_18sp"
-
-        />
-
-
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/pro_searchView"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="33dp"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_marginLeft="13dp"-->
-    <!--android:layout_marginRight="9dp"-->
-    <!--android:layout_weight="1">-->
-    <!--android:background="@drawable/search_box_background">-->
-
-
-    <!--<ImageView-->
-    <!--android:id="@+id/im_seach"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:layout_marginLeft="@dimen/margin_15dp"-->
-    <!--android:src="@drawable/seach" />-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="36dp"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_marginLeft="@dimen/margin_12dp"-->
-    <!--android:layout_toRightOf="@+id/im_seach"-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:background="@null"-->
-    <!--android:gravity="center"-->
-    <!--android:hint="@string/hint"-->
-    <!--android:textSize="@dimen/textSize_12sp" />-->
-    <!--</RelativeLayout>-->
-
+        android:text="请选择" />
 
     <ImageView
         android:id="@+id/im_scan"
-        android:layout_width="28dp"
+        android:layout_width="22dp"
         android:layout_height="22dp"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="20dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp_10"
         android:src="@mipmap/scan" />
+
+    <TextView
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="@dimen/common_margin"
+        android:text=""
+        android:textColor="@color/color_ffffff"
+        android:textSize="13sp" />
 
     <ImageView
         android:id="@+id/im_list"
         android:layout_width="22dp"
         android:layout_height="22dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="20dp"
-        android:src="@mipmap/messages" />
-</RelativeLayout>
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="@dimen/margin_10dp"
+        android:src="@mipmap/messages11" />
+
+</FrameLayout>

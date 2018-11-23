@@ -11,9 +11,7 @@
         android:background="@color/colorPrimary" />
 
     <include
-        layout="@layout/layout_serche"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        layout="@layout/layout_serche" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/srly"
