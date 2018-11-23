@@ -164,7 +164,7 @@ public class MessageDetailActivity extends BaseActivity {
                         viewHolder.setText(R.id.tv_time, noticeBean.getTime());
                         break;
                     case "7":
-                        viewHolder.setText(R.id.tv_title, "保修项目:");
+                        viewHolder.setText(R.id.tv_title, "报修项目:");
                         viewHolder.setText(R.id.job_name, "工单状态:");
                         viewHolder.setText(R.id.version_numb, "受理详情:");
                         viewHolder.setText(R.id.tv_title_numb, noticeBean.getTitle());

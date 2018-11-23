@@ -311,7 +311,6 @@ public class OpendoorActivity extends BaseActivity {
                 //防止重复点击 出现不一样的圆形
                 if (UIUtils.isFastClick()) {
                     if (flag) {
-
                         wave.setVisibility(View.VISIBLE);
                         wave.start();
                         Message msg_open = new Message();
