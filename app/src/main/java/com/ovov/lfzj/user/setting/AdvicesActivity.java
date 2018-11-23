@@ -51,7 +51,7 @@ public class AdvicesActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
-                finish();
+                AdvicesActivity.this.finish();
                 break;
             case R.id.question:
                 QuestionActivity.toActivity(mActivity);

@@ -417,7 +417,7 @@ public class RetrofitHelper {
     }
 
     public Observable<ListInfo<BannerBean>> getinfomationlist() {
-        return mApiService.getinfomationlist(getToken());
+        return mApiService.getinfomationlist(getToken(),LoginUserBean.getInstance().getSub_id());
     }
 
     public Observable<ListInfo<BannerBean>> getInfomation(String id) {

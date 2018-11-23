@@ -59,11 +59,11 @@
         style="@style/myText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_10dp"
+        android:layout_marginRight="@dimen/margin_10dp"
         android:background="@color/white"
         android:text="大环境大活动价不开大边框到八九块都不大大大阿达打打打"
         android:textColor="#666666"
-        android:layout_marginLeft="@dimen/margin_10dp"
-        android:layout_marginRight="@dimen/margin_10dp"
         android:textSize="16sp" />
 
     <LinearLayout

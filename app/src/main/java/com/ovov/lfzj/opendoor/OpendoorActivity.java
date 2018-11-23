@@ -296,7 +296,7 @@ public class OpendoorActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.re_apply_key:    // 房客通行
-                intent = new Intent(OpendoorActivity.this, VistitorActivity.class);             // 扫描二维码界面
+                intent = new Intent(OpendoorActivity.this, ApplyVisitorActivity.class);             // 扫描二维码界面
                 startActivity(intent);
                 break;
             case R.id.icon_setting:

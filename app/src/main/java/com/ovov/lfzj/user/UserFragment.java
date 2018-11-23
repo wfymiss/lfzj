@@ -4,6 +4,7 @@ package com.ovov.lfzj.user;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,13 +131,14 @@ public class UserFragment extends BaseFragment {
 
     @Override
     public void onDestroyView() {
+        Log.e("hahhah","gogogo");
         super.onDestroyView();
         unbinder.unbind();
 
     }
 
 
-    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.set_ly, R.id.tv_my, R.id.mine_family, R.id.tv_worker_order, R.id.mine_advice, R.id.tv_shop_order})
+    @OnClick({R.id.tv_username_info, R.id.iv_right, R.id.tv_identity, R.id.set_ly, R.id.tv_my, R.id.mine_family, R.id.tv_worker_order, R.id.mine_advice, R.id.tv_shop_order,R.id.my_circle_images})
 
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -184,6 +186,9 @@ public class UserFragment extends BaseFragment {
 
             case R.id.mine_family:
                 FamilyListActivity.toActivity(mActivity);
+                break;
+            case R.id.my_circle_images:
+                UserInfoActivity.toActivity(mActivity, subListBean.getDatas().getUser());
                 break;
 
 

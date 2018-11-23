@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -170,6 +171,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
                 initBanner();
                 homePresenter.getNoticeList();
                 homePresenter.getNewsList();
+                homePresenter.getShopList();
                 homePresenter.gethomeList();
             }
         });
@@ -705,7 +707,9 @@ public class HomeFragment extends BaseFragment implements HomeView {
     public void getsubList(List<SubdistrictsBean> listInfo) {
         listinfo1 = listInfo;
         list.clear();
+        Log.e("isIs_auth",LoginUserBean.getInstance().isIs_auth()+"");
         if (LoginUserBean.getInstance().isIs_auth()) {
+
             if (LoginUserBean.getInstance().getSubname() == null || LoginUserBean.getInstance().getSubname().isEmpty()) {
                 LoginUserBean.getInstance().setSubname(listInfo.get(0).getSubdistrict_name());
                 LoginUserBean.getInstance().save();
