@@ -51,7 +51,7 @@
             android:text="已缴清"
             android:id="@+id/tv_type"
             android:gravity="center"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/common_title_color"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"
