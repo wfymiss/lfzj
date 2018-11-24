@@ -6,9 +6,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,8 +27,6 @@ import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.property.bean.PaymentDetailBean;
-import com.ovov.lfzj.property.widget.ChildListView;
-
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,6 +34,8 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Subscription;
 
 public class PaymentDetailActivity extends BaseActivity implements OnDateSetListener {
@@ -43,10 +45,11 @@ public class PaymentDetailActivity extends BaseActivity implements OnDateSetList
     ListView listPaymentDetail;
     @BindView(R.id.tv_time)
     TextView tvTime;
-    @BindView(R.id.tv_type)
-    TextView tvType;
     @BindView(R.id.tv_address)
     TextView tvAddress;
+    @BindView(R.id.tv_type)
+    TextView tvType;
+    int type = 1;
 
     private String token;
     private int status = 1;
@@ -62,8 +65,8 @@ public class PaymentDetailActivity extends BaseActivity implements OnDateSetList
     private String houseid;
     private String idyear;
     private String getTotalAmount;
-    private  TextView textView;
-    private  TextView textView1;
+    private TextView textView;
+    private TextView textView1;
 
     public static void toOwnerActivity(Context context, int is_shop, String building, String unit, String room, String houseid) {
         Intent intent = new Intent(context, PaymentDetailActivity.class);
@@ -93,7 +96,7 @@ public class PaymentDetailActivity extends BaseActivity implements OnDateSetList
         storageTokenRead();
         initToolBar();
 
-        View view = View.inflate(this,R.layout.item_paymentdetatil, null);
+        View view = View.inflate(this, R.layout.item_paymentdetatil, null);
         textView = view.findViewById(R.id.tv_time);
         textView1 = view.findViewById(R.id.tv_money);
         listPaymentDetail.addHeaderView(view);
@@ -107,13 +110,13 @@ public class PaymentDetailActivity extends BaseActivity implements OnDateSetList
             unit = bundle.getString("unit");
             room = bundle.getString("room");
             tvAddress.setText(building + "栋" + unit + "单元" + room + "室");
-            getOwnerDetail("1", building, unit, room, houseid);
+            getOwnerDetail("1", building, unit, room, houseid, 1);
             Log.e("house", houseid);
         } else {
             room = bundle.getString("room");
             houseid = bundle.getString("houseid");
             tvAddress.setText("商" + room + "室");
-            getTenantDetail("2", room, houseid);
+            getTenantDetail("2", room, houseid, 1);
         }
         tvTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,8 +150,9 @@ public class PaymentDetailActivity extends BaseActivity implements OnDateSetList
         mDialogAll.show(getSupportFragmentManager(), "all");
     }
 
-    private void getOwnerDetail(String is_shop, String building, String unit, String room, String houseid) {
-        Subscription subscription = RetrofitHelper.getInstance().getOwnerPayment(is_shop, status, year, houseid)
+    private void getOwnerDetail(String is_shop, String building, String unit, String room, String houseid, int s) {
+        showLoadingDialog();
+        Subscription subscription = RetrofitHelper.getInstance().getOwnerPayment(is_shop, s, year, houseid)
                 .compose(RxUtil.<DataInfo<PaymentDetailBean>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<PaymentDetailBean>>() {
                     @Override
@@ -156,7 +160,7 @@ public class PaymentDetailActivity extends BaseActivity implements OnDateSetList
                         //Log.e("payment", e.getMessage());
                         if (e instanceof DataResultException) {
                             DataResultException dataResultException = (DataResultException) e;
-
+                            dismiss();
                             mData.clear();
                             mAdapter.notifyDataSetChanged();
                             Toast.makeText(PaymentDetailActivity.this, dataResultException.errorInfo, Toast.LENGTH_SHORT).show();
@@ -166,6 +170,7 @@ public class PaymentDetailActivity extends BaseActivity implements OnDateSetList
 
                     @Override
                     public void onNext(DataInfo<PaymentDetailBean> paymentDetailBean) {
+                        dismiss();
                         mData.clear();
                         if (paymentDetailBean.success()) {
                             textView.setText(paymentDetailBean.datas().getYear());
@@ -181,19 +186,21 @@ public class PaymentDetailActivity extends BaseActivity implements OnDateSetList
         addSubscrebe(subscription);
     }
 
-    private void getTenantDetail(String is_shop, String room, String houseid) {
-        Subscription subscription = RetrofitHelper.getInstance().getShopPayment(is_shop, status, year, houseid)
+    private void getTenantDetail(String is_shop, String room, String houseid, int s) {
+        showLoadingDialog();
+        Subscription subscription = RetrofitHelper.getInstance().getShopPayment(is_shop, s, year, houseid)
                 .compose(RxUtil.<DataInfo<PaymentDetailBean>>rxSchedulerHelper())
                 .subscribe(new CommonSubscriber<DataInfo<PaymentDetailBean>>() {
                     @Override
                     public void onError(Throwable e) {
                         if (e instanceof DataResultException) {
+                            dismiss();
                             DataResultException dataResultException = (DataResultException) e;
 
                             mData.clear();
                             mAdapter.notifyDataSetChanged();
                             Toast.makeText(PaymentDetailActivity.this, dataResultException.errorInfo, Toast.LENGTH_SHORT).show();
-                        }else {
+                        } else {
                             e.printStackTrace();
                             doFailed();
                         }
@@ -201,11 +208,11 @@ public class PaymentDetailActivity extends BaseActivity implements OnDateSetList
 
                     @Override
                     public void onNext(DataInfo<PaymentDetailBean> paymentDetailBean) {
+                        dismiss();
                         mData.clear();
                         if (paymentDetailBean.success()) {
                             textView.setText(paymentDetailBean.datas().getYear());
                             textView1.setText(paymentDetailBean.datas().getTotalAmount());
-
                             mData.addAll(paymentDetailBean.datas().getFeeList());
                             mAdapter.notifyDataSetChanged();
                         } else {
@@ -265,9 +272,9 @@ public class PaymentDetailActivity extends BaseActivity implements OnDateSetList
         year = getDateToString(millseconds);
         if (isShop == 1) {
             Log.e("各种数据", "isshop" + isShop + "building" + building + "unit" + unit + "room" + room + "year" + year + "status" + status);
-            getOwnerDetail("1", building, unit, room, houseid);
+            getOwnerDetail("1", building, unit, room, houseid, 1);
         } else {
-            getTenantDetail("2", room, houseid);
+            getTenantDetail("2", room, houseid, 1);
         }
     }
 
@@ -278,4 +285,39 @@ public class PaymentDetailActivity extends BaseActivity implements OnDateSetList
         return sf.format(d);
     }
 
+    @OnClick(R.id.tv_type)
+    public void onViewClicked() {
+        PopupMenu mPopupMenu = new PopupMenu(this, tvType);
+        mPopupMenu.inflate(R.menu.menu_music_list_item_action);
+        mPopupMenu.show();
+        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                if (item.getItemId() == R.id.action_all_delete) {
+                    tvType.setTextColor(getResources().getColor(R.color.common_title_color));
+                    tvType.setText(item.getTitle());
+                    if (isShop == 1) {
+                        getOwnerDetail("1", building, unit, room, houseid, 1);
+                    } else {
+                        getTenantDetail("2", room, houseid, 1);
+                    }
+                }
+                if (item.getItemId() == R.id.action_all_share) {
+                    tvType.setTextColor(getResources().getColor(R.color.common_title_color));
+                    tvType.setText(item.getTitle());
+                    if (isShop == 1) {
+                        getOwnerDetail("1", building, unit, room, houseid, 0);
+                    } else {
+                        getTenantDetail("2", room, houseid, 0);
+                    }
+                }
+                return true;
+
+
+            }
+        });
+
+
+    }
 }

@@ -82,7 +82,6 @@ public class QRCodeActivity extends BaseActivity {
     public void init() {
         setTitleText(R.string.text_qrcode);
         initList();
-        mActivityListSwf.setEnableLoadmore(false);
         mActivityListSwf.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -152,33 +151,31 @@ public class QRCodeActivity extends BaseActivity {
 
                     @Override
                     public void onNext(ListInfo<SquareListInfo> listInfoDataInfo) {
-
                         if (listInfoDataInfo.success()) {
-                            if (listInfoDataInfo.datas() ==null ||listInfoDataInfo.datas().size()==0 ) {
-                                lin_null.setVisibility(View.VISIBLE);
+                            if (listInfoDataInfo.datas().size() < 10) {
                                 mActivityListSwf.setEnableLoadmore(false);
                             } else {
-                                lin_null.setVisibility(View.GONE);
-                                if (type == REFRESH) {
-                                    mActivityListSwf.finishRefresh(true);
-                                    mAdaptet.setDatas(listInfoDataInfo.datas());
-
-                                } else {
-                                    mActivityListSwf.finishLoadmore(true);
-                                    mAdaptet.addDatas(listInfoDataInfo.datas());
-                                }
+                                mActivityListSwf.setEnableLoadmore(true);
                             }
-
-                        } else {
                             if (type == REFRESH) {
-                                lin_null.setVisibility(View.VISIBLE);
-                                mActivityListSwf.finishRefresh(false);
+                                mActivityListSwf.finishRefresh();
+                                mActivityListSwf.finishRefresh(true);
+                                mAdaptet.setDatas(listInfoDataInfo.datas());
+
 
                             } else {
-                                mActivityListSwf.finishLoadmore(false);
+                                mActivityListSwf.finishLoadmore();
+                                mAdaptet.addDatas(listInfoDataInfo.datas());
+
+                            }
+                        } else {
+                            if (type == REFRESH) {
+                                mActivityListSwf.finishRefresh();
+
+                            } else {
+                                mActivityListSwf.finishLoadmore();
                             }
                         }
-
 
                     }
                 });
