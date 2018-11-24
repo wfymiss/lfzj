@@ -111,6 +111,9 @@ public class PaymentNoneFragment extends BaseFragment {
         addRxBusSubscribe(PassValueEvent.class, new Action1<PassValueEvent>() {
             @Override
             public void call(PassValueEvent passValueEvent) {
+                totalMoney = 0;
+                bill_amount.setText("￥0.00");
+                lisCheck.clear();
                 mSelect = passValueEvent.getSelect();
                 mAdapter.notifyDataSetChanged();
                 check_all.setSelected(false);

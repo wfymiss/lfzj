@@ -91,10 +91,6 @@ public class OwnerCancelDialog extends BaseDialog {
         tvConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(etRemarks.getText().toString())){
-                    showToast("请输入备注");
-                    return;
-                }
                 RxBus.getDefault().post(new OwnerCancelEvent(reason,etRemarks.getText().toString()));
                 dismiss();
             }

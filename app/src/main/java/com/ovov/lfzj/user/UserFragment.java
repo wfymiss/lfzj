@@ -158,7 +158,13 @@ public class UserFragment extends BaseFragment {
 //                mUtils.startActivity(OrdersActivity.class);
 //                break;
             case R.id.tv_worker_order:
-                WorkerOrderActivity.toActivity(mActivity);
+                if (LoginUserBean.getInstance().isIs_auth())
+                    WorkerOrderActivity.toActivity(mActivity);
+                else {
+                    IdentityDialog identityDialog = new IdentityDialog(mActivity, UAER_FRAGMENT_IDENTITY);
+                    identityDialog.show();
+                }
+
                 break;
 
             case R.id.iv_right:

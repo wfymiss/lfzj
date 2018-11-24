@@ -223,10 +223,7 @@ public class ApplyVisitorActivity extends BaseActivity implements OnDateSetListe
                     showToast("请输入姓名");
                     return;
                 }
-                if (!RegexUtils.isNoText(invite_name.getText().toString())){
-                    showToast("请输入正确的姓名");
-                    return ;
-                }
+
                 boolean tf = decideFormate();      //判断输入信息的格式
                 if (tf) {
                     if (keys != null && keys.size() > 0) {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -43,6 +44,7 @@ public class PaymentOtherActivity extends BaseActivity {
     public void init() {
         tvTitle.setText("代缴费");
 
+        web.setWebChromeClient(new WebChromeClient());
         web.loadUrl("http://api_test.catel-link.com/v1/payment/select?user_id=" + LoginUserBean.getInstance().getUserId()+"&type=1");
 
         web.getSettings().setJavaScriptEnabled(true);  //加上这一行网页为响应式的

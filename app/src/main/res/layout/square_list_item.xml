@@ -43,8 +43,10 @@
             android:textSize="12sp" />
 
         <ImageView
-            android:layout_width="@dimen/margin_20dp"
-            android:layout_height="@dimen/margin_10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_5dp"
+            android:scaleType="centerCrop"
             android:src="@mipmap/ic_square_delete"
             android:layout_alignParentRight="true"
             android:layout_marginTop="19dp"

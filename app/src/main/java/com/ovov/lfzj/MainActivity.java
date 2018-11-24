@@ -176,12 +176,7 @@ public class MainActivity extends BaseMainActivity {
                 finish();
             }
         });
-        addRxBusSubscribe(SquareDetailIdentityEvent.class, new Action1<SquareDetailIdentityEvent>() {
-            @Override
-            public void call(SquareDetailIdentityEvent toIdentityEvent) {
-                finish();
-            }
-        });
+
         addRxBusSubscribe(DownloadEvent.class, new Action1<DownloadEvent>() {
             @Override
             public void call(DownloadEvent downloadEvent) {

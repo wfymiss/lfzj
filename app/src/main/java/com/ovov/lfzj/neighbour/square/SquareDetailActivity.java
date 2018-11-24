@@ -25,6 +25,7 @@ import com.mcxtzhang.commonadapter.lvgv.ViewHolder;
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.bean.DataInfo;
+import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.base.bean.SquareDetailInfo;
 import com.ovov.lfzj.base.bean.SquareListInfo;
 import com.ovov.lfzj.base.net.DataResultException;
@@ -32,15 +33,20 @@ import com.ovov.lfzj.base.utils.KeyBoardShowListener;
 import com.ovov.lfzj.base.utils.RxBus;
 import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.utils.UIUtils;
+import com.ovov.lfzj.base.widget.IdentityDialog;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
 import com.ovov.lfzj.base.widget.ScaleImageView;
 import com.ovov.lfzj.base.widget.ShareAppPopup;
 import com.ovov.lfzj.base.widget.TransmitpopupWindow;
 import com.ovov.lfzj.event.GoodEvent;
 import com.ovov.lfzj.event.ShareSquareEvent;
+import com.ovov.lfzj.event.SquareDetailIdentityEvent;
 import com.ovov.lfzj.event.TransmitSquareEvent;
+import com.ovov.lfzj.home.repair.WorkerOrderActivity;
 import com.ovov.lfzj.http.RetrofitHelper;
+import com.ovov.lfzj.http.api.CatelApiService;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
+import com.ovov.lfzj.login.IdentityConfirmActivity;
 import com.ovov.lfzj.neighbour.MyCommunityActivity;
 import com.ovov.lfzj.neighbour.TransmitActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -58,6 +64,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import rx.Subscription;
 import rx.functions.Action1;
 
+import static com.ovov.lfzj.CatelApplication.SQUARE_DETAIL_IDENTITY;
+import static com.ovov.lfzj.CatelApplication.UAER_FRAGMENT_IDENTITY;
 import static com.ovov.lfzj.CatelApplication.isGood;
 import static com.ovov.lfzj.CatelApplication.noGood;
 
@@ -202,8 +210,15 @@ public class SquareDetailActivity extends BaseActivity {
         addRxBusSubscribe(ShareSquareEvent.class, new Action1<ShareSquareEvent>() {
             @Override
             public void call(ShareSquareEvent shareSquareEvent) {
-                String url = "http://app.catel-link.com/v1/user/share?id=" + squareDetailInfo.id;
+                String url = CatelApiService.HOST + "v1/user/share?id=" + squareDetailInfo.id + "&s=" + "/v1/user/share";
                 showShareApp(url, "乐福院子", squareDetailInfo.comment, "");
+            }
+        });
+        addRxBusSubscribe(SquareDetailIdentityEvent.class, new Action1<SquareDetailIdentityEvent>() {
+            @Override
+            public void call(SquareDetailIdentityEvent toIdentityEvent) {
+                IdentityConfirmActivity.toActivity(mActivity);
+                finish();
             }
         });
 
@@ -330,7 +345,13 @@ public class SquareDetailActivity extends BaseActivity {
                 showShareApp(url, "乐福院子", mSquareDetailInfo.comment, "");*/
                 break;
             case R.id.re_trasmit:
-                showTransmit();
+                if (LoginUserBean.getInstance().isIs_auth())
+                    showTransmit();
+                else {
+                    IdentityDialog identityDialog = new IdentityDialog(mActivity, SQUARE_DETAIL_IDENTITY);
+                    identityDialog.show();
+                }
+
                 break;
         }
     }
@@ -517,7 +538,13 @@ public class SquareDetailActivity extends BaseActivity {
                                 if (replyType == TYPE_COMMENT) {
                                     addComment(mEtComment.getText().toString().trim());
                                 } else {
-                                    addReply(mEtComment.getText().toString().trim());
+                                    if (LoginUserBean.getInstance().isIs_auth())
+                                        addReply(mEtComment.getText().toString().trim());
+                                    else {
+                                        IdentityDialog identityDialog = new IdentityDialog(mActivity, SQUARE_DETAIL_IDENTITY);
+                                        identityDialog.show();
+                                    }
+
                                 }
                             }
                         });
@@ -529,12 +556,18 @@ public class SquareDetailActivity extends BaseActivity {
                         mReGood.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                squareGood();
-                                if (squareDetailInfoDataInfo.datas().isZan == isGood) {
-                                    good = false;
+                                if (LoginUserBean.getInstance().isIs_auth()) {
+                                    squareGood();
+                                    if (squareDetailInfoDataInfo.datas().isZan == isGood) {
+                                        good = false;
+                                    } else {
+                                        good = true;
+                                    }
                                 } else {
-                                    good = true;
+                                    IdentityDialog identityDialog = new IdentityDialog(mActivity, SQUARE_DETAIL_IDENTITY);
+                                    identityDialog.show();
                                 }
+
                             }
                         });
 
