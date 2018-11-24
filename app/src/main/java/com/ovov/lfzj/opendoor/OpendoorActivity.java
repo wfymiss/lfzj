@@ -198,6 +198,7 @@ public class OpendoorActivity extends BaseActivity {
 
         SharedPreferences spf = this.getSharedPreferences("opendoor", Context.MODE_PRIVATE);
         open = spf.getString("type", "1");
+        Log.e("22222", open);
         if (open.equals("1")) {
             type();
         }
@@ -284,13 +285,12 @@ public class OpendoorActivity extends BaseActivity {
             case R.id.head:
                 //防止重复点击 出现不一样的圆形
                 if (UIUtils.isFastClick()) {
-                    if (flag) {
+                    Log.e("4444", "44444");
                         wave.setVisibility(View.VISIBLE);
                         wave.start();
                         Message msg_open = new Message();
                         msg_open.what = SENSOR_SHAKE;
                         handler.sendMessage(msg_open);// 开门
-                    }
                 }
 
                 break;
@@ -461,7 +461,6 @@ public class OpendoorActivity extends BaseActivity {
     }
 
 
-
     /**
      * 开门蓝牙判断权限
      */
@@ -495,7 +494,7 @@ public class OpendoorActivity extends BaseActivity {
      */
     private void connectBluetooth() {
         if (arrayKey != null && arrayKey.length > 0) {                     // 钥匙存在时，开门
-            Log.e("arrayKey",arrayKey+"");
+            Log.e("arrayKey", arrayKey + "");
             LLingOpenDoorConfig config = new LLingOpenDoorConfig(1, arrayKey);          // 钥匙以数组形式调用令令SDK 开门
             LLingOpenDoorHandler open_handler = LLingOpenDoorHandler
                     .getSingle(OpendoorActivity.this);
@@ -516,11 +515,11 @@ public class OpendoorActivity extends BaseActivity {
         // 开门成功
         public void onOpenSuccess(String deviceKey, String sn, int openType) {
 //            deviceKey——本次开门使用的钥匙 sn——设备SN码 openKey——开门方式
-           Message msg = new Message();              // 开门反馈结果
+            Message msg = new Message();              // 开门反馈结果
             msg.what = OPEN_DOOR_BACK;   // 开门反馈结果
             msg.obj = "开门成功";
             handler.sendMessage(msg);
-           Log.e("eeeeeeee","开门成功");
+            Log.e("eeeeeeee", "开门成功");
             try {
                 JSONObject object = new JSONObject(retrieve_key);
                 JSONArray array = object.getJSONArray("datas");
@@ -543,7 +542,7 @@ public class OpendoorActivity extends BaseActivity {
         public void onOpenFaild(int errCode, int openType, String deviceKey, String sn, String desc) {
 //           errCode——开门失败结果码 deviceKey——本次开门使用的钥匙
 //           sn——设备SN码 openKey——开门方式 desc——开门结果信息反馈
-                Message  msg = new Message();
+            Message msg = new Message();
 
             switch (errCode) {
                 case RS_CONN_ERROR:
