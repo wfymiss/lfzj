@@ -306,6 +306,10 @@ public class RepairActivity extends BaseActivity {
                     showToast("请输入正确的手机号码");
                     return;
                 }
+                if (TextUtils.isEmpty(mEtContent.getText().toString().trim())){
+                    showToast("请输入报修内容");
+                    return;
+                }
                 RepairContent repairContent = new RepairContent();
                 repairContent.setContent(mEtContent.getText().toString());
                 repairContent.setmGrid(mImage);

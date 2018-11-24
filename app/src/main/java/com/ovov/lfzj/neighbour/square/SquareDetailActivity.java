@@ -33,6 +33,8 @@ import com.ovov.lfzj.base.utils.KeyBoardShowListener;
 import com.ovov.lfzj.base.utils.RxBus;
 import com.ovov.lfzj.base.utils.RxUtil;
 import com.ovov.lfzj.base.utils.UIUtils;
+import com.ovov.lfzj.base.widget.DeleteCommentpopupWindow;
+import com.ovov.lfzj.base.widget.DeleteSquarepopupWindow;
 import com.ovov.lfzj.base.widget.IdentityDialog;
 import com.ovov.lfzj.base.widget.NoScrollGridView;
 import com.ovov.lfzj.base.widget.ScaleImageView;
@@ -225,6 +227,31 @@ public class SquareDetailActivity extends BaseActivity {
 
     }
 
+    //设置头像
+    private void showDelete() {
+        DeleteCommentpopupWindow pop = new DeleteCommentpopupWindow(mActivity);
+        // 开启 popup 时界面透明
+        WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+        lp.alpha = 0.7f;
+//                if (bgAlpha == 1) {
+//                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);//不移除该Flag的话,在有视频的页面上的视频会出现黑屏的bug
+//                } else {
+//                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);//此行代码主要是解决在华为手机上半透明效果无效的bug
+//                }
+        mActivity.getWindow().setAttributes(lp);
+        // popupwindow 第一个参数指定popup 显示页面
+        pop.showAtLocation(mActivity.findViewById(R.id.layout_square_1), Gravity.BOTTOM | Gravity.CENTER_VERTICAL, 0, 0);     // 第一个参数popup显示activity页面
+        // popup 退出时界面恢复
+        pop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+                lp.alpha = 1f;
+                mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                mActivity.getWindow().setAttributes(lp);
+            }
+        });
+    }
     private void initList() {
 
         mAdapter = new CommonAdapter<SquareDetailInfo.ReplyBean>(mActivity, mData, R.layout.item_activity_comment) {
@@ -331,6 +358,7 @@ public class SquareDetailActivity extends BaseActivity {
                 mReTransmit.setVisibility(View.GONE);
             }
         }
+
     }
 
 

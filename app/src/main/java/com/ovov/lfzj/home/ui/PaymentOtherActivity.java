@@ -3,9 +3,13 @@ package com.ovov.lfzj.home.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -54,10 +58,32 @@ public class PaymentOtherActivity extends BaseActivity {
         web.getSettings().setJavaScriptEnabled(true);
 
         web.setWebViewClient(new WebViewClient() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;   //返回true， 立即跳转，返回false,打开网页有延时
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                // 如下方案可在非微信内部WebView的H5页面中调出微信支付
+                String url = request.getUrl().toString();
+                if (url.startsWith("weixin://wap/pay?")) {
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(url));
+                    startActivity(intent);
+               /* Map<String, String> extraHeaders = new HashMap<String, String>();
+                extraHeaders.put("Referer", "http://api_test.catel-link.com");
+                view.loadUrl(url, extraHeaders);*/
+                    return true;
+                } else if (url.startsWith("alipays://platformapi/startApp?")) {
+                /*Map<String, String> extraHeaders = new HashMap<String, String>();
+                extraHeaders.put("Referer", "https://api.catel-link.com");
+                view.loadUrl(url, extraHeaders);*/
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(url));
+                    startActivity(intent);
+                    return true;
+                }
+
+                return super.shouldOverrideUrlLoading(view, url);
             }
         });
     }
