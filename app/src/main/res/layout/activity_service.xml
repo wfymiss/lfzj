@@ -9,7 +9,7 @@
     tools:context="com.ovov.lfzj.login.ServiceActivity">
 
     <include layout="@layout/include_title_text"/>
-    <ScrollView
+   <!-- <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
@@ -297,6 +297,10 @@
                 android:layout_marginRight="@dimen/dp_20"/>
 
         </LinearLayout>
-    </ScrollView>
+    </ScrollView>-->
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/web"/>
 
 </LinearLayout>
