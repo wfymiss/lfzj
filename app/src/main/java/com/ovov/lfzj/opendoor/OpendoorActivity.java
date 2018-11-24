@@ -168,8 +168,6 @@ public class OpendoorActivity extends BaseActivity {
                     wave.stop();
                     String back_fail = (String) open_msg.obj;
                     feedback(back_fail);                  // 开门失败返回信息
-                    open_status = 0;
-                    postOpenData(open_status);                 // 开门结果上传数据
                     break;
             }
         }
@@ -286,11 +284,11 @@ public class OpendoorActivity extends BaseActivity {
                 //防止重复点击 出现不一样的圆形
                 if (UIUtils.isFastClick()) {
                     Log.e("4444", "44444");
-                        wave.setVisibility(View.VISIBLE);
-                        wave.start();
-                        Message msg_open = new Message();
-                        msg_open.what = SENSOR_SHAKE;
-                        handler.sendMessage(msg_open);// 开门
+                    wave.setVisibility(View.VISIBLE);
+                    wave.start();
+                    Message msg_open = new Message();
+                    msg_open.what = SENSOR_SHAKE;
+                    handler.sendMessage(msg_open);// 开门
                 }
 
                 break;
@@ -519,23 +517,25 @@ public class OpendoorActivity extends BaseActivity {
             msg.what = OPEN_DOOR_BACK;   // 开门反馈结果
             msg.obj = "开门成功";
             handler.sendMessage(msg);
-            Log.e("eeeeeeee", "开门成功");
-            try {
-                JSONObject object = new JSONObject(retrieve_key);
-                JSONArray array = object.getJSONArray("datas");
-                String keykey = null;
-                arrayKey = new String[array.length()];   // 钥匙数组
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject object2 = array.getJSONObject(i);
-                    keykey = object2.getString("key");
-                    arrayKey[i] = object2.getString("key");
-                    if (deviceKey != null && deviceKey.equals(keykey)) {
-                        sn_name = object2.getString("sn_name");     //  根据开门的钥匙检索钥匙名称
-                    }
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+//            Log.e("eeeeeeee", "开门成功");
+//            try {
+//                JSONObject object = new JSONObject(retrieve_key);
+//                JSONArray array = object.getJSONArray("datas");
+//                String keykey = null;
+//                arrayKey = new String[array.length()];   // 钥匙数组
+//                for (int i = 0; i < array.length(); i++) {
+//                    JSONObject object2 = array.getJSONObject(i);
+//                    keykey = object2.getString("key");
+//                    arrayKey[i] = object2.getString("key");
+////                    if (deviceKey != null && deviceKey.equals(keykey)) {
+////                        sn_name = object2.getString("sn_name");     //  根据开门的钥匙检索钥匙名称
+////                    }
+//                    sn_name = sn;
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+            sn_name = sn;
         }
 
         // 开门失败
@@ -574,25 +574,25 @@ public class OpendoorActivity extends BaseActivity {
                 default:
                     break;
             }
-//            //open_status = "失败";
-            if (deviceKey != null) {            // 开门使用钥匙不为空时上传数据
-                try {
-                    JSONObject object = new JSONObject(retrieve_key);
-                    JSONArray array = object.getJSONArray("datas");
-                    String keykey = null;
-                    arrayKey = new String[array.length()];
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject object2 = array.getJSONObject(i);
-                        keykey = object2.getString("key");
-                        arrayKey[i] = object2.getString("key");
-                        if (deviceKey.equals(keykey)) {
-                            sn_name = object2.getString("sn_name");      //  根据开门的钥匙key检索钥匙名称
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
+////            //open_status = "失败";
+//            if (deviceKey != null) {            // 开门使用钥匙不为空时上传数据
+//                try {
+//                    JSONObject object = new JSONObject(retrieve_key);
+//                    JSONArray array = object.getJSONArray("datas");
+//                    String keykey = null;
+//                    arrayKey = new String[array.length()];
+//                    for (int i = 0; i < array.length(); i++) {
+//                        JSONObject object2 = array.getJSONObject(i);
+//                        keykey = object2.getString("key");
+//                        arrayKey[i] = object2.getString("key");
+//                        if (deviceKey.equals(keykey)) {
+//                            sn_name = object2.getString("sn_name");      //  根据开门的钥匙key检索钥匙名称
+//                        }
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
 
         }
 
