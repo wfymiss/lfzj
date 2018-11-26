@@ -20,6 +20,7 @@ import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
 import com.ovov.lfzj.base.bean.LoginUserBean;
 import com.ovov.lfzj.home.payment.activity.PayMentRecordActivity;
+import com.ovov.lfzj.http.api.CatelApiService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,7 +50,7 @@ public class PaymentOtherActivity extends BaseActivity {
         tvTitle.setText("代缴费");
 
         web.setWebChromeClient(new WebChromeClient());
-        web.loadUrl("http://api_test.catel-link.com/v1/payment/select?user_id=" + LoginUserBean.getInstance().getUserId()+"&type=1");
+        web.loadUrl(CatelApiService.HOST+"v1/payment/select?user_id=" + LoginUserBean.getInstance().getUserId()+"&type=1");
 
         web.getSettings().setJavaScriptEnabled(true);  //加上这一行网页为响应式的
         web.getSettings().setUseWideViewPort(true);
