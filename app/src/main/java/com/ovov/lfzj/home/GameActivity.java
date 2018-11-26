@@ -57,7 +57,7 @@ public class GameActivity extends BaseActivity {
         webSettings.setSavePassword(true);
         webSettings.setSaveFormData(true);
         mWebGame.setWebViewClient(webViewClient);
-        mWebGame.loadUrl("http://game_test.catel-link.com/?playID=" + LoginUserBean.getInstance().getUserId());
+        mWebGame.loadUrl("http://game.catel-link.com/?playID=" + LoginUserBean.getInstance().getUserId());
 
     }
 

@@ -75,9 +75,9 @@ import rx.Observable;
  */
 public interface CatelApiService {
 
-    //String HOST = "http://app.catel-link.com/";
+    String HOST = "http://app_new.catel-link.com/";
 
-    String HOST = "http://api_test.catel-link.com/";
+    //String HOST = "http://api_test.catel-link.com/";
 
     @FormUrlEncoded
     @POST("v1/user/login")

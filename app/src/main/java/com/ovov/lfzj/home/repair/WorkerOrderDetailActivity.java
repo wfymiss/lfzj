@@ -142,6 +142,7 @@ public class WorkerOrderDetailActivity extends BaseActivity {
                 confirmPay(payResultEvent.type, payResultEvent.order_id, "");
             }
         });
+
     }
 
     private void initData() {

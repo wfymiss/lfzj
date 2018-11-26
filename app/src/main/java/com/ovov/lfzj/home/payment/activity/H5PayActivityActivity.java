@@ -37,6 +37,7 @@ import com.ovov.lfzj.home.bean.WxPaySuccessResult;
 import com.ovov.lfzj.home.event.RefreshEvent;
 import com.ovov.lfzj.home.payment.presenter.PaymentPayPresenter;
 import com.ovov.lfzj.http.RetrofitHelper;
+import com.ovov.lfzj.http.api.CatelApiService;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 
 import org.greenrobot.eventbus.EventBus;
@@ -85,7 +86,7 @@ public class H5PayActivityActivity extends BaseActivity implements PaymentPayVie
         if (i == 0) {
 
         }
-        String url = "http://api_test.catel-link.com/v1/pay/index?type=" + type + "&order_id=" + order_id + "&subdistrict_id="+LoginUserBean.getInstance().getSub_id()+"&token"+LoginUserBean.getInstance().getAccess_token();
+        String url = CatelApiService.HOST+"v1/pay/index?type=" + type + "&order_id=" + order_id + "&subdistrict_id="+LoginUserBean.getInstance().getSub_id()+"&token"+LoginUserBean.getInstance().getAccess_token();
         Log.e("url", url);
         initWeb(url);
 
@@ -237,6 +238,7 @@ public class H5PayActivityActivity extends BaseActivity implements PaymentPayVie
                     @Override
                     public void onNext(DataInfo dataInfo) {
                         dismiss();
+                        RxBus.getDefault().post(new PayResultEvent(order_id,type));
                         RxBus.getDefault().post(new PaymentEvent());
                         showToast("支付成功");
                         finish();
