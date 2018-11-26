@@ -34,6 +34,7 @@ public class SubListBean {
         private List<SubdistrictsBean> subdistricts;
         private AppPermission app_permission;
         public AdminRolesBean admin_roles;
+        public AdminBean admin;
 
         public AdminRolesBean getAdmin_roles() {
             return admin_roles;
@@ -91,6 +92,10 @@ public class SubListBean {
             public String pivot_user_id;
             public String pivot_role_id;
             public String subdistrict_id;
+        }
+        public class AdminBean implements Serializable{
+            public String name;
+
         }
     }
 

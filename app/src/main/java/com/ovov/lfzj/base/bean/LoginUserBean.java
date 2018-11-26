@@ -142,6 +142,7 @@ public class LoginUserBean implements Serializable, Cloneable {
     }
 
     public void setIs_auth(boolean is_auth) {
+
         this.is_auth = is_auth;
     }
 

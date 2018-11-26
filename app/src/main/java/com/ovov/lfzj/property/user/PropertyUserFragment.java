@@ -152,7 +152,7 @@ public class PropertyUserFragment extends BaseFragment {
                     @Override
                     public void onNext(SubListBean subListBean) {
                         dismiss();
-                        myNickname.setText(subListBean.getDatas().admin_roles.name);
+                        myNickname.setText(subListBean.getDatas().admin.name);
                         mySign.setText(subListBean.getDatas().admin_roles.description);
 
                     }
