@@ -2,6 +2,7 @@ package com.ovov.lfzj.opendoor;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -11,16 +12,19 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.hardware.SensorManager;
+import android.location.LocationManager;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -55,6 +59,8 @@ import com.ovov.lfzj.base.widget.WaveView;
 import com.ovov.lfzj.http.RetrofitHelper;
 import com.ovov.lfzj.http.subscriber.CommonSubscriber;
 import com.ovov.lfzj.opendoor.capture.CaptureActivity;
+import com.tbruyelle.rxpermissions.Permission;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
@@ -71,6 +77,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * 令令门禁页面  2017/7/15
@@ -124,6 +131,8 @@ public class OpendoorActivity extends BaseActivity {
     private FeedbackDialog.BuilderLog backLog;       // 展示开门反馈信息
     private Animation operatingAnim;
     private boolean flag = true;
+    private RxPermissions rxPermission;
+    private static final int PRIVATE_CODE = 1315;//开启GPS权限
     String open;
 
     /**
@@ -186,7 +195,7 @@ public class OpendoorActivity extends BaseActivity {
 
     @Override
     public void init() {
-
+        rxPermission = new RxPermissions(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         StatusBarUtils.setStatusBar(mActivity, false, false);
 //        EventBus.getDefault().register(this);                                            //   钥匙生成二维码监听事件
@@ -285,7 +294,6 @@ public class OpendoorActivity extends BaseActivity {
                 if (UIUtils.isFastClick()) {
                     Log.e("4444", "44444");
                     wave.setVisibility(View.VISIBLE);
-                    wave.start();
                     Message msg_open = new Message();
                     msg_open.what = SENSOR_SHAKE;
                     handler.sendMessage(msg_open);// 开门
@@ -415,48 +423,48 @@ public class OpendoorActivity extends BaseActivity {
     }
 
 
-    @Override     // 蓝牙，相机开启权限判断回调
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        BlueToothNext(requestCode, grantResults);                  // 设备调用蓝牙权限判定——回调
-        photoNext(requestCode, grantResults);
-    }
-
-    /**
-     * 拍照权限回调
-     *
-     * @param requestCode
-     * @param grantResults
-     */
-    private void photoNext(int requestCode, int[] grantResults) {
-        if (requestCode == PHOTO_REQUEST_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                Intent intent = new Intent(OpendoorActivity.this, CaptureActivity.class);             // 扫描二维码界面
-                startActivity(intent);
-            } else {
-                return;
-            }
-        }
-    }
-
-    /**
-     * 如果同意，执行蓝牙开门 （蓝牙开门权限回调）
-     *
-     * @param requestCode
-     * @param grantResults
-     */
-    private void BlueToothNext(int requestCode, int[] grantResults) {
-        if (requestCode == MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //同意权限——开门
-                connectBluetooth();
-            } else {
-                // 权限拒绝
-                Toast.makeText(this, "需要开启蓝牙才能开门！", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }
-    }
+//    @Override     // 蓝牙，相机开启权限判断回调
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        BlueToothNext(requestCode, grantResults);                  // 设备调用蓝牙权限判定——回调
+//        photoNext(requestCode, grantResults);
+//    }
+//
+//    /**
+//     * 拍照权限回调
+//     *
+//     * @param requestCode
+//     * @param grantResults
+//     */
+//    private void photoNext(int requestCode, int[] grantResults) {
+//        if (requestCode == PHOTO_REQUEST_CODE) {
+//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+//                Intent intent = new Intent(OpendoorActivity.this, CaptureActivity.class);             // 扫描二维码界面
+//                startActivity(intent);
+//            } else {
+//                return;
+//            }
+//        }
+//    }
+//
+//    /**
+//     * 如果同意，执行蓝牙开门 （蓝牙开门权限回调）
+//     *
+//     * @param requestCode
+//     * @param grantResults
+//     */
+//    private void BlueToothNext(int requestCode, int[] grantResults) {
+//        if (requestCode == MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION) {
+//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                //同意权限——开门
+//                connectBluetooth();
+//            } else {
+//                // 权限拒绝
+//                Toast.makeText(this, "需要开启蓝牙才能开门！", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//        }
+//    }
 
 
     /**
@@ -469,28 +477,84 @@ public class OpendoorActivity extends BaseActivity {
             feedback("请更新钥匙");
             return;
         }
+
         if (Build.VERSION.SDK_INT >= 23) {
-            //校验是否已具有模糊定位权限
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
+            //做一些处理
+            LocationManager systemService = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
+            boolean ok = systemService.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            if (ok) {
+                rxPermission.requestEach(Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        .subscribe(new Action1<Permission>() {
+                            @Override
+                            public void call(Permission permission) {
+                                Log.e("permissions", Manifest.permission.ACCESS_FINE_LOCATION + "：" + permission.granted);
+
+                                if (permission.name.equals(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                                    connectBluetooth();
+                                }
+
+
+                            }
+                        });
             } else {
-                //具有权限
-                connectBluetooth();
+                new AlertDialog.Builder(this)
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setTitle("定位服务")
+                        .setMessage("暂未开启定位服务")
+                        .setNegativeButton("取消", null)
+                        .setPositiveButton("去设置", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                startActivityForResult(intent, PRIVATE_CODE);
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .show();
             }
         } else {
-            //系统不高于6.0直接执行蓝牙开门
+            //在版本低于此的时候，做一些处理
             connectBluetooth();
         }
+
+
+
+
+
+    //校验是否已具有模糊定位权限
+//            if (ContextCompat.checkSelfPermission(this,
+//                    Manifest.permission.ACCESS_COARSE_LOCATION)
+//                    != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(this,
+//                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.WRITE_EXTERNAL_STORAGE},
+//                        MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
+//            } else {
+    //具有权限
+//
+//            }
+//        } else {
+//            //系统不高于6.0直接执行蓝牙开门
+//            connectBluetooth();
+//        }
+}
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case PRIVATE_CODE:
+                //开启GPS，重新添加地理监听
+                connectBluetooth();
+                break;
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
      * 执行蓝牙开门
      */
     private void connectBluetooth() {
+        wave.start();
         if (arrayKey != null && arrayKey.length > 0) {                     // 钥匙存在时，开门
             Log.e("arrayKey", arrayKey + "");
             LLingOpenDoorConfig config = new LLingOpenDoorConfig(1, arrayKey);          // 钥匙以数组形式调用令令SDK 开门

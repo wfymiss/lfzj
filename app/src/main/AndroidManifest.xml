@@ -9,7 +9,7 @@
     <!-- 令令门禁接入权限授权 -->
     <!-- Optional for location -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
+     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 
     <!-- 调用相机 -->
