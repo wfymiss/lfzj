@@ -12,6 +12,7 @@ import android.webkit.WebViewClient;
 
 import com.ovov.lfzj.R;
 import com.ovov.lfzj.base.BaseActivity;
+import com.ovov.lfzj.http.api.CatelApiService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +42,7 @@ public class ServiceActivity extends BaseActivity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setBuiltInZoomControls(true);                              // enable navigator.geolocation
         webSettings.setGeolocationEnabled(true);
-        webSettings.setGeolocationDatabasePath("/data/data/org.itri.html5webview/databases/");     // enable Web Storage: localStorage, sessionStorage
+  //      webSettings.setGeolocationDatabasePath("/data/data/org.itri.html5webview/databases/");     // enable Web Storage: localStorage, sessionStorage
         webSettings.setDomStorageEnabled(true);
         mWeb.requestFocus();
         mWeb.setScrollBarStyle(0);
@@ -59,7 +60,7 @@ public class ServiceActivity extends BaseActivity {
             }
         });*/
         mWeb.setWebChromeClient(new WebChromeClient());
-        mWeb.loadUrl("file:////android_asset/userAgreement.html");
+        mWeb.loadUrl(CatelApiService.HOST+"/userAgreement");
         //mWeb.setWebViewClient(webViewClient);
     }
 
