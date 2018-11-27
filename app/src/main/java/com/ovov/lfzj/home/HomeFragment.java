@@ -300,7 +300,12 @@ public class HomeFragment extends BaseFragment implements HomeView {
                 holder.mImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MarketActivity.toActivity(mActivity, data.getUrl(), 1);
+                        if (!data.getUrl().equals("") &&!data.getUrl().isEmpty()){
+                            MarketActivity.toActivity(mActivity, data.getUrl(), 1);
+                        }else {
+                            return;
+                        }
+
                     }
                 });
             }

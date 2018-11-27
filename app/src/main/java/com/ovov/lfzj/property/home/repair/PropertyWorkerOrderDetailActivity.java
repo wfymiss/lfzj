@@ -167,6 +167,30 @@ public class PropertyWorkerOrderDetailActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        EventBus.getDefault().register(this);
+        setTitleText(R.string.text_worker_order_detail);
+        id = String.valueOf(getIntent().getIntExtra("id", 0));
+        initData();
+        addRxBusSubscribe(DispathEvent.class, new Action1<DispathEvent>() {
+            @Override
+            public void call(DispathEvent dispathEvent) {
+                mTvSelectWorker.setText(dispathEvent.work_name);
+                work_id = dispathEvent.work_id;
+
+            }
+        });
+        addRxBusSubscribe(DetailCancelDispathEvent.class, new Action1<DetailCancelDispathEvent>() {
+            @Override
+            public void call(DetailCancelDispathEvent detailCancelDispathEvent) {
+                cancelWorkeOrder(detailCancelDispathEvent.remarks);//维修主管取消工单弹出框返回
+            }
+        });
+        initData();
+    }
+
     //维修主管取消工单
     private void cancelWorkeOrder(String remarks) {
         showLoadingDialog();
