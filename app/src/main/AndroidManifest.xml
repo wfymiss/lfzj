@@ -484,6 +484,7 @@
         <activity
             android:name=".home.repair.WorkerOrderDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".home.repair.WorkOrderConfirmActivity"

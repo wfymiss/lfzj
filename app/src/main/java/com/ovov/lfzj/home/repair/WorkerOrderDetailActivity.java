@@ -145,6 +145,35 @@ public class WorkerOrderDetailActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setTitleText(R.string.text_worker_order_detail);
+        id = String.valueOf(getIntent().getIntExtra("id", 0));
+        initData();
+        addRxBusSubscribe(RepairCommentSuccessEvent.class, new Action1<RepairCommentSuccessEvent>() {
+            @Override
+            public void call(RepairCommentSuccessEvent repairCommentSuccessEvent) {
+                initData();
+            }
+        });
+        addRxBusSubscribe(OwnerCancelEvent.class, new Action1<OwnerCancelEvent>() {
+            @Override
+            public void call(OwnerCancelEvent ownerCancelEvent) {
+                cancelWorkerOrder(ownerCancelEvent.reason, ownerCancelEvent.remarks);
+            }
+        });
+        addRxBusSubscribe(PayResultEvent.class, new Action1<PayResultEvent>() {
+            @Override
+            public void call(PayResultEvent payResultEvent) {
+                confirmPay(payResultEvent.type, payResultEvent.order_id, "");
+            }
+        });
+
+        initData();
+
+    }
+
     private void initData() {
         showLoadingDialog();
         Subscription subscription = RetrofitHelper.getInstance().getWorkDetail(id)
@@ -394,4 +423,7 @@ public class WorkerOrderDetailActivity extends BaseActivity {
                 });
         addSubscrebe(subscription);
     }
+
+
+
 }
