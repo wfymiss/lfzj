@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.ovov.lfzj.R;
 
 import com.ovov.lfzj.base.bean.BuildingListResult;
@@ -81,6 +82,7 @@ public class BuildingPopup extends PopupWindow {
                     public void onNext(BuildingListResult buildingListResult) {
                         if (buildingListResult.getStatus() == 0){
                             adapter.setBuilding(buildingListResult.getData());
+
                         }
                     }
                 });

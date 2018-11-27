@@ -43,7 +43,7 @@ public class BuildingPopupAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final BuildingHolder buildingHolder= (BuildingHolder) holder;
         if (list!=null){
-            String comm_build =list.get(position).getBuilding_id() + "  号楼";
+            String comm_build =list.get(position).getBuilding() + "  号楼";
             buildingHolder.building.setText(comm_build);
         }
         // 楼宇列表点击
@@ -51,7 +51,7 @@ public class BuildingPopupAdapter extends RecyclerView.Adapter<RecyclerView.View
             @Override
             public void onClick(View v) {
                 if (buildingItemListener!=null){
-                    buildingItemListener.ItemClick(position,list.get(position).getBuilding_id());
+                    buildingItemListener.ItemClick(position,list.get(position).getBuilding());
                 }
             }
         });

@@ -479,6 +479,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".home.repair.WorkerOrderActivity"
+            android:launchMode="singleTask"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
@@ -517,6 +518,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".property.PropertyMainActivity"
+            android:launchMode="singleTask"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity android:name=".user.setting.HelpActivity" />

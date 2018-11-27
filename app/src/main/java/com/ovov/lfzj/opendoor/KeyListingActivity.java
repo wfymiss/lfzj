@@ -272,6 +272,8 @@ public class KeyListingActivity extends BaseActivity {
 
     // 获取选定的楼宇钥匙
     private void getBuildingKeyList() {
+        SharedPreferences spf = this.getSharedPreferences("build_id", Context.MODE_PRIVATE);
+        build_id = spf.getString("build_id", "1");
         okHttpClient = new OkHttpClient();
         FormBody.Builder builder = new FormBody.Builder();
         builder.add("token", token);
@@ -310,6 +312,10 @@ public class KeyListingActivity extends BaseActivity {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  //获取当前时间
             Date curDate = new Date(System.currentTimeMillis());
             key_gaintime = formatter.format(curDate);
+            SharedPreferences spf = KeyListingActivity.this.getSharedPreferences("build_id", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = spf.edit();
+            editor.putString("build_id", event.getBuild_id());    // 保存更新的钥匙字符串
+            editor.commit();
             getBuildingKeyList();   // 楼宇弹出框，获取选定楼宇钥匙———保存在本地
         }
     }

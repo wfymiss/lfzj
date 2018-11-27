@@ -87,17 +87,16 @@ public class CaptureActivity extends BaseActivity implements SurfaceHolder.Callb
                     @Override
                     public void call(Boolean aBoolean) {
                         if (aBoolean) {
+                            previewSv.getHolder().addCallback(CaptureActivity.this);
+                            mCameraManager = new CameraManager(CaptureActivity.this);
+                            mCameraManager.setPreviewFrameShotListener(CaptureActivity.this);
                         }
                     }
                 });
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             albumBtn.setVisibility(View.GONE);
         }
-        previewSv.getHolder().addCallback(this);
-        mCameraManager = new CameraManager(this);
-        mCameraManager.setPreviewFrameShotListener(this);
     }
-
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         mCameraManager.initCamera(holder);
