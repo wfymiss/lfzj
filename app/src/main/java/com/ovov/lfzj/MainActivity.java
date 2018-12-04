@@ -152,7 +152,8 @@ public class MainActivity extends BaseMainActivity {
         rxPermission = new RxPermissions(this);
         rxPermission.request(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA
         )
                 .subscribe(new Action1<Boolean>() {
                     @Override
